@@ -1,5 +1,3 @@
-
-
 (function() {
     let app = angular.module('app', []);
         
@@ -11,7 +9,6 @@
     app.controller('AppController', function() {
         this.loggedIn = false;
 
-        
     });
     
     
