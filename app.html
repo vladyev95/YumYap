@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html lang="en-US" ng-app="app">
+	<head>
+		<meta charset="UTF-8"> 
+		<title>App</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+	</head>
+	<body>
+        <div ng-controller="AppController as app">
+            <div ng-controller="LoginController as login" ng-hide="app.loggedIn">
+                <ul class="nav nav-pills">
+                    <li><a href ng-click="login.onLogin=true" ng-class="{active: login.onLogin}">Login</a></li>
+                    <li><a href ng-click="login.onLogin=false" ng-class="{active: !login.onLogin}">Register</a></li>
+                </ul>
+                
+                <div id="loginContent" class="form-group" ng-show="login.onLogin">
+                  <input type="text" placeholder="Email" id="loginEmail"/ class="form-control">
+                  <input type="password" placeholder="Password" id="loginEmail" class="form-control"/>
+                  <button id="loginBtn" class="btn btn-primary btn-large" class="form-control">Login</button>
+                </div>
+                
+                
+                <div id="registerContent" class="form-group col-10" ng-hide="login.onLogin">
+                  <input type="text" placeholder="First Name" id="registerFirstName" class="form-control"/>
+                  <input type="text" placeholder="Last Name" id="registerLastName" class="form-control"/>
+                  <input type="text" placeholder="Email" id="registerEmail" class="form-control"/>
+                  <input type="password" placeholder="Password" id="registerPassword" class="form-control"/>
+                  <input type="password" placeholder="Re-enter password" id="registerRePassword" class="cform-control"/>
+                  <button id="registerBtn" class="btn btn-primary btn-large">Register</button>
+                </div>
+            </div>
+        
+            <div ng-controller="ContentController as content" ng-show="app.loggedIn">
+                
+            
+            </div>
+            
+        </div>
+                
+             
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
+		<script src="app.js"></script>
+	</body>
+</html>
+      
