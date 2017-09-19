@@ -27,7 +27,7 @@
      * controller for the stuff once we've logged in
      */
     app.controller('ContentController', function() {
-        
+        this.tab = 'Home';
     });
 
 })();
