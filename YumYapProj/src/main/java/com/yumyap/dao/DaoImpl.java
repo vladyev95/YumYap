@@ -10,17 +10,15 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.yumyap.beans.Comment;
-import com.yumyap.beans.Food;
-import com.yumyap.beans.FoodItem;
-import com.yumyap.beans.Log;
-import com.yumyap.beans.Recipe;
-import com.yumyap.beans.User;
+import com.yumyap.beans.*;
 
 @Transactional
 public class DaoImpl implements Dao{
 	
+	@Autowired
 	private SessionFactory sessionFactory;
+	
+	public DaoImpl() {}
 	
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
@@ -126,6 +124,15 @@ public class DaoImpl implements Dao{
 	public boolean deleteRecipe(Recipe r) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public User findUserByEmail(String email) {
+		ArrayList<User> list = (ArrayList<User>) sessionFactory
+				.getCurrentSession()
+				.createQuery("from User where lower(email)=?")
+				.setParameter(0, email.toLowerCase()).list();
+		if(list.size()==0)return null;
+		else { return list.get(0);}
 	}
 	
 
