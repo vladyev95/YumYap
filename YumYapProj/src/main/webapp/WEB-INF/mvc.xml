@@ -45,4 +45,8 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 
+	<bean id="myService" class="com.yumyap.service.Service">
+		<property name="daoImpl" ref="myDao"></property>
+	</bean>
+ 
 </beans>

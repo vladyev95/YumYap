@@ -4,9 +4,14 @@ import java.sql.Date;
 import java.util.List;
 
 import com.yumyap.beans.*;
+import com.yumyap.dto.UserDto;
 
 public interface ServiceInterface {
 
+	public UserDto authenticateUser(UserDto userDto);
+	public UserDto createUser(UserDto userDto);
+	
+	
 	// CREATE
 	public User createUser(String username, String password, String firstname, String lastname);
 	// food is added to the database
@@ -18,7 +23,7 @@ public interface ServiceInterface {
 	// comment is added to recipe's list of comments
 	public boolean addComment(Recipe recipe, Comment comment);
 	// log is added to user's list of logs
-	public boolean addLog(User user, Log log);
+
 
 	
 	// READ

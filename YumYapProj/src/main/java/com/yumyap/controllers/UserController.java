@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yumyap.dto.UserDto;
-import com.yumyap.service.Service;
+import com.yumyap.service.ServiceInterface;
 
 @RestController
 @RequestMapping(value="/user")
 public class UserController {
 
 	@Autowired
-	private Service service;
+	private ServiceInterface service;
 
-	public void setUserServiceImpl(Service service) {
+	public void setUserServiceImpl(ServiceInterface service) {
 		this.service = service;
 	}
 	

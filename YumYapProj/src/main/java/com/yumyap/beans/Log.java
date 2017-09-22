@@ -1,3 +1,4 @@
+/*
 package com.yumyap.beans;
 
 import java.sql.Date;
@@ -71,3 +72,4 @@ public class Log {
 	
 	
 }
+*/

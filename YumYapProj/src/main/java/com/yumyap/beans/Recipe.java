@@ -15,8 +15,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-//@Entity
-//@Table(name="RECIPE")
+@Entity
+@Table(name="RECIPE")
 public class Recipe {
 	
 	@Id

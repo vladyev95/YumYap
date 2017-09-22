@@ -75,8 +75,7 @@ public class User {
 	public User() {
 	}
 
-	public User(int id, Set<User> following, String firstname, String lastname, String password, String username,
-			List<Log> logs) {
+	public User(int id, Set<User> following, String firstname, String lastname, String password, String username) {
 		super();
 		this.id = id;
 		this.following = following;

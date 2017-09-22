@@ -15,7 +15,7 @@ import com.yumyap.beans.*;
 @Transactional
 public class DaoImpl implements Dao{
 	
-	@Autowired
+//	@Autowired
 	private SessionFactory sessionFactory;
 	
 	public DaoImpl() {}
