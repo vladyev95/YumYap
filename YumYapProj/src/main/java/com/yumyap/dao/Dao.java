@@ -13,9 +13,9 @@ public interface Dao {
 	
 	
 	public User addUser(User u);
-	public boolean addFoodItem(FoodItem fi);
-	public boolean addComment(Comment c);
-	public boolean addRecipe(Recipe r);
+	public FoodItem addFoodItem(FoodItem fi);
+	public Comment addComment(Comment c);
+	public Recipe addRecipe(Recipe r);
 	
 	
 	public User getUser(String username);

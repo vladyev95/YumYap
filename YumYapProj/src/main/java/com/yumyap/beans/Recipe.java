@@ -28,6 +28,8 @@ public class Recipe {
 //	@OneToOne(fetch=FetchType.EAGER)
 //	private Food food;
 	
+	private String name;
+	
 	private String description;
 	
 	
