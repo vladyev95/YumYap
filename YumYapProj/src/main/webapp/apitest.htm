@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Insert title here</title>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+</head>
+
+<body ng-controller="searchCtrl">
+
+    <input id="search" ng-model="search" type="text" placeholder="Search" />
+
+    <h2>{{ search }}</h2>
+    <ul>
+        <li ng-repeat="item in foodItems">
+            <h4>{{ item.name }}</h4>
+            <ul>
+                <li>
+                    {{ item.ndbno }}
+                </li>
+                <li>
+                    {{ item.group }}
+                </li>
+            <!--
+                <li>
+                    {{ item.carbs }}
+                </li>
+                <li>
+                    {{ item.protein }}
+                </li>
+            -->
+            </ul>
+        </li>
+    </ul>
+
+    <script src="apitest.js"></script>
+</body>
+
+</html>
