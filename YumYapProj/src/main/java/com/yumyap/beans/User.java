@@ -39,23 +39,20 @@ public class User {
 	@Column(name ="PASSWORD", nullable = false)
 	private String password;
 	
-	@Column(name ="USERNAME", nullable = false, unique=true)
+	@Column(name ="EMAIL", nullable = false, unique=true)
 	private String email;
 	
-	@Column(name="Active", nullable = true)
+	@Column(name="Active", columnDefinition = "1")
 	private int active;
-//	
-//	@OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.REMOVE)
-//	private List<Log> logs;
 	
+	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Recipe> favoriteRecipes;
 	
 	public User() {
 	}
 	
 
-	public User(int id, Set<User> following, String firstname, String lastname, String password, String username,
-			List<Log> logs) {
+	public User(int id, Set<User> following, String firstname, String lastname, String password, String username, Set<Recipe> favoriteRecipes) {
 		super();
 		this.id = id;
 		this.following = following;
@@ -63,7 +60,7 @@ public class User {
 		this.lastname = lastname;
 		this.password = password;
 		this.email = username;
-//		this.logs = logs;
+		this.favoriteRecipes = favoriteRecipes;
 	}
 
 
@@ -114,21 +111,44 @@ public class User {
 	}
 
 
-//	public List<Log> getLogs() {
-//		return logs;
-//	}
-//
-//
-//	public void setLogs(List<Log> logs) {
-//		this.logs = logs;
-//	}
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public int getActive() {
+		return active;
+	}
+
+
+	public void setActive(int active) {
+		this.active = active;
+	}
+
+
+	public Set<Recipe> getFavoriteRecipes() {
+		return favoriteRecipes;
+	}
+
+
+	public void setFavoriteRecipes(Set<Recipe> favoriteRecipes) {
+		this.favoriteRecipes = favoriteRecipes;
+	}
 
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", password=" + password
-				+ ", username=" + email + "]";
+		return "User [id=" + id + ", following=" + following + ", firstname=" + firstname + ", lastname=" + lastname
+				+ ", password=" + password + ", email=" + email + ", active=" + active + ", favoriteRecipes="
+				+ favoriteRecipes + "]";
 	}
+
 	
 	
 
