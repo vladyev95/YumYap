@@ -1,0 +1,5 @@
+package com.yumyap.dto;
+
+public class RecipesDto {
+
+}

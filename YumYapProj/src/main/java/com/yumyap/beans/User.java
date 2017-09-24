@@ -1,5 +1,6 @@
 package com.yumyap.beans;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -8,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -41,13 +44,15 @@ public class User {
 	private int active;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<Recipe> favoriteRecipes;
+	@JoinTable(name = "User_Recipes", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "recipe_id") })
+	private List<Recipe> favoriteRecipes;
 
 	public User() {
 	}
 
 	public User(int id, Set<User> following, String firstname, String lastname, String password, String username,
-			Set<Recipe> favoriteRecipes) {
+			List<Recipe> favoriteRecipes) {
 		super();
 		this.id = id;
 		this.following = following;
@@ -122,11 +127,11 @@ public class User {
 		this.active = active;
 	}
 
-	public Set<Recipe> getFavoriteRecipes() {
+	public List<Recipe> getFavoriteRecipes() {
 		return favoriteRecipes;
 	}
 
-	public void setFavoriteRecipes(Set<Recipe> favoriteRecipes) {
+	public void setFavoriteRecipes(List<Recipe> favoriteRecipes) {
 		this.favoriteRecipes = favoriteRecipes;
 	}
 

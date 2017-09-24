@@ -15,7 +15,7 @@ import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 
 @Transactional
-public class DaoImpl implements Dao{
+public class DaoImpl implements Dao {
 	
 	private SessionFactory sessionFactory;
 	

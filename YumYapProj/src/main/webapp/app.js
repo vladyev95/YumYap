@@ -74,7 +74,7 @@ yumApp.service("UserService", function($http, $q){
 		var promise;
 
 		promise = $http.post(
-				"rest/user/register",service.user
+				"rest/user/register", service.user
 		).then(// can pass in and register up to three callback functions [success, error, notified(which is sort of like a finally)]
 				function(response){
 					console.log("register: " + response);
