@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.yumyap.beans.*;
 import com.yumyap.dao.Dao;
+import com.yumyap.dto.ProfileDto;
 import com.yumyap.dto.RecipesDto;
 import com.yumyap.dto.UserDto;
 
@@ -47,10 +48,14 @@ public class UserService implements ServiceInterface{
 		return null;
 	}
 
-	public RecipesDto getProfile(UserDto userDto) {
-		RecipesDto recipes = new RecipesDto();
-		recipes.setRecipes(userDto.getFavoriteRecipes());
-		return recipes;
+	public ProfileDto getProfile(UserDto userDto) {
+		ProfileDto profile = new ProfileDto();
+		profile.setRecipes(userDto.getFavoriteRecipes());
+		User u = new User();
+		u.setFirstname(userDto.getFirstname());
+		u.setLastname(userDto.getLastname());
+		profile.setUser(u);
+		return null;
 	}
 
 	@Override

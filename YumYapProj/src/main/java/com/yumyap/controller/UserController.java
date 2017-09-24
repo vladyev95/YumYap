@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yumyap.dto.ProfileDto;
 import com.yumyap.dto.RecipesDto;
 import com.yumyap.dto.UserDto;
 import com.yumyap.service.UserService;
@@ -35,13 +36,15 @@ public class UserController {
 			method = {RequestMethod.GET},
 			consumes = {MediaType.APPLICATION_JSON_VALUE},
 			produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<RecipesDto> loadProfile(@RequestBody UserDto userDto){
+	public ResponseEntity<ProfileDto> loadProfile(@RequestBody UserDto userDto){
 		System.out.println("Loading Profile");
 		
-		return new ResponseEntity<RecipesDto>(
+		return new ResponseEntity<ProfileDto>(
 				userService.getProfile(userDto), HttpStatus.OK);
 	}
 	
+
+
 	
 }
 
