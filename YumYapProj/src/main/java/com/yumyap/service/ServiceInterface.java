@@ -34,7 +34,7 @@ public interface ServiceInterface {
 	
 	// UPDATE
 	// rating is added to recipe's rating
-	public boolean favoriteRecipe(RecipesDto recipe, UserDto user);
+	public boolean favoriteRecipe(Recipe recipe, UserDto user);
 	public boolean deactivateUser(int userId);
 
 	
@@ -43,5 +43,7 @@ public interface ServiceInterface {
 	public boolean isEmailValid(String email);
 	public boolean isEmailAvailable(String email);
 	public boolean isUsernameAvailable(String username);
+	UserDto validateUser(UserDto userDto);
+	UserDto logoutUser(UserDto userDto);
 
 }

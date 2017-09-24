@@ -8,7 +8,7 @@ import com.yumyap.beans.User;
 
 public class UserDto {
 
-private int id;
+	private int id;
 	
 	private Set<User> following;
 	
@@ -24,7 +24,7 @@ private int id;
 	
 	private List<Recipe> favoriteRecipes;
 	
-	private int loggedIn;
+	private boolean loggedIn;
 
 	public int getId() {
 		return id;
@@ -90,11 +90,11 @@ private int id;
 		this.favoriteRecipes = favoriteRecipes;
 	}
 
-	public int getLoggedIn() {
+	public boolean getLoggedIn() {
 		return loggedIn;
 	}
 
-	public void setLoggedIn(int loggedIn) {
+	public void setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
 	}
 	
