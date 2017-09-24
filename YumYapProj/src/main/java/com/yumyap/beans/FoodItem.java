@@ -55,7 +55,7 @@ public class FoodItem {
 	
 	@Override
 	public String toString() {
-		return "Meal [id=" + id + ", food=" + food + ", amount=" + amount + "]";
+		return "FoodItem [id=" + id + ", food=" + food + ", amount=" + amount + "]";
 	}
 	
 	

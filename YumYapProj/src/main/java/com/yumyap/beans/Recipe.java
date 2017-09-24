@@ -1,5 +1,6 @@
 package com.yumyap.beans;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,12 +12,15 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-//@Entity
-//@Table(name="RECIPE")
+@Entity
+@Table(name="RECIPE")
 public class Recipe {
 	
 	@Id
@@ -25,26 +29,33 @@ public class Recipe {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="RID_SEQ")
 	private int id;
 	
-//	@OneToOne(fetch=FetchType.EAGER)
-//	private Food food;
+	private Time created;
+	
+	private User creator;
 	
 	private String description;
 	
-	
 	private String directions;
 	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+	        name = "Recipes_Ingredients", 
+	        joinColumns = { @JoinColumn(name = "recipe_id") }, 
+	        inverseJoinColumns = { @JoinColumn(name = "fooditem_id") }
+	    )
 	private Set<FoodItem> ingredients;
 	
 	public Recipe() {}
 	
 	
-	public Recipe(int id, Food food, String description, String directions, Set<FoodItem> ingredients) {
+	public Recipe(int id, String description, String directions, Set<FoodItem> ingredients, User creator, Time created) {
 		super();
 		this.id = id;
-//		this.food = food;
 		this.description = description;
 		this.directions = directions;
 		this.ingredients = ingredients;
+		this.creator = creator;
+		this.created = created;
 	}
 
 	
@@ -57,6 +68,28 @@ public class Recipe {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+
+	
+	
+	public Time getCreated() {
+		return created;
+	}
+
+
+	public void setCreated(Time created) {
+		this.created = created;
+	}
+
+
+	public User getCreator() {
+		return creator;
+	}
+
+
+	public void setCreator(User creator) {
+		this.creator = creator;
 	}
 
 
@@ -74,15 +107,6 @@ public class Recipe {
 		this.ingredients = ingredients;
 	}
 
-
-//
-//
-//	public Food getFood() {
-//		return food;
-//	}
-//	public void setFood(Food food) {
-//		this.food = food;
-//	}
 	public String getDescription() {
 		return description;
 	}
@@ -98,10 +122,10 @@ public class Recipe {
 
 	@Override
 	public String toString() {
-		return "Recipe [id=" + id  + ", description=" + description + ", ingredients=" + ingredients + "]";
+		return "Recipe [id=" + id + ", created=" + created + ", creator=" + creator + ", description=" + description
+				+ ", directions=" + directions + ", ingredients=" + ingredients + "]";
 	}
-	
-	
-	
+
+
 
 }

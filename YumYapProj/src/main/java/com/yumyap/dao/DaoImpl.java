@@ -9,14 +9,15 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.yumyap.beans.Comment;
 import com.yumyap.beans.Food;
 import com.yumyap.beans.FoodItem;
-import com.yumyap.beans.Log;
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 
+@Repository
 @Transactional
 public class DaoImpl implements Dao{
 	
@@ -104,27 +105,27 @@ public class DaoImpl implements Dao{
 	}
 
 	public boolean updateUser(User user) {
-		// TODO Auto-generated method stub
+		currentSession().saveOrUpdate(user);
 		return false;
 	}
 
 	public boolean deleteComment(Comment c) {
-		// TODO Auto-generated method stub
+		currentSession().saveOrUpdate(c);
 		return false;
 	}
 
 	public boolean deleteUser(User u) {
-		// TODO Auto-generated method stub
+		currentSession().delete(u);
 		return false;
 	}
 
 	public boolean deleteFoodItem(FoodItem fi) {
-		// TODO Auto-generated method stub
+		currentSession().delete(fi);
 		return false;
 	}
 
 	public boolean deleteRecipe(Recipe r) {
-		// TODO Auto-generated method stub
+		currentSession().delete(r);
 		return false;
 	}
 	
