@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -36,6 +38,11 @@ public class Recipe {
 	private String directions;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+	        name = "Recipes_Ingredients", 
+	        joinColumns = { @JoinColumn(name = "recipe_id") }, 
+	        inverseJoinColumns = { @JoinColumn(name = "fooditem_id") }
+	    )
 	private Set<FoodItem> ingredients;
 	
 	public Recipe() {}

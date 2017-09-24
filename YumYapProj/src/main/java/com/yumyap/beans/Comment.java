@@ -24,7 +24,7 @@ public class Comment {
 	private int id;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	private Recipe recipe;
+	private Recipe recipeDto;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	private User user;
@@ -39,7 +39,7 @@ public class Comment {
 	
 	public Comment() {
 	}
-	public Comment(User user, Date date, String comment) {
+	public Comment(Recipe recipe, User user, Date date, String comment) {
 		super();
 		this.user = user;
 		this.date = date;
