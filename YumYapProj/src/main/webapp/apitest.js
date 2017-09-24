@@ -1,44 +1,100 @@
-'use strict';
+
+const EXCLUDED_GROUPS = ['Baby Foods', 'Fast Foods', 'Restaurant Foods'];
+
 
 let app = angular.module('app', []);
-
-let excludeGroups = ['Baby Foods', 'Fast Foods', 'Restaurant Foods'];
-
 app.controller('searchCtrl', function ($scope, $http) {
     'use strict';
-    log('in apitest controller');
 
-    $scope.$watch('search', function (newVal, oldVal) {
+    $scope.getFoodReport = function (selection) {
 
-        $http.get('https://api.nal.usda.gov/ndb/search/?format=xml&q=' + newVal + '&ds=Standard%20Reference&sort=n&max=25&api_key=1dvNA9ailiF7xHYu1V2ogW374YZpjcMS1NsvOySE')
+        log('selected ' + selection);
+        $http.get('https://api.nal.usda.gov/ndb/reports/?ndbno=' + selection + '&format=xml&api_key=1dvNA9ailiF7xHYu1V2ogW374YZpjcMS1NsvOySE')
             .then(function (responseXml) {
-                //log('API response: '+responseXml.data);
 
-                let results = new DOMParser()
+                let foodReport = new DOMParser()
                     .parseFromString(responseXml.data, 'text/xml')
-                    .firstChild.children;
+                    .firstChild.children.item(0);
 
-                if (results) {
-                    $scope.foodItems = [];
-                    for (let i = 0; i < results.length; i++) {
-                        let group = results.item(i).getElementsByTagName('group')[0].innerHTML;
-                        if (excludeGroups.indexOf(group) !== -1) {
-                            continue;
+                if (foodReport.tagName === 'food') {
+                    $('#foodName').text(foodReport.getAttribute('name'));
+
+                    let nutrients = foodReport.children.item(0).children;
+                    for (let i = 0; i < nutrients.length; i++) {
+                        let nutrient = nutrients.item(i);
+
+                        switch (+nutrient.getAttribute('nutrient_id')) {
+                            case 208:
+                                $('#foodCalories').text(nutrient.getAttribute('value'));
+                                break;
+                            case 204:
+                                $('#foodFat').text(nutrient.getAttribute('value'));
+                                break;
+                            case 205:
+                                $('#foodCarbs').text(nutrient.getAttribute('value'));
+                                break;
+                            case 203:
+                                $('#foodProtein').text(nutrient.getAttribute('value'));
+                                break;
+                            default:
                         }
-
-                        let name = results.item(i).getElementsByTagName('name')[0].innerHTML;
-                        let ndbno = results.item(i).getElementsByTagName('ndbno')[0].innerHTML;
-
-                        let item = { 'name':name, 'ndbno':ndbno, 'group':group };
-                        log('#' + ndbno + ', ' + name);
-                        $scope.foodItems.push(item);
                     }
-                }
+                } else {
 
-            }, function (error) {
-                log('API status ' + error.status + ': ' + error.statusText);
+                    // Bad food ndbno
+                }
+            },
+            function (error) {
+                logError(error);
             });
-    });
+    };
+
+    $scope.searchFoods = function (searchTerm) {
+
+        if ($scope.search) {
+            $http.get('https://api.nal.usda.gov/ndb/search/?format=xml&q=' + searchTerm + '&ds=Standard%20Reference&max=20&api_key=1dvNA9ailiF7xHYu1V2ogW374YZpjcMS1NsvOySE')
+                .then(function (responseXml) {
+
+                    // Make sure slow response doesn't affect empty search box
+                    if (!$scope.search) return;
+
+                    // Get elements from XML search results
+                    let searchResults = new DOMParser()
+                        .parseFromString(responseXml.data, 'text/xml')
+                        .firstChild.children;
+                    log('first element= ' + searchResults.item(0).tagName);
+                    if (searchResults.item(0).tagName === 'item') {
+                        $scope.foodItems = [];
+
+                        // Go through each result food item
+                        for (let i = 0; i < searchResults.length; i++) {
+
+                            let group = searchResults.item(i).getElementsByTagName('group')[0].innerHTML;
+                            // Skip food if in excluded food group
+                            if (EXCLUDED_GROUPS.indexOf(group) !== -1) continue;
+
+                            let name = searchResults.item(i).getElementsByTagName('name')[0].innerHTML;
+                            let ndbno = searchResults.item(i).getElementsByTagName('ndbno')[0].innerHTML;
+
+                            // Create food item and add to list
+                            let item = { 'name': name, 'ndbno': ndbno, 'group': group };
+                            $scope.foodItems.push(item);
+                        }
+                    } else {
+
+                        // Show previous results when no new results
+                        // Or give no search results message here
+                    }
+
+                }, function (error) {
+                    logError(error);
+                });
+
+        } else {
+            // Clear search results when search box is empty
+            $scope.foodItems = [];
+        }
+    };
 });
 
 let bread = 'Bread, wheat, sprouted';
@@ -48,6 +104,10 @@ let eggBread = 'Bread, egg';
 let rx = new RegExp(/egg|bread/i);
 
 log(eggBread.search(rx));
+
+function logError(error) {
+    log(error.status + ' error, ' + error.statusText);
+}
 
 function log(message) {
     console.log('apitest.js -- ' + message);
