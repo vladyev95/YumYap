@@ -1,0 +1,5 @@
+package com.yumyap.controllers;
+
+public class UserController {
+
+}

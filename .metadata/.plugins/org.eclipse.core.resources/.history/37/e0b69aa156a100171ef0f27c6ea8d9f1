@@ -1,0 +1,37 @@
+package com.yumyap.service;
+
+import org.dom4j.util.UserDataDocumentFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.yumyap.beans.User;
+import com.yumyap.dao.Dao;
+import com.yumyap.dto.UserDto;
+
+@Service
+public class UserServiceImpl implements UserService{
+
+	
+	@Autowired
+	private Dao userDaoImpl;
+
+	public void setUserDaoImpl(Dao userDaoImpl) {
+		this.userDaoImpl = userDaoImpl;
+	}
+
+	@Override
+	public UserDto authenticateUser(UserDto userDto) {
+
+	}
+
+	@Override
+	public UserDto createUser(UserDto userDto) {
+
+	}
+
+	@Override
+	public UserDto logoutUser(UserDto userDto) {
+
+	}
+
+}

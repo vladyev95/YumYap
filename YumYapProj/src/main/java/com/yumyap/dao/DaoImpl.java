@@ -8,17 +8,14 @@ import javax.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yumyap.beans.Comment;
-import com.yumyap.beans.Food;
 import com.yumyap.beans.FoodItem;
-import com.yumyap.beans.Log;
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 
 @Transactional
-public class DaoImpl implements Dao{
+public class DaoImpl implements Dao {
 	
 	private SessionFactory sessionFactory;
 	
