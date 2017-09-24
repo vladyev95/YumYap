@@ -25,6 +25,7 @@ public class Recipe {
 	
 	private Time created;
 	
+	@Column
 	private User creator;
 	
 	private String description;
