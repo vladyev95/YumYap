@@ -1,23 +1,34 @@
-let loginRegister = angular.module('loginRegister', ['ngRoute']);
+let loginRegister = angular.module('loginRegister', ['ui.router']);
 
-loginRegister.config(function($routeProvider) {
-    $routeProvider
-    .when('/', {
+/**
+loginRegister.config(['$locationProvider', function($locationProvider) {
+    $locationProvider.hashPrefix('');
+}]);*/
+
+
+loginRegister.config(function($stateProvider, $urlRouterProvider) {
+    
+    $stateProvider
+    .state('home', {
+        url: '',
         templateUrl: 'loginContent.html',
-        controller: 'LoginController'
+        controller: 'LoginController as login'
     })
-    .when('/login', {
+    .state('login', {
+        url: '/login',
         templateUrl: 'loginContent.html',
-        controller: 'LoginController'
+        controller: 'LoginController as login'
     })
-    .when('/register', {
+    .state('register', {
+        url: '/register',
         templateUrl: 'registerContent.html',
-        controller: 'RegisterController'
+        controller: 'RegisterController as register'
     });
 });
 
 
 loginRegister.controller('LoginController', function($scope) {
+    
 });
 
 loginRegister.controller('RegisterController', function($scope) {

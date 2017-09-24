@@ -2,89 +2,24 @@
 
 <html lang="en-US" ng-app="app">
 	<head>
-		<meta charset="UTF-8"> 
+		<meta charset="UTF-8"/> 
 		<title>App</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="app.css"/>
-  </head>
-	<body>
-        <div id="appContent">
-            <div>
-                <nav id="loginRegisterNav" class="navbar navbar-light bg-faded col-3">
-                    <a href class="nav-item nav-link" ng-click="app.onLogin=true" ng-class="{active: app.onLogin}">Login</a>
-                    <a href class="nav-item nav-link" ng-click="app.onLogin=false" ng-class="{active: !app.onLogin}">Register</a>
-                </nav>
-                
-                <div ng-view>
-                
-                </div>
-                
-                
-            </div>
-            
-            
-            
-            
         
-            <div id="loggedInContent" ng-show="app.loggedIn">
-                <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-                  <button class="navbar-toggler navbar-toggler-right" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
-                  <a class="navbar-brand" href="#">Navbar</a>
-                  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                      <a href class="nav-item nav-link" ng-class="{active: app.tab === 'Home'}" ng-click="app.loadHomeTab()">Home</a>
-                      <a href class="nav-item nav-link" ng-class="{active: app.tab === 'TabName1'}" ng-click="app.tab = 'TabName1'">TabName1</a>
-                      <a href class="nav-item nav-link" ng-class="{active: app.tab === 'TabName2'}" ng-click="app.tab = 'TabName2'">TabName2</a>
-                      <a href class="nav-item nav-link" ng-click="app.loggedIn = false">Logout</a>
-                    </div>
-                  </div>
-                </nav>
-                
-                
-                
-                
-                <div id="homeTab" ng-show="app.tab === 'Home'">
-                  <div class="recipe-block" ng-repeat="recipe in app.homeRecipes | limitTo: 3">
-                    <div class="recipe-content">Recipe name: {{recipe.name}}</div>
-                    <div class="recipe-content"><img ng-src="{{recipe.image}}" width="100" height="100"></img></div>
-                    <div class="recipe-content">Recipe description: {{recipe.description}}</div>
-                    <ul class="recipe-content">
-                        <li ng-repeat="ingredient in recipe.ingredients">{{ingredient}}</li>
-                    </ul>
-          
-                    <ol class="recipe-content">
-                      <li ng-repeat="step in recipe.steps">{{step}}</li>
-                    </ol>
-                    
-                  </div>
-                </div>
-                
-                
-                
-                
-                <div id="TabName1 tab" ng-show="app.tab === 'TabName1'">
-                  TabName1 tab
-                </div>
-                
-                
-                
-                
-                
-                <div id="TabName2 tab" ng-show="app.tab === 'TabName2'">
-                  TabName2 tab
-                </div
-            
-            </div>
-            
-        </div>
-                
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+        
         <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>         
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
-		<script src="app.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+        <script src="app.js"></script>
+    </head>
+	<body>
+    
+        <div ui-view>
+        
+        </div>
+                
 	</body>
 </html>
       
