@@ -9,49 +9,51 @@ app.controller('searchCtrl', function ($scope, $http) {
     $scope.getFoodReport = function (selection) {
 
         log('selected ' + selection);
-        $http.get('https://api.nal.usda.gov/ndb/reports/?ndbno=' + selection + '&format=xml&api_key=1dvNA9ailiF7xHYu1V2ogW374YZpjcMS1NsvOySE')
-            .then(function (responseXml) {
+        if (selection) {
+            $http.get('https://api.nal.usda.gov/ndb/reports/?ndbno=' + selection + '&format=xml&api_key=1dvNA9ailiF7xHYu1V2ogW374YZpjcMS1NsvOySE')
+                .then(function (responseXml) {
 
-                let foodReport = new DOMParser()
-                    .parseFromString(responseXml.data, 'text/xml')
-                    .firstChild.children.item(0);
+                    let foodReport = new DOMParser()
+                        .parseFromString(responseXml.data, 'text/xml')
+                        .firstChild.children.item(0);
 
-                if (foodReport.tagName === 'food') {
-                    $('#foodName').text(foodReport.getAttribute('name'));
+                    if (foodReport.tagName === 'food') {
+                        $('#foodName').text(foodReport.getAttribute('name'));
 
-                    let nutrients = foodReport.children.item(0).children;
-                    for (let i = 0; i < nutrients.length; i++) {
-                        let nutrient = nutrients.item(i);
+                        let nutrients = foodReport.children.item(0).children;
+                        for (let i = 0; i < nutrients.length; i++) {
+                            let nutrient = nutrients.item(i);
 
-                        switch (+nutrient.getAttribute('nutrient_id')) {
-                            case 208:
-                                $('#foodCalories').text(nutrient.getAttribute('value'));
-                                break;
-                            case 204:
-                                $('#foodFat').text(nutrient.getAttribute('value'));
-                                break;
-                            case 205:
-                                $('#foodCarbs').text(nutrient.getAttribute('value'));
-                                break;
-                            case 203:
-                                $('#foodProtein').text(nutrient.getAttribute('value'));
-                                break;
-                            default:
+                            switch (+nutrient.getAttribute('nutrient_id')) {
+                                case 208:
+                                    $('#foodCalories').text(nutrient.getAttribute('value'));
+                                    break;
+                                case 204:
+                                    $('#foodFat').text(nutrient.getAttribute('value'));
+                                    break;
+                                case 205:
+                                    $('#foodCarbs').text(nutrient.getAttribute('value'));
+                                    break;
+                                case 203:
+                                    $('#foodProtein').text(nutrient.getAttribute('value'));
+                                    break;
+                                default:
+                            }
                         }
-                    }
-                } else {
+                    } else {
 
-                    // Bad food ndbno
-                }
-            },
-            function (error) {
-                logError(error);
-            });
+                        // Bad food ndbno
+                    }
+                },
+                function (error) {
+                    logError(error);
+                });
+        }
     };
 
     $scope.searchFoods = function (searchTerm) {
 
-        if ($scope.search) {
+        if (searchTerm) {
             $http.get('https://api.nal.usda.gov/ndb/search/?format=xml&q=' + searchTerm + '&ds=Standard%20Reference&max=20&api_key=1dvNA9ailiF7xHYu1V2ogW374YZpjcMS1NsvOySE')
                 .then(function (responseXml) {
 
