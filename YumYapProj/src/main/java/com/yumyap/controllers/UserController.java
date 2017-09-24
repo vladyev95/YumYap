@@ -10,40 +10,43 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yumyap.dto.UserDto;
-import com.yumyap.service.ServiceInterface;
+import com.yumyap.service.UserService;
 
 @RestController
-@RequestMapping(value="/user")
+@RequestMapping(value = "/user")
 public class UserController {
 
 	@Autowired
-	private ServiceInterface service;
+	private UserService userServiceImpl;
 
-	public void setUserServiceImpl(ServiceInterface service) {
-		this.service = service;
+	public void setUserServiceImpl(UserService userServiceImpl) {
+		this.userServiceImpl = userServiceImpl;
 	}
-	
-	@RequestMapping(value="/auth", method= {RequestMethod.POST},
-			consumes= {MediaType.APPLICATION_JSON_VALUE},
-			produces= {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<UserDto> 
-		authenticateUser(@RequestBody UserDto userDto){
-		
+
+	@RequestMapping(value = "/login", method = { RequestMethod.POST }, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<UserDto> authenticateUser(@RequestBody UserDto userDto) {
+
 		System.out.println("authenticating user");
-		
-		return new ResponseEntity<UserDto>(service
-				.authenticateUser(userDto),HttpStatus.OK);
+
+		return new ResponseEntity<UserDto>(userServiceImpl.authenticateUser(userDto), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/register", method= {RequestMethod.POST},
-			consumes= {MediaType.APPLICATION_JSON_VALUE},
-			produces= {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<UserDto>	registerUser(@RequestBody UserDto userDto){
+	@RequestMapping(value = "/logout", method = { RequestMethod.POST }, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<UserDto> deAuthenticateUser(@RequestBody UserDto userDto) {
+
+		System.out.println("Logging out user");
+
+		return new ResponseEntity<UserDto>(userServiceImpl.logoutUser(userDto), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/register", method = { RequestMethod.POST }, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto) {
 		System.out.println("creating new user");
-		service.createUser(userDto);
+		userServiceImpl.createUser(userDto);
 		return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
 	}
-	
-	
-	
+
 }

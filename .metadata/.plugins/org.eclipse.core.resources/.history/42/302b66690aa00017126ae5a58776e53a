@@ -1,0 +1,5 @@
+package com.yumyap.beans;
+
+public class User {
+
+}

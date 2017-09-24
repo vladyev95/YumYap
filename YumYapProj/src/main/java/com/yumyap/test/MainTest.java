@@ -8,18 +8,12 @@ public class MainTest {
 	public static void main(String[] args) {
 		
 		DaoImpl dao = new DaoImpl();
-		String email = "fred@mail.com";
-		
 		User u = new User();
-		u.setFirstname("fred");
-		u.setLastname("Smith");
-		u.setEmail(email);
-		u.setPassword("password");
+		u.setUsername("test");
+		u.setPassword("test");
 		
-		dao.addUser(u);
-		User fred = dao.getUser(email);
+		dao.createUser(u);
 		
-		System.out.println(fred);
 	}
 
 }
