@@ -1,51 +1,40 @@
 package com.yumyap.dto;
 
+import com.yumyap.beans.User;
+
 public class UserDto {
-	
-	private int id;
-	private String username;
-	private String password;
+
+	private User user;
 	private boolean authenticated;
-	
-	
-	public UserDto() {}
-	
-	public UserDto(int id, String username, String password, boolean authenticated) {
+
+	public UserDto() {
+	}
+
+	public UserDto(User user, boolean authenticated) {
 		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
+		this.user = user;
 		this.authenticated = authenticated;
 	}
 
+	public User getUser() {
+		return user;
+	}
 
-	public int getId() {
-		return id;
+	public void setUser(User user) {
+		this.user = user;
 	}
-	
-	
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
+
 	public boolean isAuthenticated() {
 		return authenticated;
 	}
+
 	public void setAuthenticated(boolean authenticated) {
 		this.authenticated = authenticated;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "UserDto [user=" + user + ", authenticated=" + authenticated + "]";
+	}
 
 }

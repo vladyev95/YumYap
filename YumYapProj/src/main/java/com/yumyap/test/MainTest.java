@@ -12,7 +12,7 @@ public class MainTest {
 		u.setUsername("test");
 		u.setPassword("test");
 		
-		dao.createUser(u);
+		dao.addUser(u);
 		
 	}
 

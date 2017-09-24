@@ -1281,3 +1281,305 @@
 2017-09-23 21:39:18,302 [Worker-86] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
 2017-09-23 21:39:18,304 [Worker-86] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
 2017-09-23 21:39:18,305 [Worker-86] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2017-09-23 22:20:55,366 [Worker-15] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.yumyap:YumYapProj:0.0.1-SNAPSHOT @ C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\pom.xml.
+2017-09-23 22:20:58,582 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:20:58,584 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:20:58,587 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:20:58,588 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:21:55,152 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:21:55,155 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:21:55,157 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:21:55,159 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:22:24,214 [Worker-12] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:22:24,216 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:22:24,218 [Worker-12] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:22:24,219 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:22:46,358 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:22:46,360 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:22:46,362 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:22:46,363 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:22:50,916 [Worker-16] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:22:50,918 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:22:50,920 [Worker-16] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:22:50,923 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:24:06,026 [Worker-16] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:24:06,028 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:24:06,030 [Worker-16] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:24:06,031 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:24:07,181 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:24:07,182 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:24:07,184 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:24:07,185 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:24:16,969 [Worker-18] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:24:16,972 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:24:16,980 [Worker-18] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:24:16,982 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:24:22,765 [Worker-17] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:24:22,767 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:24:22,769 [Worker-17] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:24:22,770 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:24:39,361 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:24:39,362 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:24:39,365 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:24:39,366 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:25:17,927 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:25:17,928 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:25:17,936 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:25:17,937 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:26:21,707 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:26:21,709 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:26:21,711 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:26:21,712 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:26:36,388 [Worker-19] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:26:36,392 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:26:36,395 [Worker-19] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:26:36,396 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:29:52,178 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:29:52,186 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:29:52,191 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:29:52,192 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:31:45,674 [Worker-23] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:31:45,677 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:31:45,679 [Worker-23] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:31:45,684 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:31:50,622 [Worker-21] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:31:50,623 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:31:50,643 [Worker-21] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:31:50,646 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:32:08,836 [Worker-10] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:32:08,838 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:32:08,842 [Worker-10] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:32:08,843 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:32:26,352 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:32:26,353 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:32:26,357 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:32:26,358 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:38:18,287 [Worker-23] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:38:18,289 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:38:18,291 [Worker-23] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:38:18,294 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:45:08,995 [Worker-21] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:45:09,002 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:45:09,007 [Worker-21] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:45:09,009 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:45:45,134 [Worker-11] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:45:45,141 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:45:45,143 [Worker-11] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:45:45,145 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:53:00,233 [Worker-26] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2017-09-23 22:53:09,128 [Worker-26] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.yumyap:YumYapProj:0.0.1-SNAPSHOT @ C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\pom.xml.
+2017-09-23 22:53:13,888 [Worker-26] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /YumYapProj/src/main/java
+2017-09-23 22:53:13,889 [Worker-26] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /YumYapProj/src/test/java
+2017-09-23 22:53:16,510 [Worker-26] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Cleaning filtered folder for YumYapProj
+2017-09-23 22:53:16,528 [Worker-26] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 16 sec
+2017-09-23 22:53:21,745 [Worker-30] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:53:21,811 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:53:21,842 [Worker-30] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:53:21,865 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:53:21,866 [Worker-30] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Changed resources require a complete clean of filtered resources of YumYapProj
+2017-09-23 22:53:21,903 [Worker-30] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Executing resource filtering for YumYapProj
+2017-09-23 22:53:21,919 [Worker-30] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:54:43,667 [Worker-27] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:54:43,668 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:54:43,672 [Worker-27] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:54:43,673 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:57:20,699 [Worker-29] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:57:20,701 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:57:20,703 [Worker-29] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:57:20,705 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:58:21,473 [Worker-33] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:58:21,475 [Worker-33] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:58:21,477 [Worker-33] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:58:21,479 [Worker-33] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:58:41,112 [Worker-28] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2017-09-23 22:58:47,083 [Worker-28] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.yumyap:YumYapProj:0.0.1-SNAPSHOT @ C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\pom.xml.
+2017-09-23 22:58:50,225 [Worker-28] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /YumYapProj/src/main/java
+2017-09-23 22:58:50,226 [Worker-28] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /YumYapProj/src/test/java
+2017-09-23 22:58:51,135 [Worker-28] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Cleaning filtered folder for YumYapProj
+2017-09-23 22:58:51,156 [Worker-28] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 10 sec
+2017-09-23 22:58:53,370 [Worker-22] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:58:53,424 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 22:58:53,428 [Worker-22] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 22:58:53,429 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 22:58:53,430 [Worker-22] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Changed resources require a complete clean of filtered resources of YumYapProj
+2017-09-23 22:58:53,430 [Worker-22] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Executing resource filtering for YumYapProj
+2017-09-23 22:58:53,438 [Worker-22] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:00:57,238 [Worker-28] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:00:57,239 [Worker-28] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:00:57,241 [Worker-28] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:00:57,242 [Worker-28] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:00:59,683 [Worker-36] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:00:59,685 [Worker-36] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:00:59,687 [Worker-36] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:00:59,688 [Worker-36] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:01:04,478 [Worker-28] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2017-09-23 23:01:05,198 [Worker-28] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.yumyap:YumYapProj:0.0.1-SNAPSHOT @ C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\pom.xml.
+2017-09-23 23:01:06,378 [Worker-28] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /YumYapProj/src/main/java
+2017-09-23 23:01:06,379 [Worker-28] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /YumYapProj/src/test/java
+2017-09-23 23:01:06,938 [Worker-28] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Cleaning filtered folder for YumYapProj
+2017-09-23 23:01:06,947 [Worker-28] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 2 sec
+2017-09-23 23:01:08,526 [Worker-34] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:01:08,528 [Worker-34] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:01:08,546 [Worker-34] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:01:08,548 [Worker-34] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:01:08,549 [Worker-34] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Changed resources require a complete clean of filtered resources of YumYapProj
+2017-09-23 23:01:08,549 [Worker-34] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Executing resource filtering for YumYapProj
+2017-09-23 23:01:08,647 [Worker-34] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:02:42,960 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:02:42,961 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:02:42,963 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:02:42,965 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:03:29,006 [Worker-30] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:03:29,008 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:03:29,010 [Worker-30] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:03:29,011 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:03:33,949 [Worker-32] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2017-09-23 23:03:36,946 [Worker-32] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.yumyap:YumYapProj:0.0.1-SNAPSHOT @ C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\pom.xml.
+2017-09-23 23:03:39,836 [Worker-32] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /YumYapProj/src/main/java
+2017-09-23 23:03:39,837 [Worker-32] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /YumYapProj/src/test/java
+2017-09-23 23:03:40,467 [Worker-32] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Cleaning filtered folder for YumYapProj
+2017-09-23 23:03:40,479 [Worker-32] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 6 sec
+2017-09-23 23:03:42,314 [Worker-29] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:03:42,315 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:03:42,318 [Worker-29] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:03:42,319 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:03:42,320 [Worker-29] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Changed resources require a complete clean of filtered resources of YumYapProj
+2017-09-23 23:03:42,320 [Worker-29] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Executing resource filtering for YumYapProj
+2017-09-23 23:03:42,325 [Worker-29] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:04:23,443 [Worker-39] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:04:23,444 [Worker-39] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:04:23,446 [Worker-39] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:04:23,448 [Worker-39] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:04:55,806 [Worker-37] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2017-09-23 23:04:56,363 [Worker-37] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.yumyap:YumYapProj:0.0.1-SNAPSHOT @ C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\pom.xml.
+2017-09-23 23:04:57,555 [Worker-37] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /YumYapProj/src/main/java
+2017-09-23 23:04:57,556 [Worker-37] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /YumYapProj/src/test/java
+2017-09-23 23:04:58,070 [Worker-37] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Cleaning filtered folder for YumYapProj
+2017-09-23 23:04:58,080 [Worker-37] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 2 sec
+2017-09-23 23:04:59,771 [Worker-37] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:04:59,773 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:04:59,775 [Worker-37] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:04:59,777 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:04:59,790 [Worker-37] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Changed resources require a complete clean of filtered resources of YumYapProj
+2017-09-23 23:04:59,790 [Worker-37] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Executing resource filtering for YumYapProj
+2017-09-23 23:04:59,797 [Worker-37] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:06:51,853 [Worker-41] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:06:51,867 [Worker-41] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:06:51,956 [Worker-41] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:06:51,958 [Worker-41] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:07:00,948 [Worker-37] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:07:00,950 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:07:00,952 [Worker-37] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:07:00,956 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:07:07,858 [Worker-36] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2017-09-23 23:07:08,492 [Worker-36] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.yumyap:YumYapProj:0.0.1-SNAPSHOT @ C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\pom.xml.
+2017-09-23 23:07:09,597 [Worker-36] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /YumYapProj/src/main/java
+2017-09-23 23:07:09,598 [Worker-36] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /YumYapProj/src/test/java
+2017-09-23 23:07:10,101 [Worker-36] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Cleaning filtered folder for YumYapProj
+2017-09-23 23:07:10,111 [Worker-36] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 2 sec
+2017-09-23 23:07:12,494 [Worker-28] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:07:12,495 [Worker-28] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:07:12,498 [Worker-28] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:07:12,500 [Worker-28] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:07:12,500 [Worker-28] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Changed resources require a complete clean of filtered resources of YumYapProj
+2017-09-23 23:07:12,501 [Worker-28] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Executing resource filtering for YumYapProj
+2017-09-23 23:07:12,507 [Worker-28] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:11:49,258 [Worker-44] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:11:49,296 [Worker-44] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:11:49,298 [Worker-44] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:11:49,299 [Worker-44] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:11:59,792 [Worker-44] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2017-09-23 23:12:05,901 [Worker-44] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.yumyap:YumYapProj:0.0.1-SNAPSHOT @ C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\pom.xml.
+2017-09-23 23:12:09,419 [Worker-44] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /YumYapProj/src/main/java
+2017-09-23 23:12:09,420 [Worker-44] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /YumYapProj/src/test/java
+2017-09-23 23:12:10,125 [Worker-44] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Cleaning filtered folder for YumYapProj
+2017-09-23 23:12:10,134 [Worker-44] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 10 sec
+2017-09-23 23:12:14,035 [Worker-46] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:12:14,087 [Worker-46] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:12:14,090 [Worker-46] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:12:14,092 [Worker-46] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:12:14,092 [Worker-46] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Changed resources require a complete clean of filtered resources of YumYapProj
+2017-09-23 23:12:14,092 [Worker-46] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Executing resource filtering for YumYapProj
+2017-09-23 23:12:14,099 [Worker-46] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:13:35,044 [Worker-45] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:13:35,045 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:13:35,047 [Worker-45] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:13:35,048 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:14:43,934 [Worker-44] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:14:43,936 [Worker-44] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:14:43,937 [Worker-44] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:14:43,938 [Worker-44] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:14:46,106 [Worker-44] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:14:46,111 [Worker-44] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:14:46,113 [Worker-44] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:14:46,115 [Worker-44] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:14:48,528 [Worker-51] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:14:48,530 [Worker-51] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:14:48,532 [Worker-51] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:14:48,533 [Worker-51] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:15:14,210 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:15:14,253 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:15:14,255 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:15:14,258 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:15:16,344 [Worker-51] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:15:16,345 [Worker-51] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:15:16,385 [Worker-51] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:15:16,387 [Worker-51] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:15:29,032 [Worker-56] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:15:29,034 [Worker-56] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:15:29,036 [Worker-56] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:15:29,037 [Worker-56] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:15:30,286 [Worker-45] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:15:30,287 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:15:30,289 [Worker-45] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:15:30,290 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:15:37,158 [Worker-49] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2017-09-23 23:15:44,910 [Worker-49] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.yumyap:YumYapProj:0.0.1-SNAPSHOT @ C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\pom.xml.
+2017-09-23 23:15:50,774 [Worker-49] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /YumYapProj/src/main/java
+2017-09-23 23:15:50,774 [Worker-49] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /YumYapProj/src/test/java
+2017-09-23 23:15:51,568 [Worker-49] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Cleaning filtered folder for YumYapProj
+2017-09-23 23:15:51,577 [Worker-49] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 14 sec
+2017-09-23 23:15:54,356 [Worker-48] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:15:54,358 [Worker-48] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:15:54,362 [Worker-48] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:15:54,363 [Worker-48] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:15:54,364 [Worker-48] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Changed resources require a complete clean of filtered resources of YumYapProj
+2017-09-23 23:15:54,364 [Worker-48] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Executing resource filtering for YumYapProj
+2017-09-23 23:15:54,371 [Worker-48] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:18:04,486 [Worker-52] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:18:04,487 [Worker-52] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:18:04,489 [Worker-52] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:18:04,491 [Worker-52] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:18:53,587 [Worker-44] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:18:53,589 [Worker-44] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:18:53,592 [Worker-44] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:18:53,596 [Worker-44] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:19:01,990 [Worker-56] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:19:01,993 [Worker-56] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:19:01,996 [Worker-56] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:19:01,998 [Worker-56] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:19:24,829 [Worker-51] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:19:24,832 [Worker-51] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:19:24,835 [Worker-51] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:19:24,837 [Worker-51] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:19:44,536 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:19:44,546 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:19:44,550 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:19:44,561 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:20:14,976 [Worker-51] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2017-09-23 23:20:18,519 [Worker-51] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.yumyap:YumYapProj:0.0.1-SNAPSHOT @ C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\pom.xml.
+2017-09-23 23:20:25,276 [Worker-51] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /YumYapProj/src/main/java
+2017-09-23 23:20:25,281 [Worker-51] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /YumYapProj/src/test/java
+2017-09-23 23:20:29,853 [Worker-51] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Cleaning filtered folder for YumYapProj
+2017-09-23 23:20:30,076 [Worker-51] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 15 sec
+2017-09-23 23:20:43,251 [Worker-45] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:20:43,272 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:20:43,307 [Worker-45] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:20:43,330 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources
+2017-09-23 23:20:43,335 [Worker-45] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Changed resources require a complete clean of filtered resources of YumYapProj
+2017-09-23 23:20:43,336 [Worker-45] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Executing resource filtering for YumYapProj
+2017-09-23 23:20:43,385 [Worker-45] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:32:15,814 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:32:15,841 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\main\resources
+2017-09-23 23:32:15,854 [Worker-20] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2017-09-23 23:32:15,858 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Surplus\my_git_repos\YumYap\YumYapProj\src\test\resources

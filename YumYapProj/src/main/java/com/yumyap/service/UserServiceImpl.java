@@ -21,10 +21,10 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public UserDto authenticateUser(UserDto userDto) {
-		User user = userDaoImpl.findUserByUsername(userDto.getUsername());
+		User user = userDaoImpl.getUser(userDto.getUser().getUsername());
 		
 		if(user != null && 
-				(user.getPassword().equals(userDto.getPassword()))) {
+				(user.getPassword().equals(userDto.getUser().getPassword()))) {
 			System.out.println("setting userdto to true");
 			userDto.setAuthenticated(true);
 		}else {
@@ -36,12 +36,13 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public UserDto createUser(UserDto userDto) {
-		// need username validation 
+		// FIXME need username validation
+		// FIXME add the rest of the necessary fields
 		User user = new User();
-		user.setUsername(userDto.getUsername());
-		user.setPassword(userDto.getPassword());
-		user = userDaoImpl.createUser(user);
-		userDto.setId(user.getId());
+		user.setUsername(userDto.getUser().getUsername());
+		user.setPassword(userDto.getUser().getPassword());
+		user = userDaoImpl.addUser(user);
+		userDto.getUser().setId(user.getId());
 		return userDto ;
 	}
 
@@ -51,7 +52,7 @@ public class UserServiceImpl implements UserService{
 			System.out.println("No user is currently logged in");
 			return userDto;
 		}
-		System.out.println("Logging out user: " + userDto.getUsername());
+		System.out.println("Logging out user: " + userDto.getUser().getUsername());
 		userDto.setAuthenticated(false);
 		return userDto;
 	}
