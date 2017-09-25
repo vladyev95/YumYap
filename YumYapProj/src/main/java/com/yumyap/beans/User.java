@@ -42,9 +42,6 @@ public class User {
 	@Column(name = "EMAIL", nullable = false, unique = true)
 	private String email;
 
-	@Column(name = "USERNAME", nullable = false, unique = true)
-	private String username;
-
 	@Column(name = "Active", columnDefinition = "1")
 	private int active;
 
@@ -58,7 +55,7 @@ public class User {
 	}
 
 	public User(int id, Set<User> following, String firstname, String lastname, String password, String email,
-			String username, int active, List<Recipe> favoriteRecipes) {
+			int active, List<Recipe> favoriteRecipes) {
 		super();
 		this.id = id;
 		this.following = following;
@@ -66,7 +63,6 @@ public class User {
 		this.lastname = lastname;
 		this.password = password;
 		this.email = email;
-		this.username = username;
 		this.active = active;
 		this.favoriteRecipes = favoriteRecipes;
 	}
@@ -79,7 +75,6 @@ public class User {
 		this.lastname = userDto.getLastname();
 		this.password = userDto.getPassword();
 		this.email = userDto.getEmail();
-		this.username = userDto.getUsername();
 		this.active = userDto.getActive();
 		this.favoriteRecipes = userDto.getFavoriteRecipes();
 	}
@@ -132,14 +127,6 @@ public class User {
 		this.email = email;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	public int getActive() {
 		return active;
 	}
@@ -159,7 +146,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", following=" + following + ", firstname=" + firstname + ", lastname=" + lastname
-				+ ", password=" + password + ", email=" + email + ", username=" + username + ", active=" + active
+				+ ", password=" + password + ", email=" + email + ", active=" + active
 				+ ", favoriteRecipes=" + favoriteRecipes + "]";
 	}
 
