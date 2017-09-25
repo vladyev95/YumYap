@@ -14,24 +14,18 @@
     <select ng-model="selection" ng-change="getFoodReport(selection)">
         <option ng-repeat="item in foodItems" value="{{ item.ndbno }}">{{ item.name }}</option>
     </select>
-    <br>
+    <br><br><br>
 
-    <h2 ng-if="selection" id="foodName"></h2>
-    <select ng-if="selection" ng-model="measure" ng-change="getFoodReport(selection)">
-        <option ng-repeat="item in measures" value="{{ item.ndbno }}">{{ item.name }}</option>
+    <input ng-model="quantity" ng-change="calculateNutrients(quantity, measure)" type="number" step="0.25" min="0" ng-show="selection" ng-hide="!selection" />
+    <select ng-model="measure" ng-change="calculateNutrients(quantity, measure)" ng-show="selection" ng-hide="!selection">
+        <option ng-repeat="m in measures" value="{{ m }}">{{ m }}</option>
     </select>
-    <h4 ng-if="selection">Calories: <span id="foodCalories"></span></h4>
-    <h4 ng-if="selection">Fat: <span id="foodFat"></span></h4>
-    <h4 ng-if="selection">Carbs: <span id="foodCarbs"></span></h4>
-    <h4 ng-if="selection">Protein: <span id="foodProtein"></span></h4>
+    <h1>{{ quantity }} {{ measure }} {{ food.name }}</h1>
+    <h3 ng-if="selection">Calories: {{ food.nutrients.calories }}g</h3>
+    <h3 ng-if="selection">Fat: {{ food.nutrients.fat }}g</h3>
+    <h3 ng-if="selection">Carbs: {{ food.nutrients.carbs }}g</h3>
+    <h3 ng-if="selection">Protein: {{ food.nutrients.protein }}g</h3>
     <br>
-
-    <h2>Results for: {{ search }}</h2>
-    <ul>
-        <li ng-repeat="item in foodItems">
-            <h4>#{{ item.ndbno }}, {{ item.name }}</h4>
-        </li>
-    </ul>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
