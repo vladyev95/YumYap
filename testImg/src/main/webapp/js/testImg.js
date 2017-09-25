@@ -2,29 +2,12 @@ window.onload = function(){
 	loadImg();
 	document.getElementById("addPic").addEventListener("click", uploadPic);
 };
-/*
-function loadImg(){
-	var xhr = new XMLHttpRequest();
-	xhr.onreadystatechange = function(){
-		if(xhr.readyState == 4 && xhr.status == 200){
-			var dto = JSON.parse(xhr.responseText);
-			var imgLocation = dto.imgs[1].link;
-			console.log(imgLocation);
-			var img = document.createElement("img");
-			img.src = imgLocation;
-			var src = document.getElementById("here");
-			src.appendChild(img);
-		}
-	}
-	xhr.open("GET", "load", true);
-	xhr.send();
-};*/
+
 function loadImg(){
 	
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
-			var dto = JSON.parse(xhr.responseText);
 			var dto = JSON.parse(xhr.responseText);
 			var imgList = dto.imgs;
 			for(var i=imgList.length-1; i>=0; i--){
@@ -51,8 +34,8 @@ function loadImg(){
 function uploadPic(){
 	var descript = document.getElementById("description").value;
 	var file = document.getElementById("file").value;
-	var filetho = file.replace("C:\\fakepath\\", "C:\\Users\\1Z4XS\\Desktop\\");
-	
+	var filetho = file.replace("C:\\fakepath\\", "C:\\Users\\1Z4XS\\Desktop\\imgTest\\");
+	console.log(filetho);
 	var tx = [descript,filetho];
 	tx = JSON.stringify(tx);
 	var xhr = new XMLHttpRequest();

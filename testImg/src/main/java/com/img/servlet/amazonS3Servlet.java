@@ -31,7 +31,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 //import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-
+import com.amazonaws.services.s3.model.PutObjectResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 //import com.fasterxml.jackson.databind.util.ISO8601Utils;
 import com.img.bean.Img;
@@ -54,18 +54,23 @@ public class amazonS3Servlet extends HttpServlet{
 		
 		String descript =tx.get(0);	System.out.println(descript);
 		String file = tx.get(1);	System.out.println(file);
-		
+		System.out.println(file);
 		uploadFileName = file;
 		Random r = new Random();
 		key = r.nextInt(1000000)+1+"";
-		AmazonS3 s3 = new AmazonS3Client(new ProfileCredentialsProvider());
+		AmazonS3 s3 = new AmazonS3Client();
 		try {
             System.out.println("Uploading a new object to S3 from a file\n");
             File f = new File(uploadFileName);
-            s3.putObject(new PutObjectRequest(bucketName, key, f));
-
+            System.out.println(f);
+            System.out.println(bucketName);
+            System.out.println(key);
+            
+            PutObjectResult result = s3.putObject(new PutObjectRequest(bucketName, key, f));
+            //System.out.println("Result= "+result.getVersionId());
            
          } catch (AmazonServiceException ase) {
+         	//System.out.println("Image upload failed: "+ase.getLocalizedMessage());
             l.error(("Caught an AmazonServiceException, which " +
             		"means your request made it " +
                     "to Amazon S3, but was rejected with an error response" +
@@ -76,6 +81,7 @@ public class amazonS3Servlet extends HttpServlet{
             "Error Type:       " + ase.getErrorType() +
             "Request ID:       " + ase.getRequestId());
         } catch (AmazonClientException ace) {
+        	//System.out.println("Image upload failed: "+ace.getLocalizedMessage());
             l.error(("Caught an AmazonClientException, which " +
             		"means the client encountered " +
                     "an internal error while trying to " +
