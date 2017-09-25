@@ -11,16 +11,10 @@ public interface ServiceInterface {
 
 	// CREATE
 	public UserDto createUser(UserDto userDto);
-//	public User createUser(String email, String password, String firstname, String lastname);
-	// food is added to the database
-	public boolean addFood(Food food);
 	
 	// Verify that user != follower
 	// follower is added to user's list of followers
-	public boolean addFollower(User user, User follower);
-	public RecipesDto addRecipe(RecipesDto recipeDto);
-	// comment is added to recipe's list of comments
-	public boolean addComment(Recipe recipe, String comment, UserDto user);
+	public boolean addFollowing(User user, User follower);
 	
 	// READ
 	// Return a list of user's followers
@@ -39,7 +33,6 @@ public interface ServiceInterface {
 	public boolean validateUser(String username, String password);
 	public boolean isEmailValid(String email);
 	public boolean isEmailAvailable(String email);
-	public boolean isUsernameAvailable(String username);
 	public UserDto validateUser(UserDto userDto);
 	public UserDto logoutUser(UserDto userDto);
 

@@ -17,6 +17,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
         url: '/app',
         templateUrl: 'appContent.html',
         controller: 'AppController as cntrl'
+    })
+    .state('dashboard',{
+    		url: '/dashboard',
+    		templateUrl:'templates/dashboard.html',
+    		controller: 'DashController as recipectrl'
+    			
     });
 });
 

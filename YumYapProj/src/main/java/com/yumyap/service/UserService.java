@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.yumyap.beans.*;
 import com.yumyap.dao.Dao;
+import com.yumyap.dao.DaoImpl;
 import com.yumyap.dto.ProfileDto;
 import com.yumyap.dto.RecipeDto;
 import com.yumyap.dto.RecipesDto;
@@ -57,6 +58,14 @@ public class UserService implements ServiceInterface{
 		return null;
 	}
 	
+	public boolean favoriteRecipe(Recipe recipe, UserDto user) {
+		List<Recipe> recipes = user.getFavoriteRecipes();
+		recipes.add(recipe);
+		User u = new User(user);
+		DaoImpl.updateUser(u);
+		return true;
+	}
+	
 //	public ProfileDto getProfile(String email) {
 //		ProfileDto profile = new ProfileDto();
 //		List<Recipe> recs = userDto.getUser().getFavoriteRecipes();
@@ -65,37 +74,11 @@ public class UserService implements ServiceInterface{
 //		return null;
 //	}
 
-
 	@Override
-	public boolean addFood(Food food) {
+	public boolean addFollowing(User user, User follower) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	@Override
-	public boolean addFollower(User user, User follower) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public RecipesDto addRecipe(RecipesDto recipeDto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	/*
-	 * This takes a string representing the comment, the userDto and 
-	 * the recipe to which the comment should be added, creates the date based on the current time
-	 */
-	public boolean addComment(Recipe recipe, String comment, UserDto user) {
-		
-		java.util.Date now = new java.util.Date();
-		Date today = new Date(now.getTime());
-		Comment c = new Comment(recipe, new User(user), today, comment);
-		return true;
-	}
-
-
 	@Override
 	public List<User> getFollowing(User user) {
 		// TODO Auto-generated method stub
@@ -127,20 +110,6 @@ public class UserService implements ServiceInterface{
 		return false;
 	}
 
-	@Override
-	public boolean isUsernameAvailable(String username) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean favoriteRecipe(Recipe recipe, UserDto user) {
-		List<Recipe> recipes = user.getFavoriteRecipes();
-		recipes.add(recipe);
-		User u = new User(user);
-		DaoImpl.updateUser(u);
-		return true;
-	}
 
 	public UserDto createUser(UserDto userDto) {
 		// FIXME need username validation
@@ -163,7 +132,7 @@ public class UserService implements ServiceInterface{
 		} else {
 			return null;
 		}
-		System.out.println("---------------------returning user dto" + userDto.toString());
+		System.out.println("returning user dto" + userDto.toString());
 		return userDto;
 	}
 
@@ -177,5 +146,6 @@ public class UserService implements ServiceInterface{
 		userDto.setLoggedIn(false);
 		return userDto;
 	}
+
 
 }
