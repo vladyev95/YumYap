@@ -4,12 +4,16 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+<<<<<<< HEAD
 import javax.persistence.JoinColumn;
+=======
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
@@ -36,6 +40,7 @@ public class User {
 
 	@Column(name = "PASSWORD", nullable = false)
 	private String password;
+<<<<<<< HEAD
 
 	@Column(name = "EMAIL", nullable = false, unique = true)
 	private String email;
@@ -48,11 +53,32 @@ public class User {
 			@JoinColumn(name = "recipe_id") })
 	private List<Recipe> favoriteRecipes;
 
+=======
+	
+	@Column(name ="EMAIL", nullable = false, unique=true)
+	private String email;
+	
+	@Column(name="Active", columnDefinition = "1")
+	private int active;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	 @JoinTable(
+		        name = "User_Recipes", 
+		        joinColumns = { @JoinColumn(name = "user_id") }, 
+		        inverseJoinColumns = { @JoinColumn(name = "recipe_id") }
+		    )
+	private List<Recipe> favoriteRecipes;
+	
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 	public User() {
 	}
 
+<<<<<<< HEAD
 	public User(int id, Set<User> following, String firstname, String lastname, String password, String username,
 			List<Recipe> favoriteRecipes) {
+=======
+	public User(int id, Set<User> following, String firstname, String lastname, String password, String username, List<Recipe> favoriteRecipes) {
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 		super();
 		this.id = id;
 		this.following = following;
@@ -115,21 +141,50 @@ public class User {
 		return email;
 	}
 
+<<<<<<< HEAD
+=======
+
+	public String getEmail() {
+		return email;
+	}
+
+
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 	public int getActive() {
 		return active;
 	}
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 	public void setActive(int active) {
 		this.active = active;
 	}
 
+<<<<<<< HEAD
 	public List<Recipe> getFavoriteRecipes() {
 		return favoriteRecipes;
 	}
+=======
+
+	public List<Recipe> getFavoriteRecipes() {
+		return favoriteRecipes;
+	}
+
+
+	public void setFavoriteRecipes(List<Recipe> favoriteRecipes) {
+		this.favoriteRecipes = favoriteRecipes;
+	}
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 
 	public void setFavoriteRecipes(List<Recipe> favoriteRecipes) {
 		this.favoriteRecipes = favoriteRecipes;
@@ -141,5 +196,11 @@ public class User {
 				+ ", password=" + password + ", email=" + email + ", active=" + active + ", favoriteRecipes="
 				+ favoriteRecipes + "]";
 	}
+<<<<<<< HEAD
+=======
+
+	
+	
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 
 }

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html lang="en-US" ng-app="app">
+	<head>
+		<meta charset="UTF-8"/> 
+		<title>App</title>
+<<<<<<< HEAD
+        
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+        
+        <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>         
+=======
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
+	</head>
+	<body>
+        <div ng-controller="AppController as app">
+            <div ng-controller="LoginController as login" ng-hide="app.loggedIn">
+                <nav class="navbar navbar-light bg-faded col-3">
+                    <a href class="nav-item nav-link" ng-click="login.onLogin=true" ng-class="{active: login.onLogin}">Login</a>
+                    <a href class="nav-item nav-link" ng-click="login.onLogin=false" ng-class="{active: !login.onLogin}">Register</a>
+                </nav>
+                
+                <div id="loginContent" class="form-group col-3" ng-show="login.onLogin">
+                  <input type="text" placeholder="Email" id="loginEmail"/ class="form-control">
+                  <input type="password" placeholder="Password" id="loginEmail" class="form-control"/>
+                  <button id="loginBtn" class="btn btn-primary btn-large" class="form-control" ng-click="app.loggedIn = true">Login</button>
+                </div>
+                
+                
+                <div id="registerContent" class="form-group col-3" ng-hide="login.onLogin">
+                  <input type="text" placeholder="First Name" id="registerFirstName" class="form-control"/>
+                  <input type="text" placeholder="Last Name" id="registerLastName" class="form-control"/>
+                  <input type="text" placeholder="Email" id="registerEmail" class="form-control"/>
+                  <input type="password" placeholder="Password" id="registerPassword" class="form-control"/>
+                  <input type="password" placeholder="Re-enter password" id="registerRetypePassword" class="form-control"/>
+                  <button id="registerBtn" class="btn btn-primary btn-large">Register</button>
+                </div>
+            </div>
+        
+            <div ng-controller="ContentController as content" ng-show="app.loggedIn">
+                <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+                  <button class="navbar-toggler navbar-toggler-right" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <a class="navbar-brand" href="#">Navbar</a>
+                  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                      <a href class="nav-item nav-link" ng-class="{active: content.tab === 'Home'}" ng-click="content.tab = 'Home'">Home</a>
+                      <a href class="nav-item nav-link" ng-class="{active: content.tab === 'TabName1'}" ng-click="content.tab = 'TabName1'">TabName1</a>
+                      <a href class="nav-item nav-link" ng-class="{active: content.tab === 'TabName2'}" ng-click="content.tab = 'TabName2'">TabName2</a>
+                      <a href class="nav-item nav-link" ng-click="app.loggedIn = false">Logout</a>
+                    </div>
+                  </div>
+                </nav>
+                
+                <div id="homeTab" ng-show="content.tab === 'Home'">
+                  Home Tab
+                </div>
+                
+                <div id="TabName1 tab" ng-show="content.tab === 'TabName1'">
+                  TabName1 tab
+                </div>
+                
+                <div id="TabName2 tab" ng-show="content.tab === 'TabName2'">
+                  TabName2 tab
+                </div>
+            
+            </div>
+            
+        </div>
+                
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>         
+>>>>>>> service2
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+        <script src="app.js"></script>
+    </head>
+	<body>
+    
+        <div ui-view>
+        
+        </div>
+                
+	</body>
+</html>

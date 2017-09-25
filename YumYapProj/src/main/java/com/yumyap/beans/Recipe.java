@@ -1,6 +1,12 @@
 package com.yumyap.beans;
 
 import java.sql.Time;
+<<<<<<< HEAD
+=======
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -12,11 +18,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+<<<<<<< HEAD
+=======
+import javax.persistence.OneToOne;
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
+<<<<<<< HEAD
 @Table(name = "RECIPE")
+=======
+@Table(name="RECIPE")
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 public class Recipe {
 
 	@Id
@@ -24,6 +38,7 @@ public class Recipe {
 	@SequenceGenerator(name = "RID_SEQ", sequenceName = "RID_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RID_SEQ")
 	private int id;
+<<<<<<< HEAD
 
 	private Time created;
 
@@ -47,9 +62,36 @@ public class Recipe {
 		this.id = id;
 		this.created = created;
 		this.creatorId = creatorId;
+=======
+	
+	private Time created;
+
+	private int creatorId;
+	
+	private String description;
+	
+	private String directions;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+	        name = "Recipes_Ingredients", 
+	        joinColumns = { @JoinColumn(name = "recipe_id") }, 
+	        inverseJoinColumns = { @JoinColumn(name = "fooditem_id") }
+	    )
+	private Set<FoodItem> ingredients;
+	
+	public Recipe() {}
+	
+	
+	public Recipe(int id, String description, String directions, Set<FoodItem> ingredients, User creator, Time created) {
+		super();
+		this.id = id;
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 		this.description = description;
 		this.directions = directions;
 		this.ingredients = ingredients;
+		this.creator = creator;
+		this.created = created;
 	}
 
 	public int getCreatorId() {
@@ -75,6 +117,28 @@ public class Recipe {
 	public void setCreated(Time created) {
 		this.created = created;
 	}
+
+	
+	
+	public Time getCreated() {
+		return created;
+	}
+
+
+	public void setCreated(Time created) {
+		this.created = created;
+	}
+
+
+	public User getCreator() {
+		return creator;
+	}
+
+
+	public void setCreator(User creator) {
+		this.creator = creator;
+	}
+
 
 	public String getDirections() {
 		return directions;
@@ -102,8 +166,16 @@ public class Recipe {
 
 	@Override
 	public String toString() {
+<<<<<<< HEAD
 		return "Recipe [id=" + id + ", created=" + created + ", creatorId=" + creatorId + ", description=" + description
 				+ ", directions=" + directions + ", ingredients=" + ingredients + "]";
 	}
+=======
+		return "Recipe [id=" + id + ", created=" + created + ", creator=" + creator + ", description=" + description
+				+ ", directions=" + directions + ", ingredients=" + ingredients + "]";
+	}
+
+
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 
 }

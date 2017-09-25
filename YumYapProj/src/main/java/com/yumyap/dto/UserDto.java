@@ -3,17 +3,21 @@ package com.yumyap.dto;
 import java.util.List;
 import java.util.Set;
 
+<<<<<<< HEAD
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+=======
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 
 public class UserDto {
 
+<<<<<<< HEAD
 	private int id;
 	private Set<User> following;
 	private String firstname;
@@ -42,6 +46,25 @@ public class UserDto {
 		this.favoriteRecipes = favoriteRecipes;
 		this.loggedIn = loggedIn;
 	}
+=======
+private int id;
+	
+	private Set<User> following;
+	
+	private String firstname;
+	
+	private String lastname;
+	
+	private String password;
+	
+	private String email;
+	
+	private int active;
+	
+	private List<Recipe> favoriteRecipes;
+	
+	private int loggedIn;
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 
 	public int getId() {
 		return id;
@@ -83,12 +106,21 @@ public class UserDto {
 		this.password = password;
 	}
 
+<<<<<<< HEAD
 	public String getUsername() {
 		return Username;
 	}
 
 	public void setUsername(String Username) {
 		this.Username = Username;
+=======
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 	}
 
 	public int getActive() {
@@ -107,6 +139,7 @@ public class UserDto {
 		this.favoriteRecipes = favoriteRecipes;
 	}
 
+<<<<<<< HEAD
 	public boolean isLoggedIn() {
 		return loggedIn;
 	}
@@ -122,4 +155,16 @@ public class UserDto {
 				+ favoriteRecipes + ", loggedIn=" + loggedIn + "]";
 	}
 
+=======
+	public int getLoggedIn() {
+		return loggedIn;
+	}
+
+	public void setLoggedIn(int loggedIn) {
+		this.loggedIn = loggedIn;
+	}
+	
+	
+	
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 }
