@@ -27,7 +27,11 @@ app.controller('searchCtrl', function ($scope, $http) {
 
                         let nutrients = foodReport.children.item(0).children;
                         let m = nutrients.item(0).children.item(0).children;
+<<<<<<< HEAD
                         for (var i = 0; i < m.length; i++) {
+=======
+                        for (let i = 0; i < m.length; i++) {
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
                             let label = m.item(i).getAttribute('label');
                             $scope.measures.push(label);
                             $scope.nutrientsByMeasure[label] = {};
@@ -35,14 +39,22 @@ app.controller('searchCtrl', function ($scope, $http) {
 
                         log('measures= ' + $scope.measures);
 
+<<<<<<< HEAD
                         for (var i = 0; i < nutrients.length; i++) {
+=======
+                        for (let i = 0; i < nutrients.length; i++) {
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
                             let nutrient = nutrients.item(i);
                             let measures = nutrient.children.item(0).children;
 
                             let id = nutrient.getAttribute('nutrient_id');
                             if (TRACKED_NUTRIENTS.indexOf(id) !== -1) {
 
+<<<<<<< HEAD
                                 for (var i = 0; i < measures.length; i++) {
+=======
+                                for (let i = 0; i < measures.length; i++) {
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
                                     let label = measures.item(i).getAttribute('label');
                                     let value = measures.item(i).getAttribute('value');
                                     $scope.nutrientsByMeasure[label][id] = value;
@@ -90,7 +102,11 @@ app.controller('searchCtrl', function ($scope, $http) {
                         $scope.foodItems = [];
 
                         // Go through each food item in result
+<<<<<<< HEAD
                         for (var i = 0; i < searchResults.length; i++) {
+=======
+                        for (let i = 0; i < searchResults.length; i++) {
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 
                             let group = searchResults.item(i).getElementsByTagName('group')[0].innerHTML;
                             // Skip food if in excluded food group

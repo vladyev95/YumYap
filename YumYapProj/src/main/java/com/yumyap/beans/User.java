@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.yumyap.dto.UserDto;
+
 @Entity
 @Table(name = "USERS")
 public class User {
@@ -40,6 +42,9 @@ public class User {
 	@Column(name = "EMAIL", nullable = false, unique = true)
 	private String email;
 
+	@Column(name = "USERNAME", nullable = false, unique = true)
+	private String username;
+
 	@Column(name = "Active", columnDefinition = "1")
 	private int active;
 
@@ -49,19 +54,50 @@ public class User {
 	private List<Recipe> favoriteRecipes;
 
 	public User() {
+		super();
 	}
 
-	public User(int id, Set<User> following, String firstname, String lastname, String password, String username,
-			List<Recipe> favoriteRecipes) {
-
+	public User(int id, Set<User> following, String firstname, String lastname, String password, String email,
+			String username, int active, List<Recipe> favoriteRecipes) {
 		super();
 		this.id = id;
 		this.following = following;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.password = password;
-		this.email = username;
+		this.email = email;
+		this.username = username;
+		this.active = active;
 		this.favoriteRecipes = favoriteRecipes;
+	}
+
+	public User(UserDto userDto) {
+		super();
+		this.id = userDto.getId();
+		this.following = userDto.getFollowing();
+		this.firstname = userDto.getFirstname();
+		this.lastname = userDto.getLastname();
+		this.password = userDto.getPassword();
+		this.email = userDto.getEmail();
+		this.username = userDto.getUsername();
+		this.active = userDto.getActive();
+		this.favoriteRecipes = userDto.getFavoriteRecipes();
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Set<User> getFollowing() {
+		return following;
+	}
+
+	public void setFollowing(Set<User> following) {
+		this.following = following;
 	}
 
 	public String getFirstname() {
@@ -88,36 +124,20 @@ public class User {
 		this.password = password;
 	}
 
-	public String getUsername() {
-		return email;
-	}
-
-	public void setUsername(String username) {
-		this.email = username;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Set<User> getFollowing() {
-		return following;
-	}
-
-	public void setFollowing(Set<User> following) {
-		this.following = following;
-	}
-
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public int getActive() {
@@ -139,8 +159,8 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", following=" + following + ", firstname=" + firstname + ", lastname=" + lastname
-				+ ", password=" + password + ", email=" + email + ", active=" + active + ", favoriteRecipes="
-				+ favoriteRecipes + "]";
+				+ ", password=" + password + ", email=" + email + ", username=" + username + ", active=" + active
+				+ ", favoriteRecipes=" + favoriteRecipes + "]";
 	}
 
 }

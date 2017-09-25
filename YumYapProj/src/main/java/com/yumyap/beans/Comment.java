@@ -38,11 +38,29 @@ public class Comment {
 	public Comment() {
 	}
 
-	public Comment(Recipe recipe, User user, Date date, String comment) {
+	public Comment(int id, Recipe recipeDto, User user, Date date, String comment) {
 		super();
+		this.id = id;
+		this.recipeDto = recipeDto;
 		this.user = user;
 		this.date = date;
 		this.comment = comment;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Recipe getRecipeDto() {
+		return recipeDto;
+	}
+
+	public void setRecipeDto(Recipe recipeDto) {
+		this.recipeDto = recipeDto;
 	}
 
 	public User getUser() {
@@ -67,6 +85,12 @@ public class Comment {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	@Override
+	public String toString() {
+		return "Comment [id=" + id + ", recipeDto=" + recipeDto + ", user=" + user + ", date=" + date + ", comment="
+				+ comment + "]";
 	}
 
 }

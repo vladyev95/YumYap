@@ -10,12 +10,21 @@
         <div ng-controller="AppController as app">
             <div ng-controller="LoginController as login" ng-hide="app.loggedIn">
                 <ul class="nav nav-pills">
+<<<<<<< HEAD
                     <li><a ng-click="login.onLogin=true" ng-class="{active: login.onLogin}">Login</a></li>
                     <li><a ng-click="login.onLogin=false" ng-class="{active: !login.onLogin}">Register</a></li>
                 </ul>
                 
                 <div id="loginContent" class="form-group" ng-show="login.onLogin">
                   <input type="text" placeholder="Email" id="loginEmail" class="form-control">
+=======
+                    <li><a href ng-click="login.onLogin=true" ng-class="{active: login.onLogin}">Login</a></li>
+                    <li><a href ng-click="login.onLogin=false" ng-class="{active: !login.onLogin}">Register</a></li>
+                </ul>
+                
+                <div id="loginContent" class="form-group" ng-show="login.onLogin">
+                  <input type="text" placeholder="Email" id="loginEmail"/ class="form-control">
+>>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
                   <input type="password" placeholder="Password" id="loginEmail" class="form-control"/>
                   <button id="loginBtn" class="btn btn-primary btn-large" class="form-control" ng-click="app.loggedIn = true">Login</button>
                 </div>

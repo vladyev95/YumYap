@@ -16,7 +16,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-
 @Table(name = "RECIPE")
 public class Recipe {
 
@@ -40,7 +39,6 @@ public class Recipe {
 	private Set<FoodItem> ingredients;
 
 	public Recipe() {
-		super();
 	}
 
 	public Recipe(int id, Time created, int creatorId, String description, String directions,

@@ -23,5 +23,4 @@ public class RecipesDto {
 	public void setRecipes(List<Recipe> recipeDtos) {
 		this.recipes = recipeDtos;
 	}
-
 }
