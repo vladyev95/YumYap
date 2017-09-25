@@ -5,21 +5,21 @@ import java.util.List;
 
 public class RecipesDto {
 
-private List<Recipe> recipes;
+private List<RecipeDto> recipes;
 	
 	
 	public RecipesDto() {}
 	
-	public RecipesDto(List<Recipe> recipeDtos) {
+	public RecipesDto(List<RecipeDto> recipeDtos) {
 		super();
 		this.recipes = recipeDtos;
 	}
 
-	public List<Recipe> getRecipes() {
+	public List<RecipeDto> getRecipes() {
 		return recipes;
 	}
 
-	public void setRecipes(List<Recipe> recipeDtos) {
+	public void setRecipes(List<RecipeDto> recipeDtos) {
 		this.recipes = recipeDtos;
 	}
 	

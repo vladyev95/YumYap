@@ -18,7 +18,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.yumyap.dto.UserDto;
 
 
 @Entity
@@ -65,16 +64,7 @@ public class User {
 	public User() {
 	}
 	
-	public User(UserDto user) {
-		this.active = user.getActive();
-		this.email = user.getEmail();
-		this.favoriteRecipes = user.getFavoriteRecipes();
-		this.firstname = user.getFirstname();
-		this.lastname = user.getLastname();
-		this.id = user.getId();
-		this.password = user.getPassword();
-				
-	}
+
 	public User(int id, Set<User> following, String firstname, String lastname, String password, String username, List<Recipe> favoriteRecipes) {
 		super();
 		this.id = id;

@@ -1,10 +1,11 @@
 <div id="loginRegisterContent">
     <nav id="loginRegisterNav" class="navbar navbar-light bg-faded col-3">
-        <a href="#login" class="nav-item nav-link" ng-click="onLogin = true">Login</a>
-        <a href="#register" class="nav-item nav-link" ng-click="onLogin = false">Register</a>
+        <a class="nav-item nav-link" ng-click="onLogin = true">Login</a>
+        <a class="nav-item nav-link" ng-click="onLogin = false">Register</a>
     </nav>
     
     <div id="loginContent" class="form-group col-3" ng-show="onLogin">
+    <form name = "loginform" ng-submit = "cntrl.doLogin">
         <input type="text" placeholder="Email" id="loginEmail" class="form-control"/>
         
         <div class="errorMsg"></div>
@@ -13,10 +14,12 @@
         
         <div class="errorMsg"></div>
         
-        <button id="loginBtn" class="btn btn-primary btn-large form-control">Login</button>
+        <button type= "submit"  id="loginBtn" class="btn btn-primary btn-large form-control">Login</button>
+    </form>
     </div>
     
     <div id="registerContent" class="form-group col-3" ng-hide="onLogin">
+     <!--   <form name = "registerform" ng-submit = "cntrl.doRegister"> -->
         <input type="text" placeholder="First Name" id="registerFirstName" class="form-control"/>
         
         <input type="text" placeholder="Last Name" id="registerLastName" class="form-control"/>
@@ -27,7 +30,8 @@
         
         <input type="password" placeholder="Re-enter password" id="registerRetypePassword" class="form-control"/>
         
-        <button id="registerBtn" class="btn btn-primary btn-large">Register</button>
+        <button id="registerBtn" ng-click = "logreg.doRegister" class="btn btn-primary btn-large">Register</button>
+ 
     </div>
 
    

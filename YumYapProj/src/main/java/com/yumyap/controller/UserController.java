@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,7 +15,7 @@ import com.yumyap.dto.RecipesDto;
 import com.yumyap.dto.UserDto;
 import com.yumyap.service.UserService;
 
-@RestController
+@Controller
 @RequestMapping(value="/user")
 public class UserController {
 
@@ -41,6 +42,17 @@ public class UserController {
 		
 		return new ResponseEntity<ProfileDto>(
 				userService.getProfile(userDto), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/controller", 
+			method = {RequestMethod.GET},
+			consumes = {MediaType.APPLICATION_JSON_VALUE},
+			produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<UserDto> register(@RequestBody UserDto userDto){
+		System.out.println("Registering User");
+		
+		return new ResponseEntity<UserDto>(
+				userService.createUser(userDto), HttpStatus.OK);
 	}
 	
 
