@@ -3,44 +3,33 @@ package com.yumyap.dto;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 
 public class UserDto {
 
 	private int id;
+
 	private Set<User> following;
+
 	private String firstname;
+
 	private String lastname;
+
+	private String username;
+
 	private String password;
-	private String Username;
+
+	private String email;
+
 	private int active;
+
 	private List<Recipe> favoriteRecipes;
 
-	private boolean loggedIn;
+	private int loggedIn;
 
 	public UserDto() {
 		super();
-	}
-
-	public UserDto(int id, Set<User> following, String firstname, String lastname, String password, String Username,
-			int active, List<Recipe> favoriteRecipes, boolean loggedIn) {
-		super();
-		this.id = id;
-		this.following = following;
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.password = password;
-		this.Username = Username;
-		this.active = active;
-		this.favoriteRecipes = favoriteRecipes;
-		this.loggedIn = loggedIn;
 	}
 
 	public int getId() {
@@ -83,12 +72,12 @@ public class UserDto {
 		this.password = password;
 	}
 
-	public String getUsername() {
-		return Username;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUsername(String Username) {
-		this.Username = Username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public int getActive() {
@@ -107,19 +96,27 @@ public class UserDto {
 		this.favoriteRecipes = favoriteRecipes;
 	}
 
-	public boolean isLoggedIn() {
+	public int getLoggedIn() {
 		return loggedIn;
 	}
 
-	public void setLoggedIn(boolean loggedIn) {
+	public void setLoggedIn(int loggedIn) {
 		this.loggedIn = loggedIn;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	@Override
 	public String toString() {
 		return "UserDto [id=" + id + ", following=" + following + ", firstname=" + firstname + ", lastname=" + lastname
-				+ ", password=" + password + ", Username=" + Username + ", active=" + active + ", favoriteRecipes="
-				+ favoriteRecipes + ", loggedIn=" + loggedIn + "]";
+				+ ", username=" + username + ", password=" + password + ", email=" + email + ", active=" + active
+				+ ", favoriteRecipes=" + favoriteRecipes + ", loggedIn=" + loggedIn + "]";
 	}
 
 }

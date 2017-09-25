@@ -20,15 +20,15 @@ import com.yumyap.dto.RecipesDto;
 import com.yumyap.dto.UserDto;
 
 @Service
-public class Services implements ServiceInterface {
+public class UserService implements ServiceInterface {
 
 	@Autowired
 	private Dao DaoImpl;
 
-	public Services() {
+	public UserService() {
 	}
 
-	public Services(Dao DaoImpl) {
+	public UserService(Dao DaoImpl) {
 		super();
 		this.DaoImpl = DaoImpl;
 	}
@@ -152,7 +152,7 @@ public class Services implements ServiceInterface {
 
 		if (user != null && (user.getPassword().equals(userDto.getPassword()))) {
 			System.out.println("setting userdto to true");
-			userDto.setLoggedIn(true);
+			userDto.setLoggedIn(1);
 		} else {
 			return null;
 		}
@@ -162,12 +162,12 @@ public class Services implements ServiceInterface {
 
 	@Override
 	public UserDto logoutUser(UserDto userDto) {
-		if (!userDto.isLoggedIn()) {
+		if (userDto.getLoggedIn() != 0) {
 			System.out.println("No user is currently logged in");
 			return userDto;
 		}
 		System.out.println("Logging out user: " + userDto.getUsername());
-		userDto.setLoggedIn(false);
+		userDto.setLoggedIn(0);
 		return userDto;
 	}
 
