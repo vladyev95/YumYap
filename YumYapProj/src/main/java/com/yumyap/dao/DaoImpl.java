@@ -8,6 +8,10 @@ import javax.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+<<<<<<< HEAD
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> Service2
 import org.springframework.stereotype.Repository;
 
 import com.yumyap.beans.Comment;
@@ -18,7 +22,12 @@ import com.yumyap.beans.User;
 @Repository
 @Transactional
 public class DaoImpl implements Dao {
+<<<<<<< HEAD
 
+=======
+	
+	@Autowired
+>>>>>>> Service2
 	private SessionFactory sessionFactory;
 
 	public void setSessionFactory(SessionFactory sessionFactory) {

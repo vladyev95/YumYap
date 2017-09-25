@@ -25,4 +25,8 @@ public class ProfileDto {
 	
 	
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> Service2

@@ -2,25 +2,15 @@ package com.yumyap.service;
 
 import java.util.List;
 
-<<<<<<< HEAD
-import com.yumyap.beans.Comment;
-import com.yumyap.beans.Food;
-import com.yumyap.beans.FoodItem;
-import com.yumyap.beans.User;
-=======
 import com.yumyap.beans.*;
->>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 import com.yumyap.dto.RecipesDto;
 import com.yumyap.dto.UserDto;
 
 public interface ServiceInterface {
 
 	// CREATE
-<<<<<<< HEAD
 	public UserDto createUser(UserDto userDto);
-=======
 	public User createUser(String email, String password, String firstname, String lastname);
->>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 	// food is added to the database
 	public boolean addFood(Food food);
 	// Verify that user != follower
@@ -38,11 +28,7 @@ public interface ServiceInterface {
 	// calories, carbohydrates, protein, fat
 	public String getMacronutrients(RecipesDto recipeDto);
 	public String getMacronutrients(FoodItem foodItem);
-<<<<<<< HEAD
 	// Gets user's dashboard
-=======
-	//Gets user's dashboard
->>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 	public String getDashboard(User user);
 
 	

@@ -9,21 +9,35 @@ import com.yumyap.beans.User;
 public class UserDto {
 
 	private int id;
+
 	private Set<User> following;
+
 	private String firstname;
+
 	private String lastname;
+
+	private String username;
+
 	private String password;
+<<<<<<< HEAD
 	private String Username;
 	private String email;
+=======
+
+	private String email;
+
+>>>>>>> Service2
 	private int active;
+
 	private List<Recipe> favoriteRecipes;
 
-	private boolean loggedIn;
+	private int loggedIn;
 
 	public UserDto() {
 		super();
 	}
 
+<<<<<<< HEAD
 	public UserDto(User user, boolean loggedIn) {
 		super();
 		this.id = user.getId();
@@ -38,6 +52,8 @@ public class UserDto {
 		this.loggedIn = loggedIn;
 	}
 
+=======
+>>>>>>> Service2
 	public int getId() {
 		return id;
 	}
@@ -78,10 +94,11 @@ public class UserDto {
 		this.password = password;
 	}
 
-	public String getUsername() {
-		return Username;
+	public String getEmail() {
+		return email;
 	}
 
+<<<<<<< HEAD
 	public void setUsername(String username) {
 		Username = username;
 	}
@@ -90,6 +107,8 @@ public class UserDto {
 		return email;
 	}
 
+=======
+>>>>>>> Service2
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -110,18 +129,30 @@ public class UserDto {
 		this.favoriteRecipes = favoriteRecipes;
 	}
 
-	public boolean isLoggedIn() {
+	public int getLoggedIn() {
 		return loggedIn;
 	}
 
-	public void setLoggedIn(boolean loggedIn) {
+	public void setLoggedIn(int loggedIn) {
 		this.loggedIn = loggedIn;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	@Override
 	public String toString() {
 		return "UserDto [id=" + id + ", following=" + following + ", firstname=" + firstname + ", lastname=" + lastname
+<<<<<<< HEAD
 				+ ", password=" + password + ", Username=" + Username + ", email=" + email + ", active=" + active
+=======
+				+ ", username=" + username + ", password=" + password + ", email=" + email + ", active=" + active
+>>>>>>> Service2
 				+ ", favoriteRecipes=" + favoriteRecipes + ", loggedIn=" + loggedIn + "]";
 	}
 

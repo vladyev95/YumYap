@@ -28,7 +28,15 @@ public class FoodItem {
 		super();
 		this.id = id;
 		this.food = food;
+		this.measure = measure;
 		this.amount = amount;
+	}
+
+	public String getMeasure() {
+		return measure;
+	}
+
+	public void setMeasure(String measure) {
 		this.measure = measure;
 	}
 
@@ -58,7 +66,7 @@ public class FoodItem {
 
 	@Override
 	public String toString() {
-		return "FoodItem [id=" + id + ", food=" + food + ", amount=" + amount + "]";
+		return "FoodItem [id=" + id + ", food=" + food + ", measure=" + measure + ", amount=" + amount + "]";
 	}
 
 }

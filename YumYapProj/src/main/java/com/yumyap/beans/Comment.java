@@ -26,12 +26,7 @@ public class Comment {
 	private Recipe recipeDto;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-<<<<<<< HEAD
-=======
-	private Recipe recipeDto;
-	
-	@ManyToOne(fetch=FetchType.EAGER)
->>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
+
 	private User user;
 
 	@Column(name = "DATE", nullable = false)
@@ -42,10 +37,7 @@ public class Comment {
 
 	public Comment() {
 	}
-<<<<<<< HEAD
 
-=======
->>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 	public Comment(Recipe recipe, User user, Date date, String comment) {
 		super();
 		this.user = user;

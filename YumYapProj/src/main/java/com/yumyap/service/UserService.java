@@ -16,7 +16,6 @@ import com.yumyap.beans.FoodItem;
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 import com.yumyap.dao.Dao;
-import com.yumyap.dto.ProfileDto;
 import com.yumyap.dto.RecipesDto;
 import com.yumyap.dto.UserDto;
 
@@ -46,25 +45,15 @@ public class UserService implements ServiceInterface {
 		while (r.hasNext()) {
 			recs.add(r.next());
 		}
-		
-		DaoImpl.setRecipes(recs);
+		RecipesDto recDto = new RecipesDto();
+		recDto.setRecipes(recs);
 		return null;
 	}
 
-	public ProfileDto getProfile(UserDto userDto) {
-		ProfileDto profile = new ProfileDto();
-		profile.setRecipes(userDto.getFavoriteRecipes());
-		User u = new User();
-		u.setFirstname(userDto.getFirstname());
-		u.setLastname(userDto.getLastname());
-		profile.setUser(u);
-		return null;
-	}
-
-	@Override
-	public User createUser(String email, String password, String firstname, String lastname) {
-		// TODO Auto-generated method stub
-		return null;
+	public RecipesDto getProfile(UserDto userDto) {
+		RecipesDto recipes = new RecipesDto();
+		recipes.setRecipes(userDto.getFavoriteRecipes());
+		return recipes;
 	}
 
 	@Override
@@ -121,11 +110,6 @@ public class UserService implements ServiceInterface {
 		return false;
 	}
 
-	public boolean validateUser(String username, String password) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 	@Override
 	public boolean isEmailValid(String email) {
 		// TODO Auto-generated method stub
@@ -152,20 +136,39 @@ public class UserService implements ServiceInterface {
 
 	@Override
 	public UserDto createUser(UserDto userDto) {
-		// TODO Auto-generated method stub
-		return null;
+		// FIXME need username validation
+		// FIXME add the rest of the necessary fields
+		User user = new User();
+		user.setUsername(userDto.getUsername());
+		user.setPassword(userDto.getPassword());
+		user = DaoImpl.addUser(user);
+		userDto.setId(user.getId());
+		return userDto;
 	}
 
 	@Override
 	public UserDto validateUser(UserDto userDto) {
-		// TODO Auto-generated method stub
-		return null;
+		User user = DaoImpl.getUser(userDto.getUsername());
+
+		if (user != null && (user.getPassword().equals(userDto.getPassword()))) {
+			System.out.println("setting userdto to true");
+			userDto.setLoggedIn(1);
+		} else {
+			return null;
+		}
+		System.out.println("---------------------returning user dto" + userDto.toString());
+		return userDto;
 	}
 
 	@Override
 	public UserDto logoutUser(UserDto userDto) {
-		// TODO Auto-generated method stub
-		return null;
+		if (userDto.getLoggedIn() != 0) {
+			System.out.println("No user is currently logged in");
+			return userDto;
+		}
+		System.out.println("Logging out user: " + userDto.getUsername());
+		userDto.setLoggedIn(0);
+		return userDto;
 	}
 
 }

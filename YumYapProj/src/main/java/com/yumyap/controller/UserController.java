@@ -23,6 +23,31 @@ public class UserController {
 
 	public void setUserServiceImpl(UserService userService) {
 		this.userService = userService;
+	
+	public void setUserServiceImpl(UserService userService) {
+		this.userService = userService;
+	}
+	
+	@RequestMapping(value="/dash", 
+			method = {RequestMethod.GET},
+			consumes = {MediaType.APPLICATION_JSON_VALUE},
+			produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<RecipesDto> loadDashboard(@RequestBody UserDto userDto){
+		System.out.println("Loading Dashboard");
+		
+		return new ResponseEntity<RecipesDto>(
+				userService.getDashboard(userDto, 0), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/profile", 
+			method = {RequestMethod.GET},
+			consumes = {MediaType.APPLICATION_JSON_VALUE},
+			produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<ProfileDto> loadProfile(@RequestBody UserDto userDto){
+		System.out.println("Loading Profile");
+		
+		return new ResponseEntity<ProfileDto>(
+				userService.getProfile(userDto), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/login", method = { RequestMethod.POST }, consumes = {

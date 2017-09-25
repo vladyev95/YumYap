@@ -27,7 +27,7 @@ app.controller('searchCtrl', function ($scope, $http) {
 
                         let nutrients = foodReport.children.item(0).children;
                         let m = nutrients.item(0).children.item(0).children;
-                        for (let i = 0; i < m.length; i++) {
+                        for (var i = 0; i < m.length; i++) {
                             let label = m.item(i).getAttribute('label');
                             $scope.measures.push(label);
                             $scope.nutrientsByMeasure[label] = {};
@@ -35,14 +35,14 @@ app.controller('searchCtrl', function ($scope, $http) {
 
                         log('measures= ' + $scope.measures);
 
-                        for (let i = 0; i < nutrients.length; i++) {
+                        for (var i = 0; i < nutrients.length; i++) {
                             let nutrient = nutrients.item(i);
                             let measures = nutrient.children.item(0).children;
 
                             let id = nutrient.getAttribute('nutrient_id');
                             if (TRACKED_NUTRIENTS.indexOf(id) !== -1) {
 
-                                for (let i = 0; i < measures.length; i++) {
+                                for (var i = 0; i < measures.length; i++) {
                                     let label = measures.item(i).getAttribute('label');
                                     let value = measures.item(i).getAttribute('value');
                                     $scope.nutrientsByMeasure[label][id] = value;
@@ -90,7 +90,7 @@ app.controller('searchCtrl', function ($scope, $http) {
                         $scope.foodItems = [];
 
                         // Go through each food item in result
-                        for (let i = 0; i < searchResults.length; i++) {
+                        for (var i = 0; i < searchResults.length; i++) {
 
                             let group = searchResults.item(i).getElementsByTagName('group')[0].innerHTML;
                             // Skip food if in excluded food group
