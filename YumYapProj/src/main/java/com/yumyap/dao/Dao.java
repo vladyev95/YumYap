@@ -5,7 +5,6 @@ import java.util.List;
 import com.yumyap.beans.Comment;
 import com.yumyap.beans.Food;
 import com.yumyap.beans.FoodItem;
-import com.yumyap.beans.Log;
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 

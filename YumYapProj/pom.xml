@@ -1,12 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.YumYap</groupId>
-  <artifactId>YumYap</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
-  
-  
-  <dependencyManagement>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.YumYap</groupId>
+	<artifactId>YumYap</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<properties>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+	</properties>
+
+
+	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>io.spring.platform</groupId>
@@ -67,22 +73,22 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 		</dependency>
-		
+
 		<dependency>
-            <groupId>com.github.noraui</groupId>
-            <artifactId>ojdbc7</artifactId>
-            <version>12.1.0.2</version>
-        </dependency>
-        
-        <dependency>
-        <groupId>javax.el</groupId>
-        <artifactId>javax.el-api</artifactId>
-        <version>3.0.0</version>
-        <scope>runtime</scope>
-    </dependency>
-        
+			<groupId>com.github.noraui</groupId>
+			<artifactId>ojdbc7</artifactId>
+			<version>12.1.0.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>javax.el-api</artifactId>
+			<version>3.0.0</version>
+			<scope>runtime</scope>
+		</dependency>
+
 	</dependencies>
-  
-  
-  
+
+
+
 </project>
