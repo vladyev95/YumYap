@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<!--  <h1>TEST IMAGE</h1>
+	<div id="here">
+	</div>-->
+	
+	<input type="text" id="description"/>
+	<form enctype="multipart/form-data" action="/upload/image" method="post">
+	<input id="file" name="file" type = "file" class="form-control">
+	</form>
+	<input type="submit" id="addPic" class="btn btn-primary" value="upload"/>
+	
+	<table id="imgList">
+		<tr>
+			<th>CAKE:</th>
+			<th>description</th>
+		</tr>
+	</table>
+	<script src="js/testImg.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Image to S3 Test</title>
+</head>
+
+<body>
+    <input type="file" id="imageFile" />
+    <button type="submit" id="uploadButton">Upload</button>
+
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.12.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            'use strict';
+            $('#uploadButton').on('click', uploadToS3);
+        });
+
+        function uploadToS3() {
+            'use strict';
+            let image = document.getElementById('imageFile').files[0];
+            if (image) {
+
+                let s3 = new AWS.S3();
+                AWS.config.update({
+                    // TODO: insert credentials here
+                    accessKeyId: "AKIAJJ652PYUGFZSJG2A",
+                    secretAccessKey: "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",
+                    region: "us-east-1"
+                });
+                let params = {
+                    Body: image,
+                    Bucket: 'yumyapimg',
+                    Key: image.name + '--' + new Date().getTime()
+                };
+
+                s3.putObject(params, function (err, data) {
+                    console.log(err, data);
+                })
+            }
+        };
+    </script>
+    <!--<table id="imgList">
+		<tr>
+			<th>CAKE:</th>
+			<th>description</th>
+		</tr>
+	</table>
+	<script src="js/testImg.js"></script>-->
+</body>
+
+</html>
