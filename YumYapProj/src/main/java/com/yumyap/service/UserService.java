@@ -10,41 +10,44 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.yumyap.beans.*;
+import com.yumyap.beans.Comment;
+import com.yumyap.beans.Food;
+import com.yumyap.beans.FoodItem;
+import com.yumyap.beans.Recipe;
+import com.yumyap.beans.User;
 import com.yumyap.dao.Dao;
 import com.yumyap.dto.ProfileDto;
 import com.yumyap.dto.RecipesDto;
 import com.yumyap.dto.UserDto;
 
-
 @Service
-public class UserService implements ServiceInterface{
-	
+public class UserService implements ServiceInterface {
+
 	@Autowired
 	private Dao DaoImpl;
-	
-	public UserService() {}
-	
-	public UserService(Dao DaoImpl) {
-		super();
-		DaoImpl = DaoImpl;
+
+	public UserService() {
 	}
 
+	public UserService(Dao DaoImpl) {
+		super();
+		this.DaoImpl = DaoImpl;
+	}
 
 	public RecipesDto getDashboard(UserDto user, int page) {
 		Set<User> following = user.getFollowing();
-		Comparator<Recipe> byCreation = (Recipe o1, Recipe o2)->o1.getCreated().compareTo(o2.getCreated());
+		Comparator<Recipe> byCreation = (Recipe o1, Recipe o2) -> o1.getCreated().compareTo(o2.getCreated());
 		Set<Recipe> recipes = new ConcurrentSkipListSet<>(byCreation);
-		for(User u: following) {
+		for (User u : following) {
 			recipes.addAll(u.getFavoriteRecipes());
 		}
 		List<Recipe> recs = new ArrayList<Recipe>();
 		Iterator<Recipe> r = recipes.iterator();
-		while(r.hasNext()) {
+		while (r.hasNext()) {
 			recs.add(r.next());
 		}
-		RecipesDto recDto = new RecipesDto();
-		recDto.setRecipes(recs);
+		
+		DaoImpl.setRecipes(recs);
 		return null;
 	}
 
@@ -88,7 +91,6 @@ public class UserService implements ServiceInterface{
 		return false;
 	}
 
-
 	@Override
 	public List<User> getFollowing(User user) {
 		// TODO Auto-generated method stub
@@ -113,14 +115,12 @@ public class UserService implements ServiceInterface{
 		return null;
 	}
 
-
 	@Override
 	public boolean deactivateUser(int userId) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public boolean validateUser(String username, String password) {
 		// TODO Auto-generated method stub
 		return false;
@@ -146,8 +146,26 @@ public class UserService implements ServiceInterface{
 
 	@Override
 	public boolean favoriteRecipe(RecipesDto recipe, UserDto user) {
-		
+
 		return false;
+	}
+
+	@Override
+	public UserDto createUser(UserDto userDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserDto validateUser(UserDto userDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserDto logoutUser(UserDto userDto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

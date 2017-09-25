@@ -3,27 +3,18 @@ package com.yumyap.dto;
 import java.util.List;
 import java.util.Set;
 
-<<<<<<< HEAD
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-
-=======
->>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 
 public class UserDto {
 
-<<<<<<< HEAD
 	private int id;
 	private Set<User> following;
 	private String firstname;
 	private String lastname;
 	private String password;
 	private String Username;
+	private String email;
 	private int active;
 	private List<Recipe> favoriteRecipes;
 
@@ -33,38 +24,19 @@ public class UserDto {
 		super();
 	}
 
-	public UserDto(int id, Set<User> following, String firstname, String lastname, String password, String Username,
-			int active, List<Recipe> favoriteRecipes, boolean loggedIn) {
+	public UserDto(User user, boolean loggedIn) {
 		super();
-		this.id = id;
-		this.following = following;
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.password = password;
-		this.Username = Username;
-		this.active = active;
-		this.favoriteRecipes = favoriteRecipes;
+		this.id = user.getId();
+		this.following = user.getFollowing();
+		this.firstname = user.getFirstname();
+		this.lastname = user.getLastname();
+		this.password = user.getPassword();
+		this.Username = user.getUsername();
+		this.email = user.getEmail();
+		this.active = user.getActive();
+		this.favoriteRecipes = user.getFavoriteRecipes();
 		this.loggedIn = loggedIn;
 	}
-=======
-private int id;
-	
-	private Set<User> following;
-	
-	private String firstname;
-	
-	private String lastname;
-	
-	private String password;
-	
-	private String email;
-	
-	private int active;
-	
-	private List<Recipe> favoriteRecipes;
-	
-	private int loggedIn;
->>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 
 	public int getId() {
 		return id;
@@ -106,21 +78,20 @@ private int id;
 		this.password = password;
 	}
 
-<<<<<<< HEAD
 	public String getUsername() {
 		return Username;
 	}
 
-	public void setUsername(String Username) {
-		this.Username = Username;
-=======
+	public void setUsername(String username) {
+		Username = username;
+	}
+
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
->>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 	}
 
 	public int getActive() {
@@ -139,7 +110,6 @@ private int id;
 		this.favoriteRecipes = favoriteRecipes;
 	}
 
-<<<<<<< HEAD
 	public boolean isLoggedIn() {
 		return loggedIn;
 	}
@@ -151,20 +121,8 @@ private int id;
 	@Override
 	public String toString() {
 		return "UserDto [id=" + id + ", following=" + following + ", firstname=" + firstname + ", lastname=" + lastname
-				+ ", password=" + password + ", Username=" + Username + ", active=" + active + ", favoriteRecipes="
-				+ favoriteRecipes + ", loggedIn=" + loggedIn + "]";
+				+ ", password=" + password + ", Username=" + Username + ", email=" + email + ", active=" + active
+				+ ", favoriteRecipes=" + favoriteRecipes + ", loggedIn=" + loggedIn + "]";
 	}
 
-=======
-	public int getLoggedIn() {
-		return loggedIn;
-	}
-
-	public void setLoggedIn(int loggedIn) {
-		this.loggedIn = loggedIn;
-	}
-	
-	
-	
->>>>>>> 5702d83360f792691cdcc0192db685d0fad17172
 }
