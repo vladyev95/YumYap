@@ -1,5 +1,6 @@
 package com.yumyap.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -16,7 +17,9 @@ import com.yumyap.beans.FoodItem;
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 import com.yumyap.dao.Dao;
+import com.yumyap.dao.DaoImpl;
 import com.yumyap.dto.ProfileDto;
+import com.yumyap.dto.RecipeDto;
 import com.yumyap.dto.RecipesDto;
 import com.yumyap.dto.UserDto;
 
@@ -41,122 +44,50 @@ public class UserService implements ServiceInterface {
 		for (User u : following) {
 			recipes.addAll(u.getFavoriteRecipes());
 		}
-		List<Recipe> recs = new ArrayList<Recipe>();
+		List<RecipeDto> recs = new ArrayList<RecipeDto>();
 		Iterator<Recipe> r = recipes.iterator();
-		while (r.hasNext()) {
-			recs.add(r.next());
+		ArrayList<String> desc = new ArrayList<String>();
+		while(r.hasNext()) {
+			recs.add(new RecipeDto(r.next()));
 		}
-		RecipesDto recDto = new RecipesDto();
-		recDto.setRecipes(recs);
-		return null;
+		return new RecipesDto(recs);
 	}
 
 	public ProfileDto getProfile(UserDto userDto) {
 		ProfileDto profile = new ProfileDto();
-		profile.setRecipes(userDto.getFavoriteRecipes());
-		User u = new User();
-		u.setFirstname(userDto.getFirstname());
-		u.setLastname(userDto.getLastname());
-		profile.setUser(u);
+		List<Recipe> recs = userDto.getFavoriteRecipes();
+		profile.setRecipes(recs);
+		profile.setUser(new User(userDto));
 		return null;
 	}
-
-	@Override
-	public boolean favoriteRecipe(RecipesDto recipe, UserDto user) {
-
-		return false;
+	
+	public boolean favoriteRecipe(Recipe recipe, UserDto user) {
+		List<Recipe> recipes = user.getFavoriteRecipes();
+		recipes.add(recipe);
+		User u = new User(user);
+		DaoImpl.updateUser(u);
+		return true;
 	}
+	
+//	public ProfileDto getProfile(String email) {
+//		ProfileDto profile = new ProfileDto();
+//		List<Recipe> recs = userDto.getUser().getFavoriteRecipes();
+//		profile.setRecipes(recs);
+//		profile.setUser(userDto.getUser());
+//		return null;
+//	}
 
 	@Override
-	public UserDto createUser(UserDto userDto) {
-		// FIXME need username validation
-		// FIXME add the rest of the necessary fields
-		User user = new User();
-		user.setUsername(userDto.getUsername());
-		user.setPassword(userDto.getPassword());
-		user = DaoImpl.addUser(user);
-		userDto.setId(user.getId());
-		return userDto;
-	}
-
-	@Override
-	public UserDto validateUser(UserDto userDto) {
-		User user = DaoImpl.getUser(userDto.getUsername());
-
-		if (user != null && (user.getPassword().equals(userDto.getPassword()))) {
-			System.out.println("setting userdto to true");
-			userDto.setLoggedIn(true);
-		} else {
-			return null;
-		}
-		System.out.println("---------------------returning user dto" + userDto.toString());
-		return userDto;
-	}
-
-	@Override
-	public UserDto logoutUser(UserDto userDto) {
-		if (!userDto.isLoggedIn()) {
-			System.out.println("No user is currently logged in");
-			return userDto;
-		}
-		System.out.println("Logging out user: " + userDto.getUsername());
-		userDto.setLoggedIn(false);
-		return userDto;
-	}
-
-	@Override
-	public User createUser(String email, String password, String firstname, String lastname) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean addFood(Food food) {
+	public boolean addFollowing(User user, User follower) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	@Override
-	public boolean addFollower(User user, User follower) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public RecipesDto addRecipe(RecipesDto recipeDto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean addComment(RecipesDto recipeDto, Comment comment) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 	@Override
 	public List<User> getFollowing(User user) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public String getMacronutrients(RecipesDto recipeDto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getMacronutrients(FoodItem foodItem) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getDashboard(User user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public boolean deactivateUser(int userId) {
@@ -176,10 +107,42 @@ public class UserService implements ServiceInterface {
 		return false;
 	}
 
-	@Override
-	public boolean isUsernameAvailable(String username) {
-		// TODO Auto-generated method stub
-		return false;
+
+	public UserDto createUser(UserDto userDto) {
+		// FIXME need username validation
+		// FIXME add the rest of the necessary fields
+		User user = new User();
+		user.setEmail(userDto.getEmail());
+		user.setPassword(userDto.getPassword());
+		user = DaoImpl.addUser(user);
+		userDto.setId(user.getId());
+		return userDto;
 	}
+
+	@Override
+	public UserDto validateUser(UserDto userDto) {
+		User user = DaoImpl.getUser(userDto.getEmail());
+
+		if (user != null && (user.getPassword().equals(userDto.getPassword()))) {
+			System.out.println("setting userdto to true");
+			userDto.setLoggedIn(true);
+		} else {
+			return null;
+		}
+		System.out.println("returning user dto" + userDto.toString());
+		return userDto;
+	}
+
+	@Override
+	public UserDto logoutUser(UserDto userDto) {
+		if (!userDto.isLoggedIn()) {
+			System.out.println("No user is currently logged in");
+			return userDto;
+		}
+		System.out.println("Logging out user: " + userDto.getEmail());
+		userDto.setLoggedIn(false);
+		return userDto;
+	}
+
 
 }

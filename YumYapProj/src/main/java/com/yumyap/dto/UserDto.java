@@ -9,6 +9,8 @@ import com.yumyap.beans.User;
 public class UserDto {
 
 	private int id;
+	
+	private List<Recipe> favoriteRecipes;
 
 	private Set<User> following;
 
@@ -21,45 +23,29 @@ public class UserDto {
 	private String password;
 
 	private String email;
+	
 
 	private int active;
-
-	private List<Recipe> favoriteRecipes;
-
+	
 	private boolean loggedIn;
-
-	public UserDto() {
-		super();
-	}
-
-	public UserDto(int id, Set<User> following, String firstname, String lastname, String username, String password,
-			String username2, String email, int active, List<Recipe> favoriteRecipes, boolean loggedIn) {
+	
+	public UserDto(int id, Set<User> following, String firstname, String lastname, String password, String email,
+			int active, boolean loogedIn, List<Recipe> favoriteRecipes) {
 		super();
 		this.id = id;
 		this.following = following;
 		this.firstname = firstname;
 		this.lastname = lastname;
-		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.active = active;
+		this.loggedIn = loogedIn;
 		this.favoriteRecipes = favoriteRecipes;
-		this.loggedIn = loggedIn;
 	}
 
-	public UserDto(User user, boolean loggedIn) {
-		super();
-		this.id = user.getId();
-		this.following = user.getFollowing();
-		this.firstname = user.getFirstname();
-		this.lastname = user.getLastname();
-		this.username = user.getUsername();
-		this.password = user.getPassword();
-		this.email = user.getEmail();
-		this.active = user.getActive();
-		this.favoriteRecipes = user.getFavoriteRecipes();
-		this.loggedIn = loggedIn;
-	}
+	
+
+	public UserDto() {}
 
 	public int getId() {
 		return id;
@@ -124,21 +110,14 @@ public class UserDto {
 	public void setActive(int active) {
 		this.active = active;
 	}
-
-	public List<Recipe> getFavoriteRecipes() {
-		return favoriteRecipes;
-	}
-
-	public void setFavoriteRecipes(List<Recipe> favoriteRecipes) {
-		this.favoriteRecipes = favoriteRecipes;
-	}
+	
 
 	public boolean isLoggedIn() {
 		return loggedIn;
 	}
 
-	public void setLoggedIn(boolean loggedIn) {
-		this.loggedIn = loggedIn;
+	public void setLoggedIn(boolean loogedIn) {
+		this.loggedIn = loogedIn;
 	}
 
 	@Override
@@ -148,4 +127,17 @@ public class UserDto {
 				+ ", favoriteRecipes=" + favoriteRecipes + ", loggedIn=" + loggedIn + "]";
 	}
 
+
+
+	public List<Recipe> getFavoriteRecipes() {
+		return favoriteRecipes;
+	}
+
+
+
+	public void setFavoriteRecipes(List<Recipe> favoriteRecipes) {
+		this.favoriteRecipes = favoriteRecipes;
+	}
+	
+	
 }

@@ -12,8 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.yumyap.dto.RecipeDto;
 
 @Entity
 @Table(name = "RECIPE")
@@ -26,29 +30,66 @@ public class Recipe {
 	private int id;
 
 	private Time created;
-
-	private int creatorId;
-
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private User creator;
+	
+	private String name;
+	
 	private String description;
 
 	private String directions;
-
+	
+	private String image;
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "Recipes_Ingredients", joinColumns = { @JoinColumn(name = "recipe_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "fooditem_id") })
 	private Set<FoodItem> ingredients;
 
-	public Recipe() {
+	public Recipe() {}
+
+	public String getName() {
+		return name;
 	}
 
-	public Recipe(int id, Time created, int creatorId, String description, String directions,
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public Recipe(RecipeDto recipe) {
+		this.id = recipe.getId();
+		this.created = recipe.getCreated();
+		this.creator = recipe.getCreator();
+		this.name = recipe.getName();
+		this.description = recipe.getDescription();
+		this.directions = "";
+		for(String s : recipe.getDirections()) {
+			directions += s;
+		}
+		this.image = recipe.getImage();
+		this.ingredients = recipe.getIngredients();
+	}
+		
+	public Recipe(int id, Time created, User creator, String name, String description, String directions, String image,
 			Set<FoodItem> ingredients) {
 		super();
 		this.id = id;
 		this.created = created;
-		this.creatorId = creatorId;
+		this.creator = creator;
+		this.name = name;
 		this.description = description;
 		this.directions = directions;
+		this.image = image;
 		this.ingredients = ingredients;
 	}
 
@@ -96,14 +137,11 @@ public class Recipe {
 		return ingredients;
 	}
 
-	public void setIngredients(Set<FoodItem> ingredients) {
-		this.ingredients = ingredients;
-	}
-
 	@Override
 	public String toString() {
-		return "Recipe [id=" + id + ", created=" + created + ", creatorId=" + creatorId + ", description=" + description
-				+ ", directions=" + directions + ", ingredients=" + ingredients + "]";
+		return "Recipe [id=" + id + ", created=" + created + ", creator=" + creator + ", name=" + name
+				+ ", description=" + description + ", directions=" + directions + ", image=" + image + ", ingredients="
+				+ ingredients + "]";
 	}
 
 }

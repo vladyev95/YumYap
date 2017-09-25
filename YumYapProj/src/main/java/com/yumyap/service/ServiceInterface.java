@@ -9,7 +9,6 @@ import com.yumyap.dto.UserDto;
 public interface ServiceInterface {
 
 	// CREATE
-
 	public UserDto createUser(UserDto userDto);
 
 	public User createUser(String email, String password, String firstname, String lastname);
@@ -43,17 +42,31 @@ public interface ServiceInterface {
 	// rating is added to recipe's rating
 	public boolean favoriteRecipe(RecipesDto recipe, UserDto user);
 
+=======
+	public UserDto createUser(UserDto userDto);
+	
+	// Verify that user != follower
+	// follower is added to user's list of followers
+	public boolean addFollowing(User user, User follower);
+	
+	// READ
+	// Return a list of user's followers
+	public List<User> getFollowing(User user);
+
+	//Gets user's dashboard
+	public RecipesDto getDashboard(UserDto user, int page);
+	
+	// UPDATE
+	// rating is added to recipe's rating
+	public boolean favoriteRecipe(Recipe recipe, UserDto user);
+>>>>>>> dashboard
 	public boolean deactivateUser(int userId);
 
 	// VALIDATION
 	public UserDto validateUser(UserDto userDto);
-
 	public boolean isEmailValid(String email);
-
 	public boolean isEmailAvailable(String email);
-
-	public boolean isUsernameAvailable(String username);
-
+	public UserDto validateUser(UserDto userDto);
 	public UserDto logoutUser(UserDto userDto);
 
 }
