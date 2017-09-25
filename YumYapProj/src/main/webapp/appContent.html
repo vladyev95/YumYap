@@ -1,4 +1,4 @@
-<div id="appContent">
+<div id="appContent" ng-controller="AppController as app">
     <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
         <button class="navbar-toggler navbar-toggler-right" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -6,7 +6,7 @@
         <a class="navbar-brand" href="#">Navbar</a>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a href class="nav-item nav-link">Home</a>
+                <a href class="nav-item nav-link" ng-click="homeTab()">Home</a>
                 <a href class="nav-item nav-link">TabName1</a>
                 <a href class="nav-item nav-link">TabName2</a>
                 <a href class="nav-item nav-link">Logout</a>
@@ -14,20 +14,61 @@
         </div>
     </nav>
 
-    <div id="homeTab">
-        <div class="recipe-block">
-            <div class="recipe-content"></div>
-            <div class="recipe-content"><img  width="100" height="100"></img></div>
-            <div class="recipe-content"></div>
-            <ul class="recipe-content">
-                <li></li>
-            </ul>
-
-            <ol class="recipe-content">
-                <li></li>
-            </ol>
-
+   <!-- Please set the controller to <whatever> as recipectrl TY
+we will need recipectrl.getMeasure(foodItem.measure) to return the measurement from the API found at the string foodItem.measure
+We will need recipectrl.getFood(foodItem.food) to return the name of the food from the API found at the food Id given by foodItem.food -->
+    <div ng-show="tab === 'Home'" ng-controller="HomeTabController as homeTab">
+        <div class="recipe-block"  ng-repeat="recipe in recipes">
+            <div id="recipe-head" class="recipe-content">
+                <h3 id="recipe-name" ng-bind="recipe.name"></h3>
+                <p id="recipe-description" ng-bind="recipe.description"></p>
+            </div>
+            <div class="recipe-content">
+                <img id="recipe-image" src="recipe.image" width="100" height="100"></img>
+                <div>
+                    Posted by {{recipe.creator.firstname + " " + recipe.creator.lastname}}
+                    <!-- This button should bring you to the user that posted it -->
+                    <button ng-click="viewAuthor(recipe.author.email)">View Author Profile</button>
+                </div>
+            </div>
+            <div class="recipe-content">
+                <ul class="recipe-content" id="recipe-ingredients" ng-repeat="foodItem in recipe.ingredients">
+                    <li>{{foodItem.amount}}<span ng-bind="foodItem.measure"></span> of <span ng-bind="foodItem.food"></span></li>
+                </ul>
+                <ol class="recipe-content" id="recipe-methods"
+                    ng-repeat="direction in recipe.directions">
+                    <li ng-bind="recipe.directions"></li>
+                </ol>
+            </div>
         </div>
+    
     </div>
     
+    
+    <div ng-show="tab === 'ViewAuthor'" ng-controller="ViewAuthorController as viewAuthor">
+        <h1 ng-bind="user.firstName + ' ' + user.lastName"></h1> 
+        <div class="recipe-block"  ng-repeat="recipe in user.recipes">
+            <div id="recipe-head" class="recipe-content">
+                <h3 id="recipe-name" ng-bind="recipe.name"></h3>
+                <p id="recipe-description" ng-bind="recipe.description"></p>
+            </div>
+            <div class="recipe-content">
+                <img id="recipe-image" src="recipe.image" width="100" height="100"></img>
+                <div>
+                    Posted by {{recipe.creator.firstname + " " + recipe.creator.lastname}}
+                    <!-- This button should bring you to the user that posted it -->
+                    <button ng-click="viewAuthor(recipe.author.email)">View Author Profile</button>
+                </div>
+            </div>
+            <div class="recipe-content">
+                <ul class="recipe-content" id="recipe-ingredients" ng-repeat="foodItem in recipe.ingredients">
+                    <li>{{foodItem.amount}}<span ng-bind="foodItem.measure"></span> of <span ng-bind="foodItem.food"></span></li>
+                </ul>
+                <ol class="recipe-content" id="recipe-methods"
+                    ng-repeat="direction in recipe.directions">
+                    <li ng-bind="recipe.directions"></li>
+                </ol>
+            </div>
+        </div>
+    </div>
 </div>

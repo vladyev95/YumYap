@@ -116,8 +116,71 @@ app.controller('RegisterController', function($scope, RegisterService) {
 /* RegisterController */
 
 
+/* ViewAuthorService */
+app.service('ViewAuthorService', function() {
+    let service = this;
+    
+    service.email = '';
+    
+    service.setEmail = function(email) {
+        service.email = email;
+    };
+    
+    service.getEmail = function(email) {
+        return service.email;
+    }
+});
+/* ViewAuthorService */
+
+
 /* AppController */
-app.controller('AppController', function($scope) {
+app.controller('AppController', function($scope, ViewAuthorService) {
     $scope.tab = 'Home';
+    
+    
+    $scope.homeTab = function() {
+        $scope.tab = 'Home';
+    };
+    
+    $scope.viewAuthor = function(email) {
+        $scope.tab = 'ViewAuthor';
+        ViewAuthorService.setEmail(email);
+    };
 });
 /* AppController */
+
+
+/* HomeTabController */
+app.controller('HomeTabController', function($scope) {
+    
+});
+/* HomeTabController */
+
+
+/* ViewAuthorController */
+app.controller('ViewAuthorController', function($scope, $http, $q, ViewAuthorService) {
+    let email = ViewAuthorService.getEmail();
+    
+    $scope.user = null;
+    
+    $http('getUserInfoController', email)
+    .then(
+        function(response) {
+        },
+        function(error) {
+            
+        });
+        
+        
+    $http('getRecipesByUserIdController', user.id)
+    .then(
+        function(response) {
+        },
+        function(error) {
+        });
+    
+});
+/* ViewAuthorController */
+
+
+
