@@ -43,7 +43,7 @@ public interface ServiceInterface {
 	public boolean isEmailValid(String email);
 	public boolean isEmailAvailable(String email);
 	public boolean isUsernameAvailable(String username);
-	UserDto validateUser(UserDto userDto);
-	UserDto logoutUser(UserDto userDto);
+	public UserDto validateUser(UserDto userDto);
+	public UserDto logoutUser(UserDto userDto);
 
 }

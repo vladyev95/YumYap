@@ -1,7 +1,6 @@
 package com.yumyap.service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -27,12 +26,13 @@ public class UserService implements ServiceInterface{
 	public UserService() {}
 	
 	public UserService(Dao DaoImpl) {
+		super();
 		DaoImpl = DaoImpl;
 	}
 
 
 	public RecipesDto getDashboard(UserDto user, int page) {
-		Set<User> following = user.getFollowing();
+		Set<User> following = user.getUser().getFollowing();
 		Comparator<Recipe> byCreation = (Recipe o1, Recipe o2)->o1.getCreated().compareTo(o2.getCreated());
 		Set<Recipe> recipes = new ConcurrentSkipListSet<>(byCreation);
 		for(User u: following) {
@@ -50,50 +50,16 @@ public class UserService implements ServiceInterface{
 
 	public ProfileDto getProfile(UserDto userDto) {
 		ProfileDto profile = new ProfileDto();
-		List<Recipe> recs = userDto.getFavoriteRecipes();
-		Collections.reverse(recs);
+		List<Recipe> recs = userDto.getUser().getFavoriteRecipes();
 		profile.setRecipes(recs);
-		User u = new User();
-		u.setFirstname(userDto.getFirstname());
-		u.setLastname(userDto.getLastname());
-		profile.setUser(u);
+		profile.setUser(userDto.getUser());
 		return null;
 	}
 
-	public UserDto createUser(UserDto userDto) {
-		// FIXME need username validation
-		// FIXME add the rest of the necessary fields
-		User user = new User();
-		user.setUsername(userDto.getEmail());
-		user.setPassword(userDto.getPassword());
-		user = DaoImpl.addUser(user);
-		userDto.setId(user.getId());
-		return userDto;
-	}
-
 	@Override
-	public UserDto validateUser(UserDto userDto) {
-		User user = DaoImpl.getUser(userDto.getEmail());
-
-		if (user != null && (user.getPassword().equals(userDto.getPassword()))) {
-			System.out.println("setting userdto to true");
-			userDto.setLoggedIn(true);
-		} else {
-			return null;
-		}
-		System.out.println("---------------------returning user dto" + userDto.toString());
-		return userDto;
-	}
-
-	@Override
-	public UserDto logoutUser(UserDto userDto) {
-		if (!userDto.getLoggedIn()) {
-			System.out.println("No user is currently logged in");
-			return userDto;
-		}
-		System.out.println("Logging out user: " + userDto.getEmail());
-		userDto.setLoggedIn(false);
-		return userDto;
+	public User createUser(String email, String password, String firstname, String lastname) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -178,15 +144,21 @@ public class UserService implements ServiceInterface{
 
 	@Override
 	public boolean favoriteRecipe(Recipe recipe, UserDto user) {
-		List<Recipe> recipes = user.getFavoriteRecipes();
+		List<Recipe> recipes = user.getUser().getFavoriteRecipes();
 		recipes.add(recipe);
-		User u = new User(user.getId(), user.getFollowing(), user.getFirstname(), user.getLastname(), user.getPassword(), user.getEmail(), recipes);
+		User u = user.getUser();
 		DaoImpl.updateUser(u);
 		return true;
 	}
 
 	@Override
-	public User createUser(String email, String password, String firstname, String lastname) {
+	public UserDto validateUser(UserDto userDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserDto logoutUser(UserDto userDto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
