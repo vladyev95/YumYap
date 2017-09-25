@@ -5,7 +5,20 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2017-09-21T15:35:52Z</updated>
+  <updated>2017-09-25T17:23:02Z</updated>
+  <entry>
+    <title>Spring Cloud Task 1.2.2.RELEASE is now available</title>
+    <link rel="alternate" href="https://spring.io/blog/2017/09/25/spring-cloud-task-1-2-2-release-is-now-available" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Michael Minella</name>
+    </author>
+    <id>tag:spring.io,2017-09-25:3036</id>
+    <updated>2017-09-25T17:23:02Z</updated>
+    <content type="html">&lt;p&gt;We are pleased to announce that Spring Cloud Task 1.2.2.RELEASE is now available via Maven Central, Github and the Pivotal download repository. This release adds support for Spring Framework&amp;rsquo;s recent added support for db engines other than MYISAM for the sequence tables when using MySql. A special thanks to Thomas Risberg for the contributions around this issue.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://cloud.spring.io/spring-cloud-task/"&gt;Spring Cloud Task Home&lt;/a&gt; | &lt;a href="https://github.com/spring-cloud/spring-cloud-task"&gt;Source on GitHub&lt;/a&gt; | &lt;a href="https://docs.spring.io/spring-cloud-task/docs/1.2.2.RELEASE/reference/htmlsingle/"&gt;Reference Documentation&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;We look forward to your feedback in &lt;a href="https://github.com/spring-cloud/spring-cloud-task/issues"&gt;Github&lt;/a&gt;, &lt;a href="http://stackoverflow.com/tags/spring-cloud-task"&gt;StackOverflow&lt;/a&gt;, to me directly via Twitter &lt;a href="https://twitter.com/michaelminella"&gt;@michaelminella&lt;/a&gt; or at &lt;a href="https://springoneplatform.io/"&gt;SpringOnePlatform&lt;/a&gt; in December!&lt;/p&gt;</content>
+  </entry>
   <entry>
     <title>How to get STS/Eclipse running on macOS High Sierra (10.13)</title>
     <link rel="alternate" href="https://spring.io/blog/2017/09/21/how-to-get-sts-eclipse-running-on-macos-high-sierra-10-13" />
@@ -1315,20 +1328,5 @@ Feedback, feature requests and, of course, contributions are welcomed via the us
   &lt;li&gt;Spring Data Elasticsearch 3.0 RC3 - &lt;a href="https://repo.spring.io/libs-milestone/org/springframework/data/spring-data-elasticsearch/3.0.0.RC3"&gt;Artifacts&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/elasticsearch/docs/3.0.0.RC3/api"&gt;JavaDocs&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/elasticsearch/docs/3.0.0.RC3/reference/html"&gt;Documentation&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/elasticsearch/docs/3.0.0.RC3/changelog.txt"&gt;Changelog&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Spring Data Couchbase 3.0 RC3 - &lt;a href="https://repo.spring.io/libs-milestone/org/springframework/data/spring-data-couchbase/3.0.0.RC3"&gt;Artifacts&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/couchbase/docs/3.0.0.RC3/api"&gt;JavaDocs&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/couchbase/docs/3.0.0.RC3/reference/html"&gt;Documentation&lt;/a&gt; - &lt;a href="http://docs.spring.io/spring-data/couchbase/docs/3.0.0.RC3/changelog.txt"&gt;Changelog&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Framework 5.0 RC4 available now</title>
-    <link rel="alternate" href="https://spring.io/blog/2017/09/11/spring-framework-5-0-rc4-available-now" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Juergen Hoeller</name>
-    </author>
-    <id>tag:spring.io,2017-09-11:3016</id>
-    <updated>2017-09-11T13:15:23Z</updated>
-    <content type="html">&lt;p&gt;Dear Spring community,&lt;/p&gt;
-&lt;p&gt;It is my pleasure to announce that our &lt;a href="https://jira.spring.io/jira/secure/ReleaseNote.jspa?projectId=10000&amp;version=16259"&gt;fourth and last Spring Framework 5.0 release candidate&lt;/a&gt; is &lt;a href="http://projects.spring.io/spring-framework/"&gt;available&lt;/a&gt; now, aligned with &lt;a href="http://projectreactor.io/"&gt;Reactor 3.1 RC1&lt;/a&gt; as well as yesterday&amp;rsquo;s &lt;a href="http://junit.org/junit5/"&gt;JUnit 5.0 GA&lt;/a&gt;, and serving as a foundation for the upcoming &lt;a href="https://github.com/spring-projects/spring-boot/milestone/78"&gt;Spring Boot 2.0 M4&lt;/a&gt;!&lt;/p&gt;
-&lt;p&gt;Spring Framework 5.0 RC4 also comes with first-class support for the final version of the Servlet 4.0 API, provides fine-tuned integration with Hibernate Validator 6.0 and is up-to-date with Jackson 2.9.1 and Kotlin 1.1.4. Our dependency baseline is therefore almost complete, with just Reactor 3.1 GA and a few JDK 9 related updates (e.g. ASM 6.0) to happen still.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Next up: Spring Framework 5.0 GA, scheduled for September 28th!&lt;/em&gt;&lt;br/&gt;We&amp;rsquo;ll celebrate it shortly thereafter with our &lt;a href="https://content.pivotal.io/spring/oct-4-getting-reactive-with-spring-framework-5-0-s-ga-release-webinar"&gt;release webinar&lt;/a&gt; on October 4th. Feel free to join!&lt;/p&gt;
-&lt;p&gt;Cheers,&lt;br/&gt;Juergen&lt;/p&gt;</content>
   </entry>
 </feed>
