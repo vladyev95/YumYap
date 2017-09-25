@@ -28,11 +28,13 @@ app.controller('searchCtrl', function ($scope, $http) {
 
                         let nutrients = foodReport.children.item(0).children;
                         let m = nutrients.item(0).children.item(0).children;
+
                         $scope.food.nutrients = { 'calories': 0, 'fat': 0, 'carbs': 0, 'protein': 0 };
                         $scope.measures = [];
                         $scope.nutrientsByMeasure = {};
-                        for (let i = 0; i < m.length; i++) {
-                            let label = m.item(i).getAttribute('label');
+
+                        for (var i = 0; i < m.length; i++) {
+			    let label = m.item(i).getAttribute('label');
                             $scope.measures.push(label);
                             $scope.nutrientsByMeasure[label] = {};
                         }
@@ -46,7 +48,8 @@ app.controller('searchCtrl', function ($scope, $http) {
                             let id = nutrient.getAttribute('nutrient_id');
                             if (TRACKED_NUTRIENTS.indexOf(id) !== -1) {
 
-                                for (let i = 0; i < measures.length; i++) {
+
+                                for (var i = 0; i < measures.length; i++) {
                                     let label = measures.item(i).getAttribute('label');
                                     let value = measures.item(i).getAttribute('value');
                                     $scope.nutrientsByMeasure[label][id] = value;
@@ -95,7 +98,7 @@ app.controller('searchCtrl', function ($scope, $http) {
                         $scope.foodItems = [];
 
                         // Go through each food item in result
-                        for (let i = 0; i < searchResults.length; i++) {
+                        for (var i = 0; i < searchResults.length; i++) {
 
                             let group = searchResults.item(i).getElementsByTagName('group')[0].innerHTML;
                             // Skip food if in excluded food group
