@@ -30,7 +30,7 @@ public class Recipe {
 	private int id;
 	
 	private Time created;
-	
+
 	private int creatorId;
 	
 	private String description;
