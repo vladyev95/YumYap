@@ -40,8 +40,6 @@ public class UserDto {
 		this.favoriteRecipes = favoriteRecipes;
 	}
 
-	
-
 	public UserDto() {}
 
 	public int getId() {

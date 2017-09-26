@@ -2,8 +2,6 @@ package com.yumyap.dto;
 
 import java.util.List;
 
-import com.yumyap.beans.Recipe;
-
 public class RecipesDto {
 
 private List<RecipeDto> recipes;
