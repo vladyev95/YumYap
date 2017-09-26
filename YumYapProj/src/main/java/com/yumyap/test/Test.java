@@ -10,6 +10,8 @@ public class Test {
 		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("beans.xml");
 		ac.getBean("User");
 		
+		ac.close();
+		
 	}
 
 }

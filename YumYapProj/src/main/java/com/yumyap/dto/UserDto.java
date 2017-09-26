@@ -8,23 +8,44 @@ import com.yumyap.beans.User;
 
 public class UserDto {
 
-private int id;
-	
-	private Set<User> following;
-	
-	private String firstname;
-	
-	private String lastname;
-	
-	private String password;
-	
-	private String email;
-	
-	private int active;
+	private int id;
 	
 	private List<Recipe> favoriteRecipes;
+
+	private Set<User> following;
+
+	private String firstname;
+
+	private String lastname;
+
+	private String username;
+
+	private String password;
+
+	private String email;
 	
-	private int loggedIn;
+
+	private int active;
+	
+	private boolean loggedIn;
+	
+	public UserDto(int id, Set<User> following, String firstname, String lastname, String password, String email,
+			int active, boolean loogedIn, List<Recipe> favoriteRecipes) {
+		super();
+		this.id = id;
+		this.following = following;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.password = password;
+		this.email = email;
+		this.active = active;
+		this.loggedIn = loogedIn;
+		this.favoriteRecipes = favoriteRecipes;
+	}
+
+	
+
+	public UserDto() {}
 
 	public int getId() {
 		return id;
@@ -58,6 +79,14 @@ private int id;
 		this.lastname = lastname;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -81,23 +110,34 @@ private int id;
 	public void setActive(int active) {
 		this.active = active;
 	}
+	
+
+	public boolean isLoggedIn() {
+		return loggedIn;
+	}
+
+	public void setLoggedIn(boolean loogedIn) {
+		this.loggedIn = loogedIn;
+	}
+
+	@Override
+	public String toString() {
+		return "UserDto [id=" + id + ", following=" + following + ", firstname=" + firstname + ", lastname=" + lastname
+				+ ", username=" + username + ", password=" + password + ", email=" + email + ", active=" + active
+				+ ", favoriteRecipes=" + favoriteRecipes + ", loggedIn=" + loggedIn + "]";
+	}
+
+
 
 	public List<Recipe> getFavoriteRecipes() {
 		return favoriteRecipes;
 	}
 
+
+
 	public void setFavoriteRecipes(List<Recipe> favoriteRecipes) {
 		this.favoriteRecipes = favoriteRecipes;
 	}
-
-	public int getLoggedIn() {
-		return loggedIn;
-	}
-
-	public void setLoggedIn(int loggedIn) {
-		this.loggedIn = loggedIn;
-	}
-	
 	
 	
 }

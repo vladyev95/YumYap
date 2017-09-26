@@ -6,7 +6,7 @@ const TRACKED_NUTRIENTS = ['208', '204', '205', '203'];
 let app = angular.module('app', []);
 app.controller('searchCtrl', function ($scope, $http) {
     'use strict';
-    $scope.food = { 'name': '', 'nutrients': { 'calories': 0, 'fat': 0, 'carbs': 0, 'protein': 0 }};
+    $scope.food = { 'name': '', 'nutrients': { 'calories': 0, 'fat': 0, 'carbs': 0, 'protein': 0 } };
     $scope.measures = [];
     $scope.nutrientsByMeasure = {};
 
@@ -24,11 +24,17 @@ app.controller('searchCtrl', function ($scope, $http) {
 
                     if (foodReport.tagName === 'food') {
                         $scope.food.name = foodReport.getAttribute('name');
+                        $scope.customName = foodReport.getAttribute('name');
 
                         let nutrients = foodReport.children.item(0).children;
                         let m = nutrients.item(0).children.item(0).children;
-                        for (let i = 0; i < m.length; i++) {
-                            let label = m.item(i).getAttribute('label');
+
+                        $scope.food.nutrients = { 'calories': 0, 'fat': 0, 'carbs': 0, 'protein': 0 };
+                        $scope.measures = [];
+                        $scope.nutrientsByMeasure = {};
+
+                        for (var i = 0; i < m.length; i++) {
+			    let label = m.item(i).getAttribute('label');
                             $scope.measures.push(label);
                             $scope.nutrientsByMeasure[label] = {};
                         }
@@ -43,6 +49,7 @@ app.controller('searchCtrl', function ($scope, $http) {
                             if (TRACKED_NUTRIENTS.indexOf(id) !== -1) {
 
                                 for (let i = 0; i < measures.length; i++) {
+
                                     let label = measures.item(i).getAttribute('label');
                                     let value = measures.item(i).getAttribute('value');
                                     $scope.nutrientsByMeasure[label][id] = value;
@@ -60,20 +67,20 @@ app.controller('searchCtrl', function ($scope, $http) {
         }
     };
 
-    $scope.calculateNutrients = function (quantity, measure) {
+    $scope.calculateNutrients = function (quantity, fraction, measure) {
         log('in calculate nutrients');
-        log(JSON.stringify($scope.food));
-        if (!quantity || !measure) return;
-
+        if (!measure) return;
+        if (!quantity) quantity = 0;
+        if (!fraction) fraction = 0;
+        let nutrients = $scope.food.nutrients;
         let nutrientsForMeasure = $scope.nutrientsByMeasure[measure];
-        $scope.food.nutrients.calories  = quantity * nutrientsForMeasure[TRACKED_NUTRIENTS[0]];
-        $scope.food.nutrients.fat       = quantity * nutrientsForMeasure[TRACKED_NUTRIENTS[1]];
-        $scope.food.nutrients.carbs     = quantity * nutrientsForMeasure[TRACKED_NUTRIENTS[2]];
-        $scope.food.nutrients.protein   = quantity * nutrientsForMeasure[TRACKED_NUTRIENTS[3]];
+        let i = 0;
+        for (let attr in nutrients) {
+            nutrients[attr] = (quantity + eval(fraction)) * nutrientsForMeasure[TRACKED_NUTRIENTS[i++]];
+        }
     };
 
     $scope.searchFoods = function (searchTerm) {
-
         if (searchTerm) {
             $http.get('https://api.nal.usda.gov/ndb/search/?q=' + searchTerm + '&ds=Standard%20Reference&max=20&format=xml&api_key=' + API_KEY)
                 .then(function (responseXml) {

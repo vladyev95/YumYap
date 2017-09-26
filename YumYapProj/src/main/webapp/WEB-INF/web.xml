@@ -3,16 +3,28 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
-	<display-name>YumYap</display-name>
-<!--  	<welcome-file-list>
-		<welcome-file>app.html</welcome-file>
-		<welcome-file>app.html</welcome-file>
-	</welcome-file-list> -->
 
-	<!-- map all requests to the DS for handling -->
-<!--  	<servlet-mapping>
-		<servlet-name>DispatcherServlet</servlet-name>
-		<url-pattern>/yum/*</url-pattern>
-	</servlet-mapping> -->
+	<display-name>YumYap</display-name>
+<welcome-file-list>
+		<welcome-file>app.html</welcome-file>
+	</welcome-file-list> 
+
+  <!-- DS is the front controller of this spring webapp. it is responsible for handling an application -->
+  <servlet>
+  	<servlet-name>DispatcherServlet</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  	<init-param>
+  		<param-name>contextConfigLocation</param-name>
+  		<param-value>/WEB-INF/beans.xml</param-value>
+  	</init-param>
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  
+  <!-- map all requests to the DS for handling  -->
+  <servlet-mapping>
+  	<servlet-name>DispatcherServlet</servlet-name>
+  	<url-pattern>/yum/*</url-pattern>
+  </servlet-mapping>
 
 </web-app>
