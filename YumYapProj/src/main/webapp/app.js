@@ -1,3 +1,24 @@
+// Copy - Pastable JavaScript Objects based on Dtos
+//  UserDto:
+//  user = {id: <int>,
+//	favoriteRecipes: {<array of recipeDtos>},
+//	following: {<array of users>},
+//	firstname: "",
+//	lastname: "",
+//	password: "",
+//	email: "",
+//	active: "", //(this is a number)
+//	loggedIn: "" } //this is a boolean
+// RecipeDto:
+//  id: "",
+//	created: "" //this is a time and will have to be formatted
+//	creator: {User object}
+//	name: "",
+//	description: "",
+//	directions: { list of strings},
+//	image: image url,
+//	ingredients: {list of strings}
+
 let app = angular.module('app', ['ngRoute']);
 
 app.config(function($routeProvider) {

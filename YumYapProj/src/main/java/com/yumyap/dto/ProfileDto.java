@@ -7,14 +7,14 @@ import com.yumyap.beans.User;
 
 public class ProfileDto {
 
-	private List<Recipe> recipes;
+	private List<RecipeDto> recipes;
 	private User user;
 
-	public List<Recipe> getRecipes() {
+	public List<RecipeDto> getRecipes() {
 		return recipes;
 	}
 
-	public void setRecipes(List<Recipe> recipes) {
+	public void setRecipes(List<RecipeDto> recipes) {
 		this.recipes = recipes;
 	}
 

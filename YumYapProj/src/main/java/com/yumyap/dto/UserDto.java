@@ -10,15 +10,13 @@ public class UserDto {
 
 	private int id;
 	
-	private List<Recipe> favoriteRecipes;
+	private List<RecipeDto> favoriteRecipes;
 
 	private Set<User> following;
 
 	private String firstname;
 
 	private String lastname;
-
-	private String username;
 
 	private String password;
 
@@ -29,7 +27,7 @@ public class UserDto {
 	private boolean loggedIn;
 	
 	public UserDto(int id, Set<User> following, String firstname, String lastname, String password, String email,
-			int active, boolean loogedIn, List<Recipe> favoriteRecipes) {
+			int active, boolean loogedIn, List<RecipeDto> favoriteRecipes) {
 		super();
 		this.id = id;
 		this.following = following;
@@ -78,14 +76,6 @@ public class UserDto {
 		this.lastname = lastname;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -128,13 +118,13 @@ public class UserDto {
 
 
 
-	public List<Recipe> getFavoriteRecipes() {
+	public List<RecipeDto> getFavoriteRecipes() {
 		return favoriteRecipes;
 	}
 
 
 
-	public void setFavoriteRecipes(List<Recipe> favoriteRecipes) {
+	public void setFavoriteRecipes(List<RecipeDto> favoriteRecipes) {
 		this.favoriteRecipes = favoriteRecipes;
 	}
 	

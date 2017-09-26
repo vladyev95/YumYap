@@ -65,8 +65,10 @@ public class UserService implements UserServiceInterface {
 	}
 	@Override
 	public boolean favoriteRecipe(RecipeDto recipe, UserDto user) {
-		List<Recipe> recipes = user.getFavoriteRecipes();
-		recipes.add(new Recipe(recipe));
+		List<RecipeDto> recipeDtos = user.getFavoriteRecipes();
+		List<Recipe> recipes = new ArrayList<Recipe>();
+		recipeDtos.add(recipe);
+		for(RecipeDto r: recipeDtos) { recipes.add(new Recipe(r));}
 		User u = new User(user);
 		DaoImpl.updateUser(u);
 		return true;
@@ -94,7 +96,9 @@ public class UserService implements UserServiceInterface {
 		ProfileDto profile = new ProfileDto();
 		User user = DaoImpl.getUser(email);
 		List<Recipe> recs = user.getFavoriteRecipes();
-		profile.setRecipes(recs);
+		List<RecipeDto> rec = new ArrayList<RecipeDto>();
+		for(Recipe r: recs) {rec.add(new RecipeDto(r));}
+		profile.setRecipes(rec);
 		profile.setUser(user);
 		return null;
 	}
