@@ -48,31 +48,35 @@ public class UserService implements UserServiceInterface {
 		return userDto;
 	}
 	@Override
-	public boolean addFollowing(User user, User follower) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public boolean addComment(RecipesDto recipeDto, Comment comment) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public List<User> getFollowing(User user) {
+	public UserDto addFollowing(UserDto user, UserDto follower) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
-	public boolean favoriteRecipe(RecipeDto recipe, UserDto user) {
+	public List<User> getFollowing(UserDto user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+		
+	/*
+	 * takes the RecipeDto & UserDto
+	 * saves new user information to database
+	 * returns the updated userDto
+	 * @see com.yumyap.service.UserServiceInterface#favoriteRecipe(com.yumyap.dto.RecipeDto, com.yumyap.dto.UserDto)
+	 */
+	public UserDto favoriteRecipe(RecipeDto recipe, UserDto user) {
 		List<RecipeDto> recipeDtos = user.getFavoriteRecipes();
 		List<Recipe> recipes = new ArrayList<Recipe>();
 		recipeDtos.add(recipe);
+		user.setFavoriteRecipes(recipeDtos);
 		for(RecipeDto r: recipeDtos) { recipes.add(new Recipe(r));}
 		User u = new User(user);
 		DaoImpl.updateUser(u);
-		return true;
+		return user;
 	}
+
 	@Override
 	public RecipesDto getDashboard(UserDto user, int page) {
 		Set<User> following = user.getFollowing();
@@ -90,7 +94,7 @@ public class UserService implements UserServiceInterface {
 		return new RecipesDto(recs);
 	}
 
-	
+
 	@Override
 	public ProfileDto getProfile(String email) {
 		ProfileDto profile = new ProfileDto();
@@ -122,7 +126,7 @@ public class UserService implements UserServiceInterface {
 		System.out.println("returning user dto" + userDto.toString());
 		return userDto;
 	}
-	
+
 	@Override
 	public boolean isEmailValid(String email) {
 		// TODO Auto-generated method stub
