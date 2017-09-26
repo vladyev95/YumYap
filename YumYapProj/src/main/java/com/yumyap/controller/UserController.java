@@ -69,30 +69,6 @@ public class UserController {
 				userService.getProfile(userDto), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/login", method = { RequestMethod.POST }, consumes = {
-			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<UserDto> authenticateUser(@RequestBody UserDto userDto) {
-
-		System.out.println("authenticating user");
-
-		return new ResponseEntity<UserDto>(userService.validateUser(userDto), HttpStatus.OK);
-	}
 	
-	@RequestMapping(value = "/register", method = { RequestMethod.POST }, consumes = {
-			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto) {
-		System.out.println("creating new user");
-		userService.createUser(userDto);
-		return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/logout", method = { RequestMethod.POST }, consumes = {
-			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<UserDto> deAuthenticateUser(@RequestBody UserDto userDto) {
-
-		System.out.println("Logging out user");
-
-		return new ResponseEntity<UserDto>(userService.logoutUser(userDto), HttpStatus.OK);
-	}
 
 }
