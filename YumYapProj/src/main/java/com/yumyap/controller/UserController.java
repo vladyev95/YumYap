@@ -26,6 +26,15 @@ public class UserController {
 		this.userService = userService;
 	}
 
+	@RequestMapping(value = "/follow", method = { RequestMethod.POST }, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<UserDto> followUser(@RequestBody UserDto currentUser, @RequestBody UserDto followingUser ) {
+
+		System.out.println("authenticating user");
+
+		return new ResponseEntity<UserDto>(userService.addFollowing(currentUser, followingUser), HttpStatus.OK);
+	}
+
 	@RequestMapping(value = "/login", method = { RequestMethod.POST }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<UserDto> authenticateUser(@RequestBody UserDto userDto) {
@@ -65,11 +74,11 @@ public class UserController {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<ProfileDto> loadProfile(@RequestBody String email) {
 		System.out.println("Loading Profile");
-		
+
 		return new ResponseEntity<ProfileDto>(
 				userService.getProfile(email), HttpStatus.OK);
 	}
-	
-	
+
+
 
 }
