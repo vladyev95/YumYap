@@ -17,19 +17,19 @@
     </div>
     
     <div id="registerContent" class="form-group col-3" ng-hide="onLogin" ng-controller="RegisterController as register">
-        <form name="loginForm" ng-submit="attemptLogin()">
-            <input type="text" placeholder="First Name" id="registerFirstName" class="form-control" ng-model="user.firstName"/>
+        
+            <input type="text" placeholder="First Name" id="registerFirstName" class="form-control" ng-model="user.firstname"/>
             
-            <input type="text" placeholder="Last Name" id="registerLastName" class="form-control" ng-model="user.lastName"/>
+            <input type="text" placeholder="Last Name" id="registerLastName" class="form-control" ng-model="user.lastname"/>
             
             <input type="text" placeholder="Email" id="registerEmail" class="form-control" ng-model="user.email"/>
             
-            <input type="password" placeholder="Password" id="registerPassword" class="form-control" ng-model="user.password1"/>
+            <input type="password" placeholder="Password" id="registerPassword" class="form-control" ng-model="user.password"/>
             
             <input type="password" placeholder="Re-enter password" id="registerRetypePassword" class="form-control" ng-model="user.password2"/>
             
             <button id="registerBtn" class="btn btn-primary btn-large" ng-click="attemptRegister()">Register</button>
-        </form>
+            <div ng-model="registerMessage"></div>
     </div>
 
    

@@ -36,7 +36,7 @@ public class User {
 	    )
 	private Set<User> following;
 
-	@Column(name = "FIRSTNAME", nullable = false)
+	@Column(name = "FIRSTNAME")
 	private String firstname;
 
 	@Column(name = "LASTNAME", nullable = false)
@@ -48,10 +48,7 @@ public class User {
 	@Column(name = "EMAIL", nullable = false, unique = true)
 	private String email;
 
-	@Column(name = "USERNAME", nullable = false, unique = true)
-	private String username;
-
-	@Column(name = "Active", columnDefinition = "1")
+	@Column(name = "Active")
 	private int active;
 
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -80,7 +77,6 @@ public class User {
 		this.lastname = lastname;
 		this.password = password;
 		this.email = email;
-		this.username = username;
 		this.active = active;
 		this.favoriteRecipes = favoriteRecipes;
 	}
@@ -133,14 +129,6 @@ public class User {
 		this.email = email;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	public int getActive() {
 		return active;
 	}
@@ -160,7 +148,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", following=" + following + ", firstname=" + firstname + ", lastname=" + lastname
-				+ ", password=" + password + ", email=" + email + ", username=" + username + ", active=" + active
+				+ ", password=" + password + ", email=" + email + ", active=" + active
 				+ ", favoriteRecipes=" + favoriteRecipes + "]";
 	}
 

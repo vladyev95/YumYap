@@ -24,7 +24,6 @@ public class UserDto {
 
 	private String email;
 	
-
 	private int active;
 	
 	private boolean loggedIn;
@@ -123,7 +122,7 @@ public class UserDto {
 	@Override
 	public String toString() {
 		return "UserDto [id=" + id + ", following=" + following + ", firstname=" + firstname + ", lastname=" + lastname
-				+ ", username=" + username + ", password=" + password + ", email=" + email + ", active=" + active
+			  + ", password=" + password + ", email=" + email + ", active=" + active
 				+ ", favoriteRecipes=" + favoriteRecipes + ", loggedIn=" + loggedIn + "]";
 	}
 

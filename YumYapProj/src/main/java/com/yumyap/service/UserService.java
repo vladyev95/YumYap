@@ -41,9 +41,8 @@ public class UserService implements UserServiceInterface {
 	public UserDto createUser(UserDto userDto) {
 		// FIXME need username validation
 		// FIXME add the rest of the necessary fields
-		User user = new User();
-		user.setEmail(userDto.getEmail());
-		user.setPassword(userDto.getPassword());
+		System.out.println(userDto);
+		User user = new User(userDto);
 		user = DaoImpl.addUser(user);
 		userDto.setId(user.getId());
 		return userDto;

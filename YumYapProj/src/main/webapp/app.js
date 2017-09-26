@@ -73,14 +73,19 @@ service.registerUser = function(){
 app.service('LoginService', function($http, $q) {
     let service = this;
     
-    service.user = { email: '', password: '' };
+    service.user = {  
+    			firstname: '',
+            lastname: '',
+            email: '',
+            password: ''};
     
     service.getUser = function() {
         return service.user;
     }
  
     service.attemptLogin = function() {
-        return $http.post('', service.user);
+        return $http.post('yum/user/login', service.user);
+        
     };
 });
 /* LoginService */
@@ -91,10 +96,10 @@ app.service('RegisterService', function($http, $q) {
     let service = this;
     
     service.user = {
-        firstName: '',
-        lastName: '',
+        firstname: '',
+        lastname: '',
         email: '',
-        password1: '',
+        password: '',
         password2: ''
     };
     
@@ -103,8 +108,9 @@ app.service('RegisterService', function($http, $q) {
     };
     
     service.attemptRegister = function() {
-        return $http.post('url', service.user);
+        return $http.post('yum/user/register', service.user);
     };
+   
 });
 /* RegisterService */
 
@@ -154,7 +160,12 @@ app.controller('RegisterController', function($scope, RegisterService) {
             function(response) {
                 console.log('attemptRegister() success response: ');
                 console.log(response);
-                
+                if(response.firstname){
+                		$scope.registerMessage = "Success, weclome "+response.firstname;
+                }
+                else{
+                	$scope.registerMessage = "unable to register";
+                }
                 /* reset all fields upon success */
                 $scope.user = { firstName: '', lastName: '', email: '', password1: '', password2: '' };
             },
