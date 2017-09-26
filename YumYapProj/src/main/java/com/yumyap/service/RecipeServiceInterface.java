@@ -1,9 +1,11 @@
 package com.yumyap.service;
 
-import com.yumyap.dto.RecipesDto;
+import com.yumyap.beans.Recipe;
+import com.yumyap.dto.RecipeDto;
 
 public interface RecipeServiceInterface {
 	
-	public RecipesDto addRecipe(RecipesDto recipeDto);
+	public RecipeDto addRecipe(RecipeDto recipe);
+	public String getMacronutrients(RecipeDto recipe);
 
 }

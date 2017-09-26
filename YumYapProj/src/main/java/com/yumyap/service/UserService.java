@@ -37,6 +37,42 @@ public class UserService implements UserServiceInterface {
 		this.DaoImpl = DaoImpl;
 	}
 
+	@Override
+	public UserDto createUser(UserDto userDto) {
+		// FIXME need username validation
+		// FIXME add the rest of the necessary fields
+		User user = new User();
+		user.setEmail(userDto.getEmail());
+		user.setPassword(userDto.getPassword());
+		user = DaoImpl.addUser(user);
+		userDto.setId(user.getId());
+		return userDto;
+	}
+	@Override
+	public boolean addFollowing(User user, User follower) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean addComment(RecipesDto recipeDto, Comment comment) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<User> getFollowing(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public boolean favoriteRecipe(RecipeDto recipe, UserDto user) {
+		List<Recipe> recipes = user.getFavoriteRecipes();
+		recipes.add(new Recipe(recipe));
+		User u = new User(user);
+		DaoImpl.updateUser(u);
+		return true;
+	}
+	@Override
 	public RecipesDto getDashboard(UserDto user, int page) {
 		Set<User> following = user.getFollowing();
 		Comparator<Recipe> byCreation = (Recipe o1, Recipe o2) -> o1.getCreated().compareTo(o2.getCreated());
@@ -53,73 +89,21 @@ public class UserService implements UserServiceInterface {
 		return new RecipesDto(recs);
 	}
 
-	public ProfileDto getProfile(UserDto userDto) {
+	
+	@Override
+	public ProfileDto getProfile(String email) {
 		ProfileDto profile = new ProfileDto();
-		List<Recipe> recs = userDto.getFavoriteRecipes();
+		User user = DaoImpl.getUser(email);
+		List<Recipe> recs = user.getFavoriteRecipes();
 		profile.setRecipes(recs);
-		profile.setUser(new User(userDto));
+		profile.setUser(user);
 		return null;
 	}
-	
-	public boolean favoriteRecipe(Recipe recipe, UserDto user) {
-		List<Recipe> recipes = user.getFavoriteRecipes();
-		recipes.add(recipe);
-		User u = new User(user);
-		DaoImpl.updateUser(u);
-		return true;
-	}
-	
-//	public ProfileDto getProfile(String email) {
-//		ProfileDto profile = new ProfileDto();
-//		List<Recipe> recs = userDto.getUser().getFavoriteRecipes();
-//		profile.setRecipes(recs);
-//		profile.setUser(userDto.getUser());
-//		return null;
-//	}
-
-
-	// Verify that user != follower
-	// follower is added to user's list of followers
-	@Override
-	public boolean addFollowing(User user, User follower) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public List<User> getFollowing(User user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 	@Override
 	public boolean deactivateUser(int userId) {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	@Override
-	public boolean isEmailValid(String email) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isEmailAvailable(String email) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	public UserDto createUser(UserDto userDto) {
-		// FIXME need username validation
-		// FIXME add the rest of the necessary fields
-		User user = new User();
-		user.setEmail(userDto.getEmail());
-		user.setPassword(userDto.getPassword());
-		user = DaoImpl.addUser(user);
-		userDto.setId(user.getId());
-		return userDto;
 	}
 
 	@Override
@@ -135,6 +119,18 @@ public class UserService implements UserServiceInterface {
 		System.out.println("returning user dto" + userDto.toString());
 		return userDto;
 	}
+	
+	@Override
+	public boolean isEmailValid(String email) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEmailAvailable(String email) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 	@Override
 	public UserDto logoutUser(UserDto userDto) {
@@ -146,6 +142,7 @@ public class UserService implements UserServiceInterface {
 		userDto.setLoggedIn(false);
 		return userDto;
 	}
+
 
 
 }
