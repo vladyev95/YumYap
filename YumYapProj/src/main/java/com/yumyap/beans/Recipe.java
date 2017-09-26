@@ -109,12 +109,12 @@ public class Recipe {
 		this.created = created;
 	}
 
-	public int getCreatorId() {
-		return creatorId;
+	public User getCreator() {
+		return creator;
 	}
 
-	public void setCreatorId(int creatorId) {
-		this.creatorId = creatorId;
+	public void setCreator(User creator) {
+		this.creator = creator;
 	}
 
 	public String getDescription() {
