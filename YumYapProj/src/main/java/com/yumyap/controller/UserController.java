@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yumyap.dto.ProfileDto;
+import com.yumyap.dto.RecipeDto;
 import com.yumyap.dto.RecipesDto;
 import com.yumyap.dto.UserDto;
 import com.yumyap.service.UserService;
@@ -77,6 +78,15 @@ public class UserController {
 
 		return new ResponseEntity<ProfileDto>(
 				userService.getProfile(email), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/favorite", method = { RequestMethod.POST }, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<UserDto> favoriteRecipe(@RequestBody RecipeDto recipeDto, @RequestBody UserDto userDto) {
+		System.out.println("favoriting this recipe");
+		System.out.println(userDto);
+		System.out.println(recipeDto);
+		return new ResponseEntity<UserDto>(userService.favoriteRecipe(recipeDto, userDto), HttpStatus.OK);
 	}
 
 
