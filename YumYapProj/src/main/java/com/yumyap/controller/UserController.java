@@ -62,11 +62,11 @@ public class UserController {
 
 	@RequestMapping(value = "/profile", method = { RequestMethod.GET }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<ProfileDto> loadProfile(@RequestBody UserDto userDto) {
+	public ResponseEntity<ProfileDto> loadProfile(@RequestBody String email) {
 		System.out.println("Loading Profile");
 		
 		return new ResponseEntity<ProfileDto>(
-				userService.getProfile(userDto), HttpStatus.OK);
+				userService.getProfile(email), HttpStatus.OK);
 	}
 	
 	
