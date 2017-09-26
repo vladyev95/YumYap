@@ -57,17 +57,6 @@ public class User {
 	private List<Recipe> favoriteRecipes;
 
 	public User() {}
-	
-	public User(UserDto user) {
-		this.active = user.getActive();
-		this.email = user.getEmail();
-		this.favoriteRecipes = user.getFavoriteRecipes();
-		this.firstname = user.getFirstname();
-		this.lastname = user.getLastname();
-		this.id = user.getId();
-		this.password = user.getPassword();
-				
-	}
 
 	public User(int id, Set<User> following, String firstname, String lastname, String password, String email,
 			int active, List<Recipe> favoriteRecipes) {

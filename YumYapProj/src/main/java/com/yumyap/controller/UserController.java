@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.yumyap.dto.ProfileDto;
 import com.yumyap.dto.RecipesDto;
@@ -47,9 +46,12 @@ public class UserController {
 	@RequestMapping(value = "/register", method = { RequestMethod.POST }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto) {
-		System.out.println("creating new user");
-		System.out.println(userDto);
-		userService.createUser(userDto);
+		System.out.println("creating new user: " + userDto);
+		
+		userDto = userService.createUser(userDto);
+		if (userDto == null)
+			System.out.println("User creation failed");
+		
 		return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
 	}
 

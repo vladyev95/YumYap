@@ -18,8 +18,6 @@ public class UserDto {
 
 	private String lastname;
 
-	private String username;
-
 	private String password;
 
 	private String email;
@@ -41,8 +39,6 @@ public class UserDto {
 		this.loggedIn = loogedIn;
 		this.favoriteRecipes = favoriteRecipes;
 	}
-
-	
 
 	public UserDto() {}
 
@@ -76,14 +72,6 @@ public class UserDto {
 
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public String getPassword() {

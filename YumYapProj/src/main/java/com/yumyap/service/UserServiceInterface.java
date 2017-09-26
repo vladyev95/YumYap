@@ -32,7 +32,6 @@ public interface UserServiceInterface {
 	// VALIDATION
 	public UserDto validateUser(UserDto userDto);
 	public boolean isEmailValid(String email);
-	public boolean isEmailAvailable(String email);
 	public UserDto logoutUser(UserDto userDto);
 
 }
