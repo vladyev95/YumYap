@@ -48,7 +48,7 @@ app.controller('searchCtrl', function ($scope, $http) {
                             let id = nutrient.getAttribute('nutrient_id');
                             if (TRACKED_NUTRIENTS.indexOf(id) !== -1) {
 
-                                for (var i = 0; i < measures.length; i++) {
+                                for (let i = 0; i < measures.length; i++) {
 
                                     let label = measures.item(i).getAttribute('label');
                                     let value = measures.item(i).getAttribute('value');
@@ -76,12 +76,11 @@ app.controller('searchCtrl', function ($scope, $http) {
         let nutrientsForMeasure = $scope.nutrientsByMeasure[measure];
         let i = 0;
         for (let attr in nutrients) {
-            nutrients[attr] = (Math.round(quantity) + eval(fraction)) * nutrientsForMeasur[TRACKED_NUTRIENTS[i++]];
+            nutrients[attr] = (quantity + eval(fraction)) * nutrientsForMeasure[TRACKED_NUTRIENTS[i++]];
         }
     };
 
     $scope.searchFoods = function (searchTerm) {
-
         if (searchTerm) {
             $http.get('https://api.nal.usda.gov/ndb/search/?q=' + searchTerm + '&ds=Standard%20Reference&max=20&format=xml&api_key=' + API_KEY)
                 .then(function (responseXml) {
