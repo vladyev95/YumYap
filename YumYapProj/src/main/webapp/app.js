@@ -1,28 +1,18 @@
-/**
- * 
- */
+let app = angular.module('app', ['ngRoute']);
 
-let app = angular.module('app', ['ui.router']);
-
-
-app.config(function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/loginRegister');
-    $stateProvider
-    .state('loginRegister', {
+app.config(function($routeProvider) {
+    $routeProvider
+    .when('/', {
+        url: '/',
+        templateUrl: 'loginRegisterContent.html'
+    })
+    .when('loginRegister', {
         url: '/loginRegister',
-        templateUrl: 'loginRegisterContent.html',
-        controller: 'LoginRegisterController as logreg'
+        templateUrl: 'loginRegisterContent.html'
     })
-    .state('app', {
+    .when('app', {
         url: '/app',
-        templateUrl: 'appContent.html',
-        controller: 'AppController as cntrl'
-    })
-    .state('dashboard',{
-    		url: '/dashboard',
-    		templateUrl:'templates/dashboard.html',
-    		controller: 'DashController as recipectrl'
-    			
+        templateUrl: 'appContent.html'
     });
 });
 
@@ -79,31 +69,170 @@ service.registerUser = function(){
 });
 
 
-app.controller('LoginRegisterController', function(UserService, $scope) {
-    $scope.onLogin = true;
-    console.log("In loginRegisterController");
+/* LoginService */
+app.service('LoginService', function($http, $q) {
+    let service = this;
     
-    var cntrl = this;
-    cntrl.user = UserService.getUser();
-    cntrl.doRegister = function(){
-    		console.log("In do register")
-    	
-		var promise = UserService.registerUser();
-		
-		promise.then(
-				function(response){
-					console.log("in promise response")
-					UserService.setUser(response.data);
-//					$state.go('login');
-					
-				},function(error){
-					console.log(error);
-				})
-	}
+    service.user = { email: '', password: '' };
     
-    
+    service.getUser = function() {
+        return service.user;
+    }
+ 
+    service.attemptLogin = function() {
+        return $http.post('', service.user);
+    };
 });
+/* LoginService */
 
-app.controller('AppController', function($scope) {
-    $scope.tab = 'Home';
+
+/* RegisterService */
+app.service('RegisterService', function($http, $q) {
+    let service = this;
+    
+    service.user = {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password1: '',
+        password2: ''
+    };
+    
+    service.getUser = function() {
+        return service.user;
+    };
+    
+    service.attemptRegister = function() {
+        return $http.post('url', service.user);
+    };
 });
+/* RegisterService */
+
+
+/* LoginRegisterController */
+app.controller('LoginRegisterController', function($scope) {
+    $scope.onLogin = true;
+});
+/* LoginRegisterController */
+
+
+/* LoginController*/
+app.controller('LoginController', function($scope, LoginService) {
+    
+    $scope.user = LoginService.getUser();
+    
+    $scope.attemptLogin = function() {
+        console.log($scope.user);
+        LoginService.attemptLogin()
+        .then(
+            function(response) {
+                console.log('attemptLogin() success response: ');
+                console.log(response);
+                
+                /* reset all fields upon success */
+                $scope.user = { email: '', password: '' };
+            },
+            function(error) {
+                console.log('attemptLogin() error response: ');
+                console.log(error);
+            }
+        );
+    };
+});
+/* LoginController */
+
+
+/* RegisterController */
+app.controller('RegisterController', function($scope, RegisterService) {
+    
+    $scope.user = RegisterService.getUser();
+    
+    $scope.attemptRegister = function() {
+        console.log($scope.user);
+        RegisterService.attemptRegister()
+        .then(
+            function(response) {
+                console.log('attemptRegister() success response: ');
+                console.log(response);
+                
+                /* reset all fields upon success */
+                $scope.user = { firstName: '', lastName: '', email: '', password1: '', password2: '' };
+            },
+            function(error) {
+                console.log('attemptRegister() error response: ');
+                console.log(error);
+            }
+        );
+    };
+});
+/* RegisterController */
+
+
+/* ViewAuthorService */
+app.service('ViewAuthorService', function() {
+    let service = this;
+    
+    service.email = '';
+    
+    service.setEmail = function(email) {
+        service.email = email;
+    };
+    
+    service.getEmail = function(email) {
+        return service.email;
+    }
+});
+/* ViewAuthorService */
+
+
+/* AppController */
+app.controller('AppController', function($scope, ViewAuthorService) {
+    $scope.tab = 'Home';
+    
+    
+    $scope.homeTab = function() {
+        $scope.tab = 'Home';
+    };
+    
+    $scope.viewAuthor = function(email) {
+        $scope.tab = 'ViewAuthor';
+        ViewAuthorService.setEmail(email);
+    };
+});
+/* AppController */
+
+
+/* HomeTabController */
+app.controller('HomeTabController', function($scope) {
+    
+});
+/* HomeTabController */
+
+
+/* ViewAuthorController */
+app.controller('ViewAuthorController', function($scope, $http, $q, ViewAuthorService) {
+    let email = ViewAuthorService.getEmail();
+    
+    $scope.user = null;
+    
+    $http('getUserInfoController', email)
+    .then(
+        function(response) {
+        },
+        function(error) {
+            
+        });
+        
+        
+    $http('getRecipesByUserIdController', user.id)
+    .then(
+        function(response) {
+        },
+        function(error) {
+        });
+    
+});
+/* ViewAuthorController */
+
+
+
