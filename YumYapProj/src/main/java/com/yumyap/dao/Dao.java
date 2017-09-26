@@ -16,7 +16,7 @@ public interface Dao {
 	public Recipe addRecipe(Recipe r);
 	
 	
-	public User getUser(String username);
+	public User getUser(String email);
 //	public int getFoods(String search);
 	public List<Comment> getComments(Recipe r);
 	public List<Recipe>	getRecipes(String search);

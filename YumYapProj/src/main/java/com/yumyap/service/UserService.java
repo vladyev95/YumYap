@@ -1,6 +1,5 @@
 package com.yumyap.service;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -9,15 +8,13 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.yumyap.beans.Comment;
-import com.yumyap.beans.Food;
-import com.yumyap.beans.FoodItem;
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 import com.yumyap.dao.Dao;
-import com.yumyap.dao.DaoImpl;
 import com.yumyap.dto.ProfileDto;
 import com.yumyap.dto.RecipeDto;
 import com.yumyap.dto.RecipesDto;
@@ -39,13 +36,38 @@ public class UserService implements UserServiceInterface {
 
 	@Override
 	public UserDto createUser(UserDto userDto) {
-		// FIXME need username validation
-		// FIXME add the rest of the necessary fields
-		System.out.println(userDto);
-		User user = new User(userDto);
-		user = DaoImpl.addUser(user);
-		userDto.setId(user.getId());
-		return userDto;
+		// Validation
+		if (userDto == null)
+			return null;
+		if (userDto.getEmail().equals("") || userDto.getFirstname().equals("") ||
+				userDto.getLastname().equals("") || userDto.getPassword().equals("")) {
+			System.out.println("One or more required fields are empty");
+			return null;
+		}
+		User thisUser = DaoImpl.getUser(userDto.getEmail());
+		if (thisUser != null && thisUser.getEmail().equals(userDto.getEmail())) {
+			System.out.println("A user already exists with the given email");
+			return null;
+		}
+		if (!isEmailValid(userDto.getEmail())) {
+			System.out.println("Given email is invalid");
+			return null;
+		}
+		
+		try {
+			User user = new User(userDto);
+			user.setActive(1);
+			user = DaoImpl.addUser(user);
+			userDto.setId(user.getId());
+		
+			return userDto;
+			
+		} catch (DataIntegrityViolationException e) {
+			// This catch block should never be reached. Table validation is
+			// done before the try block
+			System.out.println("A constraint on the user table was violated");
+			return null;
+		}
 	}
 	@Override
 	public UserDto addFollowing(UserDto user, UserDto follower) {
@@ -118,8 +140,9 @@ public class UserService implements UserServiceInterface {
 		User user = DaoImpl.getUser(userDto.getEmail());
 
 		if (user != null && (user.getPassword().equals(userDto.getPassword()))) {
-			System.out.println("setting userdto to true");
+			System.out.println("setting userDto to true");
 			userDto.setLoggedIn(true);
+			
 		} else {
 			return null;
 		}
@@ -129,13 +152,11 @@ public class UserService implements UserServiceInterface {
 
 	@Override
 	public boolean isEmailValid(String email) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		if (email.contains("@") && email.contains(".com"))
+			if (email.lastIndexOf('@') < email.lastIndexOf(".com"))
+				return true;
 
-	@Override
-	public boolean isEmailAvailable(String email) {
-		// TODO Auto-generated method stub
+		System.out.println("Email addresses must contain a valid domain such as \"something@something.com\"");
 		return false;
 	}
 
