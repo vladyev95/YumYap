@@ -26,14 +26,15 @@ public class RecipeService {
 	 * This takes a string representing the comment, the userDto and 
 	 * the recipe to which the comment should be added, creates the date based on the current time
 	 */
-	public boolean addComment(Recipe recipe, String comment, UserDto user) {
-		
-		java.util.Date now = new java.util.Date();
-		Date today = new Date(now.getTime());
-		Comment c = new Comment(recipe, new User(user), today, comment);
-		return true;
-	}
-	
+//	public boolean addComment() {
+//		
+//		java.util.Date now = new java.util.Date();
+//		Date today = new Date(now.getTime());
+//		Comment c = new Comment();
+//		c.setRecipeDto(recipe); new User(user), today, comment);
+//		return true;
+//	}
+//	
 
 
 }

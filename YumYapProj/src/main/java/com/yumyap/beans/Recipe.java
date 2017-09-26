@@ -46,6 +46,12 @@ public class Recipe {
 	@JoinTable(name = "Recipes_Ingredients", joinColumns = { @JoinColumn(name = "recipe_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "fooditem_id") })
 	private Set<FoodItem> ingredients;
+	
+	private double calories;
+	private double protein;
+	private double carbs;
+	private double fat;
+	
 
 	public Recipe() {}
 

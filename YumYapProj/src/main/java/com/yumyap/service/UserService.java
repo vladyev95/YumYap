@@ -24,7 +24,7 @@ import com.yumyap.dto.RecipesDto;
 import com.yumyap.dto.UserDto;
 
 @Service
-public class UserService implements ServiceInterface {
+public class UserService implements UserServiceInterface {
 
 	@Autowired
 	private Dao DaoImpl;
@@ -77,6 +77,9 @@ public class UserService implements ServiceInterface {
 //		return null;
 //	}
 
+
+	// Verify that user != follower
+	// follower is added to user's list of followers
 	@Override
 	public boolean addFollowing(User user, User follower) {
 		// TODO Auto-generated method stub

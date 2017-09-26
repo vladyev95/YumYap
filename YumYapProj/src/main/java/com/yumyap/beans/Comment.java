@@ -23,7 +23,7 @@ public class Comment {
 	private int id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	private Recipe recipeDto;
+	private Recipe recipe;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 
@@ -38,10 +38,10 @@ public class Comment {
 	public Comment() {
 	}
 
-	public Comment(int id, Recipe recipeDto, User user, Date date, String comment) {
+	public Comment(int id, Recipe recipe, User user, Date date, String comment) {
 		super();
 		this.id = id;
-		this.recipeDto = recipeDto;
+		this.recipe = recipe;
 		this.user = user;
 		this.date = date;
 		this.comment = comment;
@@ -55,12 +55,12 @@ public class Comment {
 		this.id = id;
 	}
 
-	public Recipe getRecipeDto() {
-		return recipeDto;
+	public Recipe getRecipe() {
+		return recipe;
 	}
 
-	public void setRecipeDto(Recipe recipeDto) {
-		this.recipeDto = recipeDto;
+	public void setRecipe(Recipe recipe) {
+		this.recipe = recipe;
 	}
 
 	public User getUser() {
@@ -89,7 +89,7 @@ public class Comment {
 
 	@Override
 	public String toString() {
-		return "Comment [id=" + id + ", recipeDto=" + recipeDto + ", user=" + user + ", date=" + date + ", comment="
+		return "Comment [id=" + id + ", recipeDto=" + recipe + ", user=" + user + ", date=" + date + ", comment="
 				+ comment + "]";
 	}
 
