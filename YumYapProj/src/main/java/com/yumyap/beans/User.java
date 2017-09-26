@@ -82,8 +82,8 @@ public class User {
 		this.password = userDto.getPassword();
 		this.email = userDto.getEmail();
 		this.active = userDto.getActive();
-		for(RecipeDto r: userDto.getFavoriteRecipes()) {
-		this.favoriteRecipes.add(new Recipe(r));}
+//		for(RecipeDto r: userDto.getFavoriteRecipes()) {
+//		this.favoriteRecipes.add(new Recipe(r));}
 	}
 
 	public int getId() {

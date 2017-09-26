@@ -72,7 +72,7 @@ public class DaoImpl implements Dao {
 
 	public User getUser(String email) {
 		Session s = sessionFactory.getCurrentSession();
-		return (User) s.createCriteria(User.class).add(Restrictions.ilike("email", email));
+		return (User) s.createCriteria(User.class).add(Restrictions.ilike("email", email)).uniqueResult();
 
 	}
 
