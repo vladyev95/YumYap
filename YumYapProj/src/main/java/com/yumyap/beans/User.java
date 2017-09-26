@@ -17,6 +17,7 @@ import javax.persistence.Table;
 
 import com.yumyap.dto.UserDto;
 
+
 @Entity
 @Table(name = "USERS")
 public class User {
@@ -28,9 +29,14 @@ public class User {
 	private int id;
 
 	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+	        name = "User_Following", 
+	        joinColumns = { @JoinColumn(name = "user_id") }, 
+	        inverseJoinColumns = { @JoinColumn(name = "suer_id") }
+	    )
 	private Set<User> following;
 
-	@Column(name = "FIRSTNAME", nullable = false)
+	@Column(name = "FIRSTNAME")
 	private String firstname;
 
 	@Column(name = "LASTNAME", nullable = false)
@@ -42,7 +48,7 @@ public class User {
 	@Column(name = "EMAIL", nullable = false, unique = true)
 	private String email;
 
-	@Column(name = "Active", columnDefinition = "1")
+	@Column(name = "Active")
 	private int active;
 
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -50,8 +56,17 @@ public class User {
 			@JoinColumn(name = "recipe_id") })
 	private List<Recipe> favoriteRecipes;
 
-	public User() {
-		super();
+	public User() {}
+	
+	public User(UserDto user) {
+		this.active = user.getActive();
+		this.email = user.getEmail();
+		this.favoriteRecipes = user.getFavoriteRecipes();
+		this.firstname = user.getFirstname();
+		this.lastname = user.getLastname();
+		this.id = user.getId();
+		this.password = user.getPassword();
+				
 	}
 
 	public User(int id, Set<User> following, String firstname, String lastname, String password, String email,

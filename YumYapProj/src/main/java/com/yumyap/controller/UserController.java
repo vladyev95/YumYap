@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,8 +15,8 @@ import com.yumyap.dto.RecipesDto;
 import com.yumyap.dto.UserDto;
 import com.yumyap.service.UserService;
 
-@RestController
-@RequestMapping(value = "/user")
+@Controller
+@RequestMapping(value="/user")
 public class UserController {
 
 	@Autowired
@@ -47,6 +48,7 @@ public class UserController {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto) {
 		System.out.println("creating new user");
+		System.out.println(userDto);
 		userService.createUser(userDto);
 		return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
 	}
@@ -61,10 +63,13 @@ public class UserController {
 
 	@RequestMapping(value = "/profile", method = { RequestMethod.GET }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<ProfileDto> loadProfile(@RequestBody UserDto userDto) {
+	public ResponseEntity<ProfileDto> loadProfile(@RequestBody String email) {
 		System.out.println("Loading Profile");
-
-		return new ResponseEntity<ProfileDto>(userService.getProfile(userDto), HttpStatus.OK);
+		
+		return new ResponseEntity<ProfileDto>(
+				userService.getProfile(email), HttpStatus.OK);
 	}
+	
+	
 
 }

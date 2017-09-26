@@ -21,6 +21,7 @@ public class FoodItem {
 	private String measure;
 	private double amount;
 
+
 	public FoodItem() {
 	}
 
