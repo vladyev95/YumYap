@@ -14,8 +14,6 @@ import com.yumyap.dto.RecipesDto;
 public class RecipeService implements RecipeServiceInterface{
 
 	private Dao DaoImpl;
-	
-	
 
 	public void setDaoImpl(Dao daoImpl) {
 		DaoImpl = daoImpl;
@@ -23,8 +21,12 @@ public class RecipeService implements RecipeServiceInterface{
 
 	@Override
 	public RecipeDto addRecipe(RecipeDto recipe) {
-		DaoImpl.addRecipe(new Recipe(recipe));
+		DaoImpl.addRecipe(getRecipeBean(recipe));
 		return recipe;
+	}
+
+	private Recipe getRecipeBean(RecipeDto recipe) {
+		return DaoImpl.getRecipeById(recipe.getId());
 	}
 
 	@Override

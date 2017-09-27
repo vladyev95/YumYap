@@ -40,8 +40,8 @@ public class UserService implements UserServiceInterface {
 		// Validation
 		if (userDto == null)
 			return null;
-		if (userDto.getEmail().equals("") || userDto.getFirstname().equals("") ||
-				userDto.getLastname().equals("") || userDto.getPassword().equals("")) {
+		if (userDto.getEmail().equals("") || userDto.getFirstName().equals("") ||
+				userDto.getLastName().equals("") || userDto.getPassword().equals("")) {
 			System.out.println("One or more required fields are empty");
 			return null;
 		}
@@ -56,8 +56,7 @@ public class UserService implements UserServiceInterface {
 		}
 
 		try {
-			User user = new User(userDto);
-			user.setActive(1);
+			User user = getUserBean(userDto);
 			user = DaoImpl.addUser(user);
 			userDto.setId(user.getId());
 
@@ -72,7 +71,7 @@ public class UserService implements UserServiceInterface {
 	}
 	@Override
 	public UserDto addFollowing(UserDto user, UserDto follower) {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
@@ -81,7 +80,6 @@ public class UserService implements UserServiceInterface {
 
 		return user.getFollowing();
 	}
-
 
 	/*
 	 * takes the RecipeDto & UserDto
@@ -94,10 +92,18 @@ public class UserService implements UserServiceInterface {
 		List<Recipe> recipes = new ArrayList<Recipe>();
 		recipeDtos.add(recipe);
 		user.setFavoriteRecipes(recipeDtos);
-		for(RecipeDto r: recipeDtos) { recipes.add(new Recipe(r));}
-		User u = new User(user);
+		for(RecipeDto r: recipeDtos) {recipes.add(getRecipeBean(r));}
+		User u = getUserBean(user);
 		DaoImpl.updateUser(u);
 		return user;
+	}
+
+	private Recipe getRecipeBean(RecipeDto r) {
+		return DaoImpl.getRecipeById(r.getId());
+	}
+
+	private User getUserBean(UserDto user) {
+		return DaoImpl.getUserById(user.getId());
 	}
 
 	@Override
@@ -105,7 +111,7 @@ public class UserService implements UserServiceInterface {
 		Set<User> following = user.getFollowing();
 		Set<Recipe> recipes;
 		if(DaoImpl.getRecipes().size() > 1) {
-			Comparator<Recipe> byCreation = (Recipe o1, Recipe o2) -> o1.getCreated().compareTo(o2.getCreated());
+			Comparator<Recipe> byCreation = (Recipe o1, Recipe o2) -> o1.getTimeCreated().compareTo(o2.getTimeCreated());
 			recipes = new ConcurrentSkipListSet<>(byCreation);
 			if(following != null) {
 				for (User u : following) {
@@ -131,14 +137,11 @@ public class UserService implements UserServiceInterface {
 		String email = userDto.getEmail();
 		ProfileDto profile = new ProfileDto();
 		User user = DaoImpl.getUser(email);
-		List<Recipe> recs = user.getFavoriteRecipes();
-
+		Set<Recipe> recs = user.getFavoriteRecipes();
 		List<RecipeDto> rec = new ArrayList<RecipeDto>();
 		for(Recipe r: recs) {
 			rec.add(new RecipeDto(r));
-			System.out.println(r);}
-
-		rec.add(new RecipeDto(1,null,null,"name","description",null,"image",null));
+			}
 		profile.setRecipes(rec);
 		profile.setUser(user);
 		return profile;
@@ -147,7 +150,7 @@ public class UserService implements UserServiceInterface {
 	@Override
 	public UserDto deactivateUser(UserDto userDto) {
 		userDto.setActive(0);
-		User user = new User(userDto);
+		User user = getUserBean(userDto);
 		DaoImpl.updateUser(user);
 		return userDto;
 	}

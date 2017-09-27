@@ -140,4 +140,16 @@ public class DaoImpl implements Dao {
 		return (Recipe) currentSession().createCriteria(Recipe.class).add(Restrictions.eq("id", i)).uniqueResult();
 	}
 
+	@Override
+	public Recipe getRecipeById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User getUserById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

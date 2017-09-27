@@ -31,5 +31,7 @@ public interface Dao {
 	public void setRecipes(List<Recipe> recs);
 	public Recipe getRecipe(int i);
 	public List<Recipe> getRecipes();
+	public Recipe getRecipeById(int id);
+	public User getUserById(int id);
 	
 }

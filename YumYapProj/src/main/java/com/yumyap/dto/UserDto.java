@@ -14,9 +14,9 @@ public class UserDto {
 
 	private Set<User> following;
 
-	private String firstname;
+	private String firstName;
 
-	private String lastname;
+	private String lastName;
 
 	private String password;
 
@@ -26,13 +26,13 @@ public class UserDto {
 	
 	private boolean loggedIn;
 	
-	public UserDto(int id, Set<User> following, String firstname, String lastname, String password, String email,
+	public UserDto(int id, Set<User> following, String firstName, String lastName, String password, String email,
 			int active, boolean loogedIn, List<RecipeDto> favoriteRecipes) {
 		super();
 		this.id = id;
 		this.following = following;
-		this.firstname = firstname;
-		this.lastname = lastname;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.password = password;
 		this.email = email;
 		this.active = active;
@@ -45,12 +45,10 @@ public class UserDto {
 	public UserDto(User user) {
 		this.id = user.getId();
 		this.following = user.getFollowing();
-		this.firstname = user.getFirstname();
-		this.lastname = user.getLastname();
+		this.firstName = user.getFirstName();
+		this.lastName = user.getLastName();
 		this.password = user.getPassword();
 		this.email = user.getEmail();
-		this.active = user.getActive();
-		
 		for(Recipe r: user.getFavoriteRecipes()) {
 			this.favoriteRecipes.add(new RecipeDto(r));
 		}
@@ -72,20 +70,20 @@ public class UserDto {
 		this.following = following;
 	}
 
-	public String getFirstname() {
-		return firstname;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getPassword() {
@@ -123,7 +121,7 @@ public class UserDto {
 
 	@Override
 	public String toString() {
-		return "UserDto [id=" + id + ", following=" + following + ", firstname=" + firstname + ", lastname=" + lastname
+		return "UserDto [id=" + id + ", following=" + following + ", firstName=" + firstName + ", lastName=" + lastName
 			  + ", password=" + password + ", email=" + email + ", active=" + active
 				+ ", favoriteRecipes=" + favoriteRecipes + ", loggedIn=" + loggedIn + "]";
 	}

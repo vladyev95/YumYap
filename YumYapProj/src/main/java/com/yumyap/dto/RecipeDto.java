@@ -7,11 +7,12 @@ import java.util.Set;
 
 import com.yumyap.beans.FoodItem;
 import com.yumyap.beans.Recipe;
+import com.yumyap.beans.RecipeDirection;
 import com.yumyap.beans.User;
 
 public class RecipeDto {
 	
-private int id;
+	private int id;
 	
 	private Time created;
 
@@ -21,18 +22,16 @@ private int id;
 	
 	private String description;
 	
-	private List<String> directions;
+	private List<RecipeDirection> directions;
 	
-	private String image;
+	private String imageUrl;
 	
 	private Set<FoodItem> ingredients;
 	
-	
-	
 	public RecipeDto() {}
 	
-	public RecipeDto(int id, Time created, User creator, String name, String description, List<String> directions,
-			String image, Set<FoodItem> ingredients) {
+	public RecipeDto(int id, Time created, User creator, String name, String description, List<RecipeDirection> directions,
+			String imageUrl, Set<FoodItem> ingredients) {
 		super();
 		this.id = id;
 		this.created = created;
@@ -40,22 +39,18 @@ private int id;
 		this.name = name;
 		this.description = description;
 		this.directions = directions;
-		this.image = image;
+		this.imageUrl = imageUrl;
 		this.ingredients = ingredients;
 	}
 	
 	public RecipeDto(Recipe recipe) {
 		this.id = recipe.getId();
-		this.created = recipe.getCreated();
+		this.created = recipe.getTimeCreated();
 		this.creator = recipe.getCreator();
 		this.name = recipe.getName();
 		this.description = recipe.getDescription();
-		this.directions = null;//new ArrayList<String>();
-		
-//		for(String s : recipe.getDirections().split("$$")) {
-//			directions.add(s);
-//		}
-		this.image = recipe.getImage();
+		this.directions = recipe.getDirections();
+		this.imageUrl = recipe.getImageUrl();
 		this.ingredients = recipe.getIngredients();
 	}
 
@@ -99,20 +94,20 @@ private int id;
 		this.description = description;
 	}
 
-	public List<String> getDirections() {
+	public List<RecipeDirection> getDirections() {
 		return directions;
 	}
 
-	public void setDirections(List<String> directions) {
+	public void setDirections(List<RecipeDirection> directions) {
 		this.directions = directions;
 	}
 
 	public String getImage() {
-		return image;
+		return imageUrl;
 	}
 
 	public void setImage(String image) {
-		this.image = image;
+		this.imageUrl = image;
 	}
 
 	public Set<FoodItem> getIngredients() {
@@ -123,6 +118,4 @@ private int id;
 		this.ingredients = ingredients;
 	}
 	
-	
-
 }
