@@ -39,10 +39,4 @@ public class UserServiceImpl implements UserService {
 	public boolean attemptRegister(User user) {
 		return dao.addUser(user);
 	}
-
-	@Override
-	public Set<Recipe> getFollowingRecipes(User user) {
-		return null;
-		//return dao.getFollowingRecipesById(user.getId());
-	}
 }

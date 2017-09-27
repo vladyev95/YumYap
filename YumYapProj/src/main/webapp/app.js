@@ -1,24 +1,3 @@
-// Copy - Pastable JavaScript Objects based on Dtos
-//  UserDto:
-//  user = {id: <int>,
-//	favoriteRecipes: {<array of recipeDtos>},
-//	following: {<array of users>},
-//	firstname: "",
-//	lastname: "",
-//	password: "",
-//	email: "",
-//	active: "", //(this is a number)
-//	loggedIn: "" } //this is a boolean
-// RecipeDto:
-//  id: "",
-//	created: "" //this is a time and will have to be formatted
-//	creator: {User object}
-//	name: "",
-//	description: "",
-//	directions: { list of strings},
-//	image: image url,
-//	ingredients: {list of strings}
-
 let app = angular.module('app', ['ngRoute']);
 
 
@@ -79,6 +58,10 @@ app.service('RegisterService', function($http, $q) {
 /* LoggedInUserService */
 app.service('LoggedInUserService', function() {
 	let service = this;
+	
+	service.getUser = function() {
+		return service.user;
+	}
 	
 	service.setUser = function(user) {
 		service.user = user;
@@ -163,23 +146,55 @@ app.controller('AppController', function($scope, LoggedInUserService) {
 });
 /* AppController */
 
-app.service('HomeTabRecipesService', function() {
-	
+app.service('HomeTabRecipesService', function(LoggedInUserService) {
+	//$http('/getFollowingRecipes', LoggedInUserService.getUser());
 });
 
 /* HomeTabController */
-app.controller('HomeTabController', function($scope) {
+app.controller('HomeTabController', function($scope, LoggedInUserService) {
+	//let following = LoggedInUserService.getUser().following;
+	
+	
+	
     $scope.recipes = [{
-    	name: 'Recipe Name',
-    	description: 'Recipe Description',
-    	image: 'https://camo.mybb.com/e01de90be6012adc1b1701dba899491a9348ae79/687474703a2f2f7777772e6a71756572797363726970742e6e65742f696d616765732f53696d706c6573742d526573706f6e736976652d6a51756572792d496d6167652d4c69676874626f782d506c7567696e2d73696d706c652d6c69676874626f782e6a7067',
+    	name: 'Baked Spaghetti',
+    	description: 'Delicious baked spaghetti',
+    	image: 'http://del.h-cdn.co/assets/17/37/980x490/landscape-1505340657-baked-spaghetti-delish-1.jpg',
     	creator: {
-    		firstName: 'Vladimir',
-    		lastName: 'Yevseenko'
+    		firstName: 'Rian',
+    		lastName: 'Handler'
     	},
-    	ingredients: [ {name: 'Cheese', measure: 'cups', amount: 2}, {name: 'bread', measure: 'slices', amount: 3} ],
-    	directions: [ '1. add cheese', '2. add bread' ]
+    	ingredients: [ 
+    	               { name: 'spaghetty', measure: 'oz', amount: 16 }, 
+    	               { name: 'extra virgin olive oil', measure: 'tbsp', amount: 2},
+    	               { name: 'medium yellow onion, finely chopped', measure: 'cup', amount: 1},
+    	               { name: 'minced garlec', measure: 'cloves', amount: 2},
+    	               { name: 'ground beef', measure: 'lb', amount: 1}
+    					],
+    	directions: [ 
+    	              'Preheat over to 350 degrees', 
+    	              'Cook spaghetti' ,
+    	              'Garnish with parsley'
+    	              ]
     	
-    }];
+    }, {
+    	name: 'Chicken Curry',
+    	description: 'Some fire chicken curry',
+    	image: 'http://del.h-cdn.co/assets/17/31/980x490/landscape-1501791674-delish-chicken-curry-horizontal.jpg',
+    	creator: {
+    		firstName: 'Jack',
+    		lastName: 'Diamond'
+    	},
+    	ingredients: [
+    	              { name: 'basmati rice', measure: 'cups', amount: '4' },
+    	              { name: 'paprika', measure: 'tsp', amount: 1},
+    	              { name: 'chicken breast', measure: 'lb', amount: 2 }
+    		 ],
+    	directions: [
+    	             'In large pot, heat oil, add onion and cook',
+    	             'season with salt and pepper',
+    	             'garnish with cilantro'
+    	             ]	
+    } ];
 });
 /* HomeTabController */

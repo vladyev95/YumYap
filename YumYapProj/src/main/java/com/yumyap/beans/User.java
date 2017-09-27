@@ -193,13 +193,13 @@ public class User {
 	@Override
 	public String toString() {
 		return "User { id: " + id + 
-				/*", following: " + following + */
 				", firstName: " + firstName + 
 				", lastName: " + lastName +
 				", password: " + password + 
 				", email: " + email + 
 				", following: " + following +
-				", favoriteRecipes: " + favoriteRecipes + " }";
+				", favoriteRecipes: " + favoriteRecipes + 
+				", createdRecipes: " + createdRecipes + " }";
 	}
 
 }

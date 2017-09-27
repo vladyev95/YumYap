@@ -27,12 +27,4 @@ public interface UserService {
 	 * @return Whether the User was successfully registered
 	 */
 	boolean attemptRegister(User user);
-	
-	
-	/**
-	 * Returns all the recipes from people that the given User follows
-	 * @param user The logged in User who we need to display recipes to
-	 * @return A Set of all the Recipes by Users that the given User follows
-	 */
-	Set<Recipe> getFollowingRecipes(User user);
 }

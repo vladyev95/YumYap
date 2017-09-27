@@ -24,7 +24,7 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
                 <p id="recipe-description" ng-bind="recipe.description"></p>
             </div>
             <div class="recipe-content">
-                <img id="recipe-image" ng-src="recipe.image" width="100" height="100"></img>
+                <img id="recipe-image" ng-src="{{recipe.image}}" width="100" height="100"></img>
                 <div>
                     Posted by {{recipe.creator.firstname + " " + recipe.creator.lastname}}
                     <!-- This button should bring you to the user that posted it -->

@@ -50,14 +50,4 @@ public class UserController {
 		
 		return new ResponseEntity<Boolean>(userService.attemptRegister(user), HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "/getFollowingRecipes",
-			method = RequestMethod.POST,
-			consumes = MediaType.APPLICATION_JSON_VALUE,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Set<Recipe>> getFollowingRecipes(@RequestBody User user) {
-		logger.trace("getFollowingRecipes() using " + user);
-		return new ResponseEntity<Set<Recipe>>(userService.getFollowingRecipes(user), HttpStatus.OK);
-	}
-
 }
