@@ -1,6 +1,5 @@
 package com.yumyap.beans;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -12,83 +11,69 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.yumyap.dto.RecipeDto;
-import com.yumyap.dto.UserDto;
+import org.apache.log4j.Logger;
 
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "users")
 public class User {
+	
+	private final static Logger logger = Logger.getLogger(User.class);
 
 	@Id
-	@Column(name = "USERID")
-	@SequenceGenerator(name = "UID_SEQ", sequenceName = "UID_SEQ")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UID_SEQ")
+	@Column(name = "user_id")
+	@SequenceGenerator(name = "user_id_sequence", sequenceName = "user_id_sequence")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_sequence")
 	private int id;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(
-	        name = "User_Following", 
-	        joinColumns = { @JoinColumn(name = "user_id") }, 
-	        inverseJoinColumns = { @JoinColumn(name = "suer_id") }
-	    )
-	private Set<User> following;
+	
+	//private Set<User> following;
 
-	@Column(name = "FIRSTNAME")
-	private String firstname;
+	@Column(name = "first_name", nullable = false)
+	private String firstName;
 
-	@Column(name = "LASTNAME", nullable = false)
-	private String lastname;
-
-	@Column(name = "PASSWORD", nullable = false)
-	private String password;
-
-	@Column(name = "EMAIL", nullable = false, unique = true)
+	@Column(name = "last_name", nullable = false)
+	private String lastName;
+	
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 
-	@Column(name = "Active")
-	private int active;
-
+	@Column(name = "password", nullable = false)
+	private String password;
+	
+	/*
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "User_Recipes", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "recipe_id") })
-	private List<Recipe> favoriteRecipes;
+	@JoinTable(name = "users_favorite_recipes_junction", 
+				joinColumns = @JoinColumn(name = "user_id"), 
+				inverseJoinColumns =  @JoinColumn(name = "recipe_id"))
+	private Set<Recipe> favoriteRecipes;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "users_created_recipes_junction",
+				joinColumns = @JoinColumn(name = "user_id"),
+				inverseJoinColumns = @JoinColumn(name = "recipe_id"))
+	private Set<Recipe> createdRecipes;*/
 
 	public User() {}
-<<<<<<< HEAD
 
-=======
->>>>>>> loginRegister
-
-	public User(int id, Set<User> following, String firstname, String lastname, String password, String email,
-			int active, List<Recipe> favoriteRecipes) {
-		super();
-		this.id = id;
-		this.following = following;
-		this.firstname = firstname;
-		this.lastname = lastname;
+	public User(Set<User> following, 
+			String firstName, 
+			String lastName, 
+			String password, 
+			String email, 
+			Set<Recipe> favoriteRecipes) {
+		//this.following = following;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.password = password;
 		this.email = email;
-		this.active = active;
-		this.favoriteRecipes = favoriteRecipes;
+		/*this.favoriteRecipes = favoriteRecipes;*/
 	}
-
-	public User(UserDto userDto) {
-		super();
-		this.id = userDto.getId();
-		this.following = userDto.getFollowing();
-		this.firstname = userDto.getFirstname();
-		this.lastname = userDto.getLastname();
-		this.password = userDto.getPassword();
-		this.email = userDto.getEmail();
-		this.active = userDto.getActive();
-		for(RecipeDto r: userDto.getFavoriteRecipes()) {
-		this.favoriteRecipes.add(new Recipe(r));}
-	}
-
+	
 	public int getId() {
 		return id;
 	}
@@ -96,7 +81,7 @@ public class User {
 	public void setId(int id) {
 		this.id = id;
 	}
-
+/*
 	public Set<User> getFollowing() {
 		return following;
 	}
@@ -104,21 +89,21 @@ public class User {
 	public void setFollowing(Set<User> following) {
 		this.following = following;
 	}
-
-	public String getFirstname() {
-		return firstname;
+*/
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getPassword() {
@@ -136,28 +121,32 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public int getActive() {
-		return active;
-	}
-
-	public void setActive(int active) {
-		this.active = active;
-	}
-
-	public List<Recipe> getFavoriteRecipes() {
+	
+/*	public Set<Recipe> getFavoriteRecipes() {
 		return favoriteRecipes;
 	}
 
-	public void setFavoriteRecipes(List<Recipe> favoriteRecipes) {
+	public void setFavoriteRecipes(Set<Recipe> favoriteRecipes) {
 		this.favoriteRecipes = favoriteRecipes;
 	}
+	
+	public Set<Recipe> getCreatedRecipes() {
+		return createdRecipes;
+	}
+	
+	public void setCreatedRecipes(Set<Recipe> createdRecipes) {
+		this.createdRecipes = createdRecipes;
+	}*/
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", following=" + following + ", firstname=" + firstname + ", lastname=" + lastname
-				+ ", password=" + password + ", email=" + email + ", active=" + active
-				+ ", favoriteRecipes=" + favoriteRecipes + "]";
+		return "User { id: " + id + 
+				/*", following: " + following + */
+				", firstName: " + firstName + 
+				", lastName: " + lastName +
+				", password: " + password + 
+				", email: " + email + " }";
+				/*", favoriteRecipes: " + favoriteRecipes + " }";*/
 	}
 
 }

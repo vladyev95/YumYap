@@ -19,33 +19,29 @@
 	<context:component-scan base-package="com.yumyap" />
 	<mvc:annotation-driven/>
 
-<bean id="myDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
-		<property name="url"
-			value="jdbc:oracle:thin:@vladdb.ckwavtaqqhv9.us-east-2.rds.amazonaws.com:1521:ORCL"></property>
-		<property name="username" value="vladyev"></property>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+		<property name="username" value="bank_user"></property>
 		<property name="password" value="p4ssw0rd"></property>
 	</bean>
 
-	<bean id="mySessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<property name="dataSource" ref="myDataSource"></property>
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
 		<property name="packagesToScan" value="com.yumyap.beans"></property>
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.dialect">
-				org.hibernate.dialect.Oracle10gDialect</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
 				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.formate_sql">true</prop>
-<!-- 				<prop key="hibernate.hbm2ddl.auto">create</prop> -->
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.format_sql">true</prop>
+ 				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
 			</props>
 		</property>
 	</bean>
 	
-	<bean id="transactionManager"
-	class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" ref="mySessionFactory"></property>
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 
 

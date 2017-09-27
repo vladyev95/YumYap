@@ -3,6 +3,7 @@ package com.yumyap.beans;
 import java.sql.Time;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,105 +14,134 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.yumyap.dto.RecipeDto;
+import org.apache.log4j.Logger;
 
 @Entity
-@Table(name = "RECIPE")
+@Table(name = "recipes")
 public class Recipe {
+	
+	private static final Logger logger = Logger.getLogger(Recipe.class);
 
 	@Id
-	@Column(name = "RECIPEID")
-	@SequenceGenerator(name = "RID_SEQ", sequenceName = "RID_SEQ")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RID_SEQ")
+	@Column(name = "recipe_id")
+	@SequenceGenerator(name = "recipe_id_sequence", sequenceName = "recipe_id_sequence")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "recipe_id_sequence")
 	private int id;
 
-	private Time created;
+	@Column(name = "time_created")
+	private Time timeCreated;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id")
 	private User creator;
 	
+	@Column(name = "name", nullable = false)
 	private String name;
 	
+	@Column(name = "description", nullable = false)
 	private String description;
 
-	private String directions;
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "recipe_direction_id")
+	private Set<RecipeDirection> directions;
 	
-	private String image;
+	@Column(name = "image_url", nullable = false)
+	private String imageUrl;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "Recipes_Ingredients", joinColumns = { @JoinColumn(name = "recipe_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "fooditem_id") })
+	@JoinTable(name = "Recipes_Ingredients", 
+			joinColumns = @JoinColumn(name = "recipe_id"),
+			inverseJoinColumns = @JoinColumn(name = "food_item_id"))
 	private Set<FoodItem> ingredients;
 	
-	private double calories;
-	private double protein;
-	private double carbs;
-	private double fat;
-	
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "comment_id")
+	private Set<Comment> comments;
 
 	public Recipe() {}
+	
+	public Recipe(Time timeCreated, 
+			String name, 
+			String description, 
+			Set<RecipeDirection> directions, 
+			String imageUrl,
+			Set<FoodItem> ingredients) {
+		this.timeCreated = timeCreated;
+		this.name = name;
+		this.description = description;
+		this.directions = directions;
+		this.imageUrl = imageUrl;
+		this.ingredients = ingredients;
+	}
 
+
+	/**
+     * Returns the name of this recipe
+	 * @return The name of this recipe
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Sets the name of the this recipe
+	 * @param name The new name for this recipe
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public String getImage() {
-		return image;
+	/**
+	 * Returns the imageUrl for this recipe
+	 * @return The imageUrl for this recipe
+	 */
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
-
-	public void setImage(String image) {
-		this.image = image;
+	/**
+	 * Sets the imageUrl for this image
+	 * @param imageUrl The new imageUrl for this image
+	 */
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
-
-	public Recipe(RecipeDto recipe) {
-		this.id = recipe.getId();
-		this.created = recipe.getCreated();
-		this.creator = recipe.getCreator();
-		this.name = recipe.getName();
-		this.description = recipe.getDescription();
-		this.directions = "";
-		for(String s : recipe.getDirections()) {
-			directions += s;
-		}
-		this.image = recipe.getImage();
-		this.ingredients = recipe.getIngredients();
-	}
-		
-	public Recipe(int id, Time created, User creator, String name, String description, String directions, String image,
-			Set<FoodItem> ingredients) {
-		super();
-		this.id = id;
-		this.created = created;
-		this.creator = creator;
-		this.name = name;
-		this.description = description;
-		this.directions = directions;
-		this.image = image;
-		this.ingredients = ingredients;
-	}
-
+	
+	/**
+	 * Returns the id of this image
+	 * @return The id of this image
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * Sets the id of this image
+	 * @param id The new id of this image
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public Time getCreated() {
-		return created;
+	/**
+	 * Returns the java.sql.Time representing the time this Recipe was created
+	 * @return The java.sql.Time representing the time this Recipe was created
+	 */
+	public Time getTimeCreated() {
+		return timeCreated;
 	}
-
-	public void setCreated(Time created) {
-		this.created = created;
+	
+	/**
+	 * Sets the time representing the time this Recipe was created
+	 * @param timeCreated
+	 */
+	public void setCreated(Time timeCreated) {
+		this.timeCreated = timeCreated;
 	}
 
 	public User getCreator() {
@@ -130,11 +160,11 @@ public class Recipe {
 		this.description = description;
 	}
 
-	public String getDirections() {
+	public Set<RecipeDirection> getDirections() {
 		return directions;
 	}
 
-	public void setDirections(String directions) {
+	public void setDirections(Set<RecipeDirection> directions) {
 		this.directions = directions;
 	}
 
@@ -144,9 +174,14 @@ public class Recipe {
 
 	@Override
 	public String toString() {
-		return "Recipe [id=" + id + ", created=" + created + ", creator=" + creator + ", name=" + name
-				+ ", description=" + description + ", directions=" + directions + ", image=" + image + ", ingredients="
-				+ ingredients + "]";
+		return "Recipe { id: " + id + 
+				", timeCreated: " + timeCreated + 
+				", creator: " + creator + 
+				", name: " + name +
+				", description: " + description + 
+				", directions: " + directions + 
+				", imageUrl: " + imageUrl + 
+				", ingredients: " + ingredients + " }";
 	}
 
 }

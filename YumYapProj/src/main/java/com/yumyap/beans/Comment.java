@@ -8,42 +8,41 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.apache.log4j.Logger;
+
 @Entity
-@Table(name = "COMMENT")
+@Table(name = "comments")
 public class Comment {
+	
+	private static final Logger logger = Logger.getLogger(Comment.class);
 
 	@Id
-	@Column(name = "COMMENTID")
-	@SequenceGenerator(name = "CID_SEQ", sequenceName = "CID_SEQ")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CID_SEQ")
+	@Column(name = "comment_id")
+	@SequenceGenerator(name = "comment_id_sequence", sequenceName = "comment_id_sequence")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_id_sequence")
 	private int id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	private Recipe recipe;
-
-	@ManyToOne(fetch = FetchType.EAGER)
-
+	@JoinColumn(name = "user_id")
 	private User user;
 
-	@Column(name = "DATE", nullable = false)
-	private Date date;
+	@Column(name = "comment_date", nullable = false)
+	private Date comment_date;
 
-	@Column(name = "COMMENT", nullable = false)
+	@Column(name = "comment", nullable = false)
 	private String comment;
 
 	public Comment() {
 	}
 
-	public Comment(int id, Recipe recipe, User user, Date date, String comment) {
-		super();
-		this.id = id;
-		this.recipe = recipe;
+	public Comment(Recipe recipe, User user, Date comment_date, String comment) {
 		this.user = user;
-		this.date = date;
+		this.comment_date = comment_date;
 		this.comment = comment;
 	}
 
@@ -55,14 +54,6 @@ public class Comment {
 		this.id = id;
 	}
 
-	public Recipe getRecipe() {
-		return recipe;
-	}
-
-	public void setRecipe(Recipe recipe) {
-		this.recipe = recipe;
-	}
-
 	public User getUser() {
 		return user;
 	}
@@ -72,11 +63,11 @@ public class Comment {
 	}
 
 	public Date getDate() {
-		return date;
+		return comment_date;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDate(Date comment_date) {
+		this.comment_date = comment_date;
 	}
 
 	public String getComment() {
@@ -89,8 +80,10 @@ public class Comment {
 
 	@Override
 	public String toString() {
-		return "Comment [id=" + id + ", recipeDto=" + recipe + ", user=" + user + ", date=" + date + ", comment="
-				+ comment + "]";
+		return "Comment { id: " + id + 
+				", user: " + user + 
+				", comment_date: " + comment_date + 
+				", comment: " + comment + " }";
 	}
 
 }

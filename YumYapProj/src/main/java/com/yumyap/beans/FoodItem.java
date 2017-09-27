@@ -9,26 +9,29 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "FOODITEMS")
+@Table(name = "food_items")
 public class FoodItem {
 
 	@Id
-	@Column(name = "FOODITEMID")
-	@SequenceGenerator(name = "FIID_SEQ", sequenceName = "FIID_SEQ")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "FIID_SEQ")
+	@Column(name = "food_item_id")
+	@SequenceGenerator(name = "food_item_id_sequence", sequenceName = "food_item_id_sequence")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "food_item_id_sequence")
 	private int id;
-	private int food;
+	
+	@Column(name = "name")
+	private String name;
+	
+	@Column(name = "measure")
 	private String measure;
+	
+	@Column(name = "amount")
 	private double amount;
 
 
 	public FoodItem() {
 	}
 
-	public FoodItem(int id, int food, String measure, double amount) {
-		super();
-		this.id = id;
-		this.food = food;
+	public FoodItem(String measure, double amount) {
 		this.measure = measure;
 		this.amount = amount;
 	}
@@ -49,14 +52,6 @@ public class FoodItem {
 		this.id = id;
 	}
 
-	public int getFood() {
-		return food;
-	}
-
-	public void setFood(int food) {
-		this.food = food;
-	}
-
 	public double getAmount() {
 		return amount;
 	}
@@ -67,7 +62,9 @@ public class FoodItem {
 
 	@Override
 	public String toString() {
-		return "FoodItem [id=" + id + ", food=" + food + ", measure=" + measure + ", amount=" + amount + "]";
+		return "FoodItem { id=" + id + 
+				", name: " + name +
+				", measure: " + measure + 
+				", amount: " + amount + " }";
 	}
-
 }
