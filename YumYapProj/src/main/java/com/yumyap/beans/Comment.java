@@ -26,7 +26,6 @@ public class Comment {
 	private Recipe recipe;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-
 	private User user;
 
 	@Column(name = "DATE", nullable = false)

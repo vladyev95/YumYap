@@ -29,5 +29,7 @@ public interface Dao {
 	public boolean deleteFoodItem(FoodItem fi);
 	public boolean deleteRecipe(Recipe r);
 	public void setRecipes(List<Recipe> recs);
+	public Recipe getRecipe(int i);
+	public List<Recipe> getRecipes();
 	
 }

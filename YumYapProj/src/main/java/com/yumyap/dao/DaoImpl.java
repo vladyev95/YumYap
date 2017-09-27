@@ -73,7 +73,11 @@ public class DaoImpl implements Dao {
 	public User getUser(String email) {
 		Session s = sessionFactory.getCurrentSession();
 		return (User) s.createCriteria(User.class).add(Restrictions.ilike("email", email)).uniqueResult();
-
+	}
+	
+	public List<Recipe> getRecipes() {
+		Session s = sessionFactory.getCurrentSession();
+		return (List<Recipe>) s.createCriteria(Recipe.class).list();
 	}
 
 	public List<Comment> getComments(Recipe r) {
@@ -128,6 +132,12 @@ public class DaoImpl implements Dao {
 	public void setRecipes(List<Recipe> recs) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Recipe getRecipe(int i) {
+
+		return (Recipe) currentSession().createCriteria(Recipe.class).add(Restrictions.eq("id", i)).uniqueResult();
 	}
 
 }

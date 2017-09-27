@@ -1,3 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"/>
+        <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>         
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.min.js"></script>
+        <script src="app.js"></script>
+</head>
+<body ng-app = "app">
 <div id="appContent" ng-controller="AppController as app">
     <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
         <button class="navbar-toggler navbar-toggler-right" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,16 +32,18 @@
    <!-- Please set the controller to <whatever> as recipectrl TY
 we will need recipectrl.getMeasure(foodItem.measure) to return the measurement from the API found at the string foodItem.measure
 We will need recipectrl.getFood(foodItem.food) to return the name of the food from the API found at the food Id given by foodItem.food -->
-    <div ng-show="tab === 'Home'" ng-controller="HomeTabController as homeTab">
+    <div  ng-show="tab === 'Home'" ng-controller="DashboardController as homeTab">
+   
         <div class="recipe-block"  ng-repeat="recipe in recipes">
             <div id="recipe-head" class="recipe-content">
                 <h3 id="recipe-name" ng-bind="recipe.name"></h3>
                 <p id="recipe-description" ng-bind="recipe.description"></p>
             </div>
             <div class="recipe-content">
-                <img id="recipe-image" src="recipe.image" width="100" height="100"></img>
-                <div>
+<!--                 <img id="recipe-image" src="recipe.image" width="100" height="100"></img>
+ -->                <div>
                     Posted by {{recipe.creator.firstname + " " + recipe.creator.lastname}}
+                    <br>
                     <!-- This button should bring you to the user that posted it -->
                     <button ng-click="viewAuthor(recipe.author.email)">View Author Profile</button>
                 </div>
@@ -40,12 +57,12 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
                     <li ng-bind="recipe.directions"></li>
                 </ol>
             </div>
-            	<button ng-click="homeTap.favoriteRecipe()">Save this recipe</button>
+            	<button ng-click="favoriteRecipe()">Save this recipe</button>
         </div>
     
     </div>
     
-    
+<!--     
     <div ng-show="tab === 'ViewAuthor'" ng-controller="ViewAuthorController as viewAuthor">
         <h1 ng-bind="user.firstName + ' ' + user.lastName"></h1> 
         <div class="recipe-block"  ng-repeat="recipe in user.recipes">
@@ -57,7 +74,7 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
                 <img id="recipe-image" src="recipe.image" width="100" height="100"></img>
                 <div>
                     Posted by {{recipe.creator.firstname + " " + recipe.creator.lastname}}
-                    <!-- This button should bring you to the user that posted it -->
+                    This button should bring you to the user that posted it
                     <button ng-click="viewAuthor(recipe.author.email)">View Author Profile</button>
                 </div>
             </div>
@@ -71,5 +88,7 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
                 </ol>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
+</body>
+</html>
