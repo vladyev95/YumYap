@@ -31,9 +31,26 @@ public class FoodItem {
 	public FoodItem() {
 	}
 
-	public FoodItem(String measure, double amount) {
+	public FoodItem(String name, String measure, double amount) {
+		this.name = name;
 		this.measure = measure;
 		this.amount = amount;
+	}
+	
+	/**
+	 * Returns the id of this FoodItem
+	 * @return The id of this FoodItem
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * Sets the id of this FoodItem
+	 * @param id The new id of this FoodItem
+	 */
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getMeasure() {
@@ -44,13 +61,7 @@ public class FoodItem {
 		this.measure = measure;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+	
 
 	public double getAmount() {
 		return amount;

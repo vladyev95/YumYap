@@ -35,7 +35,7 @@ public class DaoImpl implements Dao {
 		this.sessionFactory = sessionFactory;
 	}
 	
-	
+	@Override
 	public boolean addUser(User user) {
 		logger.fatal("addUser() " + user);
 		Session session = sessionFactory.getCurrentSession();
@@ -44,6 +44,7 @@ public class DaoImpl implements Dao {
 		return user != null;
 	}
 
+	@Override
 	public FoodItem addFoodItem(FoodItem foodItem) {
 		logger.fatal("addFoodItem() " + foodItem);
 		Session s = sessionFactory.getCurrentSession();
@@ -52,6 +53,7 @@ public class DaoImpl implements Dao {
 		return foodItem;
 	}
 
+	@Override
 	public Comment addComment(Comment comment) {
 		logger.fatal("addComment() " + comment);
 		Session s = sessionFactory.getCurrentSession();
@@ -60,6 +62,7 @@ public class DaoImpl implements Dao {
 		return comment;
 	}
 
+	@Override
 	public Recipe addRecipe(Recipe recipe) {
 		logger.fatal("addRecipe() " + recipe);
 		Session s = sessionFactory.getCurrentSession();
