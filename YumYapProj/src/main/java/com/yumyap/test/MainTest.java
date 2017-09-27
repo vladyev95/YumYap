@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 package com.yumyap.test;
 
 import com.yumyap.beans.User;
@@ -26,4 +25,4 @@ public class MainTest {
 	}
 
 }
->>>>>>> loginRegister
+

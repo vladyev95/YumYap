@@ -1,10 +1,9 @@
 package com.yumyap.service;
 
-<<<<<<< HEAD
+
 import com.yumyap.beans.Comment;
 import com.yumyap.beans.Recipe;
-=======
->>>>>>> loginRegister
+
 import com.yumyap.dto.RecipeDto;
 import com.yumyap.dto.RecipesDto;
 

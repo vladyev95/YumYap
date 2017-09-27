@@ -76,9 +76,9 @@ public class UserService implements UserServiceInterface {
 	}
 
 	@Override
-	public List<User> getFollowing(UserDto user) {
-		// TODO Auto-generated method stub
-		return null;
+	public Set<User> getFollowing(UserDto user) {
+		
+		return user.getFollowing();
 	}
 	
 		
@@ -130,23 +130,26 @@ public class UserService implements UserServiceInterface {
 	}
 
 	@Override
-	public boolean deactivateUser(int userId) {
-		// TODO Auto-generated method stub
-		return false;
+	public UserDto deactivateUser(UserDto userDto) {
+		userDto.setActive(0);
+		User user = new User(userDto);
+		DaoImpl.updateUser(user);
+		return userDto;
 	}
 
 	@Override
 	public UserDto validateUser(UserDto userDto) {
 		User user = DaoImpl.getUser(userDto.getEmail());
-
 		if (user != null && (user.getPassword().equals(userDto.getPassword()))) {
 			System.out.println("setting userDto to true");
+			userDto = new UserDto(user);
 			userDto.setLoggedIn(true);
 			
 		} else {
 			return null;
 		}
 		System.out.println("returning user dto" + userDto.toString());
+		
 		return userDto;
 	}
 

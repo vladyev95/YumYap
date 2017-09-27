@@ -2,14 +2,11 @@ package com.yumyap.service;
 
 import org.springframework.stereotype.Service;
 
-<<<<<<< HEAD
 import com.yumyap.beans.Comment;
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 import com.yumyap.dao.DaoImpl;
 import com.yumyap.dto.RecipeDto;
-=======
->>>>>>> loginRegister
 import com.yumyap.dto.RecipesDto;
 
 @Service

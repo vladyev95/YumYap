@@ -1,6 +1,7 @@
 package com.yumyap.service;
 
 import java.util.List;
+import java.util.Set;
 
 import com.yumyap.beans.*;
 import com.yumyap.dto.ProfileDto;
@@ -16,7 +17,7 @@ public interface UserServiceInterface {
 
 
 	// READ
-	public List<User> getFollowing(UserDto user);
+	public Set<User> getFollowing(UserDto user);
 
 	// UPDATE
 	// rating is added to recipe's rating
@@ -26,7 +27,7 @@ public interface UserServiceInterface {
 
 	// UPDATE
 	// rating is added to recipe's rating
-	public boolean deactivateUser(int userId);
+	public UserDto deactivateUser(UserDto userDto);
 
 	// VALIDATION
 	public UserDto validateUser(UserDto userDto);

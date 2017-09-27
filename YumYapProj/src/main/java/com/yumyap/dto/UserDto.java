@@ -42,6 +42,20 @@ public class UserDto {
 
 	public UserDto() {}
 
+	public UserDto(User user) {
+		this.id = user.getId();
+		this.following = user.getFollowing();
+		this.firstname = user.getFirstname();
+		this.lastname = user.getLastname();
+		this.password = user.getPassword();
+		this.email = user.getEmail();
+		this.active = user.getActive();
+		
+		for(Recipe r: user.getFavoriteRecipes()) {
+			this.favoriteRecipes.add(new RecipeDto(r));
+		}
+	}
+
 	public int getId() {
 		return id;
 	}

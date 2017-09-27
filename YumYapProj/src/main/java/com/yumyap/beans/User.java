@@ -58,10 +58,7 @@ public class User {
 	private List<Recipe> favoriteRecipes;
 
 	public User() {}
-<<<<<<< HEAD
 
-=======
->>>>>>> loginRegister
 
 	public User(int id, Set<User> following, String firstname, String lastname, String password, String email,
 			int active, List<Recipe> favoriteRecipes) {
