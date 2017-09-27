@@ -54,10 +54,11 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
                 </ul>
                 <ol class="recipe-content" id="recipe-methods"
                     ng-repeat="direction in recipe.directions">
-                    <li ng-bind="recipe.directions"></li>
+                    <li ng-bind="direction"></li>
                 </ol>
             </div>
-            	<button ng-click="favoriteRecipe()">Save this recipe</button>
+            	<button ng-click="favoriteRecipe(recipe.id)">Save this recipe</button>
+            	<button ng-click="viewComments(recipe.id)">View Comments</button>
         </div>
     
     </div>

@@ -34,5 +34,8 @@ public interface UserServiceInterface {
 	public boolean isEmailValid(String email);
 	public UserDto logoutUser(UserDto userDto);
 	ProfileDto getProfile(UserDto userDto);
+	RecipeDto addRecipe(RecipeDto recipe);
+	String getMacronutrients(RecipeDto recipe);
+	RecipeDto addComment(RecipesDto recipeDto, Comment comment);
 
 }

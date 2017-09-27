@@ -10,6 +10,14 @@ public class ProfileDto {
 	private List<RecipeDto> recipes;
 	private User user;
 
+	public ProfileDto() {}
+	
+	public ProfileDto(List<RecipeDto> recipes, User user) {
+		super();
+		this.recipes = recipes;
+		this.user = user;
+	}
+
 	public List<RecipeDto> getRecipes() {
 		return recipes;
 	}
@@ -25,5 +33,12 @@ public class ProfileDto {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+	@Override
+	public String toString() {
+		return "ProfileDto {recipes=" + recipes + ", user=" + user + "}";
+	}
+	
+	
 
 }
