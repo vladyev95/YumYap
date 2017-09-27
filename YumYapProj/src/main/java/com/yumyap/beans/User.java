@@ -1,5 +1,6 @@
 package com.yumyap.beans;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -31,10 +32,10 @@ public class User {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
-	        name = "User_Following", 
-	        joinColumns = { @JoinColumn(name = "user_id") }, 
-	        inverseJoinColumns = { @JoinColumn(name = "suer_id") }
-	    )
+			name = "User_Following", 
+			joinColumns = { @JoinColumn(name = "user_id") }, 
+			inverseJoinColumns = { @JoinColumn(name = "suer_id") }
+			)
 	private Set<User> following;
 
 	@Column(name = "FIRSTNAME")
@@ -55,7 +56,7 @@ public class User {
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "User_Recipes", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "recipe_id") })
-	private List<Recipe> favoriteRecipes;
+	private List<Recipe> favoriteRecipes = new ArrayList<>();
 
 	public User() {}
 
@@ -82,8 +83,13 @@ public class User {
 		this.password = userDto.getPassword();
 		this.email = userDto.getEmail();
 		this.active = userDto.getActive();
-		for(RecipeDto r: userDto.getFavoriteRecipes()) {
-		this.favoriteRecipes.add(new Recipe(r));}
+		if (userDto.getFavoriteRecipes() != null) {
+			for(RecipeDto r: userDto.getFavoriteRecipes()) {
+				this.favoriteRecipes.add(new Recipe(r));
+			}
+		} else {
+			this.favoriteRecipes = null;
+		}
 	}
 
 	public int getId() {

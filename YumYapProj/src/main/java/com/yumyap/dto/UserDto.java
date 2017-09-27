@@ -27,7 +27,7 @@ public class UserDto {
 	private boolean loggedIn;
 	
 	public UserDto(int id, Set<User> following, String firstname, String lastname, String password, String email,
-			int active, boolean loogedIn, List<RecipeDto> favoriteRecipes) {
+			int active, boolean loggedIn, List<RecipeDto> favoriteRecipes) {
 		super();
 		this.id = id;
 		this.following = following;
@@ -36,7 +36,7 @@ public class UserDto {
 		this.password = password;
 		this.email = email;
 		this.active = active;
-		this.loggedIn = loogedIn;
+		this.loggedIn = loggedIn;
 		this.favoriteRecipes = favoriteRecipes;
 	}
 

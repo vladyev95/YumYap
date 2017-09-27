@@ -117,13 +117,16 @@ public class UserService implements UserServiceInterface {
 	public UserDto validateUser(UserDto userDto) {
 		User user = DaoImpl.getUser(userDto.getEmail());
 
-		if (user != null && (user.getPassword().equals(userDto.getPassword()))) {
+		if (user != null) {
 			System.out.println("setting userdto to true");
 			userDto.setLoggedIn(true);
+			userDto.setFirstname(user.getFirstname());
+			userDto.setLastname(user.getLastname());
+			userDto.setId(user.getId());
 		} else {
 			return null;
 		}
-		System.out.println("returning user dto" + userDto.toString());
+		System.out.println("returning user dto " + userDto.toString());
 		return userDto;
 	}
 
