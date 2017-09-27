@@ -65,7 +65,7 @@ public class UserController {
 		return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/dash", method = { RequestMethod.GET }, consumes = {
+	@RequestMapping(value = "/dash", method = { RequestMethod.POST }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<RecipesDto> loadDashboard(@RequestBody UserDto userDto) {
 		System.out.println("Loading Dashboard");
@@ -73,14 +73,17 @@ public class UserController {
 		return new ResponseEntity<RecipesDto>(userService.getDashboard(userDto, 0), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/profile", method = { RequestMethod.GET }, consumes = {
+	@RequestMapping(value = "/profile", method = { RequestMethod.POST }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<ProfileDto> loadProfile(@RequestBody String email) {
+	public ResponseEntity<ProfileDto> loadProfile(@RequestBody UserDto userDto) {
 		System.out.println("Loading Profile");
 
 		return new ResponseEntity<ProfileDto>(
-				userService.getProfile(email), HttpStatus.OK);
+				userService.getProfile(userDto), HttpStatus.OK);
 	}
+	
+	
+	
 	
 	@RequestMapping(value = "/favorite", method = { RequestMethod.POST }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -91,6 +94,14 @@ public class UserController {
 		return new ResponseEntity<UserDto>(userService.favoriteRecipe(recipeDto, userDto), HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/deactivate", method = { RequestMethod.POST }, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<UserDto> deactivateUser(@RequestBody UserDto userDto) {
+
+		System.out.println("Deactivate user");
+
+		return new ResponseEntity<UserDto>(userService.logoutUser(userDto), HttpStatus.OK);
+	}
 
 
 }

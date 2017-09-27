@@ -20,7 +20,7 @@ import com.yumyap.dto.RecipeDto;
 
 @Entity
 @Table(name = "RECIPE")
-public class Recipe {
+public class Recipe{
 
 	@Id
 	@Column(name = "RECIPEID")

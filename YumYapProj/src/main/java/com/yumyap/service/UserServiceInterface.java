@@ -33,5 +33,6 @@ public interface UserServiceInterface {
 	public UserDto validateUser(UserDto userDto);
 	public boolean isEmailValid(String email);
 	public UserDto logoutUser(UserDto userDto);
+	ProfileDto getProfile(UserDto userDto);
 
 }

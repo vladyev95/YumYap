@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -53,15 +54,15 @@ public class UserService implements UserServiceInterface {
 			System.out.println("Given email is invalid");
 			return null;
 		}
-		
+
 		try {
 			User user = new User(userDto);
 			user.setActive(1);
 			user = DaoImpl.addUser(user);
 			userDto.setId(user.getId());
-		
+
 			return userDto;
-			
+
 		} catch (DataIntegrityViolationException e) {
 			// This catch block should never be reached. Table validation is
 			// done before the try block
@@ -77,11 +78,11 @@ public class UserService implements UserServiceInterface {
 
 	@Override
 	public Set<User> getFollowing(UserDto user) {
-		
+
 		return user.getFollowing();
 	}
-	
-		
+
+
 	/*
 	 * takes the RecipeDto & UserDto
 	 * saves new user information to database
@@ -102,11 +103,19 @@ public class UserService implements UserServiceInterface {
 	@Override
 	public RecipesDto getDashboard(UserDto user, int page) {
 		Set<User> following = user.getFollowing();
-		Comparator<Recipe> byCreation = (Recipe o1, Recipe o2) -> o1.getCreated().compareTo(o2.getCreated());
-		Set<Recipe> recipes = new ConcurrentSkipListSet<>(byCreation);
-		for (User u : following) {
-			recipes.addAll(u.getFavoriteRecipes());
+		Set<Recipe> recipes;
+		if(DaoImpl.getRecipes().size() > 1) {
+			Comparator<Recipe> byCreation = (Recipe o1, Recipe o2) -> o1.getCreated().compareTo(o2.getCreated());
+			recipes = new ConcurrentSkipListSet<>(byCreation);
+			if(following != null) {
+				for (User u : following) {
+					recipes.addAll(u.getFavoriteRecipes());
+				}
+			}
+			
 		}
+		else{recipes = new CopyOnWriteArraySet<>(DaoImpl.getRecipes());}
+		System.out.println(recipes);
 		List<RecipeDto> recs = new ArrayList<RecipeDto>();
 		Iterator<Recipe> r = recipes.iterator();
 		ArrayList<String> desc = new ArrayList<String>();
@@ -118,15 +127,21 @@ public class UserService implements UserServiceInterface {
 
 
 	@Override
-	public ProfileDto getProfile(String email) {
+	public ProfileDto getProfile(UserDto userDto) {
+		String email = userDto.getEmail();
 		ProfileDto profile = new ProfileDto();
 		User user = DaoImpl.getUser(email);
 		List<Recipe> recs = user.getFavoriteRecipes();
+
 		List<RecipeDto> rec = new ArrayList<RecipeDto>();
-		for(Recipe r: recs) {rec.add(new RecipeDto(r));}
+		for(Recipe r: recs) {
+			rec.add(new RecipeDto(r));
+			System.out.println(r);}
+
+		rec.add(new RecipeDto(1,null,null,"name","description",null,"image",null));
 		profile.setRecipes(rec);
 		profile.setUser(user);
-		return null;
+		return profile;
 	}
 
 	@Override
@@ -144,12 +159,12 @@ public class UserService implements UserServiceInterface {
 			System.out.println("setting userDto to true");
 			userDto = new UserDto(user);
 			userDto.setLoggedIn(true);
-			
+
 		} else {
 			return null;
 		}
 		System.out.println("returning user dto" + userDto.toString());
-		
+
 		return userDto;
 	}
 
@@ -172,6 +187,12 @@ public class UserService implements UserServiceInterface {
 		System.out.println("Logging out user: " + userDto.getEmail());
 		userDto.setLoggedIn(false);
 		return userDto;
+	}
+
+	@Override
+	public ProfileDto getProfile(String email) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

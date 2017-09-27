@@ -50,10 +50,11 @@ private int id;
 		this.creator = recipe.getCreator();
 		this.name = recipe.getName();
 		this.description = recipe.getDescription();
-		this.directions = new ArrayList<String>();
-		for(String s : recipe.getDirections().split("$$")) {
-			directions.add(s);
-		}
+		this.directions = null;//new ArrayList<String>();
+		
+//		for(String s : recipe.getDirections().split("$$")) {
+//			directions.add(s);
+//		}
 		this.image = recipe.getImage();
 		this.ingredients = recipe.getIngredients();
 	}
