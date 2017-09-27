@@ -145,4 +145,22 @@ public class UserServiceImpl implements UserService {
 		userDto.setLoggedIn(false);
 		return userDto;
 	}
+	
+	@Override
+	public RecipeDto addRecipe(RecipeDto recipe) {
+		DaoImpl.addRecipe(getRecipeBean(recipe));
+		return recipe;
+	}
+
+	@Override
+	public String getMacronutrients(RecipeDto recipe) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public RecipeDto addComment(RecipesDto recipeDto, Comment comment) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

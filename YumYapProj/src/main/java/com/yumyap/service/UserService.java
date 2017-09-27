@@ -1,19 +1,9 @@
 package com.yumyap.service;
-import java.util.Set;
-<<<<<<< HEAD
-=======
-import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.concurrent.CopyOnWriteArraySet;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Service;
->>>>>>> favoriteRecipe
+import java.util.Set;
 
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
-
-<<<<<<< HEAD
 /**
  * The interface representing a service that deals with
  * User operations

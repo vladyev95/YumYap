@@ -89,5 +89,13 @@ public class UserController {
 		return new ResponseEntity<UserDto>(userService.logoutUser(userDto), HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/create", method = { RequestMethod.POST }, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<RecipeDto> createRecipe(@RequestBody RecipeDto recipe) {
+
+		System.out.println("creating a new recipe");
+		
+		return new ResponseEntity<RecipeDto>(userService.addRecipe(recipe), HttpStatus.OK);
+	}
 
 }
