@@ -50,6 +50,20 @@ public interface Dao {
 	 * @return The Set of Recipes created by this User
 	 */
 	Set<Recipe> getUsersRecipes(User user);
+	
+	/**
+	 * Returns the User with the corresponding id
+	 * @param id The id of the user to get
+	 * @return The User with the id or null if no such user
+	 */
+	User getUserById(int id);
+	
+	/**
+	 * Returns the Recipe with the specified id
+	 * @param id The id of the Recipe to get
+	 * @return The Recipe with the id, null if no such recipe
+	 */
+	Recipe getRecipeById(int id);
 
 	List<Recipe> getRecipesByUser(User user);
 }

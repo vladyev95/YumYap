@@ -136,4 +136,23 @@ public class DaoImpl implements Dao {
 		logger.trace("got " + recipes);
 		return recipes;
 	}
+	
+	@Override
+	public User getUserById(int id) {
+		logger.trace("getUserById() by " + id); 
+		Session session = sessionFactory.getCurrentSession();
+		User user = (User) session.get(User.class, id);
+		logger.trace("got " + user);
+		return user;
+	}
+
+	@Override
+	public Recipe getRecipeById(int id) {
+		Session session = sessionFactory.getCurrentSession();
+		logger.trace("getRecipeById() by " + id);
+		Recipe recipe = (Recipe) session.get(Recipe.class, id);
+		logger.trace("got " + recipe);
+		return recipe;
+	}
+	
 }
