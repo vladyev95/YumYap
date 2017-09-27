@@ -1,11 +1,11 @@
 
-const API_KEY = '1dvNA9ailiF7xHYu1V2ogW374YZpjcMS1NsvOySE';
-const EXCLUDED_GROUPS = ['Baby Foods', 'Fast Foods', 'Restaurant Foods'];
-const TRACKED_NUTRIENTS = ['208', '204', '205', '203'];
-
 let app = angular.module('app', []);
 app.controller('searchCtrl', function ($scope, $http) {
     'use strict';
+    const API_KEY = '1dvNA9ailiF7xHYu1V2ogW374YZpjcMS1NsvOySE';
+    const EXCLUDED_GROUPS = ['Baby Foods', 'Fast Foods', 'Restaurant Foods'];
+    const TRACKED_NUTRIENTS = ['208', '204', '205', '203'];
+
     $scope.food = { 'name': '', 'nutrients': { 'calories': 0, 'fat': 0, 'carbs': 0, 'protein': 0 } };
     $scope.measures = [];
     $scope.nutrientsByMeasure = {};
@@ -34,7 +34,7 @@ app.controller('searchCtrl', function ($scope, $http) {
                         $scope.nutrientsByMeasure = {};
 
                         for (var i = 0; i < m.length; i++) {
-			    let label = m.item(i).getAttribute('label');
+                            let label = m.item(i).getAttribute('label');
                             $scope.measures.push(label);
                             $scope.nutrientsByMeasure[label] = {};
                         }

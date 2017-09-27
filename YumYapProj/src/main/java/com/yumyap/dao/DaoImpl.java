@@ -74,6 +74,16 @@ public class DaoImpl implements Dao {
 		logger.trace("added " + recipe);
 		return recipe;
 	}
+
+	public List<Comment> getComments(Recipe r) {
+		return (List<Comment>) currentSession().createCriteria(Comment.class).add(Restrictions.eq("recipe", r)).list();
+	}
+
+	public List<Recipe> getRecipes(String search) {
+
+		return (List<Recipe>) currentSession().createCriteria(Recipe.class)
+				.add(Restrictions.ilike("name", "%" + search + "%")).list();
+	}
 	
 	@Override
 	public RecipeDirection addRecipeDirection(RecipeDirection recipeDirection) {
