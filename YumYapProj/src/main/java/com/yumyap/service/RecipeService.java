@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.yumyap.beans.Comment;
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
+import com.yumyap.dao.Dao;
 import com.yumyap.dao.DaoImpl;
 import com.yumyap.dto.RecipeDto;
 import com.yumyap.dto.RecipesDto;
@@ -12,10 +13,17 @@ import com.yumyap.dto.RecipesDto;
 @Service
 public class RecipeService implements RecipeServiceInterface{
 
+	private Dao DaoImpl;
+	
+	
+
+	public void setDaoImpl(Dao daoImpl) {
+		DaoImpl = daoImpl;
+	}
 
 	@Override
 	public RecipeDto addRecipe(RecipeDto recipe) {
-		
+		DaoImpl.addRecipe(new Recipe(recipe));
 		return recipe;
 	}
 
