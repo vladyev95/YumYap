@@ -15,18 +15,20 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
+/**
+ * An object representing a Recipe object that Users may create
+ * @author vlad
+ */
+@Component
 @Entity
 @Table(name = "recipes")
 public class Recipe {
 	
-	private static final Logger logger = Logger.getLogger(Recipe.class);
-
 	@Id
 	@Column(name = "recipe_id")
 	@SequenceGenerator(name = "recipe_id_sequence", sequenceName = "recipe_id_sequence")
@@ -54,7 +56,7 @@ public class Recipe {
 	private String imageUrl;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "Recipes_Ingredients", 
+	@JoinTable(name = "recipes_ingredients", 
 			joinColumns = @JoinColumn(name = "recipe_id"),
 			inverseJoinColumns = @JoinColumn(name = "food_item_id"))
 	private Set<FoodItem> ingredients;
@@ -144,34 +146,73 @@ public class Recipe {
 		this.timeCreated = timeCreated;
 	}
 
+	/**
+	 * Returns the User that created this Recipe
+	 * @return The User that created this Recipe
+	 */
 	public User getCreator() {
 		return creator;
 	}
 
+	/**
+	 * Sets the User that created this Recipe
+	 * @param creator The new creator of this Recipe
+	 */
 	public void setCreator(User creator) {
 		this.creator = creator;
 	}
 
+	/**
+	 * Returns the description of this Recipe
+	 * @return The description of this Recipe
+	 */
 	public String getDescription() {
 		return description;
 	}
-
+	
+	/**
+	 * Sets the description of this Recipe
+	 * @param description The new description of this Recipe
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
+	/**
+	 * Returns the RecipeDirections for this Recipe
+	 * @return The RecipeDirections for this Recipe
+	 */
 	public Set<RecipeDirection> getDirections() {
 		return directions;
 	}
 
+	/**
+	 * Sets the RecipeDirections for this Recipe
+	 * @param directions The new RecipeDirections for this Recipe
+	 */
 	public void setDirections(Set<RecipeDirection> directions) {
 		this.directions = directions;
 	}
 
+	/**
+	 * Returns the ingredients for this Recipe
+	 * @return The ingredients for this Recipe
+	 */
 	public Set<FoodItem> getIngredients() {
 		return ingredients;
 	}
+	
+	/**
+	 * Sets the ingredients for this Recipe
+	 * @param ingredients The new ingredients for this Recipe
+	 */
+	public void setIngredients(Set<FoodItem> ingredients) {
+		this.ingredients = ingredients;
+	}
 
+	/**
+	 * Returns a nice String representation of a Recipe
+	 */
 	@Override
 	public String toString() {
 		return "Recipe { id: " + id + 

@@ -8,14 +8,21 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+
+/**
+ * An object representing the FoodItems that Recipes consist of
+ * @author vlad
+ */
+@Component
 @Entity
 @Table(name = "food_items")
 public class FoodItem {
 
 	@Id
 	@Column(name = "food_item_id")
-	@SequenceGenerator(name = "food_item_id_sequence", sequenceName = "food_item_id_sequence")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "food_item_id_sequence")
+	@SequenceGenerator(name = "food_item_id_seq", sequenceName = "food_item_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "food_item_id_seq")
 	private int id;
 	
 	@Column(name = "name")
@@ -53,27 +60,44 @@ public class FoodItem {
 		this.id = id;
 	}
 
+	/**
+	 * Returns the name of the measure that this FoodItem uses
+	 * @return The name of the measure that this FoodItem uses
+	 */
 	public String getMeasure() {
 		return measure;
 	}
 
+	/**
+	 * Sets the name of the measure that this FoodItem uses
+	 * @param measure The new measure that this FoodItem uses
+	 */
 	public void setMeasure(String measure) {
 		this.measure = measure;
 	}
 
-	
-
+	/**
+	 * Returns the amount of the measure for this FoodItem
+	 * @return The amount of the measure for this FoodItem
+	 */
 	public double getAmount() {
 		return amount;
 	}
 
+	/**
+	 * Sets the amount of the measure for this FoodItem
+	 * @param amount The new amount of measure for this FoodItem
+	 */
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 
+	/**
+	 * Returns a nice String representation of a FoodItem
+	 */
 	@Override
 	public String toString() {
-		return "FoodItem { id=" + id + 
+		return "FoodItem { id: " + id + 
 				", name: " + name +
 				", measure: " + measure + 
 				", amount: " + amount + " }";

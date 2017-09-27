@@ -1,5 +1,7 @@
 package com.yumyap.dao;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -16,6 +18,12 @@ import com.yumyap.beans.Recipe;
 import com.yumyap.beans.RecipeDirection;
 import com.yumyap.beans.User;
 
+/**
+ * An implementation of the Dao interface
+ * Works directly with our database specified in the beans.xml
+ * Do not use this as the variable type, use the Dao interface
+ * @author vlad
+ */
 @Repository
 @Transactional
 public class DaoImpl implements Dao {
@@ -25,11 +33,7 @@ public class DaoImpl implements Dao {
 	
 	@Autowired
 	private SessionFactory sessionFactory;
-	
-	/**
-	 * 
-	 * @param sessionFactory
-	 */
+
 	@Autowired
 	public DaoImpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
@@ -37,73 +41,99 @@ public class DaoImpl implements Dao {
 	
 	@Override
 	public boolean addUser(User user) {
-		logger.fatal("addUser() " + user);
+		logger.trace("addUser() " + user);
 		Session session = sessionFactory.getCurrentSession();
 		session.save(user);
-		logger.fatal("added " + user);
+		logger.trace("added " + user);
 		return user != null;
 	}
 
 	@Override
 	public FoodItem addFoodItem(FoodItem foodItem) {
-		logger.fatal("addFoodItem() " + foodItem);
+		logger.trace("addFoodItem() " + foodItem);
 		Session s = sessionFactory.getCurrentSession();
 		s.save(foodItem);
-		logger.fatal("added " + foodItem);
+		logger.trace("added " + foodItem);
 		return foodItem;
 	}
 
 	@Override
 	public Comment addComment(Comment comment) {
-		logger.fatal("addComment() " + comment);
+		logger.trace("addComment() " + comment);
 		Session s = sessionFactory.getCurrentSession();
 		s.save(comment);
-		logger.fatal("added " + comment);
+		logger.trace("added " + comment);
 		return comment;
 	}
 
 	@Override
 	public Recipe addRecipe(Recipe recipe) {
-		logger.fatal("addRecipe() " + recipe);
+		logger.trace("addRecipe() " + recipe);
 		Session s = sessionFactory.getCurrentSession();
 		s.save(recipe);
-		logger.fatal("added " + recipe);
+		logger.trace("added " + recipe);
 		return recipe;
 	}
 	
 	@Override
 	public RecipeDirection addRecipeDirection(RecipeDirection recipeDirection) {
-		logger.fatal("addRecipeDirection() " + recipeDirection);
+		logger.trace("addRecipeDirection() " + recipeDirection);
 		Session session = sessionFactory.getCurrentSession();
 		session.save(recipeDirection);
-		logger.fatal("added " + recipeDirection);
+		logger.trace("added " + recipeDirection);
 		return recipeDirection;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Recipe> getRecipesByUser(User user) {
-		logger.fatal("getRecipesByUser() " + user);
+		logger.trace("getRecipesByUser() " + user);
 		Session session = sessionFactory.getCurrentSession();
 		List<Recipe> recipes = (List<Recipe>) session
 						.createCriteria(Recipe.class)
 						.add(Restrictions.eq("creator", user))
 						.list();
-		logger.fatal("got recipes " + recipes);
+		logger.trace("got recipes " + recipes);
 		return recipes;
 	}
 
 	@Override
 	public User getUserByEmailAndPassword(String email, String password) {
-		logger.fatal("getUserByEmail() " + email);
+		logger.trace("getUserByEmail() " + email);
 		Session session = sessionFactory.getCurrentSession();
 		User user = (User) session
 					.createCriteria(User.class)
 					.add(Restrictions.eq("email", email))
 					.add(Restrictions.eq("password", password)).uniqueResult();
 					
-		logger.fatal("got " + user);
-	
+		logger.trace("got " + user);
 		return user;
 	}	
+	
+	@Override
+	public Set<Recipe> getFollowingRecipes(User user) {
+		logger.trace("getFollowingRecipes() using " + user);
+		
+		Set<Recipe> recipes = new LinkedHashSet<>();
+		
+		
+		
+		logger.trace("got " + recipes);
+		return recipes;
+	}
+	
+	
+	@Override
+	public Set<Recipe> getUsersRecipes(User user) {
+		logger.trace("getUserRecipesById() using " + user);
+		Session session = sessionFactory.getCurrentSession();
+		
+		@SuppressWarnings("unchecked")
+		Set<Recipe> recipes = new LinkedHashSet<>(session.createCriteria(Recipe.class)
+														.add(Restrictions.eq("creator", user))
+														.list());
+		
+		logger.trace("got " + recipes);
+		return recipes;
+	}
 }

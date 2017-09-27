@@ -15,23 +15,31 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
-
+/**
+ * An object representing a User of our system
+ * @author vlad
+ */
+@Component
 @Entity
 @Table(name = "users")
 public class User {
 	
-	private final static Logger logger = Logger.getLogger(User.class);
-
 	@Id
 	@Column(name = "user_id")
-	@SequenceGenerator(name = "user_id_sequence", sequenceName = "user_id_sequence")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_sequence")
+	@SequenceGenerator(name = "user_id_seq", sequenceName = "user_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
 	private int id;
 
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "users_following_junc",
+				joinColumns = @JoinColumn(name = "user_id"),
+				inverseJoinColumns = @JoinColumn(name = "following_id"))
+	private Set<User> users;
 	
-	//private Set<User> following;
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "users")
+	private Set<User> following;
 
 	@Column(name = "first_name", nullable = false)
 	private String firstName;
@@ -45,18 +53,16 @@ public class User {
 	@Column(name = "password", nullable = false)
 	private String password;
 	
-	/*
+	
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "users_favorite_recipes_junction", 
+	@JoinTable(name = "users_favorites_junc", 
 				joinColumns = @JoinColumn(name = "user_id"), 
 				inverseJoinColumns =  @JoinColumn(name = "recipe_id"))
 	private Set<Recipe> favoriteRecipes;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "users_created_recipes_junction",
-				joinColumns = @JoinColumn(name = "user_id"),
-				inverseJoinColumns = @JoinColumn(name = "recipe_id"))
-	private Set<Recipe> createdRecipes;*/
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "recipe_id")
+	private Set<Recipe> createdRecipes;
 
 	public User() {}
 
@@ -64,24 +70,34 @@ public class User {
 			String firstName, 
 			String lastName, 
 			String password, 
-			String email, 
-			Set<Recipe> favoriteRecipes) {
-		//this.following = following;
+			String email,
+			Set<Recipe> favoriteRecipes,
+			Set<Recipe> createdRecipes) {
+		this.following = following;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.password = password;
 		this.email = email;
-		/*this.favoriteRecipes = favoriteRecipes;*/
+		this.favoriteRecipes = favoriteRecipes;
+		this.createdRecipes = createdRecipes;
 	}
 	
+	/**
+	 * Returns the id of this User
+	 * @return The id of this User
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * Sets the id of this User
+	 * @param id The new id of this User
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
-/*
+
 	public Set<User> getFollowing() {
 		return following;
 	}
@@ -89,40 +105,73 @@ public class User {
 	public void setFollowing(Set<User> following) {
 		this.following = following;
 	}
-*/
+
+	
+	/**
+	 * Returns the firstName of this User
+	 * @return The firstName of this User
+	 */
 	public String getFirstName() {
 		return firstName;
 	}
 
+	/**
+	 * Sets the firstName for this User
+	 * @param firstName The new firstName for this User
+	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
+	/**
+	 * Returns the lastName of this User
+	 * @return The lastName of this User
+	 */
 	public String getLastName() {
 		return lastName;
 	}
 
+	/**
+	 * Sets the lastName of this User
+	 * @param lastName The new lastName of this User
+	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
+	/**
+	 * Returns the password of this User
+	 * @return The password of this User
+	 */
 	public String getPassword() {
 		return password;
 	}
 
+	/**
+	 * Sets the password of this User
+	 * @param password The new password of this User
+	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
+	/**
+	 * Returns the email of this User
+	 * @return The email of this User
+	 */
 	public String getEmail() {
 		return email;
 	}
 
+	/**
+	 * Sets the email of this User
+	 * @param email The new email of this User
+	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 	
-/*	public Set<Recipe> getFavoriteRecipes() {
+	public Set<Recipe> getFavoriteRecipes() {
 		return favoriteRecipes;
 	}
 
@@ -136,8 +185,11 @@ public class User {
 	
 	public void setCreatedRecipes(Set<Recipe> createdRecipes) {
 		this.createdRecipes = createdRecipes;
-	}*/
+	}
 
+	/**
+	 * Returns a nice String representation of this User
+	 */
 	@Override
 	public String toString() {
 		return "User { id: " + id + 
@@ -145,8 +197,9 @@ public class User {
 				", firstName: " + firstName + 
 				", lastName: " + lastName +
 				", password: " + password + 
-				", email: " + email + " }";
-				/*", favoriteRecipes: " + favoriteRecipes + " }";*/
+				", email: " + email + 
+				", following: " + following +
+				", favoriteRecipes: " + favoriteRecipes + " }";
 	}
 
 }

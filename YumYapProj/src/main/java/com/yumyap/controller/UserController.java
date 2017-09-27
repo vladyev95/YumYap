@@ -1,5 +1,7 @@
 package com.yumyap.controller;
 
+import java.util.Set;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 import com.yumyap.service.UserService;
 
@@ -33,7 +36,7 @@ public class UserController {
 			consumes = MediaType.APPLICATION_JSON_VALUE , 
 			produces =  MediaType.APPLICATION_JSON_VALUE )
 	public ResponseEntity<User> attemptLogin(@RequestBody User user) {
-		logger.fatal("attemptLogin() using " + user);
+		logger.trace("attemptLogin() using " + user);
 
 		return new ResponseEntity<User>(userService.attemptLogin(user.getEmail(), user.getPassword()), HttpStatus.OK);
 	}
@@ -43,10 +46,18 @@ public class UserController {
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> attemptRegister(@RequestBody User user) {
-		logger.fatal("attemptRegister() using " + user);
+		logger.trace("attemptRegister() using " + user);
 		
 		return new ResponseEntity<Boolean>(userService.attemptRegister(user), HttpStatus.OK);
 	}
-
+	
+	@RequestMapping(value = "/getFollowingRecipes",
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Set<Recipe>> getFollowingRecipes(@RequestBody User user) {
+		logger.trace("getFollowingRecipes() using " + user);
+		return new ResponseEntity<Set<Recipe>>(userService.getFollowingRecipes(user), HttpStatus.OK);
+	}
 
 }

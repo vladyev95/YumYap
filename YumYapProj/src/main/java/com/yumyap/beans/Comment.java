@@ -13,37 +13,40 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
+/**
+ * An object representing the comments that Users can make on Recipes
+ * @author vlad
+ */
+@Component
 @Entity
 @Table(name = "comments")
 public class Comment {
 	
-	private static final Logger logger = Logger.getLogger(Comment.class);
-
 	@Id
 	@Column(name = "comment_id")
-	@SequenceGenerator(name = "comment_id_sequence", sequenceName = "comment_id_sequence")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_id_sequence")
+	@SequenceGenerator(name = "comment_id_seq", sequenceName = "comment_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_id_seq")
 	private int id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
-	private User user;
+	private User commenter;
 
 	@Column(name = "comment_date", nullable = false)
-	private Date comment_date;
+	private Date commentDate;
 
-	@Column(name = "comment", nullable = false)
-	private String comment;
+	@Column(name = "content", nullable = false)
+	private String content;
 
 	public Comment() {
 	}
 
-	public Comment(User user, Date comment_date, String comment) {
-		this.user = user;
-		this.comment_date = comment_date;
-		this.comment = comment;
+	public Comment(User commenter, Date commentDate, String content) {
+		this.commenter = commenter;
+		this.commentDate = commentDate;
+		this.content = content;
 	}
 
 	/**
@@ -66,16 +69,16 @@ public class Comment {
 	 * Returns the User that made this Comment
 	 * @return The User that made this Comment
 	 */
-	public User getUser() {
-		return user;
+	public User getCommenter() {
+		return commenter;
 	}
 
 	/**
 	 * Sets the User that made this comment
 	 * @param user The User that made this comment
 	 */
-	public void setUser(User user) {
-		this.user = user;
+	public void setCommenter(User commenter) {
+		this.commenter = commenter;
 	}
 
 	/**
@@ -83,31 +86,31 @@ public class Comment {
 	 * @return The Date that this Comment was made
 	 */
 	public Date getDate() {
-		return comment_date;
+		return commentDate;
 	}
 
 	/**
 	 * Sets the Date that this Comment was made
 	 * @param comment_date The Date that this comment was made
 	 */
-	public void setDate(Date comment_date) {
-		this.comment_date = comment_date;
+	public void setDate(Date commentDate) {
+		this.commentDate = commentDate;
 	}
 
 	/**
 	 * Returns the contents of this Comment
 	 * @return The contents of this Comment
 	 */
-	public String getComment() {
-		return comment;
+	public String getContent() {
+		return content;
 	}
 
 	/**
 	 * Sets the contents of this Comment
 	 * @param comment The new contents of this Comment
 	 */
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	/**
@@ -116,9 +119,9 @@ public class Comment {
 	@Override
 	public String toString() {
 		return "Comment { id: " + id + 
-				", user: " + user + 
-				", comment_date: " + comment_date + 
-				", comment: " + comment + " }";
+				", commenter: " + commenter + 
+				", commentDate: " + commentDate + 
+				", content: " + content + " }";
 	}
 
 }
