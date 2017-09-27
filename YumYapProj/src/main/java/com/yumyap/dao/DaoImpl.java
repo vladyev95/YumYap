@@ -74,6 +74,11 @@ public class DaoImpl implements Dao {
 		logger.trace("added " + recipe);
 		return recipe;
 	}
+	
+	public List<Recipe> getRecipes() {
+		Session s = sessionFactory.getCurrentSession();
+		return (List<Recipe>) s.createCriteria(Recipe.class).list();
+	}
 
 	public List<Comment> getComments(Recipe r) {
 		return (List<Comment>) currentSession().createCriteria(Comment.class).add(Restrictions.eq("recipe", r)).list();

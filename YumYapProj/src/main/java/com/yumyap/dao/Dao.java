@@ -43,7 +43,7 @@ public interface Dao {
 	 * @return All the recipes of people that the user with the id follows
 	 */
 	Set<Recipe> getFollowingRecipes(User user);
-	
+
 	/**
 	 * Returns the Recipes that the user with the given id has created
 	 * @param id The id of the User whose recipes we are retrieving

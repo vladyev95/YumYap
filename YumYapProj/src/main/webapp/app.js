@@ -22,32 +22,101 @@
 let app = angular.module('app', ['ngRoute']);
 
 
-app.config(function($routeProvider) {
+app.config(function ($routeProvider) {
     $routeProvider
-    .when('/', {
-        templateUrl: 'loginRegisterContent.html'
-    })
-    .when('/loginRegister', {
-        templateUrl: 'loginRegisterContent.html'
-    })
-    .when('/app', {
-        templateUrl: 'appContent.html'
-    });
+        .when('/', {
+            templateUrl: 'loginRegisterContent.html'
+        })
+        .when('/loginRegister', {
+            templateUrl: 'loginRegisterContent.html'
+        })
+        .when('/app', {
+            templateUrl: 'appContent.html'
+        });
 });
+
+app.service('RecipeService', function ($http) {
+    let service = this;
+
+    service.saveRecipe = function (recipe) {
+        log('RecipeService save recipe');
+        return $http.post('/YumYap/yum/recipe/create', recipe);
+    };
+});
+
+
+/* LoginRegisterController */
+app.controller('LoginRegisterController', function ($scope) {
+    $scope.onLogin = true;
+});
+/* LoginRegisterController */
+
+app.service("UserService", function ($http, $q) {
+    console.log("in userservice");
+    var service = this;
+    service.user = {
+        id: "",
+        following: "",
+        firstname: "",
+        lastname: "",
+        password: "",
+        email: "",
+        active: "",
+        loggedIn: "",
+        favoriteRecipes: ""
+    };
+
+    service.getUser = function () {
+        console.log("in service.getUser");
+        console.log(service.user);
+        return service.user;
+    };
+
+    service.setUser = function (data) {
+        console.log("service.user.username " + service.user.username);
+        console.log("data.username" + data.username);
+        service.user.username = data.username;
+        service.user.password = data.password;
+        service.user.authenticated = data.authenticated;
+    };
+
+    service.registerUser = function () {
+        console.log("In register user");
+        var promise;
+        console.log(service.user);
+
+        promise = $http.post(
+            'yum/user/register', service.user
+        ).then(
+            function (response) {
+                console.log(response);
+                return response;
+            },
+            function (error) {
+                console.log('register user promise failed');
+                return $q.reject(error);
+            }
+            );
+        return promise;
+    };
+
+
+});
+
 
 /* LoginService */
 app.service('LoginService', function ($http, $q) {
     let service = this;
-    
+
     service.user = { email: '', password: '' };
-    
-    service.getUser = function() {
+
+    service.getUser = function () {
         return service.user;
     }
- 
-    service.attemptLogin = function() {
+
+    service.attemptLogin = function () {
         return $http.post('yum/user/attemptLogin', service.user);
-        
+
     };
 });
 /* LoginService */
@@ -56,22 +125,21 @@ app.service('LoginService', function ($http, $q) {
 /* RegisterService */
 app.service('RegisterService', function ($http, $q) {
     let service = this;
-    
+
     service.user = {
         firstName: '',
         lastName: '',
         email: '',
         password: ''
     };
-    
-    service.getUser = function() {
+
+    service.getUser = function () {
         return service.user;
     };
-    
-    service.attemptRegister = function() {
+
+    service.attemptRegister = function () {
         return $http.post('yum/user/attemptRegister', service.user);
     };
-
 });
 /* RegisterService */
 
@@ -86,12 +154,12 @@ app.service('RecipeService', function ($http) {
 
 
 /* LoggedInUserService */
-app.service('LoggedInUserService', function() {
-	let service = this;
-	
-	service.setUser = function(user) {
-		service.user = user;
-	}
+app.service('LoggedInUserService', function () {
+    let service = this;
+
+    service.setUser = function (user) {
+        service.user = user;
+    }
 });
 /* LoggedInUserService */
 
@@ -104,27 +172,27 @@ app.controller('LoginRegisterController', function ($scope) {
 
 
 /* LoginController*/
-app.controller('LoginController', function($scope, $location, LoginService, LoggedInUserService) {
-    
+app.controller('LoginController', function ($scope, $location, LoginService, LoggedInUserService) {
+
     $scope.user = LoginService.getUser();
-    
-    $scope.attemptLogin = function() {
-    	console.log('attempting to log in: ');
+
+    $scope.attemptLogin = function () {
+        console.log('attempting to log in: ');
         console.log($scope.user);
         LoginService.attemptLogin()
-        .then(
-            function(response) {
+            .then(
+            function (response) {
                 if (response.data) {
-                	console.log('attemptLogin() success response: ');
-                	console.log(response);
-                	console.log('data: ');
-                	console.log(response.data);
-                	LoggedInUserService.setUser(response.data);
-                	$location.path('/app');
+                    console.log('attemptLogin() success response: ');
+                    console.log(response);
+                    console.log('data: ');
+                    console.log(response.data);
+                    LoggedInUserService.setUser(response.data);
+                    $location.path('/app');
                 } else {
-                	console.log('reponse.data is null');
+                    console.log('reponse.data is null');
                 }
-                
+
             },
             function (error) {
                 console.log('attemptLogin() error response: ');
@@ -137,20 +205,20 @@ app.controller('LoginController', function($scope, $location, LoginService, Logg
 
 
 /* RegisterController */
-app.controller('RegisterController', function($scope, RegisterService) {
-    
+app.controller('RegisterController', function ($scope, RegisterService) {
+
     $scope.user = RegisterService.getUser();
-    
-    $scope.attemptRegister = function() {
+
+    $scope.attemptRegister = function () {
         console.log('attempting to register: ');
         console.log($scope.user);
         RegisterService.attemptRegister()
-        .then(
-            function(response) {
-        		console.log('attemptRegister() success response: ');
-        		console.log(response);
-        		console.log('data: ');
-        		console.log(response.data);             
+            .then(
+            function (response) {
+                console.log('attemptRegister() success response: ');
+                console.log(response);
+                console.log('data: ');
+                console.log(response.data);
             },
             function (error) {
                 console.log('attemptRegister() error response: ');
@@ -161,37 +229,76 @@ app.controller('RegisterController', function($scope, RegisterService) {
 });
 /* RegisterController */
 
-/* AppController */
-app.controller('AppController', function($scope, LoggedInUserService) {
-    $scope.tab = 'Home';
-    
-    $scope.homeTab = function() {
-        $scope.tab = 'Home';
+
+/* ViewAuthorService */
+app.service('ViewAuthorService', function () {
+    let service = this;
+
+    service.email = '';
+
+    service.setEmail = function (email) {
+        service.email = email;
     };
-    
+
+    service.getEmail = function (email) {
+        return service.email;
+    }
+});
+/* ViewAuthorService */
+
+
+
+
+/* AppController */
+app.controller('AppController', function ($scope, ProfileService, ViewAuthorService) {
+    $scope.tab = 'Home';
+
+    $scope.homeTab = function () {
+        $scope.tab = 'Home';
+
+
+    };
+
+    $scope.viewAuthor = function (email) {
+        $scope.tab = 'ViewAuthor';
+        ViewAuthorService.setEmail(email);
+    };
+
+    var profile = ProfileService;
+    var data = function () {
+        console.log("start view");
+        profile.viewDash()
+            .then(
+            function (response) {
+                console.log(response);
+                $scope.recipes = response.data.recipes;
+                console.log(response.data.recipes);
+                profile.setRecipes(response.data);
+                console.log("The last");
+                console.log(profile.getRecipes());
+                return response;
+
+            }, function (error) {
+                console.log("error")
+                console.log(error);
+                //$scope.output = error;
+            });
+    }();
+
+    var favoriteRecipe = function () {
+        console.log("maybe some goats");
+    }
 });
 /* AppController */
 
-app.service('HomeTabRecipesService', function() {
-	
+app.service('HomeTabRecipesService', function () {
+
 });
 
 /* HomeTabController */
-app.controller('HomeTabController', function($scope) {
-    $scope.recipes = [{
-    	name: 'Recipe Name',
-    	description: 'Recipe Description',
-    	image: 'https://camo.mybb.com/e01de90be6012adc1b1701dba899491a9348ae79/687474703a2f2f7777772e6a71756572797363726970742e6e65742f696d616765732f53696d706c6573742d526573706f6e736976652d6a51756572792d496d6167652d4c69676874626f782d506c7567696e2d73696d706c652d6c69676874626f782e6a7067',
-    	creator: {
-    		firstName: 'Vladimir',
-    		lastName: 'Yevseenko'
-    	},
-    	ingredients: [ {name: 'Cheese', measure: 'cups', amount: 2}, {name: 'bread', measure: 'slices', amount: 3} ],
-    	directions: [ '1. add cheese', '2. add bread' ]
-    	
-    }];
+app.controller('HomeTabController', function ($scope, ViewDashService) {
+
 });
-/* HomeTabController */
 
 app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService) {
     'use strict';
@@ -352,6 +459,116 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
             $scope.foodItems = [];
         }
     };
+});
+
+app.service('ProfileService', function ($http, $q) {
+    var service = this;
+    service.user = {
+        firstname: '',
+        lastname: '',
+        email: 'us@er.com',
+        password: ''
+    };
+
+    service.viewProfile = function () {
+        console.log("getting profile");
+        console.log(service.user);
+        return $http.post('yum/user/profile', service.user);
+    };
+
+    service.viewDash = function () {
+        console.log("getting dash");
+        console.log(service.user);
+        return $http.post('yum/user/dash', service.user);
+    };
+
+    service.recipes = {
+
+    };
+
+    service.setRecipes = function (data) {
+        service.recipes = data.recipes;
+    }
+    service.getRecipes = function () {
+        return service.recipes;
+    }
+
+    service.viewUser = {
+        firstname: '',
+        lastname: '',
+        email: 'us@er.com'
+    };
+
+    service.setViewUser = function (data) {
+        service.viewUser.firstname = data.user.firstname;
+        service.viewUser.firstname = data.user.lastname;
+        service.viewUser.firstname = data.user.email;
+    }
+
+    service.getViewUser = function () {
+        return service.viewUser;
+    }
+});
+app.controller('ProfileController', function ($scope, ProfileService, $http, $q) {
+
+
+    var profile = ProfileService;
+    var data = function () {
+        console.log("start view");
+        profile.viewProfile()
+            .then(
+            function (response) {
+                console.log(response);
+                console.log(response.data.recipes);
+                profile.setRecipes(response.data);
+                profile.setViewUser(resonse.data);
+                $scope.recipes = profile.getRecipes();
+                $scope.user = profile.getViewUser();
+                return response;
+
+            }, function (error) {
+                console.log("error")
+                console.log(error);
+                //$scope.output = error;
+            });
+    }();
+
+    var favoriteRecipe = function () {
+        console.log("maybe some goats");
+    }
+
+
+});
+
+app.controller('DashboardController', function ($scope, ProfileService, $http, $q) {
+
+
+    var profile = ProfileService;
+    var data = function () {
+        console.log("start view");
+        profile.viewDash()
+            .then(
+            function (response) {
+                console.log(response);
+                $scope.recipes = response.data.recipes;
+                console.log(response.data.recipes);
+                profile.setRecipes(response.data);
+                console.log("The last");
+                console.log(profile.getRecipes());
+                return response;
+
+            }, function (error) {
+                console.log("error")
+                console.log(error);
+                //$scope.output = error;
+            });
+    }();
+
+    var favoriteRecipe = function () {
+        console.log("maybe some goats");
+    }
+
+
 });
 
 function logError(error) {

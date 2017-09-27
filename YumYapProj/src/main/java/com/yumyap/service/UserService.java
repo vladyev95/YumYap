@@ -1,9 +1,19 @@
 package com.yumyap.service;
 import java.util.Set;
+<<<<<<< HEAD
+=======
+import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.CopyOnWriteArraySet;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+>>>>>>> favoriteRecipe
 
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 
+<<<<<<< HEAD
 /**
  * The interface representing a service that deals with
  * User operations
@@ -35,4 +45,10 @@ public interface UserService {
 	 * @return A Set of all the Recipes by Users that the given User follows
 	 */
 	Set<Recipe> getFollowingRecipes(User user);
+
+	RecipesDto getDashboard(UserDto userDto, int page);
+	ProfileDto getProfile(UserDto userDto);
+	UserDto validateUser(UserDto userDto);
+	boolean isEmailValid(String email);
+	UserDto logoutUser(UserDto userdto);
 }

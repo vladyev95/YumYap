@@ -15,7 +15,7 @@ public class UserDto {
 	
 	private String lastName;
 	
-	private Set<SimpleUserDto> following;
+	private List<SimpleUserDto> following;
 	
-	private Set<RecipeDto> favoriteRecipes;
+	private List<RecipeDto> favoriteRecipes;
 }
