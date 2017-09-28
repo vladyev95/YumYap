@@ -1,6 +1,7 @@
 package com.yumyap.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -81,7 +82,7 @@ public class UserServiceImpl implements UserService {
 			.map(recipe -> new RecipeDto(recipe))
 			.forEach(recipeDto -> recipes.add(recipeDto));
 		
-		// TODO: Sort recipes by date created
+		Collections.sort(recipes, (r1, r2) -> -r1.getTimeCreated().compareTo(r2.getTimeCreated()));
 		
 		return recipes;
 	}
