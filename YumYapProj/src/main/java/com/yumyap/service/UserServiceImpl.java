@@ -120,4 +120,10 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public UserDto getProfile(UserDto userDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

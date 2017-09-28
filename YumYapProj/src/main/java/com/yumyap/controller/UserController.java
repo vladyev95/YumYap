@@ -65,8 +65,8 @@ public class UserController {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<UserDto> loadProfile(@RequestBody UserDto userDto) {
 		System.out.println("Loading Profile");
-
-		return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
+		
+		return new ResponseEntity<UserDto>(userService.getProfile(userDto), HttpStatus.OK);
 	}	
 	
 	/*
