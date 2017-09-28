@@ -129,7 +129,7 @@ public class Recipe {
     }
 
     /**
-     * Lists the name of the this recipe
+     * Sets the name of the this recipe
      * @param name The new name for this recipe
      */
     public void ListName(String name) {
@@ -145,10 +145,10 @@ public class Recipe {
     }
 
     /**
-     * Lists the imageUrl for this image
+     * Sets the imageUrl for this image
      * @param imageUrl The new imageUrl for this image
      */
-    public void ListImageUrl(String imageUrl) {
+    public void getImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 
@@ -161,10 +161,10 @@ public class Recipe {
     }
 
     /**
-     * Lists the id of this image
+     * Sets the id of this image
      * @param id The new id of this image
      */
-    public void ListId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -177,10 +177,10 @@ public class Recipe {
     }
 
     /**
-     * Lists the time representing the time this Recipe was created
+     * Sets the time representing the time this Recipe was created
      * @param timeCreated
      */
-    public void ListCreated(Time timeCreated) {
+    public void setCreated(Time timeCreated) {
         this.timeCreated = timeCreated;
     }
 
@@ -193,10 +193,10 @@ public class Recipe {
     }
 
     /**
-     * Lists the User that created this Recipe
+     * Sets the User that created this Recipe
      * @param creator The new creator of this Recipe
      */
-    public void ListCreator(User creator) {
+    public void setCreator(User creator) {
         this.creator = creator;
     }
 
@@ -209,10 +209,10 @@ public class Recipe {
     }
 
     /**
-     * Lists the description of this Recipe
+     * Sets the description of this Recipe
      * @param description The new description of this Recipe
      */
-    public void ListDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -225,10 +225,10 @@ public class Recipe {
     }
 
     /**
-     * Lists the RecipeDirections for this Recipe
+     * Sets the RecipeDirections for this Recipe
      * @param directions The new RecipeDirections for this Recipe
      */
-    public void ListDirections(List<RecipeDirection> directions) {
+    public void setDirections(List<RecipeDirection> directions) {
         this.directions = directions;
     }
 
@@ -241,10 +241,10 @@ public class Recipe {
     }
 
     /**
-     * Lists the ingredients for this Recipe
+     * Sets the ingredients for this Recipe
      * @param ingredients The new ingredients for this Recipe
      */
-    public void ListIngredients(List<FoodItem> ingredients) {
+    public void setIngredients(List<FoodItem> ingredients) {
         this.ingredients = ingredients;
     }
     
@@ -257,10 +257,10 @@ public class Recipe {
     }
     
     /**
-     * Lists the Comments for this Recipe
+     * Sets the Comments for this Recipe
      * @param comments The new Comments for this Recipe
      */
-    public void ListComments(List<Comment> comments) {
+    public void setComments(List<Comment> comments) {
     	this.comments = comments;
     }
 
