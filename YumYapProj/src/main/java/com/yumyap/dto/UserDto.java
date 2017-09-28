@@ -1,9 +1,8 @@
 package com.yumyap.dto;
 
-import java.util.Set;
+import java.util.List;
 
 import com.yumyap.dto.RecipeDto;
-import com.yumyap.dto.FollowingDto;
 
 public class UserDto {
 	

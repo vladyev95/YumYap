@@ -1,6 +1,7 @@
 package com.yumyap.beans;
 
 import java.sql.Time;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -62,6 +63,28 @@ public class Recipe {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "comment_id")
     private Set<Comment> comments;
+    
+    @Column
+    private double calories;
+    @Column
+    private double fat;
+    @Column
+    private double carbs;
+    @Column
+    private double protein;
+
+    public Recipe() {
+    }
+
+    public Recipe(Time timeCreated, String name, String description, Set<RecipeDirection> directions, String imageUrl,
+            Set<FoodItem> ingredients) {
+        this.timeCreated = timeCreated;
+        this.name = name;
+        this.description = description;
+        this.directions = directions;
+        this.imageUrl = imageUrl;
+        this.ingredients = ingredients;
+    }
 
     public double getCalories() {
         return calories;
@@ -93,23 +116,6 @@ public class Recipe {
 
     public void setFat(double fat) {
         this.fat = fat;
-    }
-
-    public void setIngredients(Set<FoodItem> ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    public Recipe() {
-    }
-
-    public Recipe(Time timeCreated, String name, String description, Set<RecipeDirection> directions, String imageUrl,
-            Set<FoodItem> ingredients) {
-        this.timeCreated = timeCreated;
-        this.name = name;
-        this.description = description;
-        this.directions = directions;
-        this.imageUrl = imageUrl;
-        this.ingredients = ingredients;
     }
 
     /**
