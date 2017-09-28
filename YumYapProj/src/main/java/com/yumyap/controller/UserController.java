@@ -72,6 +72,7 @@ public class UserController {
 		return new ResponseEntity<List<RecipeDto>>(userService.getDashboard(userDto), HttpStatus.OK);
 	}
 
+
 	@RequestMapping(value = "/profile", method = { RequestMethod.POST }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<UserDto> loadProfile(@RequestBody UserDto userDto) {

@@ -49,7 +49,6 @@ public interface UserService {
 	String getMacronutrients(RecipeDto recipe);
 
 	RecipeDto addComment(List<RecipeDto> recipeDto, Comment comment);
-	
 
 	/**
 	 * @param userDto only has email in it
@@ -58,7 +57,6 @@ public interface UserService {
 	UserDto getProfile(UserDto userDto);
 	
 	boolean addFollower(UserDto user, UserDto follower);
-
 	
 	/**
 	 * Takes in a SimpleUserDto and transforms it into a UserDto based on the SimpleUserDto id

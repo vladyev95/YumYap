@@ -117,7 +117,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-
 	public UserDto getProfile(UserDto userDto) {
 		// TODO Auto-generated method stub
 		return null;
@@ -138,6 +137,6 @@ public class UserServiceImpl implements UserService {
 	public UserDto simpleUserDtoToUserDto(SimpleUserDto simpleUserDto) {
 		logger.trace("simpleUserDtoToUserDto() by " + simpleUserDto);
 		return new UserDto(dao.getUserById(simpleUserDto.getId()));
-
 	}
+
 }
