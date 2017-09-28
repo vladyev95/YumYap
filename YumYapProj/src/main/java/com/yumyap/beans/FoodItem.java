@@ -59,6 +59,22 @@ public class FoodItem {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	/**
+	 * Returns the name of this FoodItem
+	 * @return The name of this FoodItem
+	 */
+	public String getName() {
+		return name;
+	}
+	
+	/**
+	 * Sets the name of this FoodItem
+	 * @param name The new name of this FoodItem
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	/**
 	 * Returns the name of the measure that this FoodItem uses
