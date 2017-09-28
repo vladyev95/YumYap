@@ -168,5 +168,15 @@ public class DaoImpl implements Dao {
 		Recipe recipe = (Recipe) session.get(Recipe.class, id);
 		logger.trace("got " + recipe);
 		return recipe;
-	}	
+	}
+	
+	@Override
+	public void updateUser(User user) {
+		
+		currentSession().save(user);
+	}
+	
+	private Session currentSession() {
+		return sessionFactory.getCurrentSession();
+	}
 }

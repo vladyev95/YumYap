@@ -1,10 +1,13 @@
 package com.yumyap.service;
+
+import java.util.List;
 import java.util.Set;
 
+import com.yumyap.beans.Comment;
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
+import com.yumyap.dto.RecipeDto;
 import com.yumyap.dto.UserDto;
-
 /**
  * The interface representing a service that deals with
  * User operations
@@ -36,4 +39,13 @@ public interface UserService {
 	 * @return A Set of all the Recipes by Users that the given User follows
 	 */
 	Set<Recipe> getFollowingRecipes(User user);
+
+	void addFavoriteRecipe(RecipeDto recipeDto, UserDto userDto);
+	List<RecipeDto> getDashboard(UserDto userDto);
+
+	void addRecipe(Recipe recipe);
+
+	String getMacronutrients(RecipeDto recipe);
+
+	RecipeDto addComment(List<RecipeDto> recipeDto, Comment comment);
 }

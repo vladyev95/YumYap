@@ -60,7 +60,7 @@
 			<input type="text" ng-model="recipeStep" placeholder="Add a step" />
 			<button ng-click="addStep(recipeStep)">+</button>
 			<ol>
-				<li ng-repeat="step in steps" ng-bind="step"></li>
+				<li ng-repeat="step in steps" ng-bind="step.direction"></li>
 			</ol>
 		</div>
 		<!-- TODO: Send recipe to backend for storage -->

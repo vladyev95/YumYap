@@ -316,14 +316,16 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
     $scope.saveRecipe = function () {
         log('RecipeCtrl save recipe');
         let recipe = {
-            id: -1,
-            created: null,
             creator: UserService.getUser(),
             name: $scope.recipeName,
             description: $scope.recipeDescription,
             directions: $scope.steps,
-            image: null,
-            ingredients: $scope.foodItems
+            imageUrl: null,
+            ingredients: $scope.foodItems,
+            calories: $scope.food.nutrients.calories,
+            fat: $scope.food.nutrients.fat,
+            carbs: $scope.food.nutrients.carbs,
+            protein: $scope.food.nutrients.protein
         };
 
         RecipeService.saveRecipe(recipe);
@@ -340,7 +342,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 
     $scope.addStep = function (step) {
         log('Adding step ' + step);
-        $scope.steps.push(step);
+        $scope.steps.push({direction:step});
         $scope.recipeStep = '';
     };
 

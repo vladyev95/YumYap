@@ -1,14 +1,26 @@
 package com.yumyap.service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yumyap.beans.Comment;
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 import com.yumyap.dao.Dao;
+import com.yumyap.dao.DaoImpl;
+import com.yumyap.dto.RecipeDto;
+import com.yumyap.dto.SimpleUserDto;
+import com.yumyap.dto.UserDto;
 
 /**
  * An implementation of a UserService
@@ -18,7 +30,7 @@ import com.yumyap.dao.Dao;
 @Service
 public class UserServiceImpl implements UserService {
 
-	private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
+	private static final Logger log = Logger.getLogger(UserServiceImpl.class);
 
 	@Autowired
 	private Dao dao;
@@ -30,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User attemptLogin(String email, String password) {
-		logger.trace("attemptLogin(" + email + ", " + password + ") ");
+		log.trace("attemptLogin(" + email + ", " + password + ") ");
 		return dao.getUserByEmailAndPassword(email, password);
 	}
 
@@ -43,5 +55,73 @@ public class UserServiceImpl implements UserService {
 	public Set<Recipe> getFollowingRecipes(User user) {
 		return null;
 		//return dao.getFollowingRecipesById(user.getId());
+	}
+
+	/*
+	 * takes the RecipeDto & UserDto
+	 * saves new user information to database
+	 * returns the updated userDto
+	 * @see com.yumyap.service.UserServiceInterface#favoriteRecipe(com.yumyap.dto.RecipeDto, com.yumyap.dto.UserDto)
+	 */
+	@Override
+	public void addFavoriteRecipe(RecipeDto recipeDto, UserDto userDto) {
+		User user = dao.getUserById(userDto.getId());
+		Recipe recipe = dao.getRecipeById(recipeDto.getId());
+		user.getFavoriteRecipes().add(recipe);
+		dao.updateUser(user);
+	}
+
+	@Override
+	public List<RecipeDto> getDashboard(UserDto userDto) {
+		List<RecipeDto> recipes = new ArrayList<>();
+		log.trace("in getDashboard(userDto= "+userDto+")");
+		
+		User user = dao.getUserById(userDto.getId());
+		if (user == null) return recipes;
+		
+		Set<User> following = user.getFollowing();
+		
+		recipes.addAll(
+			dao.getRecipesByUser(user)
+			.stream().map(recipe -> new RecipeDto(recipe))
+			.collect(Collectors.toList()));		
+		
+		following.stream()
+			.map(followedUser -> dao.getRecipesByUser(followedUser))
+			.flatMap(list -> list.stream())
+			.map(recipe -> new RecipeDto(recipe))
+			.forEach(recipeDto -> recipes.add(recipeDto));
+		
+		return recipes;
+	}
+
+	/*
+	@Override
+	public UserDto logoutUser(UserDto userDto) {
+		if (!userDto.isLoggedIn()) {
+			logger.trace("No user is currently logged in");
+			return userDto;
+		}
+		logger.trace("Logging out user: " + userDto.getEmail());
+		userDto.setLoggedIn(false);
+		return userDto;
+	}
+	*/
+	
+	@Override
+	public void addRecipe(Recipe recipe) {
+		dao.addRecipe(recipe);
+	}
+
+	@Override
+	public String getMacronutrients(RecipeDto recipe) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public RecipeDto addComment(List<RecipeDto> recipeDto, Comment comment) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
