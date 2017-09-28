@@ -14,11 +14,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.yumyap.beans.User;
 import com.yumyap.dto.RecipeDto;
+import com.yumyap.dto.SimpleUserDto;
 import com.yumyap.dto.UserDto;
 import com.yumyap.service.UserService;
 
+/**
+ * A controller for retrieving information regarding Users
+ * @author vlad
+ */
 @Controller
-@RequestMapping(value="/user")
+@RequestMapping(value = "/user")
 public class UserController {
 	
 	private static final Logger logger = Logger.getLogger(UserController.class);
@@ -31,15 +36,19 @@ public class UserController {
 		this.userService = userService;
 	}
 
-
+	/**
+	 * Attempts to validate the given User
+	 * @param user The User to validate
+	 * @return The UserDto with the corresponding information upon success
+	 */
 	@RequestMapping(value = "/attemptLogin", 
 			method = RequestMethod.POST, 
 			consumes = MediaType.APPLICATION_JSON_VALUE , 
 			produces =  MediaType.APPLICATION_JSON_VALUE )
-	public ResponseEntity<User> attemptLogin(@RequestBody User user) {
+	public ResponseEntity<UserDto> attemptLogin(@RequestBody User user) {
 		logger.trace("attemptLogin() using " + user);
-
-		return new ResponseEntity<User>(userService.attemptLogin(user.getEmail(), user.getPassword()), HttpStatus.OK);
+		User actualUser = userService.attemptLogin(user.getEmail(), user.getPassword());
+		return new ResponseEntity<UserDto>(new UserDto(actualUser), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/attemptRegister",
@@ -52,21 +61,27 @@ public class UserController {
 		return new ResponseEntity<Boolean>(userService.attemptRegister(user), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/dash", method = { RequestMethod.POST }, consumes = {
-			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	@RequestMapping(value = "/dash", 
+			method = RequestMethod.POST , 
+			consumes = MediaType.APPLICATION_JSON_VALUE, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<RecipeDto>> loadDashboard(@RequestBody UserDto userDto) {
-		logger.trace("loadDashboard(userDto= "+userDto+")");
+		logger.trace("loadDashboard() by " + userDto);
 
 		return new ResponseEntity<List<RecipeDto>>(userService.getDashboard(userDto), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/profile", method = { RequestMethod.POST }, consumes = {
-			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<UserDto> loadProfile(@RequestBody UserDto userDto) {
-		System.out.println("Loading Profile");
-		
-		return new ResponseEntity<UserDto>(userService.getProfile(userDto), HttpStatus.OK);
+
+	@RequestMapping(value = "/profile", 
+			method = RequestMethod.POST, 
+			consumes = MediaType.APPLICATION_JSON_VALUE, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserDto> loadProfile(@RequestBody SimpleUserDto simpleUserDto) {
+		logger.trace("loadProfile() by " + simpleUserDto);
+		UserDto userDto = userService.simpleUserDtoToUserDto(simpleUserDto);
+		return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
 	}	
+
 	
 	/*
 	@RequestMapping(value = "/favorite",
