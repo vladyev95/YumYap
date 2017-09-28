@@ -35,16 +35,6 @@ app.config(function ($routeProvider) {
         });
 });
 
-app.service('RecipeService', function ($http) {
-    let service = this;
-
-    service.saveRecipe = function (recipe) {
-        log('RecipeService save recipe');
-        return $http.post('/YumYap/yum/recipe/create', recipe);
-    };
-});
-
-
 /* LoginRegisterController */
 app.controller('LoginRegisterController', function ($scope) {
     $scope.onLogin = true;
@@ -143,7 +133,7 @@ app.service('RegisterService', function ($http, $q) {
 });
 /* RegisterService */
 
-app.service('RecipeService', function ($http, $q) {
+app.service('RecipeService', function ($http) {
     let service = this;
 
     service.createRecipe = function (recipe) {
