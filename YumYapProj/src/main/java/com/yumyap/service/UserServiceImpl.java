@@ -1,12 +1,8 @@
 package com.yumyap.service;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
@@ -17,9 +13,7 @@ import com.yumyap.beans.Comment;
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 import com.yumyap.dao.Dao;
-import com.yumyap.dao.DaoImpl;
 import com.yumyap.dto.RecipeDto;
-import com.yumyap.dto.SimpleUserDto;
 import com.yumyap.dto.UserDto;
 
 /**
@@ -91,6 +85,8 @@ public class UserServiceImpl implements UserService {
 			.flatMap(list -> list.stream())
 			.map(recipe -> new RecipeDto(recipe))
 			.forEach(recipeDto -> recipes.add(recipeDto));
+		
+		// TODO: Sort recipes by date created
 		
 		return recipes;
 	}

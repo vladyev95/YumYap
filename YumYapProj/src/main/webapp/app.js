@@ -246,7 +246,12 @@ app.service('ViewAuthorService', function () {
 });
 /* ViewAuthorService */
 
-
+app.controller('ViewAuthorController', function ($scope, ViewAuthorService) {
+	
+	$scope.viewAuthor = function(email) {
+		// TODO: Implement viewAuthor with ViewAuthorService??
+	}
+});
 
 
 /* AppController */
@@ -287,6 +292,7 @@ app.controller('AppController', function ($scope, ProfileService, ViewAuthorServ
 
     var favoriteRecipe = function () {
         console.log("maybe some goats");
+        // TODO: Use FavoriteRecipeService here
     }
 });
 /* AppController */
@@ -537,6 +543,7 @@ app.controller('ProfileController', function ($scope, ProfileService, $http, $q)
 
     var favoriteRecipe = function () {
         console.log("maybe some goats");
+        // TODO: Use FavoriteRecipeService here
     }
 
 
@@ -568,6 +575,7 @@ app.controller('DashboardController', function ($scope, ProfileService, $http, $
 
     var favoriteRecipe = function () {
         console.log("maybe some goats");
+        // TODO: Use FavoriteRecipeService here
     }
 
 
