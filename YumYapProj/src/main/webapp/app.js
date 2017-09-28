@@ -244,16 +244,16 @@ app.service('ViewAuthorService', function () {
     }
 
     service.setUser = function (data) {
-//        service.id=  data.id,
-//		service.email,
-//		firstName: '',
-//		lastName: '',
-//		following: '',
-//		favoriteRecipes: ''
+       service.user.id =  data.id,
+       service.user.email = data.email,
+       service.user.firstName = data.firstName,
+       service.user.lastName = data.lastName,
+       service.user.following = data.following,
+       service.user.favoriteRecipes = data.favoriteRecipes
     };
 
     service.getUser = function (email) {
-        return service.email;
+        return service.user;
     }
     
     $scope.follow = function () {
@@ -266,10 +266,20 @@ app.service('ViewAuthorService', function () {
 });
 /* ViewAuthorService */
 
-app.controller('ViewAuthorController', function ($scope, ViewAuthorService) {
+app.controller('ViewAuthorController', function ($scope, ViewAuthorService, RecipeService) {
+	var viewAuthor = ViewAuthorService;
+	var recipeService = RecipeService;
+	var author = this;
+	author.user = viewAuthor.getUser();
+	$scope.user = author.user;
+	$scope.recipes = author.user.recipes;
 	
-	$scope.viewAuthor = function(email) {
-		// TODO: Implement viewAuthor with ViewAuthorService??
+	$scope.viewAuthor = function(recipe){
+		recipeService.viewAuthor(recipe);
+	}
+
+	$scope.favoriteRecipe = function(recipe){
+		recipeService.favoriteRecipe(recipe);
 	}
 });
 
