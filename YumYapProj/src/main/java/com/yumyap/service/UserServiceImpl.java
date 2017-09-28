@@ -14,6 +14,7 @@ import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 import com.yumyap.dao.Dao;
 import com.yumyap.dto.RecipeDto;
+import com.yumyap.dto.SimpleUserDto;
 import com.yumyap.dto.UserDto;
 
 /**
@@ -24,7 +25,7 @@ import com.yumyap.dto.UserDto;
 @Service
 public class UserServiceImpl implements UserService {
 
-	private static final Logger log = Logger.getLogger(UserServiceImpl.class);
+	private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
 
 	@Autowired
 	private Dao dao;
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User attemptLogin(String email, String password) {
-		log.trace("attemptLogin(" + email + ", " + password + ") ");
+		logger.trace("attemptLogin(" + email + ", " + password + ") ");
 		return dao.getUserByEmailAndPassword(email, password);
 	}
 
@@ -50,13 +51,7 @@ public class UserServiceImpl implements UserService {
 		return null;
 		//return dao.getFollowingRecipesById(user.getId());
 	}
-
-	/*
-	 * takes the RecipeDto & UserDto
-	 * saves new user information to database
-	 * returns the updated userDto
-	 * @see com.yumyap.service.UserServiceInterface#favoriteRecipe(com.yumyap.dto.RecipeDto, com.yumyap.dto.UserDto)
-	 */
+	
 	@Override
 	public void addFavoriteRecipe(RecipeDto recipeDto, UserDto userDto) {
 		User user = dao.getUserById(userDto.getId());
@@ -68,7 +63,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<RecipeDto> getDashboard(UserDto userDto) {
 		List<RecipeDto> recipes = new ArrayList<>();
-		log.trace("in getDashboard(userDto= "+userDto+")");
+		logger.trace("in getDashboard(userDto= "+userDto+")");
 		
 		User user = dao.getUserById(userDto.getId());
 		if (user == null) return recipes;
@@ -122,8 +117,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDto getProfile(UserDto userDto) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserDto simpleUserDtoToUserDto(SimpleUserDto simpleUserDto) {
+		logger.trace("simpleUserDtoToUserDto() by " + simpleUserDto);
+		return new UserDto(dao.getUserById(simpleUserDto.getId()));
 	}
 }

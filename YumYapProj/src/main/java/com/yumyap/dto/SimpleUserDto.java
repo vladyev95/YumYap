@@ -2,6 +2,10 @@ package com.yumyap.dto;
 
 import com.yumyap.beans.User;
 
+/**
+ * A lightweight data transfer object only containing the necessary information of a User
+ * @author vlad
+ */
 public class SimpleUserDto {
 
     private int id;
@@ -49,9 +53,15 @@ public class SimpleUserDto {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-
+	
+	/**
+	 * Returns a nice String representation of a SimpleUserDto
+	 * @return A nice String representation of a SimpleUserDto
+	 */
 	@Override
 	public String toString() {
-		return "SimpleUserDto [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+		return "SimpleUserDto { id: " + id + 
+				", firstName: " + firstName + 
+				", lastName: " + lastName + " }";
 	}
 }

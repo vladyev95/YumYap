@@ -1,7 +1,6 @@
 package com.yumyap.beans;
 
 import java.sql.Time;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -244,6 +243,22 @@ public class Recipe {
      */
     public void setIngredients(Set<FoodItem> ingredients) {
         this.ingredients = ingredients;
+    }
+    
+    /**
+     * Returns the Comments of this Recipe
+     * @return The Comments of this Recipe
+     */
+    public Set<Comment> getComments() {
+    	return comments;
+    }
+    
+    /**
+     * Sets the Comments for this Recipe
+     * @param comments The new Comments for this Recipe
+     */
+    public void setComments(Set<Comment> comments) {
+    	this.comments = comments;
     }
 
     /**
