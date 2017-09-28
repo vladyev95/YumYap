@@ -244,17 +244,20 @@ app.service('ViewAuthorService', function () {
     }
 
     service.setUser = function (data) {
-//        service.id=  data.id,
-//		service.email,
-//		firstName: '',
-//		lastName: '',
-//		following: '',
-//		favoriteRecipes: ''
+       service.user.id =  data.id,
+       service.user.email = data.email,
+       service.user.firstName = data.firstName,
+       service.user.lastName = data.lastName,
+       service.user.following = data.following,
+       service.user.favoriteRecipes = data.favoriteRecipes
     };
 
     service.getUser = function (email) {
-        return service.email;
+        return service.user;
     }
+    
+    
+    
 });
 /* ViewAuthorService */
 

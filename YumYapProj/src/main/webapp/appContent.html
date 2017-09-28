@@ -28,7 +28,7 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
                 <div>
                     Posted by {{recipe.creator.firstname + " " + recipe.creator.lastname}}
                     <!-- This button should bring you to the user that posted it -->
-                    <button ng-click="viewAuthor(recipe.author.email)">View Author Profile</button>
+                    <button ng-click="viewAuthor(recipe)">View Author Profile</button>
                 </div>
             </div>
             <div class="recipe-content">
