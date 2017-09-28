@@ -262,10 +262,12 @@ app.service('ViewAuthorService', function () {
 /* ViewAuthorService */
 
 app.controller('ViewAuthorController', function ($scope, ViewAuthorService) {
+	var viewAuthor = ViewAuthorService;
+	var author = this;
+	author.user = viewAuthor.getUser();
+	$scope.user = author.user;
+	$scope.recipes = author.user.recipes;
 	
-	$scope.viewAuthor = function(email) {
-		// TODO: Implement viewAuthor with ViewAuthorService??
-	}
 });
 
 
