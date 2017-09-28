@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 import com.yumyap.dto.RecipeDto;
-import com.yumyap.dto.SimpleUserDto;
 import com.yumyap.dto.UserDto;
 import com.yumyap.service.UserService;
 

@@ -68,4 +68,11 @@ public interface Dao {
 	List<Recipe> getRecipesByUser(User user);
 
 	void updateUser(User user);
+	
+	/**
+	 * Adds the Comment to the Recipe with the corresponding id
+	 * @param id The id of the Recipe to add the comment to
+	 * @param comment The Comment to add to the Recipe with the corresponding id
+	 */ 
+	void addCommentForRecipeById(int id, Comment comment);
 }

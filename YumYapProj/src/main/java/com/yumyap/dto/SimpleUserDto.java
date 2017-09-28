@@ -2,6 +2,10 @@ package com.yumyap.dto;
 
 import com.yumyap.beans.User;
 
+/**
+ * A lightweight data transfer object only containing the necessary information of a User
+ * @author vlad
+ */
 public class SimpleUserDto {
 
     private int id;
@@ -59,6 +63,7 @@ public class SimpleUserDto {
 
 	/**
 	 * Checks for equivalence by checking the id of each object
+	 * @return boolean value corresponding to object equivalence
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -71,8 +76,14 @@ public class SimpleUserDto {
 		else return false;
 	}
 	
+	/**
+	 * Returns a nice String representation of a SimpleUserDto
+	 * @return A nice String representation of a SimpleUserDto
+	 */
 	@Override
 	public String toString() {
-		return "SimpleUserDto [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+		return "SimpleUserDto { id: " + id + 
+				", firstName: " + firstName + 
+				", lastName: " + lastName + " }";
 	}
 }
