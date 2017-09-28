@@ -55,15 +55,12 @@ app.service("UserService", function ($http, $q) {
     console.log("in userservice");
     var service = this;
     service.user = {
-        id: "",
-        following: "",
-        firstname: "",
-        lastname: "",
-        password: "",
-        email: "",
-        active: "",
-        loggedIn: "",
-        favoriteRecipes: ""
+    		id: '',
+    		email: '',
+    		firstName: '',
+    		lastName: '',
+    		following: '',
+    		favoriteRecipes: ''
     };
 
     service.getUser = function () {
@@ -73,31 +70,12 @@ app.service("UserService", function ($http, $q) {
     };
 
     service.setUser = function (data) {
-        console.log("service.user.username " + service.user.username);
-        console.log("data.username" + data.username);
-        service.user.username = data.username;
-        service.user.password = data.password;
-        service.user.authenticated = data.authenticated;
-    };
-
-    service.registerUser = function () {
-        console.log("In register user");
-        var promise;
-        console.log(service.user);
-
-        promise = $http.post(
-            'yum/user/register', service.user
-        ).then(
-            function (response) {
-                console.log(response);
-                return response;
-            },
-            function (error) {
-                console.log('register user promise failed');
-                return $q.reject(error);
-            }
-            );
-        return promise;
+    	    service.user.id = data.id,
+		service.user.email = data.email,
+		service.user.firstName = data.firstName,
+		service.user.lastName = data.lastName,
+		service.user.following = data.following,
+		service.user.favoriteRecipes = data.favoriteRecipes;
     };
 
 
