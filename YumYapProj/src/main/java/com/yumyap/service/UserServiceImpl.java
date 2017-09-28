@@ -14,6 +14,7 @@ import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 import com.yumyap.dao.Dao;
 import com.yumyap.dto.RecipeDto;
+import com.yumyap.dto.SimpleUserDto;
 import com.yumyap.dto.UserDto;
 
 /**
@@ -125,5 +126,17 @@ public class UserServiceImpl implements UserService {
 	public UserDto getProfile(UserDto userDto) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean addFollower(UserDto user, UserDto follower) {
+		SimpleUserDto follow = new SimpleUserDto(follower);
+		
+		if (user.getFollowing().contains(follow))
+			return false;
+		else {
+			user.getFollowing().add(follow);
+			return true;
+		}
 	}
 }

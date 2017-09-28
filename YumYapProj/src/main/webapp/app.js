@@ -255,6 +255,14 @@ app.service('ViewAuthorService', function () {
     service.getUser = function (email) {
         return service.email;
     }
+    
+    $scope.follow = function () {
+    	console.log("Adding a follower");
+    	var follower = service.user;
+    	var user = getUserInfoService();
+    	
+    	return $http.post('yum/user/addFollower', user, follower);
+    }
 });
 /* ViewAuthorService */
 

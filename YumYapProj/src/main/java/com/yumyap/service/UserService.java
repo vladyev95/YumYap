@@ -54,4 +54,6 @@ public interface UserService {
 	 * @return a full userDto from the given email
 	 */
 	UserDto getProfile(UserDto userDto);
+	
+	boolean addFollower(UserDto user, UserDto follower);
 }

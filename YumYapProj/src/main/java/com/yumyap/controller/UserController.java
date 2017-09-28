@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 import com.yumyap.dto.RecipeDto;
+import com.yumyap.dto.SimpleUserDto;
 import com.yumyap.dto.UserDto;
 import com.yumyap.service.UserService;
 
@@ -105,5 +106,20 @@ public class UserController {
 		logger.trace("creating a new recipe");
 		userService.addRecipe(recipe);		
 		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/addFollower",
+			method   = { RequestMethod.POST },
+			consumes = { MediaType.APPLICATION_JSON_VALUE },
+			produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Void> addFollower(@RequestBody UserDto user, @RequestBody UserDto follower) {
+		logger.trace("Adding a follower");
+
+		if (userService.addFollower(user, follower))
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		else {
+			logger.info("The user is already following that person");
+			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+		}
 	}
 }
