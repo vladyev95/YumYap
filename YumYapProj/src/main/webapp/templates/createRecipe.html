@@ -1,0 +1,29 @@
+<div>
+<div class="recipe-block" ng-repeat="recipe in recipes">
+		<div id="recipe-head" class="recipe-content">
+			<h3 id="recipe-name" ng-bind="recipe.name"></h3>
+			<p id="recipe-description" ng-bind="recipe.description"></p>
+		</div>
+		<div class="recipe-content">
+			<!-- Here we will put something to upload an image -->
+			<div>
+				<!-- This is where the user information will go -->
+				<!-- This button should bring you to the user that posted it -->
+				<button ui-sref="recipe.creator.email">View profile</button>
+			</div>
+		</div>
+		<div class="recipe-content">
+			<ul class="recipe-content" id="recipe-ingredients"
+				ng-repeat="foodItem in recipe.ingredients">
+				<li>{{foodItem.amount}} <span
+					ng-bind="recipectrl.getMeasure(foodItem.measure)"></span> of <span
+					ng-bind="recipectrl.getFood(foodItem.food)"></span></li>
+			</ul>
+			<ol class="recipe-content" id="recipe-methods"
+				ng-repeat="direction in recipe.directions">
+				<li ng-bind="recipe.directions"></li>
+			</ol>
+		</div>
+	<button ng-click="createRecipe()">create recipe</button>
+	</div>
+	</div>

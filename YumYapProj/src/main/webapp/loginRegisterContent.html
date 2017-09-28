@@ -1,0 +1,36 @@
+<div id="loginRegisterContent" ng-controller="LoginRegisterController as loginRegister">
+    <nav id="loginRegisterNav" class="navbar navbar-light bg-faded col-3">
+        <a href="" class="nav-item nav-link" ng-click="onLogin = true">Login</a>
+        <a href="" class="nav-item nav-link" ng-click="onLogin = false">Register</a>
+    </nav>
+    
+    <div id="loginContent" class="form-group col-3" ng-show="onLogin" ng-controller="LoginController as login">
+        <input type="text" placeholder="Email" id="loginEmail" class="form-control" ng-model="user.email"/>
+        
+        <div class="errorMsg"></div>
+        
+        <input type="password" placeholder="Password" id="loginPassword" class="form-control" ng-model="user.password"/>
+        
+        <div class="errorMsg"></div>
+        
+        <button id="loginBtn" class="btn btn-primary btn-large form-control" ng-click="attemptLogin()">Login</button>
+    </div>
+    
+    <div id="registerContent" class="form-group col-3" ng-hide="onLogin" ng-controller="RegisterController as register">
+        
+            <input type="text" placeholder="First Name" id="registerFirstName" class="form-control" ng-model="user.firstname"/>
+            
+            <input type="text" placeholder="Last Name" id="registerLastName" class="form-control" ng-model="user.lastname"/>
+            
+            <input type="text" placeholder="Email" id="registerEmail" class="form-control" ng-model="user.email"/>
+            
+            <input type="password" placeholder="Password" id="registerPassword" class="form-control" ng-model="user.password"/>
+            
+            <input type="password" placeholder="Re-enter password" id="registerRetypePassword" class="form-control" ng-model="user.password2"/>
+            
+            <button id="registerBtn" class="btn btn-primary btn-large" ng-click="attemptRegister()">Register</button>
+            <div ng-model="registerMessage"></div>
+    </div>
+
+   
+</div>

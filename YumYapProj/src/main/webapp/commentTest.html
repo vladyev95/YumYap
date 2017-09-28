@@ -1,0 +1,32 @@
+<!--  <!DOCTYPE html>
+<html lang="en-US" ng-app="app">
+<head>
+<meta charset="ISO-8859-1">
+<title>Testing comment</title>
+</head>
+<body>
+	Email:<input type="text" id="email"/>
+	Password:<input type="text" id="pwd"/>
+	<br>
+	<table id="commentList" class="table table-striped">
+		<tr>
+			<th>User:</th>
+			<th>Comment:</th>
+		</tr>
+	</table>
+	Comment:<input type="text" id="say"/>
+	<input type="submit" id="comment" class="btn btn-primary" value="comment"/>
+	<script src="comment.js"></script>
+</body>
+</html>-->
+
+<div id="commentTest" ng-controller="CommentController">
+	<table id="commentList" class="table table-striped">
+		<tr>
+			<th>User:</th>
+			<th>Comment:</th>
+		</tr>
+	</table>
+	Comment:<input type="text" id="say" ng-model="inputComment"/>
+	<button type="submit" id="comment" class="btn btn-primary" value="comment" ng-click="CommentButton()"/>
+</div>
