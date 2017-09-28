@@ -261,13 +261,21 @@ app.service('ViewAuthorService', function () {
 });
 /* ViewAuthorService */
 
-app.controller('ViewAuthorController', function ($scope, ViewAuthorService) {
+app.controller('ViewAuthorController', function ($scope, ViewAuthorService, RecipeService) {
 	var viewAuthor = ViewAuthorService;
+	var recipeService = RecipeService;
 	var author = this;
 	author.user = viewAuthor.getUser();
 	$scope.user = author.user;
 	$scope.recipes = author.user.recipes;
 	
+	$scope.viewAuthor = function(recipe){
+		recipeService.viewAuthor(recipe);
+	}
+
+	$scope.favoriteRecipe = function(recipe){
+		recipeService.favoriteRecipe(recipe);
+	}
 });
 
 
