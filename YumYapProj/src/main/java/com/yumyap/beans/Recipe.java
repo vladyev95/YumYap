@@ -52,7 +52,7 @@ public class Recipe {
     @JoinColumn(name = "recipe_direction_id")
     private Set<RecipeDirection> directions;
 
-    @Column(name = "image_url", nullable = false)
+    @Column(name = "image_url")
     private String imageUrl;
 
     @ManyToMany(fetch = FetchType.EAGER)

@@ -42,55 +42,25 @@ app.controller('LoginRegisterController', function ($scope) {
 /* LoginRegisterController */
 
 app.service("UserService", function ($http, $q) {
+    'use strict';
     console.log("in userservice");
-    var service = this;
-    service.user = {
-        id: "",
-        following: "",
-        firstname: "",
-        lastname: "",
-        password: "",
-        email: "",
-        active: "",
-        loggedIn: "",
-        favoriteRecipes: ""
-    };
+    let service = this;
+    let user = {};
 
     service.getUser = function () {
         console.log("in service.getUser");
-        console.log(service.user);
-        return service.user;
+        console.log(user);
+        return user;
     };
 
     service.setUser = function (data) {
-        console.log("service.user.username " + service.user.username);
-        console.log("data.username" + data.username);
-        service.user.username = data.username;
-        service.user.password = data.password;
-        service.user.authenticated = data.authenticated;
+        user.id = data.id;
+        user.email = data.email;
+        user.firstName = data.firstName;
+        user.lastName = data.lastName;
+        user.following = data.following;
+        user.favoriteRecipes = data.favoriteRecipes;
     };
-
-    service.registerUser = function () {
-        console.log("In register user");
-        var promise;
-        console.log(service.user);
-
-        promise = $http.post(
-            'yum/user/register', service.user
-        ).then(
-            function (response) {
-                console.log(response);
-                return response;
-            },
-            function (error) {
-                console.log('register user promise failed');
-                return $q.reject(error);
-            }
-            );
-        return promise;
-    };
-
-
 });
 
 
@@ -116,19 +86,9 @@ app.service('LoginService', function ($http, $q) {
 app.service('RegisterService', function ($http, $q) {
     let service = this;
 
-    service.user = {
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: ''
-    };
-
-    service.getUser = function () {
-        return service.user;
-    };
-
-    service.attemptRegister = function () {
-        return $http.post('yum/user/attemptRegister', service.user);
+    service.attemptRegister = function (user) {
+        log('registering user '+user);
+        return $http.post('yum/user/attemptRegister', user);
     };
 });
 /* RegisterService */
@@ -162,7 +122,7 @@ app.controller('LoginRegisterController', function ($scope) {
 
 
 /* LoginController*/
-app.controller('LoginController', function ($scope, $location, LoginService, LoggedInUserService) {
+app.controller('LoginController', function ($scope, $location, LoginService, UserService) {
 
     $scope.user = LoginService.getUser();
 
@@ -177,7 +137,7 @@ app.controller('LoginController', function ($scope, $location, LoginService, Log
                     console.log(response);
                     console.log('data: ');
                     console.log(response.data);
-                    LoggedInUserService.setUser(response.data);
+                    UserService.setUser(response.data);
                     $location.path('/app');
                 } else {
                     console.log('reponse.data is null');
@@ -197,12 +157,10 @@ app.controller('LoginController', function ($scope, $location, LoginService, Log
 /* RegisterController */
 app.controller('RegisterController', function ($scope, RegisterService) {
 
-    $scope.user = RegisterService.getUser();
-
     $scope.attemptRegister = function () {
         console.log('attempting to register: ');
         console.log($scope.user);
-        RegisterService.attemptRegister()
+        RegisterService.attemptRegister($scope.user)
             .then(
             function (response) {
                 console.log('attemptRegister() success response: ');
@@ -221,7 +179,7 @@ app.controller('RegisterController', function ($scope, RegisterService) {
 
 
 /* ViewAuthorService */
-app.service('ViewAuthorService', function () {
+app.service('ViewAuthorService', function ($http) {
     let service = this;
     console.log("Inside ViewAuthorService")
     
@@ -232,28 +190,28 @@ app.service('ViewAuthorService', function () {
     		lastName: '',
     		following: '',
     		favoriteRecipes: ''
-    }
+    };
 
     service.setUser = function (data) {
-       service.user.id =  data.id,
-       service.user.email = data.email,
-       service.user.firstName = data.firstName,
-       service.user.lastName = data.lastName,
-       service.user.following = data.following,
-       service.user.favoriteRecipes = data.favoriteRecipes
+       service.user.id =  data.id;
+       service.user.email = data.email;
+       service.user.firstName = data.firstName;
+       service.user.lastName = data.lastName;
+       service.user.following = data.following;
+       service.user.favoriteRecipes = data.favoriteRecipe;
     };
 
     service.getUser = function (email) {
         return service.user;
-    }
+    };
     
-    $scope.follow = function () {
+    service.follow = function () {
     	console.log("Adding a follower");
     	var follower = service.user;
     	var user = getUserInfoService();
     	
     	return $http.post('yum/user/addFollower', user, follower);
-    }
+    };
 });
 /* ViewAuthorService */
 
@@ -325,15 +283,6 @@ app.controller('AppController', function ($scope, ProfileService, ViewAuthorServ
 });
 /* AppController */
 
-app.service('HomeTabRecipesService', function () {
-
-});
-
-/* HomeTabController */
-app.controller('HomeTabController', function ($scope, ViewDashService) {
-
-});
-
 app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService) {
     'use strict';
     const API_KEY = '1dvNA9ailiF7xHYu1V2ogW374YZpjcMS1NsvOySE';
@@ -344,18 +293,18 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
     $scope.measures = [];
     $scope.nutrientsByMeasure = {};
     $scope.ingredients = [];
-    $scope.foodItems = [];
+    $scope.ingredients2 = [];
     $scope.steps = [];
 
-    $scope.createRecipe = function () {
+    $scope.publishRecipe = function () {
         log('RecipeCtrl create recipe');
         let recipe = {
             creator: UserService.getUser(),
             name: $scope.recipeName,
             description: $scope.recipeDescription,
             directions: $scope.steps,
-            imageUrl: null,
-            ingredients: $scope.foodItems,
+            imageUrl: '',
+            ingredients: $scope.ingredients2,
             calories: $scope.food.nutrients.calories,
             fat: $scope.food.nutrients.fat,
             carbs: $scope.food.nutrients.carbs,
@@ -369,7 +318,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
         log('Creating ingredient with ' + quantity + ', ' + fraction + ', ' + measure + ', ' + name);
         let ingredient = { name: name, quantity: quantity, fraction: fraction, measure: measure };
         $scope.ingredients.push(ingredient);
-        $scope.foodItems.push({ name: name, amount: quantity + eval(fraction), measure: measure });
+        $scope.ingredients2.push({ name: name, amount: quantity + eval(fraction), measure: measure });
         $scope.search = null;
         $scope.selection = null;
     };
