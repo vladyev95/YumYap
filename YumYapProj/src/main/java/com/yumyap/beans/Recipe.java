@@ -2,6 +2,7 @@ package com.yumyap.beans;
 
 import java.sql.Time;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +20,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
+
+import com.yumyap.dto.UserDto;
 
 /**
  * An object representing a Recipe object that Users may create
@@ -55,13 +58,13 @@ public class Recipe {
     @Column(name = "image_url")
     private String imageUrl;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "recipes_ingredients", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "food_item_id"))
-    private List<FoodItem> ingredients;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "recipes_ingredients")
+    private Set<FoodItem> ingredients;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "comment_id")
-    private List<Comment> comments;
+    private Set<Comment> comments;
     
     @Column
     private double calories;
@@ -79,7 +82,7 @@ public class Recipe {
     }
 
     public Recipe(Time timeCreated, String name, String description, List<RecipeDirection> directions, String imageUrl,
-            List<FoodItem> ingredients) {
+            Set<FoodItem> ingredients) {
         this.timeCreated = timeCreated;
         this.name = name;
         this.description = description;
@@ -236,7 +239,7 @@ public class Recipe {
      * Returns the ingredients for this Recipe
      * @return The ingredients for this Recipe
      */
-    public List<FoodItem> getIngredients() {
+    public Set<FoodItem> getIngredients() {
         return ingredients;
     }
 
@@ -244,7 +247,7 @@ public class Recipe {
      * Sets the ingredients for this Recipe
      * @param ingredients The new ingredients for this Recipe
      */
-    public void setIngredients(List<FoodItem> ingredients) {
+    public void setIngredients(Set<FoodItem> ingredients) {
         this.ingredients = ingredients;
     }
     
@@ -252,7 +255,7 @@ public class Recipe {
      * Returns the Comments of this Recipe
      * @return The Comments of this Recipe
      */
-    public List<Comment> getComments() {
+    public Set<Comment> getComments() {
     	return comments;
     }
     
@@ -260,7 +263,7 @@ public class Recipe {
      * Sets the Comments for this Recipe
      * @param comments The new Comments for this Recipe
      */
-    public void setComments(List<Comment> comments) {
+    public void setComments(Set<Comment> comments) {
     	this.comments = comments;
     }
 
@@ -271,7 +274,7 @@ public class Recipe {
     public String toString() {
         return "Recipe { id: " + id + 
         		", timeCreated: " + timeCreated + 
-        		", creator: " + creator + 
+        		", creator: " + new UserDto(creator) + 
         		", name: " + name +
         		", description: " + description + 
                 ", directions: " + directions + 

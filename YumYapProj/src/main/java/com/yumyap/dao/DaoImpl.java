@@ -70,6 +70,10 @@ public class DaoImpl implements Dao {
 	public Recipe addRecipe(Recipe recipe) {
 		logger.trace("addRecipe() " + recipe);
 		Session s = sessionFactory.getCurrentSession();
+		
+		// TODO: Parent key not found error, FIX IT!!
+		recipe.getDirections().stream().forEach(recipeDir -> s.save(recipeDir));
+		recipe.getIngredients().stream().forEach(recipeIngr -> s.save(recipeIngr));
 		s.save(recipe);
 		logger.trace("added " + recipe);
 		return recipe;

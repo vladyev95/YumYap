@@ -102,7 +102,12 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public void addRecipe(Recipe recipe) {
-		dao.addRecipe(recipe);
+		User creator = recipe.getCreator();
+		if (creator != null) {
+			User creatorDb = dao.getUserById(creator.getId());
+			recipe.setCreator(creatorDb);
+			dao.addRecipe(recipe);
+		}
 	}
 
 	@Override
