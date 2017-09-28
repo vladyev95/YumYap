@@ -233,7 +233,8 @@ app.controller('RegisterController', function ($scope, RegisterService) {
 /* ViewAuthorService */
 app.service('ViewAuthorService', function () {
     let service = this;
-
+    console.log("Inside ViewAuthorService")
+    
     service.user = {
     		id: '',
     		email: '',
@@ -267,6 +268,7 @@ app.service('ViewAuthorService', function () {
 /* ViewAuthorService */
 
 app.controller('ViewAuthorController', function ($scope, ViewAuthorService, RecipeService) {
+	console.log("Inside ViewAuthorController");
 	var viewAuthor = ViewAuthorService;
 	var recipeService = RecipeService;
 	var author = this;
