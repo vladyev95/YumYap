@@ -33,6 +33,10 @@ public class RecipeDto {
     
     public RecipeDto() {}
     
+    /**
+     * Converts a Recipe into a RecipeDto with the corresponding fields
+     * @param recipe The Recipe to convert into a RecipeDto
+     */
     public RecipeDto(Recipe recipe) {
     	this.id = recipe.getId();
     	this.creator = new SimpleUserDto(recipe.getCreator());
@@ -45,10 +49,12 @@ public class RecipeDto {
     	this.carbs = recipe.getCarbs();
     	this.protein = recipe.getProtein();
     	
-    	recipe.getIngredients().stream()
+    	recipe.getIngredients()
+    		.stream()
     		.forEach(foodItem -> ingredients.add(foodItem.getAmount() + " " + foodItem.getMeasure() + " of " + foodItem.getName()));
     	
-    	recipe.getDirections().stream()
+    	recipe.getDirections()
+    		.stream()
     		.forEach(recipeDirection -> directions.add(recipeDirection.getDirection()));
     }
 
