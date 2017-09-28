@@ -1,7 +1,6 @@
 package com.yumyap.beans;
 
 import java.sql.Time;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;

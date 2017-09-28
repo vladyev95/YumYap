@@ -26,6 +26,7 @@ public class RecipeController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
 	public RecipeController(UserService userService) {
 		this.userService = userService;
 	}
