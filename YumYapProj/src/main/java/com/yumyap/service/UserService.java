@@ -48,4 +48,10 @@ public interface UserService {
 	String getMacronutrients(RecipeDto recipe);
 
 	RecipeDto addComment(List<RecipeDto> recipeDto, Comment comment);
+	
+	/**
+	 * @param userDto only has email in it
+	 * @return a full userDto from the given email
+	 */
+	UserDto getProfile(UserDto userDto);
 }
