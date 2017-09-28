@@ -26,6 +26,7 @@ public class CommentService {
 	@Autowired
 	private Dao dao;
 	
+	@Autowired
 	public CommentService(Dao dao) {
 		this.dao = dao;
 	}

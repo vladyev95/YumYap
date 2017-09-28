@@ -7,6 +7,7 @@ import com.yumyap.beans.Comment;
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 import com.yumyap.dto.RecipeDto;
+import com.yumyap.dto.SimpleUserDto;
 import com.yumyap.dto.UserDto;
 /**
  * The interface representing a service that deals with
@@ -49,6 +50,7 @@ public interface UserService {
 
 	RecipeDto addComment(List<RecipeDto> recipeDto, Comment comment);
 	
+
 	/**
 	 * @param userDto only has email in it
 	 * @return a full userDto from the given email
@@ -56,4 +58,13 @@ public interface UserService {
 	UserDto getProfile(UserDto userDto);
 	
 	boolean addFollower(UserDto user, UserDto follower);
+
+	
+	/**
+	 * Takes in a SimpleUserDto and transforms it into a UserDto based on the SimpleUserDto id
+	 * @param simpleUserDto The SimpleUserDto to transform into a UserDto
+	 * @return A UserDto version of SimpleUserDto
+	 */
+	UserDto simpleUserDtoToUserDto(SimpleUserDto simpleUserDto);
+
 }
