@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"/>
+        <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>         
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.min.js"></script>
+        <script src="app.js"></script>
+</head>
+<body ng-app="app" ng-controller="ProfileController as prof">
+<div id="profile-info" style="float: left;">
+<h3><span  ng-bind="user.firstname">'s profile</span></h3>
+</div>
+<div class="recipe-block"  ng-repeat="recipe in recipes">
+            <div id="recipe-head" class="recipe-content">
+                <h3 id="recipe-name" ng-bind="recipe.name"></h3>
+                <p id="recipe-description" ng-bind="recipe.description"></p>
+            </div>
+            <div class="recipe-content">
+                <!-- <img id="recipe-image" ng-src="recipe.imageUrl" width="100" height="100"></img> -->
+                <div>
+                    Posted by <span ng-bind = "recipe.creator"></span>{{recipe.creator.firstname + " " + recipe.creator.lastname}}<br>
+         
+                    <button ng-click="viewAuthor(recipe.creator.email)">View Author Profile</button>
+                </div>
+            </div>
+            <div class="recipe-content">
+                <ul class="recipe-content" id="recipe-ingredients" ng-repeat="foodItem in recipe.ingredients">
+                    <li>{{foodItem.amount}}<span ng-bind="foodItem.measure"></span> of <span ng-bind="foodItem.food"></span></li>
+                </ul>
+                <ol class="recipe-content" id="recipe-methods"
+                    ng-repeat="direction in recipe.directions">
+                    <li ng-bind="recipe.directions"></li>
+                </ol>
+            </div>
+            	<button ng-click="favoriteRecipe()">Save this recipe</button>
+        </div> 
+</body>
+</html>
