@@ -6,6 +6,11 @@ import java.util.List;
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 
+/**
+ * A lightweight User data transfer object, slightly heavier than UserDto
+ * Contains information about Users you follow, and favorite Recipes
+ * @author vlad
+ */
 public class UserDto {
 	
 	private int id;
@@ -95,9 +100,17 @@ public class UserDto {
 		this.favoriteRecipes = favoriteRecipes;
 	}
 
+	/**
+	 * Returns a nice String representation of a UserDto
+	 * @return A nice String representation of a UserDto
+	 */
 	@Override
 	public String toString() {
-		return "UserDto [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", following=" + following + ", favoriteRecipes=" + favoriteRecipes + "]";
+		return "UserDto { id: " + id + 
+				", email: " + email + 
+				", firstName: " + firstName + 
+				", lastName: " + lastName +
+				", following: " + following + 
+				", favoriteRecipes: " + favoriteRecipes + " }";
 	}
 }

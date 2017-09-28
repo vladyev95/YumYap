@@ -1,13 +1,16 @@
 package com.yumyap.dto;
 
 import com.yumyap.beans.Recipe;
-import com.yumyap.beans.User;
 
+/**
+ * A lightweight version of a Recipe that will be transported to and from the back end
+ * @author vlad
+ */
 public class RecipeDto {
 
     private int id;
     
-    private int creatorId;
+    private SimpleUserDto creator;
 
     private String name;
 
@@ -18,23 +21,14 @@ public class RecipeDto {
     public RecipeDto() {}
     
     public RecipeDto(Recipe recipe) {
-    	super();
     	this.id = recipe.getId();
-    	User creator = recipe.getCreator();
-    	this.creatorId = (creator != null) ? creator.getId() : -1;
+    	this.creator = new SimpleUserDto(recipe.getCreator());
     	this.name = recipe.getName();
     	this.description = recipe.getDescription();
     	this.imageUrl = recipe.getImageUrl();
     }
 
-	public RecipeDto(int id, int creatorId, String name, String description, String imageUrl) {
-		super();
-		this.id = id;
-		this.creatorId = creatorId;
-		this.name = name;
-		this.description = description;
-		this.imageUrl = imageUrl;
-	}
+	
 
 	public int getId() {
 		return id;
@@ -44,12 +38,12 @@ public class RecipeDto {
 		this.id = id;
 	}
 
-	public int getCreatorId() {
-		return creatorId;
+	public SimpleUserDto getCreator() {
+		return creator;
 	}
-
-	public void setCreatorId(int creatorId) {
-		this.creatorId = creatorId;
+	
+	public void setCreator(SimpleUserDto creator) {
+		this.creator = creator;
 	}
 
 	public String getName() {
@@ -78,7 +72,10 @@ public class RecipeDto {
 
 	@Override
 	public String toString() {
-		return "RecipeDto [id=" + id + ", creatorId=" + creatorId + ", name=" + name + ", description=" + description
-				+ ", imageUrl=" + imageUrl + "]";
+		return "RecipeDto { id: " + id + 
+				", creator: " + creator + 
+				", name: " + name + 
+				", description: " + description
+				+ ", imageUrl: " + imageUrl + " }";
 	}
 }
