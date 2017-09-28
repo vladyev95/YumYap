@@ -143,12 +143,12 @@ app.service('RegisterService', function ($http, $q) {
 });
 /* RegisterService */
 
-app.service('RecipeService', function ($http) {
+app.service('RecipeService', function ($http, $q) {
     let service = this;
 
-    service.saveRecipe = function (recipe) {
-        log('RecipeService save recipe');
-        return $http.post('/YumYap/yum/recipe/create', recipe);
+    service.createRecipe = function (recipe) {
+        log('RecipeService create recipe');
+        return $http.post('yum/recipe/create', recipe);
     };
 });
 
@@ -256,15 +256,21 @@ app.controller('ViewAuthorController', function ($scope, ViewAuthorService) {
 
 /* AppController */
 app.controller('AppController', function ($scope, ProfileService, ViewAuthorService) {
+	log('in AppController');
     $scope.tab = 'Home';
 
-    $scope.homeTab = function () {
+    $scope.switchToHome = function () {
+    	log('switching to \'Home\' tab');
         $scope.tab = 'Home';
-
-
+    };
+    
+    $scope.switchToCreateRecipe = function () {
+    	log('switching to \'Create Recipe\' tab');
+    	$scope.tab = 'CreateRecipe';
     };
 
     $scope.viewAuthor = function (email) {
+    	log('switching to \'View Author\' tab');
         $scope.tab = 'ViewAuthor';
         ViewAuthorService.setEmail(email);
     };
@@ -319,8 +325,8 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
     $scope.foodItems = [];
     $scope.steps = [];
 
-    $scope.saveRecipe = function () {
-        log('RecipeCtrl save recipe');
+    $scope.createRecipe = function () {
+        log('RecipeCtrl create recipe');
         let recipe = {
             creator: UserService.getUser(),
             name: $scope.recipeName,
@@ -334,7 +340,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
             protein: $scope.food.nutrients.protein
         };
 
-        RecipeService.saveRecipe(recipe);
+        RecipeService.createRecipe(recipe);
     };
 
     $scope.addIngredient = function (quantity, fraction, measure, name) {
