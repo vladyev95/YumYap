@@ -234,13 +234,25 @@ app.controller('RegisterController', function ($scope, RegisterService) {
 app.service('ViewAuthorService', function () {
     let service = this;
 
-    service.email = '';
+    service.user = {
+    		id: '',
+    		email: '',
+    		firstName: '',
+    		lastName: '',
+    		following: '',
+    		favoriteRecipes: ''
+    }
 
-    service.setEmail = function (email) {
-        service.email = email;
+    service.setUser = function (data) {
+//        service.id=  data.id,
+//		service.email,
+//		firstName: '',
+//		lastName: '',
+//		following: '',
+//		favoriteRecipes: ''
     };
 
-    service.getEmail = function (email) {
+    service.getUser = function (email) {
         return service.email;
     }
 });
