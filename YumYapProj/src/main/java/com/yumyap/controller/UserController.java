@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 import com.yumyap.dto.RecipeDto;
 import com.yumyap.dto.SimpleUserDto;
@@ -72,6 +73,14 @@ public class UserController {
 	}
 
 
+	@RequestMapping(value = "/profile", method = { RequestMethod.POST }, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<UserDto> loadProfile(@RequestBody UserDto userDto) {
+		System.out.println("Loading Profile");
+		
+		return new ResponseEntity<UserDto>(userService.getProfile(userDto), HttpStatus.OK);
+	}
+
 	@RequestMapping(value = "/profile", 
 			method = RequestMethod.POST, 
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
@@ -80,6 +89,7 @@ public class UserController {
 		logger.trace("loadProfile() by " + simpleUserDto);
 		UserDto userDto = userService.simpleUserDtoToUserDto(simpleUserDto);
 		return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
+
 	}	
 
 	
@@ -110,5 +120,29 @@ public class UserController {
 	}
 	*/
 
+	@RequestMapping(value = "/create",
+			method   = { RequestMethod.POST },
+			consumes = { MediaType.APPLICATION_JSON_VALUE },
+			produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Void> createRecipe(@RequestBody Recipe recipe) {
+
+		logger.trace("creating a new recipe");
+		userService.addRecipe(recipe);		
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
 	
+	@RequestMapping(value = "/addFollower",
+			method   = { RequestMethod.POST },
+			consumes = { MediaType.APPLICATION_JSON_VALUE },
+			produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Void> addFollower(@RequestBody UserDto user, @RequestBody UserDto follower) {
+		logger.trace("Adding a follower");
+
+		if (userService.addFollower(user, follower))
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		else {
+			logger.info("The user is already following that person");
+			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+		}
+	}
 }

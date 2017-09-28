@@ -35,16 +35,6 @@ app.config(function ($routeProvider) {
         });
 });
 
-app.service('RecipeService', function ($http) {
-    let service = this;
-
-    service.saveRecipe = function (recipe) {
-        log('RecipeService save recipe');
-        return $http.post('/YumYap/yum/recipe/create', recipe);
-    };
-});
-
-
 /* LoginRegisterController */
 app.controller('LoginRegisterController', function ($scope) {
     $scope.onLogin = true;
@@ -124,9 +114,9 @@ app.service('RegisterService', function ($http, $q) {
 app.service('RecipeService', function ($http) {
     let service = this;
 
-    service.saveRecipe = function (recipe) {
-        log('RecipeService save recipe');
-        return $http.post('/YumYap/yum/recipe/create', recipe);
+    service.createRecipe = function (recipe) {
+        log('RecipeService create recipe');
+        return $http.post('yum/recipe/create', recipe);
     };
 });
 
@@ -211,7 +201,8 @@ app.controller('RegisterController', function ($scope, RegisterService) {
 /* ViewAuthorService */
 app.service('ViewAuthorService', function () {
     let service = this;
-
+    console.log("Inside ViewAuthorService")
+    
     service.user = {
     		id: '',
     		email: '',
@@ -234,12 +225,18 @@ app.service('ViewAuthorService', function () {
         return service.user;
     }
     
-    
-    
+    $scope.follow = function () {
+    	console.log("Adding a follower");
+    	var follower = service.user;
+    	var user = getUserInfoService();
+    	
+    	return $http.post('yum/user/addFollower', user, follower);
+    }
 });
 /* ViewAuthorService */
 
 app.controller('ViewAuthorController', function ($scope, ViewAuthorService, RecipeService) {
+	console.log("Inside ViewAuthorController");
 	var viewAuthor = ViewAuthorService;
 	var recipeService = RecipeService;
 	var author = this;
@@ -259,15 +256,21 @@ app.controller('ViewAuthorController', function ($scope, ViewAuthorService, Reci
 
 /* AppController */
 app.controller('AppController', function ($scope, ProfileService, ViewAuthorService) {
+	log('in AppController');
     $scope.tab = 'Home';
 
-    $scope.homeTab = function () {
+    $scope.switchToHome = function () {
+    	log('switching to \'Home\' tab');
         $scope.tab = 'Home';
-
-
+    };
+    
+    $scope.switchToCreateRecipe = function () {
+    	log('switching to \'Create Recipe\' tab');
+    	$scope.tab = 'CreateRecipe';
     };
 
     $scope.viewAuthor = function (email) {
+    	log('switching to \'View Author\' tab');
         $scope.tab = 'ViewAuthor';
         ViewAuthorService.setEmail(email);
     };
@@ -322,8 +325,8 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
     $scope.foodItems = [];
     $scope.steps = [];
 
-    $scope.saveRecipe = function () {
-        log('RecipeCtrl save recipe');
+    $scope.createRecipe = function () {
+        log('RecipeCtrl create recipe');
         let recipe = {
             creator: UserService.getUser(),
             name: $scope.recipeName,
@@ -337,7 +340,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
             protein: $scope.food.nutrients.protein
         };
 
-        RecipeService.saveRecipe(recipe);
+        RecipeService.createRecipe(recipe);
     };
 
     $scope.addIngredient = function (quantity, fraction, measure, name) {

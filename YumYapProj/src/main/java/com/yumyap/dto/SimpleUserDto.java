@@ -30,6 +30,13 @@ public class SimpleUserDto {
 		this.lastName = lastName;
 	}
 
+	public SimpleUserDto(UserDto userDto) {
+		super();
+		this.id = userDto.getId();
+		this.firstName = userDto.getFirstName();
+		this.lastName = userDto.getLastName();
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -52,6 +59,21 @@ public class SimpleUserDto {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	/**
+	 * Checks for equivalence by checking the id of each object
+	 * @return boolean value corresponding to object equivalence
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		
+		if (obj == null || obj.getClass() != SimpleUserDto.class)
+			return false;
+		
+		if (this.id == ((SimpleUserDto)obj).getId())
+			return true;
+		else return false;
 	}
 	
 	/**

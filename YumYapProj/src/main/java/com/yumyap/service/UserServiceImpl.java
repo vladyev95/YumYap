@@ -117,8 +117,26 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public UserDto getProfile(UserDto userDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean addFollower(UserDto user, UserDto follower) {
+		SimpleUserDto follow = new SimpleUserDto(follower);
+		
+		if (user.getFollowing().contains(follow))
+			return false;
+		else {
+			user.getFollowing().add(follow);
+			return true;
+		}
+	}
+
 	public UserDto simpleUserDtoToUserDto(SimpleUserDto simpleUserDto) {
 		logger.trace("simpleUserDtoToUserDto() by " + simpleUserDto);
 		return new UserDto(dao.getUserById(simpleUserDto.getId()));
 	}
+
 }
