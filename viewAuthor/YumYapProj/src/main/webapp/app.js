@@ -243,6 +243,10 @@ app.service('ViewAuthorService', function () {
     service.getEmail = function (email) {
         return service.email;
     }
+    
+    service.getAuthorInfo = function() {
+        return $http.post('/viewAuthor', service.email);
+    };
 });
 /* ViewAuthorService */
 
@@ -250,9 +254,9 @@ app.controller('ViewAuthorController', function ($scope, $location, ViewAuthorSe
 	
 	$scope.viewAuthor = function(email) {
 		// TODO: Implement viewAuthor with ViewAuthorService??
-		ViewAuthorService.viewAuthor(email).then(function(response){
+		 ViewAuthorService.getAuthorInfo().then(function(response){
 			 if (response.data) {
-				 $location.path('/viewAuthor');
+				 let user = response.data;
 			 }else{
 				 console.log('reponse.data is null');
 			 }
