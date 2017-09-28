@@ -1,18 +1,24 @@
 <div id="appContent" ng-controller="AppController as app">
-    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-        <button class="navbar-toggler navbar-toggler-right" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="#">Navbar</a>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link" ng-click="homeTab()">Home</a>
-                <a class="nav-item nav-link">TabName1</a>
-                <a class="nav-item nav-link">TabName2</a>
-                <a class="nav-item nav-link">Logout</a>
-            </div>
-        </div>
-    </nav>
+	<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+		<button class="navbar-toggler navbar-toggler-right"
+			data-toggle="collapse" data-target="#navbarNavAltMarkup"
+			aria-controls="navbarNavAltMarkup" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<a class="navbar-brand" href="#">Navbar</a>
+		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+			<div class="navbar-nav">
+				<a class="nav-item nav-link" ng-click="homeTab()">Home</a>
+				
+				<!-- TODO: Set tab to Create Recipe -->
+				<a class="nav-item nav-link" ng-click="tab='Create Recipe'">Create Recipe</a>
+				<a class="nav-item nav-link">TabName2</a>
+				<a class="nav-item nav-link">Logout</a>
+			</div>
+		</div>
+	</nav>
+
 
    <!-- Please set the controller to <whatever> as recipectrl TY
 we will need recipectrl.getMeasure(foodItem.measure) to return the measurement from the API found at the string foodItem.measure
@@ -75,4 +81,107 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
             </div>
         </div>
     </div>
+	
+
+<div ng-show="tab === 'ViewAuthor'"
+	ng-controller="ViewAuthorController as viewAuthor">
+	<h1 ng-bind="user.firstName + ' ' + user.lastName"></h1>
+	<div class="recipe-block" ng-repeat="recipe in user.recipes">
+		<div id="recipe-head" class="recipe-content">
+			<h3 id="recipe-name" ng-bind="recipe.name"></h3>
+			<p id="recipe-description" ng-bind="recipe.description"></p>
+		</div>
+		<div class="recipe-content">
+			<img id="recipe-image" ng-src="recipe.imageUrl" width="100"
+				height="100"></img>
+			<div>
+				Posted by {{recipe.creator.firstname + " " +
+				recipe.creator.lastname}} This button should bring you to the user
+				that posted it
+				<button ng-click="viewAuthor(recipe.author.email)">View
+					Author Profile</button>
+			</div>
+			<div class="recipe-content">
+				<ul class="recipe-content" id="recipe-ingredients"
+					ng-repeat="foodItem in recipe.ingredients">
+					<li><span
+						ng-bind="foodItem.amount + ' ' + foodItem.measure + ' of ' + foodItem.name"></span></li>
+				</ul>
+				<ol class="recipe-content"
+					ng-repeat="direction in recipe.directions">
+					<li ng-bind="direction"></li>
+				</ol>
+			</div>
+			<button ng-click="favoriteRecipe(recipe.id)">Save this
+				recipe</button>
+		</div>
+
+	</div>
+
+</div>
+
+<div ng-show="tab === 'Create Recipe'">
+	<div ng-controller="RecipeCtrl">
+		<div id="recipe-head" class="recipe-content">
+			<h1 ng-bind="recipeName"></h1>
+			<input ng-model="recipeName" placeholder="Recipe name" /> <br>
+			<br>
+			<textarea ng-model="recipeDescription" cols="32" rows="5"
+				placeholder="Description"></textarea>
+		</div>
+		<div class="recipe-content">
+			<h2>Ingredients</h2>
+
+			<input id="search" ng-model="search" ng-change="searchFoods(search)"
+				type="text" placeholder="Search ingredients" /> <select
+				ng-model="selection" ng-change="getFoodReport(selection)"
+				ng-show="search" ng-hide="!search">
+				<option ng-repeat="item in foodItems" ng-bind="item.name"
+					value="{{ item.ndbno }}"></option>
+			</select> <br> <span ng-show="selection"> <input
+				ng-model="quantity"
+				ng-change="calculateNutrients(quantity, fraction, measure)"
+				type="number" default=0 step="1" min="0" /> <select
+				ng-model="fraction"
+				ng-change="calculateNutrients(quantity, fraction, measure)">
+					<option value="0"></option>
+					<option value="1/8">1/8</option>
+					<option value="1/4">1/4</option>
+					<option value="1/3">1/3</option>
+					<option value="1/2">1/2</option>
+					<option value="2/3">2/3</option>
+					<option value="3/4">3/4</option>
+			</select> <select ng-model="measure"
+				ng-change="calculateNutrients(quantity, fraction, measure)">
+					<option ng-repeat="m in measures" value="{{ m }}" ng-bind="m"></option>
+			</select> <input type="text" value="{{ customName }}" ng-model="customName" />
+				<button
+					ng-click="addIngredient(quantity, fraction, measure, customName)">+</button>
+				<br>
+				<h3>
+					<span ng-if="quantity!=0 && measure" ng-bind="quantity"></span> <span
+						ng-if="fraction!='0' && measure" ng-bind="fraction"></span> <span
+						ng-bind="measure"></span> <span ng-bind="customName"></span>
+				</h3>
+			</span>
+
+			<ul>
+				<li ng-repeat="ingredient in ingredients"><span
+					ng-if="ingredient.quantity!=0" ng-bind="ingredient.quantity"></span>
+					<span ng-if="ingredient.fraction!='0'"
+					ng-bind="ingredient.fraction"></span> <span
+					ng-bind="ingredient.measure"></span> <span
+					ng-bind="ingredient.name"></span></li>
+			</ul>
+
+			<h2>Directions</h2>
+			<input type="text" ng-model="recipeStep" placeholder="Add a step" />
+			<button ng-click="addStep(recipeStep)">+</button>
+			<ol>
+				<li ng-repeat="step in steps" ng-bind="step.direction"></li>
+			</ol>
+		</div>
+		<!-- TODO: Send recipe to backend for storage -->
+		<button ng-click="saveRecipe()">Save Recipe</button>
+	</div>
 </div>

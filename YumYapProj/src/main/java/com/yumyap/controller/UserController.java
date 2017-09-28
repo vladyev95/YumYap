@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 import com.yumyap.dto.RecipeDto;
 import com.yumyap.dto.UserDto;
@@ -96,14 +95,5 @@ public class UserController {
 	}
 	*/
 
-	@RequestMapping(value = "/create",
-			method   = { RequestMethod.POST },
-			consumes = { MediaType.APPLICATION_JSON_VALUE },
-			produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Void> createRecipe(@RequestBody Recipe recipe) {
-
-		logger.trace("creating a new recipe");
-		userService.addRecipe(recipe);		
-		return new ResponseEntity<Void>(HttpStatus.OK);
-	}
+	
 }

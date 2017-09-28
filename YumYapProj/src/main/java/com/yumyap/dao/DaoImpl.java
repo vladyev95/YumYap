@@ -75,15 +75,18 @@ public class DaoImpl implements Dao {
 		return recipe;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Recipe> getRecipes() {
 		Session s = sessionFactory.getCurrentSession();
 		return (List<Recipe>) s.createCriteria(Recipe.class).list();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Comment> getComments(Recipe r) {
 		return (List<Comment>) sessionFactory.getCurrentSession().createCriteria(Comment.class).add(Restrictions.eq("recipe", r)).list();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Recipe> getRecipes(String search) {
 
 		return (List<Recipe>) sessionFactory.getCurrentSession().createCriteria(Recipe.class)
@@ -178,5 +181,13 @@ public class DaoImpl implements Dao {
 	
 	private Session currentSession() {
 		return sessionFactory.getCurrentSession();
+	}
+	
+	public void addCommentForRecipeById(int id, Comment comment) {
+		logger.trace("addCommentForRecipyById() for id: " + id + " comment: " + comment);
+		Session session = sessionFactory.getCurrentSession();
+		Recipe recipe = getRecipeById(id);
+		recipe.getComments().add(comment);
+		session.merge(recipe);
 	}
 }
