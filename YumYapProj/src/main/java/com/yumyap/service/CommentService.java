@@ -50,7 +50,7 @@ public class CommentService {
 	 */
 	public void createComment(RecipeDto recipeDto, Comment comment) {
 		logger.trace("createComment() with " + recipeDto + ", " + comment);
-		User commenter = dao.getUserById(recipeDto.getCreatorId());
+		User commenter = dao.getUserById(recipeDto.getCreator().getId());
 		comment.setCommenter(commenter);
 		dao.addCommentForRecipeById(recipeDto.getId(), comment);
 	}

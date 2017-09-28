@@ -39,7 +39,7 @@ public class CommentController {
 	 * @param comment
 	 * @return
 	 */
-	@RequestMapping(value = "/createComment", 
+	@RequestMapping(value = "/create", 
 				method = RequestMethod.POST, 
 				consumes = MediaType.APPLICATION_JSON_VALUE, 
 				produces = MediaType.APPLICATION_JSON_VALUE)
@@ -55,7 +55,7 @@ public class CommentController {
 	 * @param recipeDto The Recipe for which to get the Comments
 	 * @return The Comments for the Recipe, in order from newest to oldest
 	 */
-	@RequestMapping(value = "/recipeComments",
+	@RequestMapping(value = "/recipe",
 				method = RequestMethod.POST,
 				consumes = MediaType.APPLICATION_JSON_VALUE, 
 				produces = MediaType.APPLICATION_JSON_VALUE)
