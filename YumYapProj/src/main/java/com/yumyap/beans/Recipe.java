@@ -1,7 +1,7 @@
 package com.yumyap.beans;
 
 import java.sql.Time;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -50,33 +50,36 @@ public class Recipe {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "recipe_direction_id")
-    private Set<RecipeDirection> directions;
+    private List<RecipeDirection> directions;
 
     @Column(name = "image_url")
     private String imageUrl;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "recipes_ingredients", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "food_item_id"))
-    private Set<FoodItem> ingredients;
+    private List<FoodItem> ingredients;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "comment_id")
-    private Set<Comment> comments;
+    private List<Comment> comments;
     
     @Column
     private double calories;
+    
     @Column
     private double fat;
+    
     @Column
     private double carbs;
+    
     @Column
     private double protein;
 
     public Recipe() {
     }
 
-    public Recipe(Time timeCreated, String name, String description, Set<RecipeDirection> directions, String imageUrl,
-            Set<FoodItem> ingredients) {
+    public Recipe(Time timeCreated, String name, String description, List<RecipeDirection> directions, String imageUrl,
+            List<FoodItem> ingredients) {
         this.timeCreated = timeCreated;
         this.name = name;
         this.description = description;
@@ -89,7 +92,7 @@ public class Recipe {
         return calories;
     }
 
-    public void setCalories(double calories) {
+    public void ListCalories(double calories) {
         this.calories = calories;
     }
 
@@ -97,7 +100,7 @@ public class Recipe {
         return protein;
     }
 
-    public void setProtein(double protein) {
+    public void ListProtein(double protein) {
         this.protein = protein;
     }
 
@@ -105,7 +108,7 @@ public class Recipe {
         return carbs;
     }
 
-    public void setCarbs(double carbs) {
+    public void ListCarbs(double carbs) {
         this.carbs = carbs;
     }
 
@@ -113,7 +116,7 @@ public class Recipe {
         return fat;
     }
 
-    public void setFat(double fat) {
+    public void ListFat(double fat) {
         this.fat = fat;
     }
 
@@ -126,10 +129,10 @@ public class Recipe {
     }
 
     /**
-     * Sets the name of the this recipe
+     * Lists the name of the this recipe
      * @param name The new name for this recipe
      */
-    public void setName(String name) {
+    public void ListName(String name) {
         this.name = name;
     }
 
@@ -142,10 +145,10 @@ public class Recipe {
     }
 
     /**
-     * Sets the imageUrl for this image
+     * Lists the imageUrl for this image
      * @param imageUrl The new imageUrl for this image
      */
-    public void setImageUrl(String imageUrl) {
+    public void ListImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 
@@ -158,10 +161,10 @@ public class Recipe {
     }
 
     /**
-     * Sets the id of this image
+     * Lists the id of this image
      * @param id The new id of this image
      */
-    public void setId(int id) {
+    public void ListId(int id) {
         this.id = id;
     }
 
@@ -174,10 +177,10 @@ public class Recipe {
     }
 
     /**
-     * Sets the time representing the time this Recipe was created
+     * Lists the time representing the time this Recipe was created
      * @param timeCreated
      */
-    public void setCreated(Time timeCreated) {
+    public void ListCreated(Time timeCreated) {
         this.timeCreated = timeCreated;
     }
 
@@ -190,10 +193,10 @@ public class Recipe {
     }
 
     /**
-     * Sets the User that created this Recipe
+     * Lists the User that created this Recipe
      * @param creator The new creator of this Recipe
      */
-    public void setCreator(User creator) {
+    public void ListCreator(User creator) {
         this.creator = creator;
     }
 
@@ -206,10 +209,10 @@ public class Recipe {
     }
 
     /**
-     * Sets the description of this Recipe
+     * Lists the description of this Recipe
      * @param description The new description of this Recipe
      */
-    public void setDescription(String description) {
+    public void ListDescription(String description) {
         this.description = description;
     }
 
@@ -217,15 +220,15 @@ public class Recipe {
      * Returns the RecipeDirections for this Recipe
      * @return The RecipeDirections for this Recipe
      */
-    public Set<RecipeDirection> getDirections() {
+    public List<RecipeDirection> getDirections() {
         return directions;
     }
 
     /**
-     * Sets the RecipeDirections for this Recipe
+     * Lists the RecipeDirections for this Recipe
      * @param directions The new RecipeDirections for this Recipe
      */
-    public void setDirections(Set<RecipeDirection> directions) {
+    public void ListDirections(List<RecipeDirection> directions) {
         this.directions = directions;
     }
 
@@ -233,15 +236,15 @@ public class Recipe {
      * Returns the ingredients for this Recipe
      * @return The ingredients for this Recipe
      */
-    public Set<FoodItem> getIngredients() {
+    public List<FoodItem> getIngredients() {
         return ingredients;
     }
 
     /**
-     * Sets the ingredients for this Recipe
+     * Lists the ingredients for this Recipe
      * @param ingredients The new ingredients for this Recipe
      */
-    public void setIngredients(Set<FoodItem> ingredients) {
+    public void ListIngredients(List<FoodItem> ingredients) {
         this.ingredients = ingredients;
     }
     
@@ -249,15 +252,15 @@ public class Recipe {
      * Returns the Comments of this Recipe
      * @return The Comments of this Recipe
      */
-    public Set<Comment> getComments() {
+    public List<Comment> getComments() {
     	return comments;
     }
     
     /**
-     * Sets the Comments for this Recipe
+     * Lists the Comments for this Recipe
      * @param comments The new Comments for this Recipe
      */
-    public void setComments(Set<Comment> comments) {
+    public void ListComments(List<Comment> comments) {
     	this.comments = comments;
     }
 
@@ -266,9 +269,14 @@ public class Recipe {
      */
     @Override
     public String toString() {
-        return "Recipe { id: " + id + ", timeCreated: " + timeCreated + ", creator: " + creator + ", name: " + name
-                + ", description: " + description + ", directions: " + directions + ", imageUrl: " + imageUrl
-                + ", ingredients: " + ingredients + " }";
+        return "Recipe { id: " + id + 
+        		", timeCreated: " + timeCreated + 
+        		", creator: " + creator + 
+        		", name: " + name +
+        		", description: " + description + 
+                ", directions: " + directions + 
+                ", imageUrl: " + imageUrl +
+                ", ingredients: " + ingredients + " }";
     }
 
 }
