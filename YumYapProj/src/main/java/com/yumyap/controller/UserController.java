@@ -70,17 +70,20 @@ public class UserController {
 		return new ResponseEntity<List<RecipeDto>>(userService.getDashboard(userDto), HttpStatus.OK);
 	}
 
-	/*
-	 * @RequestMapping(value = "/profile", method = { RequestMethod.POST }, consumes
-	 * = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-	 * MediaType.APPLICATION_JSON_VALUE }) public ResponseEntity<UserDto>
-	 * loadProfile(@RequestBody UserDto userDto) {
-	 * System.out.println("Loading Profile");
-	 * 
-	 * return new ResponseEntity<UserDto>(userService.getProfile(userDto),
-	 * HttpStatus.OK); }
-	 */
-	@RequestMapping(value = "/profile", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+
+//
+//	@RequestMapping(value = "/profile", method = { RequestMethod.POST }, consumes = {
+//			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+//	public ResponseEntity<UserDto> loadProfile(@RequestBody UserDto userDto) {
+//		System.out.println("Loading Profile");
+//		
+//		return new ResponseEntity<UserDto>(userService.getProfile(userDto), HttpStatus.OK);
+//	}
+
+	@RequestMapping(value = "/profile", 
+			method = RequestMethod.POST, 
+			consumes = MediaType.APPLICATION_JSON_VALUE, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserDto> loadProfile(@RequestBody SimpleUserDto simpleUserDto) {
 		logger.trace("loadProfile() by " + simpleUserDto);
 		UserDto userDto = userService.simpleUserDtoToUserDto(simpleUserDto);
