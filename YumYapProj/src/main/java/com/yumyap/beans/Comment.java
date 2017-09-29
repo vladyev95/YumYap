@@ -1,6 +1,6 @@
 package com.yumyap.beans;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,14 +35,14 @@ public class Comment {
 	private User commenter;
 
 	@Column(name = "comment_date", nullable = false)
-	private Date commentDate;
+	private Timestamp commentDate;
 
 	@Column(name = "content", nullable = false)
 	private String content;
 
 	public Comment() {}
 
-	public Comment(User commenter, Date commentDate, String content) {
+	public Comment(User commenter, Timestamp commentDate, String content) {
 		this.commenter = commenter;
 		this.commentDate = commentDate;
 		this.content = content;
@@ -84,7 +84,7 @@ public class Comment {
 	 * Returns the java.sql.Date that this Comment was made
 	 * @return The Date that this Comment was made
 	 */
-	public Date getDate() {
+	public Timestamp getDate() {
 		return commentDate;
 	}
 
@@ -92,7 +92,7 @@ public class Comment {
 	 * Sets the Date that this Comment was made
 	 * @param comment_date The Date that this comment was made
 	 */
-	public void setDate(Date commentDate) {
+	public void setDate(Timestamp commentDate) {
 		this.commentDate = commentDate;
 	}
 

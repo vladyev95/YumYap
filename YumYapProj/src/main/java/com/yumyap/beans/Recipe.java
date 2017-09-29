@@ -1,11 +1,9 @@
 package com.yumyap.beans;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.SortedMap;
 import java.util.SortedSet;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
@@ -13,13 +11,14 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -43,9 +42,9 @@ public class Recipe {
 	private int id;
 
 	@Column (name = "date_created")
-	private Date dateCreated;
+	private Timestamp dateCreated;
 
-	@ManyToOne (cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn (name = "user_id")
 	private User creator;
 
@@ -55,22 +54,27 @@ public class Recipe {
 	@Column (name = "description", nullable = false)
 	private String description;
 
-	@ElementCollection
+	@ElementCollection (fetch = FetchType.EAGER)
 	@CollectionTable (
 			name = "DIRECTION",
 			joinColumns = @JoinColumn(name = "RECIPE_ID"))
 	@Column (name = "CONTENT", nullable = false)
-	private SortedMap<Integer, String> directions = new TreeMap<>();
+	@OrderBy ("CONTENT")
+	private SortedSet<String> directions = new TreeSet<>();
 
 	@Column (name = "image_url")
 	private String imageUrl;
 
-	@OneToMany (cascade = CascadeType.ALL)
-	@JoinColumn (name = "recipes_ingredients")
+	@ElementCollection (fetch = FetchType.EAGER)
+	@CollectionTable (
+			name = "recipes_ingredients",
+			joinColumns = @JoinColumn(name = "RECIPE_ID", nullable = false))
+	@Column (name = "FOOD_ITEM")
 	private Set<FoodItem> ingredients = new HashSet<>();
 
-	@OneToMany (mappedBy = "COMMENTER")
-	@OrderColumn (name = "COMMENT_DATE")
+	@OneToMany
+	@JoinColumn (name = "COMMENT_ID")
+	@OrderBy ("COMMENT_DATE DESC")
 	private SortedSet<Comment> comments = new TreeSet<>();
 
 	@Column
@@ -88,7 +92,7 @@ public class Recipe {
 
 	public Recipe() {}
 
-	public Recipe(Date dateCreated, String name, String description, SortedMap<Integer, String> directions, String imageUrl,
+	public Recipe(Timestamp dateCreated, String name, String description, SortedSet<String> directions, String imageUrl,
 			Set<FoodItem> ingredients, SortedSet<Comment> comments) {
 		this.dateCreated = dateCreated;
 		this.name = name;
@@ -183,7 +187,7 @@ public class Recipe {
 	 * Returns the java.sql.Time representing the time this Recipe was created
 	 * @return The java.sql.Time representing the time this Recipe was created
 	 */
-	public Date getDateCreated() {
+	public Timestamp getDateCreated() {
 		return dateCreated;
 	}
 
@@ -191,7 +195,7 @@ public class Recipe {
 	 * Sets the time representing the time this Recipe was created
 	 * @param timeCreated
 	 */
-	public void setDateCreated(Date dateCreated) {
+	public void setDateCreated(Timestamp dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
@@ -232,7 +236,7 @@ public class Recipe {
 	 * Returns the RecipeDirections for this Recipe 
 	 * @return The RecipeDirections for this Recipe
 	 */
-	public SortedMap<Integer, String> getDirections() {
+	public SortedSet<String> getDirections() {
 		return directions;
 	}
 
@@ -240,7 +244,7 @@ public class Recipe {
 	 * Sets the RecipeDirections for this Recipe
 	 * @param directions The new RecipeDirections for this Recipe
 	 */
-	public void setDirections(SortedMap<Integer, String> directions) {
+	public void setDirections(SortedSet<String> directions) {
 		this.directions = directions;
 	}
 

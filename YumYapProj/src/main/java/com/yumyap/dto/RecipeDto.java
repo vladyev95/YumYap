@@ -1,6 +1,6 @@
 package com.yumyap.dto;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class RecipeDto {
 
 	private SimpleUserDto creator;
 
-	private Date dateCreated;
+	private Timestamp dateCreated;
 
 	private String name;
 
@@ -98,7 +98,7 @@ public class RecipeDto {
 	 * Returns the Time that the corresponding Recipe was created
 	 * @return The Time that the corresponding Recipe was created
 	 */
-	public Date getDateCreated() {
+	public Timestamp getDateCreated() {
 		return dateCreated;
 	}
 
@@ -106,7 +106,7 @@ public class RecipeDto {
 	 * Sets the timeCreated
 	 * @param dateCreated The new Time
 	 */
-	public void setDateCreated(Date dateCreated) {
+	public void setDateCreated(Timestamp dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 

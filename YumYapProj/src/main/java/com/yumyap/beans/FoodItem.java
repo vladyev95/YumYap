@@ -2,27 +2,19 @@ package com.yumyap.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 
-import org.springframework.stereotype.Component;
+import org.hibernate.annotations.Parent;
 
 /**
  * An object representing the FoodItems that constitute the ingredient list of a
  * Recipe
  * @author vlad
  */
-@Component
 @Embeddable
 public class FoodItem {
-
-	@Id
-	@Column (name = "food_item_id")
-	@SequenceGenerator (name = "food_item_id_seq", sequenceName = "food_item_id_seq")
-	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator = "food_item_id_seq")
-	private int id;
+	
+	@Parent
+	private Recipe recipe;
 
 	@Column (name = "name", nullable = false)
 	private String name;
@@ -40,22 +32,6 @@ public class FoodItem {
 		this.name = name;
 		this.measure = measure;
 		this.amount = amount;
-	}
-
-	/**
-	 * Returns the id of this FoodItem
-	 * @return The id of this FoodItem
-	 */
-	public int getId() {
-		return id;
-	}
-
-	/**
-	 * Sets the id of this FoodItem
-	 * @param id The new id of this FoodItem
-	 */
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	/**
@@ -111,6 +87,32 @@ public class FoodItem {
 	 */
 	@Override
 	public String toString() {
-		return "FoodItem { id: " + id + ", name: " + name + ", measure: " + measure + ", amount: " + amount + " }";
+		return "FoodItem { name: " + name + ", measure: " + measure + ", amount: " + amount + " }";
+	}
+	
+	@Override
+	public boolean equals(Object that) {
+		if (!(that instanceof FoodItem)) return false;
+		FoodItem thatFood = (FoodItem) that;
+		return  this.amount == thatFood.getAmount() &&
+				this.name.equals(thatFood.getName()) &&
+				this.measure.equals(thatFood.getMeasure());
+	}
+	
+	@Override
+	public int hashCode() {
+		int hash = 17;
+		hash = hash * 31 + new Double(amount).hashCode();
+		hash = hash * 31 + measure.hashCode();
+		hash = hash * 31 + name.hashCode();
+		return hash;
+	}
+
+	public Recipe getRecipe() {
+		return recipe;
+	}
+
+	public void setRecipe(Recipe recipe) {
+		this.recipe = recipe;
 	}
 }
