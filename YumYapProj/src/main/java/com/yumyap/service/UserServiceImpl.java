@@ -70,6 +70,7 @@ public class UserServiceImpl implements UserService {
 		if (user == null) return recipes;
 		
 		Set<User> following = user.getFollowing();
+		if (following == null || following.isEmpty()) return recipes;
 		
 		recipes.addAll(
 			dao.getRecipesByUser(user)
@@ -101,13 +102,12 @@ public class UserServiceImpl implements UserService {
 	*/
 	
 	@Override
-	public void addRecipe(Recipe recipe) {
+	public void addRecipe(Recipe recipe) throws NullPointerException {
 		User creator = recipe.getCreator();
-		if (creator != null) {
-			User creatorDb = dao.getUserById(creator.getId());
-			recipe.setCreator(creatorDb);
-			dao.addRecipe(recipe);
-		}
+		
+		User creatorDb = dao.getUserById(creator.getId());
+		recipe.setCreator(creatorDb);
+		dao.addRecipe(recipe);
 	}
 
 	@Override
@@ -140,7 +140,7 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	public UserDto simpleUserDtoToUserDto(SimpleUserDto simpleUserDto) {
+	public UserDto simpleUserDtoToUserDto(SimpleUserDto simpleUserDto) throws NullPointerException {
 		logger.trace("simpleUserDtoToUserDto() by " + simpleUserDto);
 		return new UserDto(dao.getUserById(simpleUserDto.getId()));
 	}
