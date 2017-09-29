@@ -36,7 +36,7 @@ public class Comment implements Comparable<Comment> {
 	@JoinColumn(name = "USER_ID")
 	private User commenter;
 
-	@Temporal(TemporalType.TIMESTAMP)
+//	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "comment_date", nullable = false, insertable = false)
 	private Calendar commentDate;
 

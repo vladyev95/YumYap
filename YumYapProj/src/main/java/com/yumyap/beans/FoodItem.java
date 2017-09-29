@@ -13,16 +13,16 @@ import org.hibernate.annotations.Parent;
 @Embeddable
 public class FoodItem {
 	
-	@Parent
-	private Recipe recipe;
+//	@Parent
+//	private Recipe recipe;
 
-	@Column (name = "name", nullable = false)
+	@Column (name = "name", nullable = true)
 	private String name;
 
-	@Column (name = "measure", nullable = false)
+	@Column (name = "measure", nullable = true)
 	private String measure;
 
-	@Column (name = "amount", nullable = false)
+	@Column (name = "amount", nullable = true)
 	private double amount;
 
 
@@ -107,12 +107,12 @@ public class FoodItem {
 		hash = hash * 31 + name.hashCode();
 		return hash;
 	}
-
-	public Recipe getRecipe() {
-		return recipe;
-	}
-
-	public void setRecipe(Recipe recipe) {
-		this.recipe = recipe;
-	}
+//
+//	public Recipe getRecipe() {
+//		return recipe;
+//	}
+//
+//	public void setRecipe(Recipe recipe) {
+//		this.recipe = recipe;
+//	}
 }

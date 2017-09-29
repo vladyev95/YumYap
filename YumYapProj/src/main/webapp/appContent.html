@@ -13,7 +13,7 @@
 
 				<!-- TODO: Set tab to Create Recipe -->
 				<a class="nav-item nav-link" ng-click="switchToCreateRecipe()">Create Recipe</a>
-				<a class="nav-item nav-link">TabName2</a>
+				<a class="nav-item nav-link" ng-click="switchToSearchRecipe()">Search Recipes</a>
 				<a class="nav-item nav-link">Logout</a>
 			</div>
 		</div>
@@ -156,4 +156,11 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
 			<button ng-click="publishRecipe()">Publish Recipe</button>
 		</div>
 	</div>
+	
+	<div ng-show="tab === 'SearchRecipes'" ng-controller="SearchRecipeController">
+		<input type="text" ng-model="RecipeName">
+		<button ng-click="search()">Search Recipes </button>
+	</div>
+	
+	
 </div>

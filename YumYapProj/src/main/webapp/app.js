@@ -448,12 +448,12 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 
 app.service('ProfileService', function ($http, $q) {
     var service = this;
-    service.user = {
-        firstname: '',
-        lastname: '',
-        email: 'us@er.com',
-        password: ''
-    };
+//    service.user = {
+//        firstname: '',
+//        lastname: '',
+//        email: 'us@er.com',
+//        password: ''
+//    };
 
     service.viewProfile = function () {
         console.log("getting profile");
@@ -481,7 +481,7 @@ app.service('ProfileService', function ($http, $q) {
     service.viewUser = {
         firstname: '',
         lastname: '',
-        email: 'us@er.com'
+        email: ''
     };
 
     service.setViewUser = function (data) {
@@ -526,10 +526,11 @@ app.controller('ProfileController', function ($scope, ProfileService, $http, $q)
 
 });
 
-app.controller('DashboardController', function ($scope, ProfileService, $http, $q) {
+app.controller('DashboardController', function ($scope, UserService, ProfileService, $http, $q) {
 
 
     var profile = ProfileService;
+    var userService = UserService;
     var data = function () {
         console.log("start view");
         profile.viewDash()

@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -42,18 +43,17 @@ public class Recipe implements Comparable<Recipe> {
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator = "recipe_id_sequence")
 	private int id;
 
-	@Temporal(TemporalType.TIMESTAMP)
+//	@Temporal(TemporalType.TIMESTAMP)
 	@Column (name = "date_created", insertable = false)
 	private Calendar dateCreated;
 
-	@ManyToOne
-	@JoinColumn (name = "user_id")
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private User creator;
 
-	@Column (name = "name", nullable = false)
+	@Column (name = "name", nullable = true)
 	private String name;
 
-	@Column (name = "description", nullable = false)
+	@Column (name = "description", nullable = true)
 	private String description;
 
 	@ElementCollection (fetch = FetchType.EAGER)
