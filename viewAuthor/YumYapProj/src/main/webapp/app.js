@@ -115,6 +115,7 @@ app.service('LoginService', function ($http, $q) {
     }
 
     service.attemptLogin = function () {
+    	console.log("service.attemptLogin");
         return $http.post('yum/user/attemptLogin', service.user);
 
     };
