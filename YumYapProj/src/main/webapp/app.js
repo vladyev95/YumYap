@@ -308,6 +308,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
     const API_KEY = '1dvNA9ailiF7xHYu1V2ogW374YZpjcMS1NsvOySE';
     const EXCLUDED_GROUPS = ['Baby Foods', 'Fast Foods', 'Restaurant Foods'];
     const TRACKED_NUTRIENTS = ['208', '204', '205', '203'];
+    var i = 1;
 
     $scope.food = { 'name': '', 'nutrients': { 'calories': 0, 'fat': 0, 'carbs': 0, 'protein': 0 } };
     $scope.measures = [];
@@ -345,8 +346,10 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 
     $scope.addStep = function (step) {
         log('Adding step ' + step);
+        step = i +'. '+ step;
         $scope.steps.push({direction:step});
         $scope.recipeStep = '';
+        i++;
     };
 
     $scope.getFoodReport = function (selection) {

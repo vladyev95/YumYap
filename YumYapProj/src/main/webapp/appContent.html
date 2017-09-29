@@ -80,10 +80,10 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
 						<li><span
 							ng-bind="foodItem.amount + ' ' + foodItem.measure + ' of ' + foodItem.name"></span></li>
 					</ul>
-					<ol class="recipe-content"
+					<ul class="recipe-content"
 						ng-repeat="direction in recipe.directions">
 						<li ng-bind="direction"></li>
-					</ol>
+					</ul>
 				</div>
 				<button ng-click="favoriteRecipe(recipe.id)">Save this
 					recipe</button>
@@ -149,9 +149,9 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
 				<h2>Directions</h2>
 				<input type="text" ng-model="recipeStep" placeholder="Add a step" />
 				<button ng-click="addStep(recipeStep)">+</button>
-				<ol>
+				<ul>
 					<li ng-repeat="step in steps" ng-bind="step.direction"></li>
-				</ol>
+				</ul>
 			</div>
 			<!-- TODO: Send recipe to backend for storage -->
 			<button ng-click="createRecipe()">Publish Recipe</button>
