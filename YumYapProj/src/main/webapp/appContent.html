@@ -23,6 +23,7 @@
 we will need recipectrl.getMeasure(foodItem.measure) to return the measurement from the API found at the string foodItem.measure
 We will need recipectrl.getFood(foodItem.food) to return the name of the food from the API found at the food Id given by foodItem.food -->
 	<div ng-show="tab === 'Home'" ng-controller="DashboardController">
+		<h3> Welcome back, <span ng-bind="currentUser.firstName"></span></h3>
 		<div class="recipe-block"  ng-repeat="recipe in recipes">
 			<div id="recipe-head" class="recipe-content">
 				<h3 id="recipe-name" ng-bind="recipe.name"></h3>

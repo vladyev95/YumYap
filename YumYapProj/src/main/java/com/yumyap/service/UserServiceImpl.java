@@ -101,6 +101,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public void addRecipe(Recipe recipe) {
+		Set<Recipe> favorites = recipe.getCreator().getFavoriteRecipes();
+		favorites.add(recipe);
+		recipe.getCreator().setFavoriteRecipes(favorites);
 		dao.addRecipe(recipe);
 	}
 
