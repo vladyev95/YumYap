@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
 			.map(recipe -> new RecipeDto(recipe))
 			.forEach(recipeDto -> recipes.add(recipeDto));
 		
-		Collections.sort(recipes, (r1, r2) -> -r1.getTimeCreated().compareTo(r2.getTimeCreated()));
+		Collections.sort(recipes, (r1, r2) -> -r1.getDateCreated().compareTo(r2.getDateCreated()));
 		
 		return recipes;
 	}

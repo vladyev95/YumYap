@@ -6,7 +6,6 @@ import java.util.Set;
 import com.yumyap.beans.Comment;
 import com.yumyap.beans.FoodItem;
 import com.yumyap.beans.Recipe;
-import com.yumyap.beans.RecipeDirection;
 import com.yumyap.beans.User;
 
 /**
@@ -27,7 +26,6 @@ public interface Dao {
 	FoodItem addFoodItem(FoodItem foodItem);
 	Comment addComment(Comment comment);
 	Recipe addRecipe(Recipe recipe);
-	RecipeDirection addRecipeDirection(RecipeDirection recipeDirection);
 	
 	/**
 	 * Attempts to retrieve a User with the given email and password

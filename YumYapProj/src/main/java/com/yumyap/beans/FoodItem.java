@@ -1,49 +1,47 @@
 package com.yumyap.beans;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.Embeddable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
 /**
- * An object representing the FoodItems that Recipes consist of
+ * An object representing the FoodItems that constitute the ingredient list of a
+ * Recipe
  * @author vlad
  */
 @Component
-@Entity
-@Table(name = "food_items")
+@Embeddable
 public class FoodItem {
 
 	@Id
-	@Column(name = "food_item_id")
-	@SequenceGenerator(name = "food_item_id_seq", sequenceName = "food_item_id_seq")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "food_item_id_seq")
+	@Column (name = "food_item_id")
+	@SequenceGenerator (name = "food_item_id_seq", sequenceName = "food_item_id_seq")
+	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator = "food_item_id_seq")
 	private int id;
-	
-	@Column(name = "name")
+
+	@Column (name = "name", nullable = false)
 	private String name;
-	
-	@Column(name = "measure")
+
+	@Column (name = "measure", nullable = false)
 	private String measure;
-	
-	@Column(name = "amount")
+
+	@Column (name = "amount", nullable = false)
 	private double amount;
 
 
-	public FoodItem() {
-	}
+	public FoodItem() {}
 
 	public FoodItem(String name, String measure, double amount) {
 		this.name = name;
 		this.measure = measure;
 		this.amount = amount;
 	}
-	
+
 	/**
 	 * Returns the id of this FoodItem
 	 * @return The id of this FoodItem
@@ -59,7 +57,7 @@ public class FoodItem {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	/**
 	 * Returns the name of this FoodItem
 	 * @return The name of this FoodItem
@@ -67,7 +65,7 @@ public class FoodItem {
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
 	 * Sets the name of this FoodItem
 	 * @param name The new name of this FoodItem
@@ -113,9 +111,6 @@ public class FoodItem {
 	 */
 	@Override
 	public String toString() {
-		return "FoodItem { id: " + id + 
-				", name: " + name +
-				", measure: " + measure + 
-				", amount: " + amount + " }";
+		return "FoodItem { id: " + id + ", name: " + name + ", measure: " + measure + ", amount: " + amount + " }";
 	}
 }

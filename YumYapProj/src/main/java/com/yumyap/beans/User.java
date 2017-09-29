@@ -1,10 +1,12 @@
 package com.yumyap.beans;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -25,54 +28,52 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name = "users")
 public class User {
-	
+
 	@Id
 	@Column(name = "user_id")
 	@SequenceGenerator(name = "user_id_seq", sequenceName = "user_id_seq")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
 	private int id;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "users_following_junc",
-				joinColumns = @JoinColumn(name = "user_id"),
-				inverseJoinColumns = @JoinColumn(name = "following_id"))
-	private Set<User> users;
-	
-	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "users")
-	private Set<User> following;
+	// TODO: Check if many-to-many self join is implemented correctly
+	@ManyToMany
+	@JoinTable (
+			name = "users_following_junc",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "following_id"))
+	private Set<User> followers = new HashSet<>();
 
-	@Column(name = "first_name", nullable = false)
+	@ManyToMany (mappedBy = "followers")
+	private Set<User> following = new HashSet<>();
+
+	@Column (name = "first_name", nullable = false)
 	private String firstName;
 
-	@Column(name = "last_name", nullable = false)
+	@Column (name = "last_name", nullable = false)
 	private String lastName;
-	
-	@Column(name = "email", nullable = false, unique = true)
+
+	@Column (name = "email", nullable = false, unique = true)
 	private String email;
 
-	@Column(name = "password", nullable = false)
+	@Column (name = "password", nullable = false)
 	private String password;
-	
-	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "users_favorites_junc", 
-				joinColumns = @JoinColumn(name = "user_id"), 
-				inverseJoinColumns =  @JoinColumn(name = "recipe_id"))
-	private Set<Recipe> favoriteRecipes;
-	
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "recipe_id")
-	private Set<Recipe> createdRecipes;
+
+	@ManyToMany
+	@JoinTable (
+			name = "FAVORITE_RECIPES",
+			joinColumns = @JoinColumn(name = "USER_ID"),
+			inverseJoinColumns = @JoinColumn(name = "RECIPE_ID"))
+	private Set<Recipe> favoriteRecipes = new HashSet<>();
+
+	@OneToMany (mappedBy = "CREATOR")
+	@OrderColumn (name = "date_created")
+	private SortedSet<Recipe> createdRecipes = new TreeSet<>();
+
 
 	public User() {}
 
-	public User(Set<User> following, 
-			String firstName, 
-			String lastName, 
-			String password, 
-			String email,
-			Set<Recipe> favoriteRecipes,
-			Set<Recipe> createdRecipes) {
+	public User(Set<User> following, String firstName, String lastName, String password, String email,
+			Set<Recipe> favoriteRecipes, SortedSet<Recipe> createdRecipes) {
 		this.following = following;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -81,7 +82,7 @@ public class User {
 		this.favoriteRecipes = favoriteRecipes;
 		this.createdRecipes = createdRecipes;
 	}
-	
+
 	/**
 	 * Returns the id of this User
 	 * @return The id of this User
@@ -106,7 +107,6 @@ public class User {
 		this.following = following;
 	}
 
-	
 	/**
 	 * Returns the firstName of this User
 	 * @return The firstName of this User
@@ -170,7 +170,7 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public Set<Recipe> getFavoriteRecipes() {
 		return favoriteRecipes;
 	}
@@ -178,12 +178,12 @@ public class User {
 	public void setFavoriteRecipes(Set<Recipe> favoriteRecipes) {
 		this.favoriteRecipes = favoriteRecipes;
 	}
-	
+
 	public Set<Recipe> getCreatedRecipes() {
 		return createdRecipes;
 	}
-	
-	public void setCreatedRecipes(Set<Recipe> createdRecipes) {
+
+	public void setCreatedRecipes(SortedSet<Recipe> createdRecipes) {
 		this.createdRecipes = createdRecipes;
 	}
 
@@ -192,14 +192,8 @@ public class User {
 	 */
 	@Override
 	public String toString() {
-		return "User { id: " + id + 
-				", firstName: " + firstName + 
-				", lastName: " + lastName +
-				", password: " + password + 
-				", email: " + email + 
-				", following: " + following +
-				", favoriteRecipes: " + favoriteRecipes + 
-				", createdRecipes: " + createdRecipes + " }";
+		return "User { id: " + id + ", firstName: " + firstName + ", lastName: " + lastName + ", password: " + password
+				+ ", email: " + email + ", following: " + following + ", favoriteRecipes: " + favoriteRecipes
+				+ ", createdRecipes: " + createdRecipes + " }";
 	}
-
 }

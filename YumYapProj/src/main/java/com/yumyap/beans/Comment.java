@@ -2,9 +2,9 @@ package com.yumyap.beans;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,15 +23,15 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name = "comments")
 public class Comment {
-	
+
 	@Id
 	@Column(name = "comment_id")
 	@SequenceGenerator(name = "comment_id_seq", sequenceName = "comment_id_seq")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_id_seq")
 	private int id;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id")
+	@ManyToOne (cascade = CascadeType.ALL)
+	@JoinColumn(name = "USER_ID")
 	private User commenter;
 
 	@Column(name = "comment_date", nullable = false)
@@ -40,8 +40,7 @@ public class Comment {
 	@Column(name = "content", nullable = false)
 	private String content;
 
-	public Comment() {
-	}
+	public Comment() {}
 
 	public Comment(User commenter, Date commentDate, String content) {
 		this.commenter = commenter;
@@ -56,7 +55,7 @@ public class Comment {
 	public int getId() {
 		return id;
 	}
-	
+
 	/**
 	 * Sets the id of this Comment
 	 * @param id The new id of this Comment
@@ -123,5 +122,4 @@ public class Comment {
 				", commentDate: " + commentDate + 
 				", content: " + content + " }";
 	}
-
 }

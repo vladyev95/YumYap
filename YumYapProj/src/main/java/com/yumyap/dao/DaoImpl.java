@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 import com.yumyap.beans.Comment;
 import com.yumyap.beans.FoodItem;
 import com.yumyap.beans.Recipe;
-import com.yumyap.beans.RecipeDirection;
 import com.yumyap.beans.User;
 
 /**
@@ -27,10 +26,10 @@ import com.yumyap.beans.User;
 @Repository
 @Transactional
 public class DaoImpl implements Dao {
-	
-	
+
+
 	private static final Logger logger = Logger.getLogger(DaoImpl.class);
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -38,7 +37,7 @@ public class DaoImpl implements Dao {
 	public DaoImpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
+
 	@Override
 	public boolean addUser(User user) {
 		logger.trace("addUser() " + user);
@@ -70,15 +69,11 @@ public class DaoImpl implements Dao {
 	public Recipe addRecipe(Recipe recipe) {
 		logger.trace("addRecipe() " + recipe);
 		Session s = sessionFactory.getCurrentSession();
-		
-		// TODO: Parent key not found error, FIX IT!!
-		recipe.getDirections().stream().forEach(recipeDir -> s.save(recipeDir));
-		recipe.getIngredients().stream().forEach(recipeIngr -> s.save(recipeIngr));
 		s.save(recipe);
 		logger.trace("added " + recipe);
 		return recipe;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Recipe> getRecipes() {
 		Session s = sessionFactory.getCurrentSession();
@@ -96,15 +91,6 @@ public class DaoImpl implements Dao {
 		return (List<Recipe>) sessionFactory.getCurrentSession().createCriteria(Recipe.class)
 				.add(Restrictions.ilike("name", "%" + search + "%")).list();
 	}
-	
-	@Override
-	public RecipeDirection addRecipeDirection(RecipeDirection recipeDirection) {
-		logger.trace("addRecipeDirection() " + recipeDirection);
-		Session session = sessionFactory.getCurrentSession();
-		session.save(recipeDirection);
-		logger.trace("added " + recipeDirection);
-		return recipeDirection;
-	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -112,9 +98,9 @@ public class DaoImpl implements Dao {
 		logger.trace("getRecipesByUser() " + user);
 		Session session = sessionFactory.getCurrentSession();
 		List<Recipe> recipes = (List<Recipe>) session
-						.createCriteria(Recipe.class)
-						.add(Restrictions.eq("creator", user))
-						.list();
+				.createCriteria(Recipe.class)
+				.add(Restrictions.eq("creator", user))
+				.list();
 		logger.trace("got recipes " + recipes);
 		return recipes;
 	}
@@ -124,41 +110,41 @@ public class DaoImpl implements Dao {
 		logger.trace("getUserByEmail() " + email);
 		Session session = sessionFactory.getCurrentSession();
 		User user = (User) session
-					.createCriteria(User.class)
-					.add(Restrictions.eq("email", email))
-					.add(Restrictions.eq("password", password)).uniqueResult();
-					
+				.createCriteria(User.class)
+				.add(Restrictions.eq("email", email))
+				.add(Restrictions.eq("password", password)).uniqueResult();
+
 		logger.trace("got " + user);
 		return user;
 	}	
-	
+
 	@Override
 	public Set<Recipe> getFollowingRecipes(User user) {
 		logger.trace("getFollowingRecipes() using " + user);
-		
+
 		Set<Recipe> recipes = new LinkedHashSet<>();
-		
-		
-		
+
+
+
 		logger.trace("got " + recipes);
 		return recipes;
 	}
-	
-	
+
+
 	@Override
 	public Set<Recipe> getUsersRecipes(User user) {
 		logger.trace("getUserRecipesById() using " + user);
 		Session session = sessionFactory.getCurrentSession();
-		
+
 		@SuppressWarnings("unchecked")
 		Set<Recipe> recipes = new LinkedHashSet<>(session.createCriteria(Recipe.class)
-														.add(Restrictions.eq("creator", user))
-														.list());
-		
+				.add(Restrictions.eq("creator", user))
+				.list());
+
 		logger.trace("got " + recipes);
 		return recipes;
 	}
-	
+
 	@Override
 	public User getUserById(int id) {
 		logger.trace("getUserById() by " + id); 
@@ -176,17 +162,17 @@ public class DaoImpl implements Dao {
 		logger.trace("got " + recipe);
 		return recipe;
 	}
-	
+
 	@Override
 	public void updateUser(User user) {
-		
+
 		currentSession().save(user);
 	}
-	
+
 	private Session currentSession() {
 		return sessionFactory.getCurrentSession();
 	}
-	
+
 	public void addCommentForRecipeById(int id, Comment comment) {
 		logger.trace("addCommentForRecipyById() for id: " + id + " comment: " + comment);
 		Session session = sessionFactory.getCurrentSession();

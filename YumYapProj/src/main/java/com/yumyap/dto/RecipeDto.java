@@ -1,6 +1,6 @@
 package com.yumyap.dto;
 
-import java.sql.Time;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,55 +13,58 @@ import com.yumyap.beans.Recipe;
  */
 public class RecipeDto {
 
-    private int id;
-    
-    private SimpleUserDto creator;
-    
-    private Time timeCreated;
+	private int id;
 
-    private String name;
+	private SimpleUserDto creator;
 
-    private String description;
+	private Date dateCreated;
 
-    private String imageUrl;
-    
-    private double calories, fat, carbs, protein;
-    
-    private List<String> ingredients = new ArrayList<>();
-    
-    private List<String> directions = new ArrayList<>();
-    
-    public RecipeDto() {}
-    
-    /**
-     * Converts a Recipe into a RecipeDto with the corresponding fields
-     * @param recipe The Recipe to convert into a RecipeDto
-     */
-    public RecipeDto(Recipe recipe) {
-    	this.id = recipe.getId();
-    	this.creator = new SimpleUserDto(recipe.getCreator());
-    	this.name = recipe.getName();
-    	this.description = recipe.getDescription();
-    	this.imageUrl = recipe.getImageUrl();
-    	this.setTimeCreated(recipe.getTimeCreated());
-    	this.calories = recipe.getCalories();
-    	this.fat = recipe.getFat();
-    	this.carbs = recipe.getCarbs();
-    	this.protein = recipe.getProtein();
-    	
-    	recipe.getIngredients()
-    		.stream()
-    		.forEach(foodItem -> ingredients.add(foodItem.getAmount() + " " + foodItem.getMeasure() + " of " + foodItem.getName()));
-    	
-    	recipe.getDirections()
-    		.stream()
-    		.forEach(recipeDirection -> directions.add(recipeDirection.getDirection()));
-    }
+	private String name;
 
-    /**
-     * Returns the id of the corresponding Recipe
-     * @return The id of the corresponding Recipe
-     */
+	private String description;
+
+	private String imageUrl;
+
+	private double calories, fat, carbs, protein;
+
+	private List<String> ingredients = new ArrayList<>();
+
+	private List<String> directions = new ArrayList<>();
+
+	public RecipeDto() {}
+
+	/**
+	 * Converts a Recipe into a RecipeDto with the corresponding fields
+	 * @param recipe The Recipe to convert into a RecipeDto
+	 */
+	public RecipeDto(Recipe recipe) {
+		this.id = recipe.getId();
+		this.creator = new SimpleUserDto(recipe.getCreator());
+		this.name = recipe.getName();
+		this.description = recipe.getDescription();
+		this.imageUrl = recipe.getImageUrl();
+		this.setDateCreated(recipe.getDateCreated());
+		this.calories = recipe.getCalories();
+		this.fat = recipe.getFat();
+		this.carbs = recipe.getCarbs();
+		this.protein = recipe.getProtein();
+
+		/*
+		recipe.getIngredients()
+		.stream()
+		.forEach(foodItem -> ingredients.add(foodItem.getAmount() + " " + foodItem.getMeasure() + " of " + foodItem.getName()));
+
+		// TODO: Use stream on map key set to add directions to DTO
+		recipe.getDirections()
+		.stream()
+		.forEach(recipeDirection -> directions.add(recipeDirection.getDirection()));
+		*/
+	}
+
+	/**
+	 * Returns the id of the corresponding Recipe
+	 * @return The id of the corresponding Recipe
+	 */
 	public int getId() {
 		return id;
 	}
@@ -74,7 +77,7 @@ public class RecipeDto {
 		this.id = id;
 	}
 
-	
+
 	/**
 	 * Returns the creator of the corresponding Recipe as a SimpleUserDto
 	 * @return The creator of the corresponding Recipe as a SimpleUserDto
@@ -82,7 +85,7 @@ public class RecipeDto {
 	public SimpleUserDto getCreator() {
 		return creator;
 	}
-	
+
 	/**
 	 * Sets the creator of this RecipeDto
 	 * @param creator The new creator of this RecipeDto
@@ -90,21 +93,21 @@ public class RecipeDto {
 	public void setCreator(SimpleUserDto creator) {
 		this.creator = creator;
 	}
-	
+
 	/**
 	 * Returns the Time that the corresponding Recipe was created
 	 * @return The Time that the corresponding Recipe was created
 	 */
-	public Time getTimeCreated() {
-		return timeCreated;
+	public Date getDateCreated() {
+		return dateCreated;
 	}
-	
+
 	/**
 	 * Sets the timeCreated
-	 * @param timeCreated The new Time
+	 * @param dateCreated The new Time
 	 */
-	public void setTimeCreated(Time timeCreated) {
-		this.timeCreated = timeCreated;
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 
 	/**
@@ -154,8 +157,8 @@ public class RecipeDto {
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
-	
-	
+
+
 
 	/**
 	 * Returns a nice String representation of this RecipeDto
@@ -165,7 +168,7 @@ public class RecipeDto {
 	public String toString() {
 		return "RecipeDto { id: " + id + 
 				", creator: " + creator + 
-				", timeCreated: " + timeCreated +
+				", timeCreated: " + dateCreated +
 				", name: " + name + 
 				", description: " + description +
 				", imageUrl: " + imageUrl +
@@ -177,5 +180,5 @@ public class RecipeDto {
 				", directions: " + directions + " }";
 	}
 
-	
+
 }
