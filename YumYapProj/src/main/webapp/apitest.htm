@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Food API Test</title>
+
+</head>
+
+<body ng-controller="searchCtrl">
+
+    <input id="search" ng-model="search" ng-change="searchFoods(search)" type="text" placeholder="Search" />
+    <select ng-model="selection" ng-change="getFoodReport(selection)" ng-show="search" ng-hide="!search">
+        <option ng-repeat="item in foodItems" ng-bind="item.name" value="{{ item.ndbno }}"></option>
+    </select>
+    <br>
+
+    <h1><span ng-if="quantity!=0 && measure" ng-bind="quantity"></span> <span ng-if="fraction!='0' && measure" ng-bind="fraction"></span>
+        <span ng-bind="measure"></span> <span ng-bind="customName"></span></h1>
+    <input ng-model="quantity" ng-change="calculateNutrients(quantity, fraction, measure)" type="number" default=0 step="1" min="0"
+        ng-show="selection" ng-hide="!selection" />
+    <select ng-model="fraction" ng-change="calculateNutrients(quantity, fraction, measure)" ng-show="selection" ng-hide="!selection">
+        <option value="0">0</option>
+        <option value="1/8">1/8</option>
+        <option value="1/4">1/4</option>
+        <option value="1/3">1/3</option>
+        <option value="1/2">1/2</option>
+        <option value="2/3">2/3</option>
+        <option value="3/4">3/4</option>
+    </select>
+    <select ng-model="measure" ng-change="calculateNutrients(quantity, fraction, measure)" ng-show="selection" ng-hide="!selection">
+        <option ng-repeat="m in measures" value="{{ m }}">{{ m }}</option>
+    </select>
+    <input type="text" ng-model="customName" value="{{ customName }}" ng-show="selection" ng-hide="!selection" />
+    <br>
+
+    <h3 ng-if="selection">Calories: <span ng-bind="food.nutrients.calories"></span>g</h3>
+    <h3 ng-if="selection">Fat: <span ng-bind="food.nutrients.fat"></span>g</h3>
+    <h3 ng-if="selection">Carbs: <span ng-bind="food.nutrients.carbs"></span>g</h3>
+    <h3 ng-if="selection">Protein: <span ng-bind="food.nutrients.protein"></span>g</h3>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <script src="apitest.js"></script>
+</body>
+
+</html>
