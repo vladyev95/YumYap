@@ -68,14 +68,8 @@ app.service("UserService", function ($http, $q) {
 app.service('LoginService', function ($http, $q) {
     let service = this;
 
-    service.user = { email: '', password: '' };
-
-    service.getUser = function () {
-        return service.user;
-    }
-
-    service.attemptLogin = function () {
-        return $http.post('yum/user/attemptLogin', service.user);
+    service.attemptLogin = function (user) {
+        return $http.post('yum/user/attemptLogin', user);
 
     };
 });
@@ -87,7 +81,6 @@ app.service('RegisterService', function ($http, $q) {
     let service = this;
 
     service.attemptRegister = function (user) {
-        log('registering user '+user);
         return $http.post('yum/user/attemptRegister', user);
     };
 });
@@ -123,13 +116,10 @@ app.controller('LoginRegisterController', function ($scope) {
 
 /* LoginController*/
 app.controller('LoginController', function ($scope, $location, LoginService, UserService) {
-
-    $scope.user = LoginService.getUser();
-
     $scope.attemptLogin = function () {
         console.log('attempting to log in: ');
         console.log($scope.user);
-        LoginService.attemptLogin()
+        LoginService.attemptLogin($scope.user)
             .then(
             function (response) {
                 if (response.data) {
@@ -155,9 +145,16 @@ app.controller('LoginController', function ($scope, $location, LoginService, Use
 
 
 /* RegisterController */
-app.controller('RegisterController', function ($scope, RegisterService) {
-
+app.controller('RegisterController', function ($scope, $timeout, RegisterService) {
     $scope.attemptRegister = function () {
+        if ($scope.user.password !== $scope.user.password2) {
+            console.log('passwords do not match');
+            $scope.password2Message = 'Passwords do not match';
+            $timeout(function() {
+                $scope.password2Message = '';
+            }, 3000);
+            return;
+        }
         console.log('attempting to register: ');
         console.log($scope.user);
         RegisterService.attemptRegister($scope.user)
@@ -167,6 +164,11 @@ app.controller('RegisterController', function ($scope, RegisterService) {
                 console.log(response);
                 console.log('data: ');
                 console.log(response.data);
+                $scope.registerMessage = 'Registration successful';
+                $scope.user.firstName = $scope.user.lastName = $scope.user.email = $scope.user.password = $scope.user.password2 = '';
+                $timeout(function() {
+                    $scope.registerMessage = '';
+                }, 3000);
             },
             function (error) {
                 console.log('attemptRegister() error response: ');
