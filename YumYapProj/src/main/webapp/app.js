@@ -325,7 +325,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 
     $scope.addStep = function (step) {
         log('Adding step ' + step);
-        $scope.steps.push({direction:step});
+        $scope.steps.push(step);
         $scope.recipeStep = '';
     };
 

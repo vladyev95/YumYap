@@ -149,7 +149,7 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
 				<input type="text" ng-model="recipeStep" placeholder="Add a step" />
 				<button ng-click="addStep(recipeStep)">+</button>
 				<ol>
-					<li ng-repeat="step in steps" ng-bind="step.direction"></li>
+					<li ng-repeat="step in steps" ng-bind="step"></li>
 				</ol>
 			</div>
 			<!-- TODO: Send recipe to backend for storage -->
