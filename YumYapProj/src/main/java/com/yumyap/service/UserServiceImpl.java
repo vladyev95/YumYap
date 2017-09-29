@@ -1,6 +1,7 @@
 package com.yumyap.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -81,7 +82,7 @@ public class UserServiceImpl implements UserService {
 			.map(recipe -> new RecipeDto(recipe))
 			.forEach(recipeDto -> recipes.add(recipeDto));
 		
-		// TODO: Sort recipes by date created
+		Collections.sort(recipes, (r1, r2) -> -r1.getDateCreated().compareTo(r2.getDateCreated()));
 		
 		return recipes;
 	}
@@ -101,10 +102,15 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public void addRecipe(Recipe recipe) {
-		Set<Recipe> favorites = recipe.getCreator().getFavoriteRecipes();
-		favorites.add(recipe);
-		recipe.getCreator().setFavoriteRecipes(favorites);
-		dao.addRecipe(recipe);
+		User creator = recipe.getCreator();
+		if (creator != null) {
+			Set<Recipe> favorites = creator.getFavoriteRecipes();
+			favorites.add(recipe);
+			User creatorDb = dao.getUserById(creator.getId());
+			recipe.setCreator(creatorDb);
+			dao.addRecipe(recipe);
+		}
+
 	}
 
 	@Override

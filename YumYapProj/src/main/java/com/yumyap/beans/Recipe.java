@@ -1,24 +1,31 @@
 package com.yumyap.beans;
 
-import java.sql.Time;
+import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
-import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.springframework.stereotype.Component;
+
+import com.yumyap.dto.UserDto;
 
 /**
  * An object representing a Recipe object that Users may create
@@ -27,248 +34,264 @@ import org.springframework.stereotype.Component;
 @Component
 @Entity
 @Table(name = "recipes")
-public class Recipe {
+public class Recipe implements Comparable<Recipe> {
 
-    @Id
-    @Column(name = "recipe_id")
-    @SequenceGenerator(name = "recipe_id_sequence", sequenceName = "recipe_id_sequence")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "recipe_id_sequence")
-    private int id;
+	@Id
+	@Column (name = "recipe_id")
+	@SequenceGenerator (name = "recipe_id_sequence", sequenceName = "recipe_id_sequence")
+	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator = "recipe_id_sequence")
+	private int id;
 
-    @Column(name = "time_created")
-    private Time timeCreated;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column (name = "date_created", insertable = false)
+	private Calendar dateCreated;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User creator;
+	@ManyToOne
+	@JoinColumn (name = "user_id")
+	private User creator;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+	@Column (name = "name", nullable = false)
+	private String name;
 
-    @Column(name = "description", nullable = false)
-    private String description;
+	@Column (name = "description", nullable = false)
+	private String description;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "recipe_direction_id")
-    private Set<RecipeDirection> directions;
+	@ElementCollection (fetch = FetchType.EAGER)
+	@CollectionTable (
+			name = "DIRECTION",
+			joinColumns = @JoinColumn(name = "RECIPE_ID"))
+	@Column (name = "CONTENT", nullable = false)
+	@OrderBy ("CONTENT")
+	private SortedSet<String> directions = new TreeSet<>();
 
-    @Column(name = "image_url", nullable = false)
-    private String imageUrl;
+	@Column (name = "image_url")
+	private String imageUrl;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "recipes_ingredients", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "food_item_id"))
-    private Set<FoodItem> ingredients;
+	@ElementCollection (fetch = FetchType.EAGER)
+	@CollectionTable (
+			name = "recipes_ingredients",
+			joinColumns = @JoinColumn(name = "RECIPE_ID", nullable = false))
+	@Column (name = "FOOD_ITEM")
+	private Set<FoodItem> ingredients = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "comment_id")
-    private Set<Comment> comments;
-    
-    @Column
-    private double calories;
-    @Column
-    private double fat;
-    @Column
-    private double carbs;
-    @Column
-    private double protein;
+	@OneToMany
+	@JoinColumn (name = "COMMENT_ID")
+	@OrderBy ("COMMENT_DATE DESC")
+	private SortedSet<Comment> comments = new TreeSet<>();
 
-    public Recipe() {
-    }
+	@Column
+	private double calories;
 
-    public Recipe(Time timeCreated, String name, String description, Set<RecipeDirection> directions, String imageUrl,
-            Set<FoodItem> ingredients) {
-        this.timeCreated = timeCreated;
-        this.name = name;
-        this.description = description;
-        this.directions = directions;
-        this.imageUrl = imageUrl;
-        this.ingredients = ingredients;
-    }
+	@Column
+	private double fat;
 
-    public double getCalories() {
-        return calories;
-    }
+	@Column
+	private double carbs;
 
-    public void setCalories(double calories) {
-        this.calories = calories;
-    }
+	@Column
+	private double protein;
 
-    public double getProtein() {
-        return protein;
-    }
 
-    public void setProtein(double protein) {
-        this.protein = protein;
-    }
+	public Recipe() {}
 
-    public double getCarbs() {
-        return carbs;
-    }
+	public Recipe(Calendar dateCreated, String name, String description, SortedSet<String> directions, String imageUrl,
+			Set<FoodItem> ingredients, SortedSet<Comment> comments) {
+		this.dateCreated = dateCreated;
+		this.name = name;
+		this.description = description;
+		this.directions = directions;
+		this.imageUrl = imageUrl;
+		this.ingredients = ingredients;
+		this.comments = comments;
+	}
 
-    public void setCarbs(double carbs) {
-        this.carbs = carbs;
-    }
+	public double getCalories() {
+		return calories;
+	}
 
-    public double getFat() {
-        return fat;
-    }
+	public void setCalories(double calories) {
+		this.calories = calories;
+	}
 
-    public void setFat(double fat) {
-        this.fat = fat;
-    }
+	public double getProtein() {
+		return protein;
+	}
 
-    /**
-     * Returns the name of this recipe
-     * @return The name of this recipe
-     */
-    public String getName() {
-        return name;
-    }
+	public void setProtein(double protein) {
+		this.protein = protein;
+	}
 
-    /**
-     * Sets the name of the this recipe
-     * @param name The new name for this recipe
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
+	public double getCarbs() {
+		return carbs;
+	}
 
-    /**
-     * Returns the imageUrl for this recipe
-     * @return The imageUrl for this recipe
-     */
-    public String getImageUrl() {
-        return imageUrl;
-    }
+	public void setCarbs(double carbs) {
+		this.carbs = carbs;
+	}
 
-    /**
-     * Sets the imageUrl for this image
-     * @param imageUrl The new imageUrl for this image
-     */
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
+	public double getFat() {
+		return fat;
+	}
 
-    /**
-     * Returns the id of this image
-     * @return The id of this image
-     */
-    public int getId() {
-        return id;
-    }
+	public void setFat(double fat) {
+		this.fat = fat;
+	}
 
-    /**
-     * Sets the id of this image
-     * @param id The new id of this image
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
+	/**
+	 * Returns the name of this recipe
+	 * @return The name of this recipe
+	 */
+	public String getName() {
+		return name;
+	}
 
-    /**
-     * Returns the java.sql.Time representing the time this Recipe was created
-     * @return The java.sql.Time representing the time this Recipe was created
-     */
-    public Time getTimeCreated() {
-        return timeCreated;
-    }
+	/**
+	 * Sets the name of the this recipe
+	 * @param name The new name for this recipe
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    /**
-     * Sets the time representing the time this Recipe was created
-     * @param timeCreated
-     */
-    public void setCreated(Time timeCreated) {
-        this.timeCreated = timeCreated;
-    }
+	/**
+	 * Returns the imageUrl for this recipe
+	 * @return The imageUrl for this recipe
+	 */
+	public String getImageUrl() {
+		return imageUrl;
+	}
 
-    /**
-     * Returns the User that created this Recipe
-     * @return The User that created this Recipe
-     */
-    public User getCreator() {
-        return creator;
-    }
+	/**
+	 * Sets the imageUrl for this image
+	 * @param imageUrl The new imageUrl for this image
+	 */
+	public void getImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 
-    /**
-     * Sets the User that created this Recipe
-     * @param creator The new creator of this Recipe
-     */
-    public void setCreator(User creator) {
-        this.creator = creator;
-    }
+	/**
+	 * Returns the id of this image
+	 * @return The id of this image
+	 */
+	public int getId() {
+		return id;
+	}
 
-    /**
-     * Returns the description of this Recipe
-     * @return The description of this Recipe
-     */
-    public String getDescription() {
-        return description;
-    }
+	/**
+	 * Sets the id of this image
+	 * @param id The new id of this image
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    /**
-     * Sets the description of this Recipe
-     * @param description The new description of this Recipe
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	/**
+	 * Returns the java.sql.Time representing the time this Recipe was created
+	 * @return The java.sql.Time representing the time this Recipe was created
+	 */
+	public Calendar getDateCreated() {
+		return dateCreated;
+	}
 
-    /**
-     * Returns the RecipeDirections for this Recipe
-     * @return The RecipeDirections for this Recipe
-     */
-    public Set<RecipeDirection> getDirections() {
-        return directions;
-    }
+	/**
+	 * Sets the time representing the time this Recipe was created
+	 * @param timeCreated
+	 */
+	public void setDateCreated(Calendar dateCreated) {
+		this.dateCreated = dateCreated;
+	}
 
-    /**
-     * Sets the RecipeDirections for this Recipe
-     * @param directions The new RecipeDirections for this Recipe
-     */
-    public void setDirections(Set<RecipeDirection> directions) {
-        this.directions = directions;
-    }
+	/**
+	 * Returns the User that created this Recipe
+	 * @return The User that created this Recipe
+	 */
+	public User getCreator() {
+		return creator;
+	}
 
-    /**
-     * Returns the ingredients for this Recipe
-     * @return The ingredients for this Recipe
-     */
-    public Set<FoodItem> getIngredients() {
-        return ingredients;
-    }
+	/**
+	 * Sets the User that created this Recipe
+	 * @param creator The new creator of this Recipe
+	 */
+	public void setCreator(User creator) {
+		this.creator = creator;
+	}
 
-    /**
-     * Sets the ingredients for this Recipe
-     * @param ingredients The new ingredients for this Recipe
-     */
-    public void setIngredients(Set<FoodItem> ingredients) {
-        this.ingredients = ingredients;
-    }
-    
-    /**
-     * Returns the Comments of this Recipe
-     * @return The Comments of this Recipe
-     */
-    public Set<Comment> getComments() {
-    	return comments;
-    }
-    
-    /**
-     * Sets the Comments for this Recipe
-     * @param comments The new Comments for this Recipe
-     */
-    public void setComments(Set<Comment> comments) {
-    	this.comments = comments;
-    }
+	/**
+	 * Returns the description of this Recipe
+	 * @return The description of this Recipe
+	 */
+	public String getDescription() {
+		return description;
+	}
 
-    /**
-     * Returns a nice String representation of a Recipe
-     */
-    @Override
-    public String toString() {
-        return "Recipe { id: " + id + ", timeCreated: " + timeCreated + ", creator: " + creator + ", name: " + name
-                + ", description: " + description + ", directions: " + directions + ", imageUrl: " + imageUrl
-                + ", ingredients: " + ingredients + " }";
-    }
+	/**
+	 * Sets the description of this Recipe
+	 * 
+	 * @param description The new description of this Recipe
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
+	/**
+	 * Returns the RecipeDirections for this Recipe 
+	 * @return The RecipeDirections for this Recipe
+	 */
+	public SortedSet<String> getDirections() {
+		return directions;
+	}
+
+	/**
+	 * Sets the RecipeDirections for this Recipe
+	 * @param directions The new RecipeDirections for this Recipe
+	 */
+	public void setDirections(SortedSet<String> directions) {
+		this.directions = directions;
+	}
+
+	/**
+	 * Returns the ingredients for this Recipe
+	 * @return The ingredients for this Recipe
+	 */
+	public Set<FoodItem> getIngredients() {
+		return ingredients;
+	}
+
+	/**
+	 * Sets the ingredients for this Recipe
+	 * @param ingredients The new ingredients for this Recipe
+	 */
+	public void setIngredients(Set<FoodItem> ingredients) {
+		this.ingredients = ingredients;
+	}
+
+	/**
+	 * Returns the Comments of this Recipe
+	 * @return The Comments of this Recipe
+	 */
+	public SortedSet<Comment> getComments() {
+		return comments;
+	}
+
+	/**
+	 * Sets the Comments for this Recipe
+	 * @param comments The new Comments for this Recipe
+	 */
+	public void setComments(SortedSet<Comment> comments) {
+		this.comments = comments;
+	}
+
+	@Override
+	public String toString() {
+		return "Recipe [id=" + id + ", dateCreated=" + dateCreated + ", creator=" + new UserDto(creator) + ", name=" + name
+				+ ", description=" + description + ", directions=" + directions + ", imageUrl=" + imageUrl
+				+ ", ingredients=" + ingredients + ", comments=" + comments + ", calories=" + calories + ", fat=" + fat
+				+ ", carbs=" + carbs + ", protein=" + protein + "]";
+	}
+
+	@Override
+	public int compareTo(Recipe that) {
+		return (this.dateCreated != null) ? this.dateCreated.compareTo(that.getDateCreated()) : -1;
+	}
 }

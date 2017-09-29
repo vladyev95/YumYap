@@ -3,11 +3,10 @@ package com.yumyap.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 
 /**
- * A lightweight User data transfer object, slightly heavier than UserDto
+ * A lightweight User data transfer object, slightly heavier than SimpleUserDto
  * Contains information about Users you follow, and favorite Recipes
  * @author vlad
  */
@@ -27,29 +26,23 @@ public class UserDto {
 	
 	public UserDto() {}
 	
+	/**
+	 * Constructs a UserDto from a User by converting the required information
+	 * @param user The User to transform into a UserDto
+	 */
 	public UserDto(User user) {
-		super();
 		this.id = user.getId();
 		this.email = user.getEmail();
 		this.firstName = user.getFirstName();
 		this.lastName = user.getLastName();
-		for (User u : user.getFollowing()) {
-			this.following.add(new SimpleUserDto(u));
-		}
-		for (Recipe r : user.getFavoriteRecipes()) {
-			this.favoriteRecipes.add(new RecipeDto(r));
-		}
-	}
-
-	public UserDto(int id, String email, String firstName, String lastName, List<SimpleUserDto> following,
-			List<RecipeDto> favoriteRecipes) {
-		super();
-		this.id = id;
-		this.email = email;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.following = following;
-		this.favoriteRecipes = favoriteRecipes;
+		
+		user.getFollowing()
+			.stream()
+			.forEach(followingUser -> following.add(new SimpleUserDto(followingUser)));
+		
+		user.getFavoriteRecipes()
+			.stream()
+			.forEach(favoriteRecipe -> favoriteRecipes.add(new RecipeDto(favoriteRecipe)));
 	}
 
 	public int getId() {

@@ -1,63 +1,53 @@
 package com.yumyap.beans;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.Embeddable;
 
-import org.springframework.stereotype.Component;
+import org.hibernate.annotations.Parent;
 
 /**
- * An object representing the FoodItems that Recipes consist of
+ * An object representing the FoodItems that constitute the ingredient list of a
+ * Recipe
  * @author vlad
  */
-@Component
-@Entity
-@Table(name = "food_items")
+@Embeddable
 public class FoodItem {
+	
+	@Parent
+	private Recipe recipe;
 
-	@Id
-	@Column(name = "food_item_id")
-	@SequenceGenerator(name = "food_item_id_seq", sequenceName = "food_item_id_seq")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "food_item_id_seq")
-	private int id;
-	
-	@Column(name = "name")
+	@Column (name = "name", nullable = false)
 	private String name;
-	
-	@Column(name = "measure")
+
+	@Column (name = "measure", nullable = false)
 	private String measure;
-	
-	@Column(name = "amount")
+
+	@Column (name = "amount", nullable = false)
 	private double amount;
 
 
-	public FoodItem() {
-	}
+	public FoodItem() {}
 
 	public FoodItem(String name, String measure, double amount) {
 		this.name = name;
 		this.measure = measure;
 		this.amount = amount;
 	}
-	
+
 	/**
-	 * Returns the id of this FoodItem
-	 * @return The id of this FoodItem
+	 * Returns the name of this FoodItem
+	 * @return The name of this FoodItem
 	 */
-	public int getId() {
-		return id;
+	public String getName() {
+		return name;
 	}
 
 	/**
-	 * Sets the id of this FoodItem
-	 * @param id The new id of this FoodItem
+	 * Sets the name of this FoodItem
+	 * @param name The new name of this FoodItem
 	 */
-	public void setId(int id) {
-		this.id = id;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**
@@ -97,9 +87,32 @@ public class FoodItem {
 	 */
 	@Override
 	public String toString() {
-		return "FoodItem { id: " + id + 
-				", name: " + name +
-				", measure: " + measure + 
-				", amount: " + amount + " }";
+		return "FoodItem { name: " + name + ", measure: " + measure + ", amount: " + amount + " }";
+	}
+	
+	@Override
+	public boolean equals(Object that) {
+		if (!(that instanceof FoodItem)) return false;
+		FoodItem thatFood = (FoodItem) that;
+		return  this.amount == thatFood.getAmount() &&
+				this.name.equals(thatFood.getName()) &&
+				this.measure.equals(thatFood.getMeasure());
+	}
+	
+	@Override
+	public int hashCode() {
+		int hash = 17;
+		hash = hash * 31 + new Double(amount).hashCode();
+		hash = hash * 31 + measure.hashCode();
+		hash = hash * 31 + name.hashCode();
+		return hash;
+	}
+
+	public Recipe getRecipe() {
+		return recipe;
+	}
+
+	public void setRecipe(Recipe recipe) {
+		this.recipe = recipe;
 	}
 }
