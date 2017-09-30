@@ -12,47 +12,69 @@
 				<a class="nav-item nav-link" ng-click="switchToHome()">Home</a>
 
 				<!-- TODO: Set tab to Create Recipe -->
-				<a class="nav-item nav-link" ng-click="switchToCreateRecipe()">Create Recipe</a>
-				<a class="nav-item nav-link" ng-click="switchToSearchRecipe()">Search Recipes</a>
-				<a class="nav-item nav-link">Logout</a>
+				<a class="nav-item nav-link" ng-click="switchToCreateRecipe()">Create
+					Recipe</a> <a class="nav-item nav-link"
+					ng-click="switchToSearchRecipe()">Search Recipes</a> <a
+					class="nav-item nav-link">Logout</a>
 			</div>
 		</div>
 	</nav>
 	<div ng-show="tab === 'Home'" ng-controller="DashboardController">
-	<h3> Welcome back, <span ng-bind="currentUser.firstName"></span></h3>
-		<div class="recipe-block"  ng-repeat="recipe in recipes">
+		<h3>
+			Welcome back, <span ng-bind="currentUser.firstName"></span>
+		</h3>
+		<div class="recipe-block" ng-repeat="recipe in recipes">
 			<div id="recipe-head" class="recipe-content">
 				<h3 id="recipe-name" ng-bind="recipe.name"></h3>
 				<p id="recipe-description" ng-bind="recipe.description"></p>
 			</div>
 			<div class="recipe-content">
-				<img id="recipe-image" ng-src="recipe.imageUrl" width="100" height="100"></img>
+				<img id="recipe-image" ng-src="recipe.imageUrl" width="100"
+					height="100"></img>
 				<div>
-					Posted by {{recipe.creator.firstName + " " + recipe.creator.lastName}}
-					<br>
+					Posted by {{recipe.creator.firstName + " " +
+					recipe.creator.lastName}} <br>
 					<!-- This button should bring you to the user that posted it -->
-					<button ng-click="viewAuthor(recipe.creator)">View Author Profile</button>
+					<button ng-click="viewAuthor(recipe.creator)">View Author
+						Profile</button>
 				</div>
 			</div>
 			<div class="recipe-content">
-				<ul class="recipe-content" id="recipe-ingredients" ng-repeat="foodItem in recipe.ingredients">
-					<li>{{foodItem.amount}}<span ng-bind="foodItem.measure"></span> of <span ng-bind="foodItem.food"></span></li>
+				<ul class="recipe-content" id="recipe-ingredients"
+					ng-repeat="foodItem in recipe.ingredients">
+					<li>{{foodItem.amount}}<span ng-bind="foodItem.measure"></span>
+						of <span ng-bind="foodItem.food"></span></li>
 				</ul>
 				<ol class="recipe-content" id="recipe-methods"
 					ng-repeat="direction in recipe.directions">
 					<li ng-bind="recipe.directions"></li>
 				</ol>
 			</div>
-				<button ng-click="favoriteRecipe(recipe)">Save this recipe</button>
+			<button ng-click="favoriteRecipe(recipe)">Save this recipe</button>
+			
+			<div id="comments">
+				<button ng-click="addComment(recipe)">Add comment</button>
+				<textarea ng-show="addComment" ng-model="recipeDescription"
+					cols="32" rows="5" placeholder="Description"></textarea>
+				<button ng-click="viewComments(recipe)">View comments for
+					this recipe</button>
+				<div ng-show="showComments">
+					<div ng-repeat="comment in recipe.comments">
+						<h5 ng-bind="comment.commentor"></h5>
+						<p ng-bind="comment.content"></p>
+					</div>
+				</div>
+			</div>
 		</div>
-	
+
 	</div>
 
 	<div ng-show="tab === 'ViewAuthor'"
 		ng-controller="ViewAuthorController as viewAuthor">
 		<div>
 			<h1 ng-bind="user.firstName + ' ' + user.lastName"></h1>
-			<button ng-click="follow()"> Follow <span ng-bind="user.firstname"></span>
+			<button ng-click="follow()">
+				Follow <span ng-bind="user.firstname"></span>
 			</button>
 		</div>
 		<div class="recipe-block" ng-repeat="recipe in user.recipes">
@@ -67,8 +89,8 @@
 					Posted by {{recipe.creator.firstname + " " +
 					recipe.creator.lastname}} This button should bring you to the user
 					that posted it
-					<button ng-click="viewAuthor(recipe.creator)">View
-						Author Profile</button>
+					<button ng-click="viewAuthor(recipe.creator)">View Author
+						Profile</button>
 				</div>
 				<div class="recipe-content">
 					<ul class="recipe-content" id="recipe-ingredients"
@@ -81,10 +103,21 @@
 						<li ng-bind="direction"></li>
 					</ul>
 				</div>
-				<button ng-click="favoriteRecipe(recipe)">Save this
-					recipe</button>
+				<button ng-click="favoriteRecipe(recipe)">Save this recipe</button>
 			</div>
-
+			<div id="comments">
+				<button ng-click="addComment(recipe)">Add comment</button>
+				<textarea ng-show="addComment" ng-model="recipeDescription"
+					cols="32" rows="5" placeholder="Description"></textarea>
+				<button ng-click="viewComments(recipe)">View comments for
+					this recipe</button>
+				<div ng-show="showComments">
+					<div ng-repeat="comment in recipe.comments">
+						<h5 ng-bind="comment.commentor"></h5>
+						<p ng-bind="comment.content"></p>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -93,14 +126,11 @@
 			<div id="recipe-head" class="recipe-content">
 				<h1 ng-bind="recipeName"></h1>
 				<input ng-model="recipeName" placeholder="Recipe name" /> <br>
+				<br> <input type="file" id="recipeImageFile" />
+				<button ng-click="uploadRecipeImage()">Save Image</button>
+				<br> <img ng-src="{{ recipeImageUri }}" id="recipeImage" /> <br>
 				<br>
-				
-				<input type="file" id="recipeImageFile" />
- 				<button ng-click="uploadRecipeImage()">Save Image</button>
- 				<br>
- 				<img ng-src="{{ recipeImageUri }}" id="recipeImage" />
- 				<br><br>
- 
+
 				<textarea ng-model="recipeDescription" cols="32" rows="5"
 					placeholder="Description"></textarea>
 			</div>
@@ -140,7 +170,7 @@
 					</h3>
 				</span>
 
-				<ul style="list-style-type:none;">
+				<ul style="list-style-type: none;">
 					<li ng-repeat="ingredient in ingredients"><span
 						ng-if="ingredient.quantity!=0" ng-bind="ingredient.quantity"></span>
 						<span ng-if="ingredient.fraction!='0'"
@@ -152,7 +182,7 @@
 				<h2>Directions</h2>
 				<input type="text" ng-model="recipeStep" placeholder="Add a step" />
 				<button ng-click="addStep(recipeStep)">+</button>
-				<ul style="list-style-type:none;">
+				<ul style="list-style-type: none;">
 					<li ng-repeat="step in steps" ng-bind="step"></li>
 				</ul>
 			</div>
@@ -160,11 +190,12 @@
 			<button ng-click="publishRecipe()">Publish Recipe</button>
 		</div>
 	</div>
-	
-	<div ng-show="tab === 'SearchRecipes'" ng-controller="SearchRecipeController">
+
+	<div ng-show="tab === 'SearchRecipes'"
+		ng-controller="SearchRecipeController">
 		<input type="text" ng-model="RecipeName">
-		<button ng-click="search()">Search Recipes </button>
+		<button ng-click="search()">Search Recipes</button>
 	</div>
-	
-	
+
+
 </div>

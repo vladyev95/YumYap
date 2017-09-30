@@ -132,6 +132,14 @@ app.service('RecipeService', function ($http) {
 	service.getRecipes = function () {
 		return service.recipes;
 	}
+	
+	service.viewComments = function(recipe){
+		return $http.post('yum/comments/show', recipe)
+	}
+	
+	service.addComment = function(recipe, user){
+		return $http.post('yum/comments/create', comment)
+	}
 
 
 });
@@ -278,16 +286,6 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 		$scope.tab = 'SearchRecipes';
 	}
 
-	$scope.viewAuthor = function (user) {
-		log('switching to \'View Author\' tab');
-		ViewAuthorService.setUser(user);   
-		$scope.tab = 'ViewAuthor';
-
-	};
-
-	var favoriteRecipe = function () {
-		RecipeService.favoriteRecipe(recipe);
-	}
 });
 /* AppController */
 
@@ -355,14 +353,10 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			$scope.ingredients = [];
 			$scope.ingredients2 = [];
 			$scope.steps = [];
-
-//			expect(warnning.getText()).toContain('Recipe successfully created');
 		}
-		else{
-//			expect(warnning.getText()).toContain('name, discription, direction, and steps cannot be empty');
-		}
+		
 	};
-
+	
 	$scope.addIngredient = function (quantity, fraction, measure, name) {
 		log('Creating ingredient with ' + quantity + ', ' + fraction + ', ' + measure + ', ' + name);
 		name = name.trim();
@@ -377,7 +371,6 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			expect(warnning.getText()).toContain('quanity or fraction must be specifed, or specife both');
 		}
 	};
-
 	$scope.addStep = function (step) {
 		log('Adding step ' + step);
 		step = step.trim();
@@ -391,28 +384,6 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			expect(warnning.getText()).toContain('step cannot be empty');
 		}
 	};
-
-	/*
-	 * 
-	 * This was commented ------------ beginning*/
-//	 var warnning = element(by.binding('warnning'));
-//
-//    if(validate){
-//    	RecipeService.createRecipe(recipe).then(
-//            function (response) {
-//            	// Recipe create success message
-//            	// clear input fields
-//            	expect(warnning.getText()).toContain('Recipe successfully created');
-//            }, function(error){
-//            	 console.log("error")
-//                 console.log(error); // RIP Vlad
-//            });
-//	}else{
-//		// Message says these fields cannnot be empty
-//		expect(warnning.getText()).toContain('name, discription, direction, and steps cannot be empty');
-//		expect(warnning.getText()).toContain('quanity or fraction must be specifed, or specife both')
-//	}
-//-------------this was commmented -----------end
 	$scope.getFoodReport = function (selection) {
 		log('in getFoodReport');
 		log('Selected food= ' + selection);
@@ -533,11 +504,8 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 
 
 app.controller('DashboardController', function ($scope, UserService, RecipeService, $http, $q) {
-
-
 	var recipeService = RecipeService;
 	var userService = UserService;
-
 	$scope.currentUser = userService.getUser();
 	var data = function () {
 		console.log("start view");
@@ -560,12 +528,22 @@ app.controller('DashboardController', function ($scope, UserService, RecipeServi
 				});
 	}();
 
-	var favoriteRecipe = function (recipe) {
-		recipeService.favoriteRecipe(recipe)
+	var favoriteRecipe = function(recipe){
+		recipeService.favoriteRecipe(recipe, userService.getUser());
+		
 	}
-
-
+	var addComment = function(recipe){
+		
+		//ToDo: add add & view comments to recipe service
+		recipeService.addComment(recipe, userService.getUser());
+		
+	}
+	var viewComments = function(recipe){
+		recipeService.viewComments(recipe);
+		
+	}
 });
+
 
 app.controller('SearchRecipeController', function ($scope, UserService, RecipeService, $http, $q) {
 
