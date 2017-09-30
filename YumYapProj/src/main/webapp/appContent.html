@@ -6,15 +6,15 @@
 			aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<a class="navbar-brand" href="#">Navbar</a>
-		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+		<a class="navbar-brand">YumYap</a>
+		<div class="navbar-collapse collapse show" id="navbarNavAltMarkup">
 			<div class="navbar-nav">
 				<a class="nav-item nav-link" ng-click="switchToHome()">Home</a>
 
 				<!-- TODO: Set tab to Create Recipe -->
 				<a class="nav-item nav-link" ng-click="switchToCreateRecipe()">Create Recipe</a>
 				<a class="nav-item nav-link">TabName2</a>
-				<a class="nav-item nav-link">Logout</a>
+				<a class="nav-item nav-link" href="#">Logout</a>
 			</div>
 		</div>
 	</nav>
@@ -158,7 +158,9 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
 
 			</div>
 			<!-- TODO: Send recipe to backend for storage -->
-			<button ng-click="publishRecipe()">Publish Recipe</button>
+			<button class="btn btn-primary" ng-click="publishRecipe()">Publish Recipe</button>
+			<br><br>
+			<p id="recipeResponse" hidden=true></p>
 		</div>
 	</div>
 </div>

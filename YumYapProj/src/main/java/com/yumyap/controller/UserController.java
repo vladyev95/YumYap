@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -75,11 +75,11 @@ public class UserController {
 			if (userService.attemptRegister(user))
 				return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 			else {
-				logger.info("A user already exists with that email");
+				logger.info("User could not be registered");
 				return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
 			}
-		} catch (ConstraintViolationException e) {
-			logger.info(e.getMessage());
+		} catch (DataIntegrityViolationException e) {
+			logger.info("A user already exists with that email");
 			return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
 		} catch (HibernateException e) {
 			logger.info(e.getMessage());

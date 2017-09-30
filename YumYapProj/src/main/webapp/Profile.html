@@ -11,11 +11,19 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.min.js"></script>
         <script src="app.js"></script>
+<link rel="stylesheet" href="app.css">
 </head>
 <body ng-app="app" ng-controller="ProfileController as prof">
 <div id="profile-info" style="float: left;">
 <h3><span  ng-bind="user.firstname">'s profile</span></h3>
 </div>
+
+<!-- below is TESTING ONLY -->
+<button class="btn btn-primary">click here</button>
+<button >click here 2</button>
+<button class="buttons">click here 3</button>
+<!-- above is TESTING ONLY -->
+
 <div class="recipe-block"  ng-repeat="recipe in recipes">
             <div id="recipe-head" class="recipe-content">
                 <h3 id="recipe-name" ng-bind="recipe.name"></h3>
