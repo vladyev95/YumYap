@@ -21,12 +21,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.springframework.stereotype.Component;
 
-import com.yumyap.dto.UserDto;
+import com.yumyap.dto.SimpleUserDto;
 
 /**
  * An object representing a Recipe object that Users may create
@@ -284,10 +282,19 @@ public class Recipe implements Comparable<Recipe>{
 
 	@Override
 	public String toString() {
-		return "Recipe [id=" + id + ", dateCreated=" + dateCreated + ", creator=" + new UserDto(creator) + ", name=" + name
-				+ ", description=" + description + ", directions=" + directions + ", imageUrl=" + imageUrl
-				+ ", ingredients=" + ingredients + ", comments=" + comments + ", calories=" + calories + ", fat=" + fat
-				+ ", carbs=" + carbs + ", protein=" + protein + "]";
+		return "Recipe {id: " + id + 
+				", dateCreated=" + dateCreated + 
+				", creator: " + new SimpleUserDto(creator) + 
+				", name: " + name +
+				", description: " + description + 
+				", directions: " + directions + 
+				", imageUrl: " + imageUrl +
+				", ingredients:" + ingredients + 
+				", comments: " + comments + 
+				", calories: " + calories + 
+				", fat: " + fat +
+				", carbs: " + carbs + 
+				", protein: " + protein + " }";
 	}
 
 	@Override
