@@ -47,8 +47,8 @@ public class RecipeDto implements Comparable<RecipeDto>{
 				.stream()
 				.forEach(foodItem -> this.ingredients.add(foodItem.getAmount() + " " + foodItem.getMeasure() + " of " + foodItem.getName()));
 		recipe.getDirections()
-		.stream()
-		.forEach(recipeDirection -> this.directions.add(recipeDirection));
+			.stream()
+			.forEach(recipeDirection -> this.directions.add(recipeDirection));
 		this.setDateCreated(recipe.getDateCreated());
 		this.calories = recipe.getCalories();
 		this.fat = recipe.getFat();

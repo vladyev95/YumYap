@@ -1,11 +1,11 @@
 package com.yumyap.beans;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.stream.Collectors;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,12 +14,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
+
+import com.yumyap.dto.RecipeDto;
+import com.yumyap.dto.SimpleUserDto;
 
 /**
  * An object representing a User of our system
@@ -35,14 +36,6 @@ public class User {
 	@SequenceGenerator(name = "user_id_seq", sequenceName = "user_id_seq")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
 	private int id;
-
-	// TODO: Check if many-to-many self join is implemented correctly
-	@ManyToMany
-	@JoinTable (
-			name = "users_following_junc",
-			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "following_id"))
-	private Set<User> followers = new HashSet<>();
 
 	@ManyToMany (mappedBy = "followers")
 	private Set<User> following = new HashSet<>();
@@ -179,15 +172,23 @@ public class User {
 
 	/**
 	 * Returns a nice String representation of this User
-	 */
+	 *//*
 	@Override
 	public String toString() {
+		List<SimpleUserDto> followingSimpleUserDtos = this.following
+				.stream()
+				.map(user -> new SimpleUserDto(user))
+				.collect(Collectors.toList());
+		List<RecipeDto> favoriteRecipesRecipeDtos = this.favoriteRecipes
+				.stream()
+				.map(recipe -> new RecipeDto(recipe))
+				.collect(Collectors.toList());
 		return "User { id: " + id + 
 				", firstName: " + firstName + 
 				", lastName: " + lastName + 
 				", password: " + password +
-				 ", email: " + email + 
-				", following: " + following + 
-				", favoriteRecipes: " + favoriteRecipes+ " }";
-	}
+				", email: " + email + 
+				", following: " + followingSimpleUserDtos + 
+				", favoriteRecipes: " + favoriteRecipesRecipeDtos + " }";
+	}*/
 }
