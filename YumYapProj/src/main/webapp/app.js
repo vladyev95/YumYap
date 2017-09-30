@@ -181,13 +181,12 @@ app.service('ViewAuthorService', function ($http) {
     let service = this;
     
     service.getAuthor = function() {
-        return $http.post('/user/profile', { service.email });
-    }
+        return $http.post('/user/profile', { email: service.email } );
+    };
 });
 /* ViewAuthorService */
 
 app.controller('ViewAuthorController', function ($scope, ViewAuthorService, RecipeService, UserService) {
-    
     ViewAuthorService.getAuthor().then(
                 function(response) {
                     console.log('getAuthor() response: ');
@@ -205,7 +204,7 @@ app.controller('ViewAuthorController', function ($scope, ViewAuthorService, Reci
 
 /* AppController */
 app.controller('AppController', function ($scope, ViewAuthorService) {
-	log('in AppController');
+	console.log('in AppController');
     $scope.tab = 'Home';
     
     $scope.onLogin = false;
