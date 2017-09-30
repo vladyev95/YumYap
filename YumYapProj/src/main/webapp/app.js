@@ -179,61 +179,27 @@ app.controller('RegisterController', function ($scope, $timeout, RegisterService
 /* ViewAuthorService */
 app.service('ViewAuthorService', function ($http) {
     let service = this;
-    console.log("Inside ViewAuthorService")
     
-    service.user = {
-    		id: '',
-    		email: '',
-    		firstName: '',
-    		lastName: '',
-    		following: '',
-    		favoriteRecipes: ''
-    };
-
-    service.setUser = function (data) {
-       service.user.id =  data.id;
-       service.user.email = data.email;
-       service.user.firstName = data.firstName;
-       service.user.lastName = data.lastName;
-       service.user.following = data.following;
-       service.user.favoriteRecipes = data.favoriteRecipe;
-    };
-
-    service.getUser = function (email) {
-        return service.user;
-    };
-    
-    service.follow = function (user) {
-    	console.log("Adding a follower");
-    	var follower = service.user;
-    	
-    	return $http.post('yum/user/addFollower', user, follower);
-    };
+    service.getAuthor = function() {
+        return $http.post('/user/profile', { service.email });
+    }
 });
 /* ViewAuthorService */
 
 app.controller('ViewAuthorController', function ($scope, ViewAuthorService, RecipeService, UserService) {
-	console.log("Inside ViewAuthorController");
-	var viewAuthor = ViewAuthorService;
-	var recipeService = RecipeService;
-	var userService = UserService;
-	var author = this;
-	author.user = viewAuthor.getUser();
-	
-	$scope.user = author.user;
-	$scope.recipes = author.user.recipes;
-	
-	$scope.follow = function(){
-		viewAuthor.follow(userService);
-		}
-	
-	$scope.viewAuthor = function(recipe){
-		recipeService.viewAuthor(recipe);
-	}
-
-	$scope.favoriteRecipe = function(recipe){
-		recipeService.favoriteRecipe(recipe);
-	}
+    
+    ViewAuthorService.getAuthor().then(
+                function(response) {
+                    console.log('getAuthor() response: ');
+                    console.log(response);
+                    console.log('getAuthor() response.data: ');
+                    console.log(response.data);
+                    $scope.author = response.data;
+                },
+                function(error) {
+                    console.log('getAuthor() error: ');
+                    console.log(error);
+                });
 });
 
 
@@ -257,7 +223,7 @@ app.controller('AppController', function ($scope, ViewAuthorService) {
     $scope.viewAuthor = function (email) {
     	log('switching to \'View Author\' tab');
         $scope.tab = 'ViewAuthor';
-        ViewAuthorService.setEmail(email);
+        ViewAuthorService.email = email;
     };
 
 //    var profile = ViewAuthorService;

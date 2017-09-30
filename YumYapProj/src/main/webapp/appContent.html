@@ -48,51 +48,18 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
 					<li ng-bind="recipe.directions"></li>
 				</ol>
 			</div>
-				<button ng-click="homeTap.favoriteRecipe()">Save this recipe</button>
 		</div>
 	
 	</div>
 
 
-	<div ng-show="tab === 'ViewAuthor'"
-		ng-controller="ViewAuthorController as viewAuthor">
-		<div>
-			<h1 ng-bind="user.firstName + ' ' + user.lastName"></h1>
-			<button ng-click="follow()">
-				follow <span ng-bind="user.firstname"></span>
-			</button>
-		</div>
-		<div class="recipe-block" ng-repeat="recipe in user.recipes">
-			<div id="recipe-head" class="recipe-content">
-				<h3 id="recipe-name" ng-bind="recipe.name"></h3>
-				<p id="recipe-description" ng-bind="recipe.description"></p>
-			</div>
-			<div class="recipe-content">
-				<!-- <img id="recipe-image" ng-src="recipe.imageUrl" width="100"
-					height="100"></img> -->
-				<div>
-					Posted by {{recipe.creator.firstname + " " +
-					recipe.creator.lastname}} This button should bring you to the user
-					that posted it
-					<button ng-click="viewAuthor(recipe.author.email)">View
-						Author Profile</button>
-				</div>
-				<div class="recipe-content">
-					<ul class="recipe-content" id="recipe-ingredients"
-						ng-repeat="foodItem in recipe.ingredients">
-						<li><span
-							ng-bind="foodItem.amount + ' ' + foodItem.measure + ' of ' + foodItem.name"></span></li>
-					</ul>
-					<ul class="recipe-content"
-						ng-repeat="direction in recipe.directions">
-						<li ng-bind="direction"></li>
-					</ul>
-				</div>
-				<button ng-click="favoriteRecipe(recipe.id)">Save this
-					recipe</button>
-			</div>
-
-		</div>
+	<div ng-show="tab === 'ViewAuthor'" ng-controller="ViewAuthorController as viewAuthor">
+		<h1 ng-bind="user.firstName + ' ' + user.lastName"></h1>
+		<ul>
+			<li ng-repeat="recipe in user.recipes">
+				<div ng-bind="recipe.name"></div>
+			</li>
+		</ul>
 	</div>
 
 	<div ng-show="tab === 'CreateRecipe'">
