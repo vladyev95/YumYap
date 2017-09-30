@@ -37,7 +37,10 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
 	private int id;
 
-	@ManyToMany (mappedBy = "followers")
+	@ManyToMany
+	@JoinTable(name = "user_following_table",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "followoing_id"))
 	private Set<User> following = new HashSet<>();
 
 	@Column (name = "first_name", nullable = false)
