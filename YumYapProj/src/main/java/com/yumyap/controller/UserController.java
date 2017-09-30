@@ -1,6 +1,7 @@
 package com.yumyap.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -88,10 +89,10 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/dash", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<RecipeDto>> loadDashboard(@RequestBody UserDto userDto) {
+	public ResponseEntity<Set<RecipeDto>> loadDashboard(@RequestBody UserDto userDto) {
 		logger.trace("loadDashboard() by " + userDto);
-
-		return new ResponseEntity<List<RecipeDto>>(userService.getDashboard(userDto), HttpStatus.OK);
+		
+		return new ResponseEntity<Set<RecipeDto>>(userService.getDashboard(userDto), HttpStatus.OK);
 	}
 
 	/*

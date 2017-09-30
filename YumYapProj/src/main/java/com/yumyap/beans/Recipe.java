@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -20,12 +21,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.springframework.stereotype.Component;
 
-import com.yumyap.dto.UserDto;
+import com.yumyap.dto.SimpleUserDto;
 
 /**
  * An object representing a Recipe object that Users may create
@@ -34,7 +33,7 @@ import com.yumyap.dto.UserDto;
 @Component
 @Entity
 @Table(name = "recipes")
-public class Recipe implements Comparable<Recipe> {
+public class Recipe implements Comparable<Recipe>{
 
 	@Id
 	@Column (name = "recipe_id")
@@ -42,17 +41,17 @@ public class Recipe implements Comparable<Recipe> {
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator = "recipe_id_sequence")
 	private int id;
 
-	@Temporal(TemporalType.TIMESTAMP)
+//	@Temporal(TemporalType.TIMESTAMP)
 	@Column (name = "date_created", insertable = false)
 	private Calendar dateCreated;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private User creator;
 
-	@Column (name = "name", nullable = false)
+	@Column (name = "name", nullable = true)
 	private String name;
 
-	@Column (name = "description", nullable = false)
+	@Column (name = "description", nullable = true)
 	private String description;
 
 	@ElementCollection (fetch = FetchType.EAGER)
@@ -283,14 +282,32 @@ public class Recipe implements Comparable<Recipe> {
 
 	@Override
 	public String toString() {
-		return "Recipe [id=" + id + ", dateCreated=" + dateCreated + ", creator=" + new UserDto(creator) + ", name=" + name
-				+ ", description=" + description + ", directions=" + directions + ", imageUrl=" + imageUrl
-				+ ", ingredients=" + ingredients + ", comments=" + comments + ", calories=" + calories + ", fat=" + fat
-				+ ", carbs=" + carbs + ", protein=" + protein + "]";
+		return "Recipe {id: " + id + 
+				", dateCreated=" + dateCreated + 
+				", creator: " + new SimpleUserDto(creator) + 
+				", name: " + name +
+				", description: " + description + 
+				", directions: " + directions + 
+				", imageUrl: " + imageUrl +
+				", ingredients:" + ingredients + 
+				", comments: " + comments + 
+				", calories: " + calories + 
+				", fat: " + fat +
+				", carbs: " + carbs + 
+				", protein: " + protein + " }";
 	}
 
 	@Override
 	public int compareTo(Recipe that) {
 		return (this.dateCreated != null) ? this.dateCreated.compareTo(that.getDateCreated()) : -1;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		Recipe r = (Recipe) o;
+		this.id = r.getId();
+		return this.id == r.getId();
+	}
+	
+	
 }

@@ -1,9 +1,8 @@
 package com.yumyap.service;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
@@ -62,9 +61,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<RecipeDto> getDashboard(UserDto userDto) {
-		List<RecipeDto> recipes = new ArrayList<>();
-		logger.trace("in getDashboard(userDto= "+userDto+")");
+	public Set<RecipeDto> getDashboard(UserDto userDto) {
+		Set<RecipeDto> recipes = new TreeSet<>();
+		logger.trace("in getDashboard() by " + userDto);
 		
 		User user = dao.getUserById(userDto.getId());
 		if (user == null) return recipes;
@@ -72,34 +71,21 @@ public class UserServiceImpl implements UserService {
 		Set<User> following = user.getFollowing();
 		if (following == null || following.isEmpty()) return recipes;
 		
-		recipes.addAll(
-			dao.getRecipesByUser(user)
-			.stream().map(recipe -> new RecipeDto(recipe))
-			.collect(Collectors.toList()));		
-		
+		dao.getRecipesByUser(user)
+			.stream()
+			.map(recipe -> new RecipeDto(recipe))
+			.forEach(recipe -> recipes.add(recipe));
+	
 		following.stream()
 			.map(followedUser -> dao.getRecipesByUser(followedUser))
 			.flatMap(list -> list.stream())
 			.map(recipe -> new RecipeDto(recipe))
 			.forEach(recipeDto -> recipes.add(recipeDto));
 		
-		Collections.sort(recipes, (r1, r2) -> -r1.getDateCreated().compareTo(r2.getDateCreated()));
-		
+		logger.trace("getDashBoard() returning " + recipes);
 		return recipes;
 	}
 
-	/*
-	@Override
-	public UserDto logoutUser(UserDto userDto) {
-		if (!userDto.isLoggedIn()) {
-			logger.trace("No user is currently logged in");
-			return userDto;
-		}
-		logger.trace("Logging out user: " + userDto.getEmail());
-		userDto.setLoggedIn(false);
-		return userDto;
-	}
-	*/
 	
 	@Override
 	public void addRecipe(Recipe recipe) throws NullPointerException {

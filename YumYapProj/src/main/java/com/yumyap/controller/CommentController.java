@@ -56,7 +56,7 @@ public class CommentController {
 	 * @param recipeDto The Recipe for which to get the Comments
 	 * @return The Comments for the Recipe, in order from newest to oldest
 	 */
-	@RequestMapping(value = "/recipe",
+	@RequestMapping(value = "/show",
 				method = RequestMethod.POST,
 				consumes = MediaType.APPLICATION_JSON_VALUE, 
 				produces = MediaType.APPLICATION_JSON_VALUE)

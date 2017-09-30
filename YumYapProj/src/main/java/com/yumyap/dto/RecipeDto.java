@@ -11,7 +11,7 @@ import com.yumyap.beans.Recipe;
  * Contains enough information to construct meaningful front end view
  * @author vlad
  */
-public class RecipeDto {
+public class RecipeDto implements Comparable<RecipeDto>{
 
 	private int id;
 
@@ -43,6 +43,12 @@ public class RecipeDto {
 		this.name = recipe.getName();
 		this.description = recipe.getDescription();
 		this.imageUrl = recipe.getImageUrl();
+		recipe.getIngredients()
+				.stream()
+				.forEach(foodItem -> this.ingredients.add(foodItem.getAmount() + " " + foodItem.getMeasure() + " of " + foodItem.getName()));
+		recipe.getDirections()
+			.stream()
+			.forEach(recipeDirection -> this.directions.add(recipeDirection));
 		this.setDateCreated(recipe.getDateCreated());
 		this.calories = recipe.getCalories();
 		this.fat = recipe.getFat();
@@ -178,6 +184,17 @@ public class RecipeDto {
 				", protein: " + protein + 
 				", ingredients: " + ingredients +
 				", directions: " + directions + " }";
+	}
+
+	@Override
+	public int compareTo(RecipeDto that) {
+		return (this.dateCreated != null) ? this.dateCreated.compareTo(that.getDateCreated()) : -1;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		RecipeDto r = (RecipeDto) o;
+		return this.id == r.getId();
 	}
 
 
