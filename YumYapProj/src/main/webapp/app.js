@@ -19,6 +19,18 @@
 //	image: image url,
 //	ingredients: {list of strings}
 
+const BUCKET_PATH = 'https://s3.amazonaws.com/thisisans3bucket/';
+const S3 = new AWS.S3({
+    credentials: {
+        accessKeyId: 'AKIAJGSJ4WJMQ6AC7UYA',
+        secretAccessKey: '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'
+    }
+});
+
+const API_KEY = '1dvNA9ailiF7xHYu1V2ogW374YZpjcMS1NsvOySE';
+const EXCLUDED_GROUPS = ['Baby Foods', 'Fast Foods', 'Restaurant Foods'];
+const TRACKED_NUTRIENTS = ['208', '204', '205', '203'];
+
 let app = angular.module('app', ['ngRoute']);
 
 
@@ -91,21 +103,21 @@ app.service('RecipeService', function ($http) {
         log('RecipeService create recipe');
         return $http.post('yum/recipe/create', recipe);
     };
-    
-    service.viewDash = function (user) {
-      console.log("getting dash");
-      console.log(user);
-      return $http.post('yum/user/dash', user);
-  };
-  
-  	service.recipes = {};
 
-  	service.setRecipes = function (data) {
-	  service.recipes = data.recipes;
-  	}
-  	service.getRecipes = function () {
-	  return service.recipes;
-  	}
+    service.viewDash = function (user) {
+        console.log("getting dash");
+        console.log(user);
+        return $http.post('yum/user/dash', user);
+    };
+
+    service.recipes = {};
+
+    service.setRecipes = function (data) {
+        service.recipes = data.recipes;
+    }
+    service.getRecipes = function () {
+        return service.recipes;
+    }
 });
 
 
@@ -146,7 +158,7 @@ app.controller('RegisterController', function ($scope, $timeout, RegisterService
         if ($scope.user.password !== $scope.user.password2) {
             console.log('passwords do not match');
             $scope.password2Message = 'Passwords do not match';
-            $timeout(function() {
+            $timeout(function () {
                 $scope.password2Message = '';
             }, 3000);
             return;
@@ -162,7 +174,7 @@ app.controller('RegisterController', function ($scope, $timeout, RegisterService
                 console.log(response.data);
                 $scope.registerMessage = 'Registration successful';
                 $scope.user.firstName = $scope.user.lastName = $scope.user.email = $scope.user.password = $scope.user.password2 = '';
-                $timeout(function() {
+                $timeout(function () {
                     $scope.registerMessage = '';
                 }, 3000);
             },
@@ -179,73 +191,74 @@ app.controller('RegisterController', function ($scope, $timeout, RegisterService
 /* ViewAuthorService */
 app.service('ViewAuthorService', function ($http) {
     let service = this;
-    
-    service.getAuthor = function() {
-        return $http.post('/user/profile', { service.email });
-    }
+
+    service.getAuthor = function () {
+        // TODO: Unexpected . error in service.email      v v v
+        return $http.post('/user/profile', null);//{ service.email });
+    };
 });
 /* ViewAuthorService */
 
 app.controller('ViewAuthorController', function ($scope, ViewAuthorService, RecipeService, UserService) {
-    
+
     ViewAuthorService.getAuthor().then(
-                function(response) {
-                    console.log('getAuthor() response: ');
-                    console.log(response);
-                    console.log('getAuthor() response.data: ');
-                    console.log(response.data);
-                    $scope.author = response.data;
-                },
-                function(error) {
-                    console.log('getAuthor() error: ');
-                    console.log(error);
-                });
+        function (response) {
+            console.log('getAuthor() response: ');
+            console.log(response);
+            console.log('getAuthor() response.data: ');
+            console.log(response.data);
+            $scope.author = response.data;
+        },
+        function (error) {
+            console.log('getAuthor() error: ');
+            console.log(error);
+        });
 });
 
 
 /* AppController */
 app.controller('AppController', function ($scope, ViewAuthorService) {
-	log('in AppController');
+    log('in AppController');
     $scope.tab = 'Home';
-    
+
     $scope.onLogin = false;
 
     $scope.switchToHome = function () {
-    	log('switching to \'Home\' tab');
+        log('switching to \'Home\' tab');
         $scope.tab = 'Home';
     };
-    
+
     $scope.switchToCreateRecipe = function () {
-    	log('switching to \'Create Recipe\' tab');
-    	$scope.tab = 'CreateRecipe';
+        log('switching to \'Create Recipe\' tab');
+        $scope.tab = 'CreateRecipe';
     };
 
     $scope.viewAuthor = function (email) {
-    	log('switching to \'View Author\' tab');
+        log('switching to \'View Author\' tab');
         $scope.tab = 'ViewAuthor';
         ViewAuthorService.email = email;
     };
 
-//    var profile = ViewAuthorService;
-//    var data = function () {
-//        console.log("start view");
-//        profile.viewDash()
-//            .then(
-//            function (response) {
-//                console.log(response);
-//                $scope.recipes = response.data.recipes;
-//                console.log(response.data.recipes);
-//                profile.setRecipes(response.data);
-//                console.log("The last");
-//                console.log(profile.getRecipes());
-//                return response;
-//
-//            }, function (error) {
-//                console.log("error")
-//                console.log(error);
-//                //$scope.output = error;
-//            });
-//    }();
+    //    var profile = ViewAuthorService;
+    //    var data = function () {
+    //        console.log("start view");
+    //        profile.viewDash()
+    //            .then(
+    //            function (response) {
+    //                console.log(response);
+    //                $scope.recipes = response.data.recipes;
+    //                console.log(response.data.recipes);
+    //                profile.setRecipes(response.data);
+    //                console.log("The last");
+    //                console.log(profile.getRecipes());
+    //                return response;
+    //
+    //            }, function (error) {
+    //                console.log("error")
+    //                console.log(error);
+    //                //$scope.output = error;
+    //            });
+    //    }();
 
     var favoriteRecipe = function () {
         console.log("maybe some goats");
@@ -256,9 +269,6 @@ app.controller('AppController', function ($scope, ViewAuthorService) {
 
 app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService) {
     'use strict';
-    const API_KEY = '1dvNA9ailiF7xHYu1V2ogW374YZpjcMS1NsvOySE';
-    const EXCLUDED_GROUPS = ['Baby Foods', 'Fast Foods', 'Restaurant Foods'];
-    const TRACKED_NUTRIENTS = ['208', '204', '205', '203'];
     var i = 1;
 
     $scope.food = { 'name': '', 'nutrients': { 'calories': 0, 'fat': 0, 'carbs': 0, 'protein': 0 } };
@@ -268,6 +278,34 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
     $scope.ingredients2 = [];
     $scope.steps = [];
 
+    $scope.uploadRecipeImage = function () {
+        log('uploading recipe image');
+        let image = document.getElementById('recipeImageFile').files[0];
+
+        if (image) {
+
+            let imageKey = new Date().getTime() + '--' + image.name;
+            let params = {
+                Body: image,
+                Bucket: 'thisisans3bucket',
+                Key: imageKey
+            };
+            S3.upload(params, function (err, data) {
+                if (err) {
+                    log(err);
+                } else {
+
+                    log('successfully uploaded image ' + imageKey);
+                    setTimeout(function () {
+                        $scope.recipeImageUri = BUCKET_PATH + encodeURIComponent(imageKey);
+                        $('#recipeImage').attr('src', BUCKET_PATH + encodeURIComponent(imageKey));
+                        log('uri= '+$scope.recipeImageUri);
+                    }, 4000);
+                }
+            });
+        }
+    };
+
     $scope.publishRecipe = function () {
         log('RecipeCtrl create recipe');
         let recipe = {
@@ -275,7 +313,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
             name: $scope.recipeName,
             description: $scope.recipeDescription,
             directions: $scope.steps,
-            imageUrl: '',
+            imageUrl: $scope.recipeImageUri,
             ingredients: $scope.ingredients2,
             calories: $scope.food.nutrients.calories,
             fat: $scope.food.nutrients.fat,
@@ -297,8 +335,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 
     $scope.addStep = function (step) {
         log('Adding step ' + step);
-        step = i +'. '+ step;
-        $scope.steps.push({direction:step});
+        step = i + '. ' + step;
         $scope.steps.push(step);
         $scope.recipeStep = '';
         i++;
@@ -506,7 +543,7 @@ app.controller('DashboardController', function ($scope, UserService, RecipeServi
 
     var recipeService = RecipeService;
     var userService = UserService;
-    
+
     var data = function () {
         console.log("start view");
         recipeService.viewDash(userService.getUser())

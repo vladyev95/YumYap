@@ -68,7 +68,14 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
 				<h1 ng-bind="recipeName"></h1>
 				<input ng-model="recipeName" placeholder="Recipe name" /> <br>
 				<br>
-				<textarea ng-model="recipeDescription" cols="32" rows="5"
+
+				<input type="file" id="recipeImageFile" />
+				<button ng-click="uploadRecipeImage()">Save Image</button>
+				<br>
+				<img ng-src="{{ recipeImageUri }}" id="recipeImage" />
+				<br><br>
+
+				<textarea ng-model="recipeDescription" cols="36" rows="5"
 					placeholder="Description"></textarea>
 			</div>
 			<div class="recipe-content">
