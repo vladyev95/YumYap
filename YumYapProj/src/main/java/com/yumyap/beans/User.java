@@ -3,9 +3,7 @@ package com.yumyap.beans;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -65,12 +61,6 @@ public class User {
 			joinColumns = @JoinColumn(name = "USER_ID"),
 			inverseJoinColumns = @JoinColumn(name = "RECIPE_ID"))
 	private Set<Recipe> favoriteRecipes = new HashSet<>();
-
-//	@OneToMany (cascade = CascadeType.ALL)
-//	@JoinColumn (name = "RECIPE_ID")
-//	@OrderBy("DATE_CREATED")
-//	private SortedSet<Recipe> createdRecipes = new TreeSet<>();
-
 
 	public User() {}
 
