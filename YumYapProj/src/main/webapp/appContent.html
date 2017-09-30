@@ -112,7 +112,7 @@
 				<button ng-click="viewComments(recipe)">View comments for
 					this recipe</button>
 				<div ng-show="showComments">
-					<div ng-repeat="comment in recipe.comments">
+					<div ng-repeat="comment in comments">
 						<h5 ng-bind="comment.commentor"></h5>
 						<p ng-bind="comment.content"></p>
 					</div>

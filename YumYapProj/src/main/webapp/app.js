@@ -501,11 +501,35 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 	};
 });
 
+app.service('CommentService', function ($http, $q){
+	service = this;	
+	
+	service.comment = {}
+//		id = ''
+//		recipe
+//		commenter
+//		content
+	
+	service.setComment = function(data){
+		service.comment = data;
+	}
+	
+	service.setUser = function(user){
+		service.comment.user = data;
+	}
+	
+	service.getComment = function(){
+		return service.comment;
+	}
+}
 
+)
 
-app.controller('DashboardController', function ($scope, UserService, RecipeService, $http, $q) {
+app.controller('DashboardController', function ($scope, UserService, CommentService, RecipeService, $http, $q) {
 	var recipeService = RecipeService;
 	var userService = UserService;
+	var commentService = CommentService;
+	
 	$scope.currentUser = userService.getUser();
 	var data = function () {
 		console.log("start view");
@@ -533,9 +557,9 @@ app.controller('DashboardController', function ($scope, UserService, RecipeServi
 		
 	}
 	var addComment = function(recipe){
-		
-		//ToDo: add add & view comments to recipe service
-		recipeService.addComment(recipe, userService.getUser());
+		commentService.setComment($scope.comment);
+		commentService.setUser(userService.getUser());
+		recipeService.addComment(recipe, comment);
 		
 	}
 	var viewComments = function(recipe){
