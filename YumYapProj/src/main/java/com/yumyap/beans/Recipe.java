@@ -47,7 +47,6 @@ public class Recipe implements Comparable<Recipe> {
 	private Calendar dateCreated;
 
 	@ManyToOne
-	@JoinColumn (name = "user_id")
 	private User creator;
 
 	@Column (name = "name", nullable = false)

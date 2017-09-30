@@ -43,7 +43,6 @@ public class DaoImpl implements Dao {
 		logger.trace("addUser() " + user);
 		Session session = sessionFactory.getCurrentSession();
 		session.save(user);
-		logger.trace("added " + user);
 		return user != null;
 	}
 
@@ -87,7 +86,7 @@ public class DaoImpl implements Dao {
 
 	@SuppressWarnings("unchecked")
 	public List<Recipe> getRecipes(String search) {
-
+		logger.trace("getRecipes() by " + search);
 		return (List<Recipe>) sessionFactory.getCurrentSession().createCriteria(Recipe.class)
 				.add(Restrictions.ilike("name", "%" + search + "%")).list();
 	}
@@ -126,7 +125,7 @@ public class DaoImpl implements Dao {
 
 
 
-		logger.trace("got " + recipes);
+		logger.trace("getFollowingRecipes() got " + recipes);
 		return recipes;
 	}
 
@@ -141,7 +140,7 @@ public class DaoImpl implements Dao {
 				.add(Restrictions.eq("creator", user))
 				.list());
 
-		logger.trace("got " + recipes);
+		logger.trace("getUserRecipesById() got " + recipes);
 		return recipes;
 	}
 
@@ -150,7 +149,7 @@ public class DaoImpl implements Dao {
 		logger.trace("getUserById() by " + id); 
 		Session session = sessionFactory.getCurrentSession();
 		User user = (User) session.get(User.class, id);
-		logger.trace("got " + user);
+		logger.trace("getUserById() got " + user);
 		return user;
 	}
 
@@ -159,18 +158,14 @@ public class DaoImpl implements Dao {
 		Session session = sessionFactory.getCurrentSession();
 		logger.trace("getRecipeById() by " + id);
 		Recipe recipe = (Recipe) session.get(Recipe.class, id);
-		logger.trace("got " + recipe);
+		logger.trace("getRecipeById() got " + recipe);
 		return recipe;
 	}
 
 	@Override
 	public void updateUser(User user) {
-
-		currentSession().save(user);
-	}
-
-	private Session currentSession() {
-		return sessionFactory.getCurrentSession();
+		logger.trace("updateUser() " + user);
+		sessionFactory.getCurrentSession().save(user);
 	}
 
 	public void addCommentForRecipeById(int id, Comment comment) {

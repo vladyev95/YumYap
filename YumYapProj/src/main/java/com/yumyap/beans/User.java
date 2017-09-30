@@ -38,8 +38,7 @@ public class User {
 
 	// TODO: Check if many-to-many self join is implemented correctly
 	@ManyToMany
-	@JoinTable (
-			name = "users_following_junc",
+	@JoinTable (name = "users_following_junc",
 			joinColumns = @JoinColumn(name = "user_id"),
 			inverseJoinColumns = @JoinColumn(name = "following_id"))
 	private Set<User> followers = new HashSet<>();
@@ -60,8 +59,7 @@ public class User {
 	private String password;
 
 	@ManyToMany
-	@JoinTable (
-			name = "FAVORITE_RECIPES",
+	@JoinTable (name = "FAVORITE_RECIPES",
 			joinColumns = @JoinColumn(name = "USER_ID"),
 			inverseJoinColumns = @JoinColumn(name = "RECIPE_ID"))
 	private Set<Recipe> favoriteRecipes = new HashSet<>();

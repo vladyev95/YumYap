@@ -64,9 +64,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<RecipeDto> getDashboard(UserDto userDto) {
 		List<RecipeDto> recipes = new ArrayList<>();
-		logger.trace("in getDashboard(userDto= "+userDto+")");
+		logger.trace("in getDashboard() by " +userDto);
 		
 		User user = dao.getUserById(userDto.getId());
+		logger.trace("getDashBoard() got " + user);
 		if (user == null) return recipes;
 		
 		Set<User> following = user.getFollowing();
@@ -84,7 +85,7 @@ public class UserServiceImpl implements UserService {
 			.forEach(recipeDto -> recipes.add(recipeDto));
 		
 		Collections.sort(recipes, (r1, r2) -> -r1.getDateCreated().compareTo(r2.getDateCreated()));
-		
+		logger.trace("getDashboard() returning " + recipes);
 		return recipes;
 	}
 

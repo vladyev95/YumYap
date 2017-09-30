@@ -110,7 +110,10 @@ public class UserController {
 	 * @return The UserDto with the corresponding information upon success
 	 * 			HttpStatus.NOT_ACCEPTABLE upon failure
 	 */
-	@RequestMapping(value = "/profile", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/profile", 
+			method = RequestMethod.POST, 
+			consumes = MediaType.APPLICATION_JSON_VALUE, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserDto> loadProfile(@RequestBody SimpleUserDto simpleUserDto) {
 		logger.trace("loadProfile() by " + simpleUserDto);
 		
