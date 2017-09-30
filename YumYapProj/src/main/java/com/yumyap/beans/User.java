@@ -38,9 +38,6 @@ public class User {
 			name = "users_following_junc",
 			joinColumns = @JoinColumn(name = "user_id"),
 			inverseJoinColumns = @JoinColumn(name = "following_id"))
-	private Set<User> followers = new HashSet<>();
-
-	@ManyToMany (mappedBy = "followers")
 	private Set<User> following = new HashSet<>();
 
 	@Column (name = "first_name", nullable = false)

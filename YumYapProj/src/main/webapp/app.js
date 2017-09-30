@@ -151,9 +151,8 @@ app.controller('LoginController', function ($scope, $location, LoginService, Use
                 console.log('attemptLogin() error response: ');
                 console.log(error);
 				
-                $("#loginMessage").attr("class", "alert alert-danger");
                 $("#loginMessage").text("Invalid email or password");
-                displayMessage("#loginMessage");
+                displayMessage("#loginMessage", "alert alert-danger");
             }
             );
     };
@@ -169,9 +168,8 @@ app.controller('RegisterController', function ($scope, $timeout, RegisterService
     	
         if ($scope.user.password !== $scope.user.password2) {
             console.log('passwords do not match');  
-            $(responseText).attr("class", "alert alert-danger");
             $(responseText).text("Passwords do not match");
-            displayMessage(responseText);
+            displayMessage(responseText, "alert alert-danger");
         } else {
 	        console.log('attempting to register: ');
 	        console.log($scope.user);
@@ -183,20 +181,20 @@ app.controller('RegisterController', function ($scope, $timeout, RegisterService
 	                console.log('data: ');
 	                console.log(response.data);
 	                
-	                $(responseText).attr("class", "alert alert-success");
+	                $(responseText).attr("class");
 	                $(responseText).text("Registration successful");
 	                $scope.user.firstName = $scope.user.lastName = $scope.user.email = $scope.user.password = $scope.user.password2 = '';
-	                displayMessage(responseText);
+	                displayMessage(responseText, "alert alert-success");
 	            },
 	            function (error) {
 	                console.log('attemptRegister() error response: ');
 	                console.log(error);
-	                $(responseText).attr("class", "alert alert-danger");
+	                $(responseText).attr("class");
 	                
 	                if (error.status == 406)
 	                	$(responseText).text("A user with that email already exists");
 	                else $(responseText).text("something went wrong");
-	                displayMessage(responseText);
+	                displayMessage(responseText, "alert alert-danger");
 	            }
 	            );
         }
@@ -204,13 +202,23 @@ app.controller('RegisterController', function ($scope, $timeout, RegisterService
 });
 /* RegisterController */
 
-function displayMessage(response) {
+/**
+ * @param response id of the HTML tag to display the message
+ * @param setClass Sets the class of the response HTML tag
+ * @param time Optional parameter to set timeout duration. Default is TIMEOUT_TIME
+ */
+function displayMessage(response, setClass, time) {
+	$(response).attr("class", setClass);
 	clearTimeout(timeout);
+	var timeout_time_ammt = TIMEOUT_TIME;
+	if (time)
+		timeout_time_ammt = time;
+	
 	// Display the message to the user and set a timeout to hide it
     $(response).attr("hidden", false);
     timeout = setTimeout(function() {
     	$(response).attr("hidden", true);
-    }, TIMEOUT_TIME);
+    }, timeout_time_ammt);
 }
 
 
@@ -296,6 +304,8 @@ app.controller('AppController', function ($scope, ViewAuthorService) {
 app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService) {
     'use strict';
     var i = 1;
+    
+//    var warning = element(by.binding("warning"));
 
     $scope.food = { 'name': '', 'nutrients': { 'calories': 0, 'fat': 0, 'carbs': 0, 'protein': 0 } };
     $scope.measures = [];
@@ -306,7 +316,12 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 
     $scope.uploadRecipeImage = function () {
         log('uploading recipe image');
+        var responseText = "#uploadImageMessage";
+        displaySubmitting(responseText);
+        
         let image = document.getElementById('recipeImageFile').files[0];
+        if (!image)
+        	return;
 
         if (image) {
 
@@ -319,10 +334,17 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
             S3.upload(params, function (err, data) {
                 if (err) {
                     log(err);
+                    $(responseText).attr("class");
+                    $(responseText).text("Image could not be saved");
+                    displayMessage(responseText, "alert alert-danger");
                 } else {
 
                     log('successfully uploaded image ' + imageKey);
                     setTimeout(function () {
+                        $(responseText).attr("class");
+                        $(responseText).text("Image saved");
+                        displayMessage(responseText, "alert alert-success");
+                    	
                         $scope.recipeImageUri = BUCKET_PATH + encodeURIComponent(imageKey);
                         $('#recipeImage').attr('src', BUCKET_PATH + encodeURIComponent(imageKey));
                         log('uri= '+$scope.recipeImageUri);
@@ -347,6 +369,22 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
             carbs: $scope.food.nutrients.carbs,
             protein: $scope.food.nutrients.protein
         };
+        
+        if(recipe.name && recipe.description && recipe.ingredients.length > 0 && recipe.steps.length > 0) {
+        	RecipeService.createRecipe(recipe);
+        	$scope.recipeName = null;
+        	$scope.recipeDescription = null;
+        	$scope.ingredients = [];
+        	$scope.ingredients2 = [];
+        	$scope.steps = [];
+        	
+        	$("#warningMessage").text("Recipe successfully created");
+        	displayMessage("#warningMessage", "alert alert-danger");
+        }
+        else{
+        	$("#warningMessage").text("name, discription, direction, and steps cannot be empty");
+        	displayMessage("#warningMessage", "alert alert-danger");
+        }
 
         var responseText = "#recipeResponse";
         RecipeService.createRecipe(recipe)
@@ -360,21 +398,19 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
                     console.log(recipeService.getRecipes());
                     return response;
                     
-                    $(responseText).attr("class", "alert alert-success");
                     $(responseText).text("Recipe created");
-                    displayMessage(responseText);
+                    displayMessage(responseText, "alert alert-success");
 
                 }, function (error) {
                     console.log("error")
                     console.log(error);
                     
-                    $(responseText).attr("class", "alert alert-danger");
                     if (error.status == 406)
                     	$(responseText).text("Please fill out every field");
                     else if (error.status == 401)
                     	$(responseText).text("You must be logged in to create a recipe");
                     else $(responseText).text("Something went wrong");
-                    displayMessage(responseText);
+                    displayMessage(responseText, "alert alert-danger");
                 });
     };
 
@@ -385,9 +421,14 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
         $scope.ingredients2.push({ name: name, amount: quantity + eval(fraction), measure: measure });
         $scope.search = null;
         $scope.selection = null;
+        $scope.quantity = null;
+        $scope.fraction = null;
+        $scope.measure = null;
     };
 
     $scope.addStep = function (step) {
+    	if (!step)
+    		return;
         log('Adding step ' + step);
         step = i + '. ' + step;
         $scope.steps.push(step);
@@ -512,10 +553,13 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
     };
 });
 
+/**
+ * @param message id of the HTML tag to display the message
+ */
 function displaySubmitting(message) {
-	$(message).attr("class", "alert alert-warning");
     $(message).text("Submitting...");
-    $(message).attr("hidden", false);
+    
+    displayMessage(message, "alert alert-warning", TIMEOUT_TIME*3);
 }
 
 //app.service('DashboardService', function ($http, $q) {

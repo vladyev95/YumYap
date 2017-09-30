@@ -34,7 +34,7 @@
                 <div>
                     Posted by <span ng-bind = "recipe.creator"></span>{{recipe.creator.firstname + " " + recipe.creator.lastname}}<br>
          
-                    <button ng-click="viewAuthor(recipe.creator.email)">View Author Profile</button>
+                    <button class="btn btn-primary" ng-click="viewAuthor(recipe.creator.email)">View Author Profile</button>
                 </div>
             </div>
             <div class="recipe-content">
@@ -46,7 +46,7 @@
                     <li ng-bind="recipe.directions"></li>
                 </ol>
             </div>
-            	<button ng-click="favoriteRecipe()">Save this recipe</button>
+            	<button class="btn btn-primary" ng-click="favoriteRecipe()">Save this recipe</button>
         </div> 
 </body>
 </html>
