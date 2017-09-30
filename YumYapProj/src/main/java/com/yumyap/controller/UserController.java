@@ -3,6 +3,8 @@ package com.yumyap.controller;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -44,23 +46,45 @@ public class UserController {
 	 * @param user
 	 *            The User to validate
 	 * @return The UserDto with the corresponding information upon success
+	 * 			HttpStatus.UNAUTHORIZED upon failure
 	 */
 	@RequestMapping(value = "/attemptLogin", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserDto> attemptLogin(@RequestBody User user) {
 		logger.trace("attemptLogin() using " + user);
 		User actualUser = userService.attemptLogin(user.getEmail(), user.getPassword());
+		
 		if (actualUser == null) {
-			return new ResponseEntity<UserDto>(HttpStatus.I_AM_A_TEAPOT);
+			logger.info("email/password is incorrect");
+			return new ResponseEntity<UserDto>(HttpStatus.UNAUTHORIZED);
 		} else {
 			return new ResponseEntity<UserDto>(new UserDto(actualUser), HttpStatus.OK);
 		}
 	}
 
+	/**
+	 * @param user
+	 * @return true upon success
+	 * 			false and HttpStatus.UNAUTHORIZED, HttpStatus.NOT_ACCEPTABLE, or
+	 * 			HttpStatus.CONFLICT upon failure
+	 */
 	@RequestMapping(value = "/attemptRegister", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> attemptRegister(@RequestBody User user) {
 		logger.trace("attemptRegister() using " + user);
-
-		return new ResponseEntity<Boolean>(userService.attemptRegister(user), HttpStatus.OK);
+		
+		try {
+			if (userService.attemptRegister(user))
+				return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+			else {
+				logger.info("A user already exists with that email");
+				return new ResponseEntity<Boolean>(false, HttpStatus.UNAUTHORIZED);
+			}
+		} catch (ConstraintViolationException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
+		} catch (HibernateException e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<Boolean>(false, HttpStatus.CONFLICT);
+		}
 	}
 
 	@RequestMapping(value = "/dash", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -70,25 +94,33 @@ public class UserController {
 		return new ResponseEntity<List<RecipeDto>>(userService.getDashboard(userDto), HttpStatus.OK);
 	}
 
-
-//
-//	@RequestMapping(value = "/profile", method = { RequestMethod.POST }, consumes = {
-//			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-//	public ResponseEntity<UserDto> loadProfile(@RequestBody UserDto userDto) {
-//		System.out.println("Loading Profile");
-//		
-//		return new ResponseEntity<UserDto>(userService.getProfile(userDto), HttpStatus.OK);
-//	}
-
-	@RequestMapping(value = "/profile", 
-			method = RequestMethod.POST, 
-			consumes = MediaType.APPLICATION_JSON_VALUE, 
-			produces = MediaType.APPLICATION_JSON_VALUE)
+	/*
+	 * @RequestMapping(value = "/profile", method = { RequestMethod.POST }, consumes
+	 * = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+	 * MediaType.APPLICATION_JSON_VALUE }) public ResponseEntity<UserDto>
+	 * loadProfile(@RequestBody UserDto userDto) {
+	 * System.out.println("Loading Profile");
+	 * 
+	 * return new ResponseEntity<UserDto>(userService.getProfile(userDto),
+	 * HttpStatus.OK); }
+	 */
+	
+	/**
+	 * @param simpleUserDto
+	 * @return The UserDto with the corresponding information upon success
+	 * 			HttpStatus.NOT_ACCEPTABLE upon failure
+	 */
+	@RequestMapping(value = "/profile", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserDto> loadProfile(@RequestBody SimpleUserDto simpleUserDto) {
 		logger.trace("loadProfile() by " + simpleUserDto);
-		UserDto userDto = userService.simpleUserDtoToUserDto(simpleUserDto);
-		return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
-
+		
+		try {
+			UserDto userDto = userService.simpleUserDtoToUserDto(simpleUserDto);
+			return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
+		} catch (NullPointerException e) {
+			logger.info("NullPointer thrown");
+			return new ResponseEntity<UserDto>(HttpStatus.NOT_ACCEPTABLE);
+		}
 	}
 
 	/*
@@ -116,20 +148,37 @@ public class UserController {
 	 * HttpStatus.OK); }
 	 */
 
+	/**
+	 * @param recipe
+	 * @return HttpStatus.OK on success, HttpStatus.NOT_ACCEPTABLE upon failure
+	 */
 	@RequestMapping(value = "/create", method = { RequestMethod.POST }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<Void> createRecipe(@RequestBody Recipe recipe) {
-
+		
 		logger.trace("creating a new recipe");
-		userService.addRecipe(recipe);
-		return new ResponseEntity<Void>(HttpStatus.OK);
+		
+		try {
+			userService.addRecipe(recipe);
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		} catch (NullPointerException e) {
+			logger.info("NullPointer thrown");
+			return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+		}
 	}
 
+	/**
+	 * @param user
+	 * @param follower
+	 * @return HttpStatus.OK on success, HttpStatus.CONFLICT or HttpStatus.NOT_ACCEPTABLE on failure
+	 */
 	@RequestMapping(value = "/addFollower", method = { RequestMethod.POST }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<Void> addFollower(@RequestBody UserDto user, @RequestBody UserDto follower) {
 		logger.trace("Adding a follower");
 
+		if (user == null || follower == null)
+			return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
 		if (userService.addFollower(user, follower))
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		else {
