@@ -33,6 +33,10 @@ const TRACKED_NUTRIENTS = ['208', '204', '205', '203'];
 
 let app = angular.module('app', ['ngRoute']);
 
+// Keeps track of the last timeout set
+var timeout = -1;
+// Time for a timeout message to expire in ms
+var TIMEOUT_TIME = 4000;
 
 app.config(function ($routeProvider) {
     $routeProvider
@@ -127,6 +131,7 @@ app.controller('LoginController', function ($scope, $location, LoginService, Use
     $scope.attemptLogin = function () {
         console.log('attempting to log in: ');
         console.log($scope.user);
+        displaySubmitting("#loginMessage");
         LoginService.attemptLogin($scope.user)
             .then(
             function (response) {
@@ -145,6 +150,10 @@ app.controller('LoginController', function ($scope, $location, LoginService, Use
             function (error) {
                 console.log('attemptLogin() error response: ');
                 console.log(error);
+				
+                $("#loginMessage").attr("class", "alert alert-danger");
+                $("#loginMessage").text("Invalid email or password");
+                displayMessage("#loginMessage");
             }
             );
     };
@@ -155,37 +164,54 @@ app.controller('LoginController', function ($scope, $location, LoginService, Use
 /* RegisterController */
 app.controller('RegisterController', function ($scope, $timeout, RegisterService) {
     $scope.attemptRegister = function () {
+    	var responseText = "#registerMessage";
+    	displaySubmitting(responseText);
+    	
         if ($scope.user.password !== $scope.user.password2) {
-            console.log('passwords do not match');
-            $scope.password2Message = 'Passwords do not match';
-            $timeout(function () {
-                $scope.password2Message = '';
-            }, 3000);
-            return;
+            console.log('passwords do not match');  
+            $(responseText).attr("class", "alert alert-danger");
+            $(responseText).text("Passwords do not match");
+            displayMessage(responseText);
+        } else {
+	        console.log('attempting to register: ');
+	        console.log($scope.user);
+	        RegisterService.attemptRegister($scope.user)
+	            .then(
+	            function (response) {
+	                console.log('attemptRegister() success response: ');
+	                console.log(response);
+	                console.log('data: ');
+	                console.log(response.data);
+	                
+	                $(responseText).attr("class", "alert alert-success");
+	                $(responseText).text("Registration successful");
+	                $scope.user.firstName = $scope.user.lastName = $scope.user.email = $scope.user.password = $scope.user.password2 = '';
+	                displayMessage(responseText);
+	            },
+	            function (error) {
+	                console.log('attemptRegister() error response: ');
+	                console.log(error);
+	                $(responseText).attr("class", "alert alert-danger");
+	                
+	                if (error.status == 406)
+	                	$(responseText).text("A user with that email already exists");
+	                else $(responseText).text("something went wrong");
+	                displayMessage(responseText);
+	            }
+	            );
         }
-        console.log('attempting to register: ');
-        console.log($scope.user);
-        RegisterService.attemptRegister($scope.user)
-            .then(
-            function (response) {
-                console.log('attemptRegister() success response: ');
-                console.log(response);
-                console.log('data: ');
-                console.log(response.data);
-                $scope.registerMessage = 'Registration successful';
-                $scope.user.firstName = $scope.user.lastName = $scope.user.email = $scope.user.password = $scope.user.password2 = '';
-                $timeout(function () {
-                    $scope.registerMessage = '';
-                }, 3000);
-            },
-            function (error) {
-                console.log('attemptRegister() error response: ');
-                console.log(error);
-            }
-            );
     };
 });
 /* RegisterController */
+
+function displayMessage(response) {
+	clearTimeout(timeout);
+	// Display the message to the user and set a timeout to hide it
+    $(response).attr("hidden", false);
+    timeout = setTimeout(function() {
+    	$(response).attr("hidden", true);
+    }, TIMEOUT_TIME);
+}
 
 
 /* ViewAuthorService */
@@ -308,6 +334,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 
     $scope.publishRecipe = function () {
         log('RecipeCtrl create recipe');
+        displaySubmitting("#recipeResponse");
         let recipe = {
             creator: UserService.getUser(),
             name: $scope.recipeName,
@@ -321,7 +348,34 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
             protein: $scope.food.nutrients.protein
         };
 
-        RecipeService.createRecipe(recipe);
+        var responseText = "#recipeResponse";
+        RecipeService.createRecipe(recipe)
+        	.then(
+                function (response) {
+                    console.log(response);
+                    $scope.recipes = response.data.recipes;
+                    console.log(response.data.recipes);
+                    recipeService.setRecipes(response.data);
+                    console.log("The last");
+                    console.log(recipeService.getRecipes());
+                    return response;
+                    
+                    $(responseText).attr("class", "alert alert-success");
+                    $(responseText).text("Recipe created");
+                    displayMessage(responseText);
+
+                }, function (error) {
+                    console.log("error")
+                    console.log(error);
+                    
+                    $(responseText).attr("class", "alert alert-danger");
+                    if (error.status == 406)
+                    	$(responseText).text("Please fill out every field");
+                    else if (error.status == 401)
+                    	$(responseText).text("You must be logged in to create a recipe");
+                    else $(responseText).text("Something went wrong");
+                    displayMessage(responseText);
+                });
     };
 
     $scope.addIngredient = function (quantity, fraction, measure, name) {
@@ -457,6 +511,12 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
         }
     };
 });
+
+function displaySubmitting(message) {
+	$(message).attr("class", "alert alert-warning");
+    $(message).text("Submitting...");
+    $(message).attr("hidden", false);
+}
 
 //app.service('DashboardService', function ($http, $q) {
 //    var service = this;
