@@ -42,7 +42,7 @@ public interface UserService {
 	Set<Recipe> getFollowingRecipes(User user);
 
 	void addFavoriteRecipe(RecipeDto recipeDto, UserDto userDto);
-	List<RecipeDto> getDashboard(UserDto userDto);
+	Set<RecipeDto> getDashboard(UserDto userDto);
 
 	void addRecipe(Recipe recipe);
 

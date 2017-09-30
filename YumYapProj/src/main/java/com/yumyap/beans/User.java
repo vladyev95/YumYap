@@ -66,11 +66,6 @@ public class User {
 			inverseJoinColumns = @JoinColumn(name = "RECIPE_ID"))
 	private Set<Recipe> favoriteRecipes = new HashSet<>();
 
-//	@OneToMany (cascade = CascadeType.ALL)
-//	@JoinColumn (name = "RECIPE_ID")
-//	@OrderBy("DATE_CREATED")
-//	private SortedSet<Recipe> createdRecipes = new TreeSet<>();
-
 
 	public User() {}
 
@@ -181,21 +176,18 @@ public class User {
 		this.favoriteRecipes = favoriteRecipes;
 	}
 
-//	public Set<Recipe> getCreatedRecipes() {
-//		return createdRecipes;
-//	}
-//
-//	public void setCreatedRecipes(SortedSet<Recipe> createdRecipes) {
-//		this.createdRecipes = createdRecipes;
-//	}
 
 	/**
 	 * Returns a nice String representation of this User
 	 */
 	@Override
 	public String toString() {
-		return "User { id: " + id + ", firstName: " + firstName + ", lastName: " + lastName + ", password: " + password
-				+ ", email: " + email + ", following: " + following + ", favoriteRecipes: " + favoriteRecipes
-				+ " }";
+		return "User { id: " + id + 
+				", firstName: " + firstName + 
+				", lastName: " + lastName + 
+				", password: " + password +
+				 ", email: " + email + 
+				", following: " + following + 
+				", favoriteRecipes: " + favoriteRecipes+ " }";
 	}
 }

@@ -35,7 +35,7 @@ import com.yumyap.dto.UserDto;
 @Component
 @Entity
 @Table(name = "recipes")
-public class Recipe implements Comparable<Recipe> {
+public class Recipe implements Comparable<Recipe>{
 
 	@Id
 	@Column (name = "recipe_id")
@@ -294,4 +294,13 @@ public class Recipe implements Comparable<Recipe> {
 	public int compareTo(Recipe that) {
 		return (this.dateCreated != null) ? this.dateCreated.compareTo(that.getDateCreated()) : -1;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		Recipe r = (Recipe) o;
+		this.id = r.getId();
+		return this.id == r.getId();
+	}
+	
+	
 }

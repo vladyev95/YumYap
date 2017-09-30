@@ -18,11 +18,8 @@
 			</div>
 		</div>
 	</nav>
-
-	<!-- Please set the controller to <whatever> as recipectrl TY
-we will need recipectrl.getMeasure(foodItem.measure) to return the measurement from the API found at the string foodItem.measure
-We will need recipectrl.getFood(foodItem.food) to return the name of the food from the API found at the food Id given by foodItem.food -->
 	<div ng-show="tab === 'Home'" ng-controller="DashboardController">
+	<h3> Welcome back, <span ng-bind="currentUser.firstName"></span></h3>
 		<div class="recipe-block"  ng-repeat="recipe in recipes">
 			<div id="recipe-head" class="recipe-content">
 				<h3 id="recipe-name" ng-bind="recipe.name"></h3>
@@ -34,7 +31,7 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
 					Posted by {{recipe.creator.firstName + " " + recipe.creator.lastName}}
 					<br>
 					<!-- This button should bring you to the user that posted it -->
-					<button ng-click="viewAuthor(recipe)">View Author Profile</button>
+					<button ng-click="viewAuthor(recipe.creator)">View Author Profile</button>
 				</div>
 			</div>
 			<div class="recipe-content">
@@ -46,7 +43,7 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
 					<li ng-bind="recipe.directions"></li>
 				</ol>
 			</div>
-				<button ng-click="homeTap.favoriteRecipe()">Save this recipe</button>
+				<button ng-click="favoriteRecipe(recipe)">Save this recipe</button>
 		</div>
 	
 	</div>
@@ -55,8 +52,7 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
 		ng-controller="ViewAuthorController as viewAuthor">
 		<div>
 			<h1 ng-bind="user.firstName + ' ' + user.lastName"></h1>
-			<button ng-click="follow()">
-				follow <span ng-bind="user.firstname"></span>
+			<button ng-click="follow()"> Follow <span ng-bind="user.firstname"></span>
 			</button>
 		</div>
 		<div class="recipe-block" ng-repeat="recipe in user.recipes">
@@ -71,7 +67,7 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
 					Posted by {{recipe.creator.firstname + " " +
 					recipe.creator.lastname}} This button should bring you to the user
 					that posted it
-					<button ng-click="viewAuthor(recipe.author.email)">View
+					<button ng-click="viewAuthor(recipe.creator)">View
 						Author Profile</button>
 				</div>
 				<div class="recipe-content">
@@ -80,12 +76,12 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
 						<li><span
 							ng-bind="foodItem.amount + ' ' + foodItem.measure + ' of ' + foodItem.name"></span></li>
 					</ul>
-					<ol class="recipe-content"
+					<ul class="recipe-content"
 						ng-repeat="direction in recipe.directions">
 						<li ng-bind="direction"></li>
-					</ol>
+					</ul>
 				</div>
-				<button ng-click="favoriteRecipe(recipe.id)">Save this
+				<button ng-click="favoriteRecipe(recipe)">Save this
 					recipe</button>
 			</div>
 
@@ -98,6 +94,13 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
 				<h1 ng-bind="recipeName"></h1>
 				<input ng-model="recipeName" placeholder="Recipe name" /> <br>
 				<br>
+				
+				<input type="file" id="recipeImageFile" />
+ 				<button ng-click="uploadRecipeImage()">Save Image</button>
+ 				<br>
+ 				<img ng-src="{{ recipeImageUri }}" id="recipeImage" />
+ 				<br><br>
+ 
 				<textarea ng-model="recipeDescription" cols="32" rows="5"
 					placeholder="Description"></textarea>
 			</div>
@@ -137,7 +140,7 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
 					</h3>
 				</span>
 
-				<ul>
+				<ul style="list-style-type:none;">
 					<li ng-repeat="ingredient in ingredients"><span
 						ng-if="ingredient.quantity!=0" ng-bind="ingredient.quantity"></span>
 						<span ng-if="ingredient.fraction!='0'"
@@ -149,9 +152,9 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
 				<h2>Directions</h2>
 				<input type="text" ng-model="recipeStep" placeholder="Add a step" />
 				<button ng-click="addStep(recipeStep)">+</button>
-				<ol>
+				<ul style="list-style-type:none;">
 					<li ng-repeat="step in steps" ng-bind="step"></li>
-				</ol>
+				</ul>
 			</div>
 			<!-- TODO: Send recipe to backend for storage -->
 			<button ng-click="publishRecipe()">Publish Recipe</button>

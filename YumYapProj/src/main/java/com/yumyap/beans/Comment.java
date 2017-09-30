@@ -31,6 +31,10 @@ public class Comment implements Comparable<Comment> {
 	@SequenceGenerator(name = "comment_id_seq", sequenceName = "comment_id_seq")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_id_seq")
 	private int id;
+	
+	@ManyToOne
+	@JoinColumn(name = "RECIPE_ID")
+	private Recipe recipe;
 
 	@ManyToOne (cascade = CascadeType.ALL)
 	@JoinColumn(name = "USER_ID")
@@ -45,7 +49,10 @@ public class Comment implements Comparable<Comment> {
 
 	public Comment() {}
 
-	public Comment(User commenter, Calendar commentDate, String content) {
+	public Comment(int id, Recipe recipe, User commenter, Calendar commentDate, String content) {
+		super();
+		this.id = id;
+		this.recipe = recipe;
 		this.commenter = commenter;
 		this.commentDate = commentDate;
 		this.content = content;
@@ -120,14 +127,12 @@ public class Comment implements Comparable<Comment> {
 	 */
 	@Override
 	public String toString() {
-		return "Comment { id: " + id + 
-				", commenter: " + commenter + 
-				", commentDate: " + commentDate + 
-				", content: " + content + " }";
+		return "Comment [id=" + id + ", recipe=" + recipe + ", commenter=" + commenter + ", commentDate=" + commentDate
+				+ ", content=" + content + "]";
 	}
 
 	@Override
 	public int compareTo(Comment that) {
-		return (this.commentDate != null) ? this.commentDate.compareTo(that.getDate()) : -1;
+		return (this.commentDate != null) ? -this.commentDate.compareTo(that.getDate()) : -1;
 	}
 }

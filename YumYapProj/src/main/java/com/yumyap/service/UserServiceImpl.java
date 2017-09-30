@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
@@ -62,8 +63,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<RecipeDto> getDashboard(UserDto userDto) {
-		List<RecipeDto> recipes = new ArrayList<>();
+	public Set<RecipeDto> getDashboard(UserDto userDto) {
+		Set<RecipeDto> recipes = new TreeSet<>();
 		logger.trace("in getDashboard(userDto= "+userDto+")");
 		
 		User user = dao.getUserById(userDto.getId());
@@ -73,31 +74,18 @@ public class UserServiceImpl implements UserService {
 		recipes.addAll(
 			dao.getRecipesByUser(user)
 			.stream().map(recipe -> new RecipeDto(recipe))
-			.collect(Collectors.toList()));		
+			.collect(Collectors.toList()));	
 		
+		System.out.println(recipes);
 		following.stream()
 			.map(followedUser -> dao.getRecipesByUser(followedUser))
 			.flatMap(list -> list.stream())
 			.map(recipe -> new RecipeDto(recipe))
 			.forEach(recipeDto -> recipes.add(recipeDto));
 		System.out.println(recipes);
-//		Collections.sort(recipes, (r1, r2) -> -r1.getDateCreated().compareTo(r2.getDateCreated()));
-		
 		return recipes;
 	}
 
-	/*
-	@Override
-	public UserDto logoutUser(UserDto userDto) {
-		if (!userDto.isLoggedIn()) {
-			logger.trace("No user is currently logged in");
-			return userDto;
-		}
-		logger.trace("Logging out user: " + userDto.getEmail());
-		userDto.setLoggedIn(false);
-		return userDto;
-	}
-	*/
 	
 	@Override
 	public void addRecipe(Recipe recipe) {
