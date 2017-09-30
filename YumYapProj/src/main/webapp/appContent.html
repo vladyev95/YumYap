@@ -62,14 +62,14 @@ We will need recipectrl.getFood(foodItem.food) to return the name of the food fr
 		</ul>
 	</div>
 
-	<div ng-show="tab === 'CreateRecipe'">
+	<div ng-show="tab === 'CreateRecipe'" style="padding-left:20px">
 		<div ng-controller="RecipeCtrl">
 			<div id="recipe-head" class="recipe-content">
 				<h1 ng-bind="recipeName"></h1>
 				<input ng-model="recipeName" placeholder="Recipe name" /> <br>
 				<br>
 
-				<input type="file" id="recipeImageFile" />
+				<input type="file" id="recipeImageFile" style="background-color:AntiqueWhite"/>
 				<button class="btn btn-primary" ng-click="uploadRecipeImage()">Save Image</button>
 				<br><br>
 				<p id="uploadImageMessage" hidden=true></p>
