@@ -1,7 +1,5 @@
 package com.yumyap.service;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -65,24 +63,25 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Set<RecipeDto> getDashboard(UserDto userDto) {
 		Set<RecipeDto> recipes = new TreeSet<>();
-		logger.trace("in getDashboard(userDto= "+userDto+")");
+		logger.trace("in getDashboard() by " + userDto);
 		
 		User user = dao.getUserById(userDto.getId());
 		if (user == null) return recipes;
 		
 		Set<User> following = user.getFollowing();
-		recipes.addAll(
-			dao.getRecipesByUser(user)
-			.stream().map(recipe -> new RecipeDto(recipe))
-			.collect(Collectors.toList()));	
 		
-		System.out.println(recipes);
+		dao.getRecipesByUser(user)
+			.stream()
+			.map(recipe -> new RecipeDto(recipe))
+			.forEach(recipe -> recipes.add(recipe));
+	
 		following.stream()
 			.map(followedUser -> dao.getRecipesByUser(followedUser))
 			.flatMap(list -> list.stream())
 			.map(recipe -> new RecipeDto(recipe))
 			.forEach(recipeDto -> recipes.add(recipeDto));
-		System.out.println(recipes);
+		
+		logger.trace("getDashBoard() returning " + recipes);
 		return recipes;
 	}
 

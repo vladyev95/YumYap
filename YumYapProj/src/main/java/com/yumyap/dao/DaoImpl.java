@@ -101,7 +101,7 @@ public class DaoImpl implements Dao {
 				.createCriteria(Recipe.class)
 				.add(Restrictions.eq("creator", user))
 				.list();
-		logger.trace("got recipes " + recipes);
+		logger.trace("getRecipesByUser() got " + recipes);
 		return recipes;
 	}
 
