@@ -35,17 +35,14 @@ app.config(function ($routeProvider) {
         });
 });
 
-/* LoginRegisterController */
-app.controller('LoginRegisterController', function ($scope) {
-    $scope.onLogin = true;
-});
-/* LoginRegisterController */
-
+//current User information
 app.service("UserService", function ($http, $q) {
     'use strict';
     console.log("in userservice");
+
     let service = this;
     let user = {};
+
 
     service.getUser = function () {
         console.log("in service.getUser");
@@ -54,6 +51,7 @@ app.service("UserService", function ($http, $q) {
     };
 
     service.setUser = function (data) {
+
         user.id = data.id;
         user.email = data.email;
         user.firstName = data.firstName;
@@ -100,25 +98,23 @@ app.service('RecipeService', function ($http) {
         log('RecipeService create recipe');
         return $http.post('yum/recipe/create', recipe);
     };
+    
+    service.viewDash = function (user) {
+      console.log("getting dash");
+      console.log(user);
+      return $http.post('yum/user/dash', user);
+  };
+  
+  	service.recipes = {};
+
+  	service.setRecipes = function (data) {
+	  service.recipes = data;
+  	}
+  	service.getRecipes = function () {
+	  return service.recipes;
+  	}
 });
 
-
-/* LoggedInUserService */
-app.service('LoggedInUserService', function () {
-    let service = this;
-
-    service.setUser = function (user) {
-        service.user = user;
-    }
-});
-/* LoggedInUserService */
-
-
-/* LoginRegisterController */
-app.controller('LoginRegisterController', function ($scope) {
-    $scope.onLogin = true;
-});
-/* LoginRegisterController */
 
 
 /* LoginController*/
@@ -155,7 +151,7 @@ app.controller('LoginController', function ($scope, $location, LoginService, Use
 
 
 /* RegisterController */
-app.controller('RegisterController', function ($scope, RegisterService) {
+app.controller('RegisterController', function ($scope, RegisterService, UserService) {
 
     $scope.attemptRegister = function () {
         console.log('attempting to register: ');
@@ -205,24 +201,29 @@ app.service('ViewAuthorService', function ($http) {
         return service.user;
     };
     
-    service.follow = function () {
+    service.follow = function (user) {
     	console.log("Adding a follower");
     	var follower = service.user;
-    	var user = getUserInfoService();
     	
     	return $http.post('yum/user/addFollower', user, follower);
     };
 });
 /* ViewAuthorService */
 
-app.controller('ViewAuthorController', function ($scope, ViewAuthorService, RecipeService) {
+app.controller('ViewAuthorController', function ($scope, ViewAuthorService, RecipeService, UserService) {
 	console.log("Inside ViewAuthorController");
 	var viewAuthor = ViewAuthorService;
 	var recipeService = RecipeService;
+	var userService = UserService;
 	var author = this;
 	author.user = viewAuthor.getUser();
+	
 	$scope.user = author.user;
 	$scope.recipes = author.user.recipes;
+	
+	$scope.follow = function(){
+		viewAuthor.follow(userService);
+		}
 	
 	$scope.viewAuthor = function(recipe){
 		recipeService.viewAuthor(recipe);
@@ -235,9 +236,11 @@ app.controller('ViewAuthorController', function ($scope, ViewAuthorService, Reci
 
 
 /* AppController */
-app.controller('AppController', function ($scope, ProfileService, ViewAuthorService) {
+app.controller('AppController', function ($scope, ViewAuthorService) {
 	log('in AppController');
     $scope.tab = 'Home';
+    
+    $scope.onLogin = true;
 
     $scope.switchToHome = function () {
     	log('switching to \'Home\' tab');
@@ -255,26 +258,26 @@ app.controller('AppController', function ($scope, ProfileService, ViewAuthorServ
         ViewAuthorService.setEmail(email);
     };
 
-    var profile = ProfileService;
-    var data = function () {
-        console.log("start view");
-        profile.viewDash()
-            .then(
-            function (response) {
-                console.log(response);
-                $scope.recipes = response.data.recipes;
-                console.log(response.data.recipes);
-                profile.setRecipes(response.data);
-                console.log("The last");
-                console.log(profile.getRecipes());
-                return response;
-
-            }, function (error) {
-                console.log("error")
-                console.log(error);
-                //$scope.output = error;
-            });
-    }();
+//    var profile = ViewAuthorService;
+//    var data = function () {
+//        console.log("start view");
+//        profile.viewDash()
+//            .then(
+//            function (response) {
+//                console.log(response);
+//                $scope.recipes = response.data.recipes;
+//                console.log(response.data.recipes);
+//                profile.setRecipes(response.data);
+//                console.log("The last");
+//                console.log(profile.getRecipes());
+//                return response;
+//
+//            }, function (error) {
+//                console.log("error")
+//                console.log(error);
+//                //$scope.output = error;
+//            });
+//    }();
 
     var favoriteRecipe = function () {
         console.log("maybe some goats");
@@ -288,6 +291,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
     const API_KEY = '1dvNA9ailiF7xHYu1V2ogW374YZpjcMS1NsvOySE';
     const EXCLUDED_GROUPS = ['Baby Foods', 'Fast Foods', 'Restaurant Foods'];
     const TRACKED_NUTRIENTS = ['208', '204', '205', '203'];
+    var i = 1;
 
     $scope.food = { 'name': '', 'nutrients': { 'calories': 0, 'fat': 0, 'carbs': 0, 'protein': 0 } };
     $scope.measures = [];
@@ -325,8 +329,10 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 
     $scope.addStep = function (step) {
         log('Adding step ' + step);
+        step = i +'. '+ step;
         $scope.steps.push(step);
         $scope.recipeStep = '';
+        i++;
     };
 
     $scope.getFoodReport = function (selection) {
@@ -446,102 +452,104 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
     };
 });
 
-app.service('ProfileService', function ($http, $q) {
-    var service = this;
+//app.service('DashboardService', function ($http, $q) {
+//    var service = this;
 //    service.user = {
 //        firstname: '',
 //        lastname: '',
-//        email: 'us@er.com',
+//        email: '',
 //        password: ''
 //    };
+//
+//    service.viewProfile = function () {
+//        console.log("getting profile");
+//        console.log(service.user);
+//        return $http.post('yum/user/profile', service.user);
+//    };
+//
+//    service.viewDash = function () {
+//        console.log("getting dash");
+//        console.log(service.user);
+//        return $http.post('yum/user/dash', service.user);
+//    };
+//
+//    service.recipes = {
+//
+//    };
+//
+//    service.setRecipes = function (data) {
+//        service.recipes = data.recipes;
+//    }
+//    service.getRecipes = function () {
+//        return service.recipes;
+//    }
+//
+//    service.viewUser = {
+//        firstname: '',
+//        lastname: '',
+//        email: ''
+//    };
+//
+//    service.setViewUser = function (data) {
+//        service.viewUser.firstname = data.user.firstname;
+//        service.viewUser.firstname = data.user.lastname;
+//        service.viewUser.firstname = data.user.email;
+//    }
+//
+//    service.getViewUser = function () {
+//        return service.viewUser;
+//    }
+//});
+//app.controller('ProfileController', function ($scope, ProfileService, $http, $q) {
+//
+//
+//    var profile = ProfileService;
+//    var data = function () {
+//        console.log("start view");
+//        profile.viewProfile()
+//            .then(
+//            function (response) {
+//                console.log(response);
+//                console.log(response.data.recipes);
+//                profile.setRecipes(response.data);
+//                profile.setViewUser(resonse.data);
+//                $scope.recipes = profile.getRecipes();
+//                $scope.user = profile.getViewUser();
+//                return response;
+//
+//            }, function (error) {
+//                console.log("error")
+//                console.log(error);
+//                //$scope.output = error;
+//            });
+//    }();
+//
+//    var favoriteRecipe = function () {
+//        console.log("maybe some goats");
+//        // TODO: Use FavoriteRecipeService here
+//    }
+//
+//
+//});
 
-    service.viewProfile = function () {
-        console.log("getting profile");
-        console.log(service.user);
-        return $http.post('yum/user/profile', service.user);
-    };
-
-    service.viewDash = function () {
-        console.log("getting dash");
-        console.log(service.user);
-        return $http.post('yum/user/dash', service.user);
-    };
-
-    service.recipes = {
-
-    };
-
-    service.setRecipes = function (data) {
-        service.recipes = data.recipes;
-    }
-    service.getRecipes = function () {
-        return service.recipes;
-    }
-
-    service.viewUser = {
-        firstname: '',
-        lastname: '',
-        email: ''
-    };
-
-    service.setViewUser = function (data) {
-        service.viewUser.firstname = data.user.firstname;
-        service.viewUser.firstname = data.user.lastname;
-        service.viewUser.firstname = data.user.email;
-    }
-
-    service.getViewUser = function () {
-        return service.viewUser;
-    }
-});
-app.controller('ProfileController', function ($scope, ProfileService, $http, $q) {
+app.controller('DashboardController', function ($scope, UserService, RecipeService, $http, $q) {
 
 
-    var profile = ProfileService;
-    var data = function () {
-        console.log("start view");
-        profile.viewProfile()
-            .then(
-            function (response) {
-                console.log(response);
-                console.log(response.data.recipes);
-                profile.setRecipes(response.data);
-                profile.setViewUser(resonse.data);
-                $scope.recipes = profile.getRecipes();
-                $scope.user = profile.getViewUser();
-                return response;
-
-            }, function (error) {
-                console.log("error")
-                console.log(error);
-                //$scope.output = error;
-            });
-    }();
-
-    var favoriteRecipe = function () {
-        console.log("maybe some goats");
-        // TODO: Use FavoriteRecipeService here
-    }
-
-
-});
-
-app.controller('DashboardController', function ($scope, UserService, ProfileService, $http, $q) {
-
-
-    var profile = ProfileService;
+    var recipeService = RecipeService;
     var userService = UserService;
+    
     var data = function () {
         console.log("start view");
-        profile.viewDash()
+        console.log("loading the dashboard for " + userService.getUser());
+        recipeService.viewDash(userService.getUser())
             .then(
             function (response) {
                 console.log(response);
-                $scope.recipes = response.data.recipes;
-                console.log(response.data.recipes);
-                profile.setRecipes(response.data);
+                $scope.recipes = response.data;
+                console.log(response.data);
+                recipeService.setRecipes(response.data);
                 console.log("The last");
-                console.log(profile.getRecipes());
+                console.log(recipeService.getRecipes());
                 return response;
 
             }, function (error) {
@@ -558,6 +566,10 @@ app.controller('DashboardController', function ($scope, UserService, ProfileServ
 
 
 });
+
+app.controller('SearchRecipeController', function ($scope, UserService, RecipeService, $http, $q) {
+	
+})
 
 function logError(error) {
     log(error.status + ' error, ' + error.statusText);

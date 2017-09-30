@@ -70,7 +70,6 @@ public class UserServiceImpl implements UserService {
 		if (user == null) return recipes;
 		
 		Set<User> following = user.getFollowing();
-		
 		recipes.addAll(
 			dao.getRecipesByUser(user)
 			.stream().map(recipe -> new RecipeDto(recipe))
@@ -81,8 +80,8 @@ public class UserServiceImpl implements UserService {
 			.flatMap(list -> list.stream())
 			.map(recipe -> new RecipeDto(recipe))
 			.forEach(recipeDto -> recipes.add(recipeDto));
-		
-		Collections.sort(recipes, (r1, r2) -> -r1.getDateCreated().compareTo(r2.getDateCreated()));
+		System.out.println(recipes);
+//		Collections.sort(recipes, (r1, r2) -> -r1.getDateCreated().compareTo(r2.getDateCreated()));
 		
 		return recipes;
 	}

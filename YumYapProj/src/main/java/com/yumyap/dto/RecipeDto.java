@@ -43,6 +43,12 @@ public class RecipeDto {
 		this.name = recipe.getName();
 		this.description = recipe.getDescription();
 		this.imageUrl = recipe.getImageUrl();
+		recipe.getIngredients()
+				.stream()
+				.forEach(foodItem -> this.ingredients.add(foodItem.getAmount() + " " + foodItem.getMeasure() + " of " + foodItem.getName()));
+		recipe.getDirections()
+		.stream()
+		.forEach(recipeDirection -> this.directions.add(recipeDirection));
 		this.setDateCreated(recipe.getDateCreated());
 		this.calories = recipe.getCalories();
 		this.fat = recipe.getFat();
