@@ -40,7 +40,7 @@ public class User {
 	@ManyToMany
 	@JoinTable(name = "user_following_table",
 			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "followoing_id"))
+			inverseJoinColumns = @JoinColumn(name = "following_id"))
 	private Set<User> following = new HashSet<>();
 
 	@Column (name = "first_name", nullable = false)
@@ -67,7 +67,7 @@ public class User {
 
 	public User(Set<User> following, String firstName, String lastName, String password, String email,
 			Set<Recipe> favoriteRecipes, SortedSet<Recipe> createdRecipes) {
-		this.following = following;
+//		this.following = following;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.password = password;
@@ -175,23 +175,25 @@ public class User {
 
 	/**
 	 * Returns a nice String representation of this User
-	 *//*
-	@Override
-	public String toString() {
-		List<SimpleUserDto> followingSimpleUserDtos = this.following
-				.stream()
-				.map(user -> new SimpleUserDto(user))
-				.collect(Collectors.toList());
-		List<RecipeDto> favoriteRecipesRecipeDtos = this.favoriteRecipes
-				.stream()
-				.map(recipe -> new RecipeDto(recipe))
-				.collect(Collectors.toList());
-		return "User { id: " + id + 
-				", firstName: " + firstName + 
-				", lastName: " + lastName + 
-				", password: " + password +
-				", email: " + email + 
-				", following: " + followingSimpleUserDtos + 
-				", favoriteRecipes: " + favoriteRecipesRecipeDtos + " }";
-	}*/
+	 */
+//	@Override
+//	public String toString() {
+//		List<SimpleUserDto> followingSimpleUserDtos = this.following
+//				.stream()
+//				.map(user -> new SimpleUserDto(user))
+//				.collect(Collectors.toList());
+//		List<RecipeDto> favoriteRecipesRecipeDtos = this.favoriteRecipes
+//				.stream()
+//				.map(recipe -> new RecipeDto(recipe))
+//				.collect(Collectors.toList());
+//		return "User { id: " + id + 
+//				", firstName: " + firstName + 
+//				", lastName: " + lastName + 
+//				", password: " + password +
+//
+//				 ", email: " + email + 
+////				", following: " + following + 
+//				", favoriteRecipes: " + favoriteRecipes+ " }";
+//	}
+
 }

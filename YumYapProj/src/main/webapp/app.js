@@ -559,11 +559,19 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 	var addComment = function(recipe){
 		commentService.setComment($scope.comment);
 		commentService.setUser(userService.getUser());
-		recipeService.addComment(recipe, comment);
+		recipeService.addComment(recipe, commentService.getComment()).then(
+				function(response){},
+				function(error){});
 		
 	}
 	var viewComments = function(recipe){
-		recipeService.viewComments(recipe);
+		recipeService.viewComments(recipe).then(
+				function(response){
+					
+				},
+				function(error){
+					
+				});
 		
 	}
 });
