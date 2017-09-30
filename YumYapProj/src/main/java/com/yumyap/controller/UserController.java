@@ -89,10 +89,10 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/dash", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Set<RecipeDto>> loadDashboard(@RequestBody UserDto userDto) {
+	public ResponseEntity<List<RecipeDto>> loadDashboard(@RequestBody UserDto userDto) {
 		logger.trace("loadDashboard() by " + userDto);
 		
-		return new ResponseEntity<Set<RecipeDto>>(userService.getDashboard(userDto), HttpStatus.OK);
+		return new ResponseEntity<List<RecipeDto>>(userService.getDashboard(userDto), HttpStatus.OK);
 	}
 
 	/*

@@ -64,12 +64,13 @@ app.service("UserService", function ($http, $q) {
 
 	service.getUser = function () {
 		console.log("in service.getUser");
-		console.log(user);
+		console.log(service.user);
 		return user;
 	};
 
 	service.setUser = function (data) {
-		console.log('setting user '+ data);
+		console.log('setting user ');
+		console.log(data);
 		user.id = data.id;
 		user.email = data.email;
 		user.firstName = data.firstName;
@@ -160,7 +161,7 @@ app.controller('LoginController', function ($scope, $location, LoginService, Use
 					console.log('attemptLogin() success response: ');
 					console.log(response);
 					console.log('data: ');
-					console.log(response.data);
+					console.log('sending '+ response.data);
 					UserService.setUser(response.data);
 					$location.path('/app');
 				} else {
@@ -370,6 +371,7 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService) {
 	'use strict';
 	var i = 1;
+	var recipeService = RecipeService;
 	
 //	var warning = element(by.binding("warning"));
 

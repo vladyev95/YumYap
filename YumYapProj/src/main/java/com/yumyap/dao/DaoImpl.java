@@ -102,6 +102,7 @@ public class DaoImpl implements Dao {
 				.add(Restrictions.eq("creator", user))
 				.list();
 		logger.trace("getRecipesByUser() got " + recipes);
+		System.out.println(recipes);
 		return recipes;
 	}
 
