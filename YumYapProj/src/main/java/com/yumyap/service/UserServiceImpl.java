@@ -1,6 +1,7 @@
 package com.yumyap.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,7 +26,7 @@ import com.yumyap.dto.UserDto;
 @Service
 public class UserServiceImpl implements UserService {
 
-	private static final Logger log = Logger.getLogger(UserServiceImpl.class);
+	private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
 
 	@Autowired
 	private Dao dao;
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User attemptLogin(String email, String password) {
-		log.trace("attemptLogin(" + email + ", " + password + ") ");
+		logger.trace("attemptLogin(" + email + ", " + password + ") ");
 		return dao.getUserByEmailAndPassword(email, password);
 	}
 
@@ -51,13 +52,7 @@ public class UserServiceImpl implements UserService {
 		return null;
 		//return dao.getFollowingRecipesById(user.getId());
 	}
-
-	/*
-	 * takes the RecipeDto & UserDto
-	 * saves new user information to database
-	 * returns the updated userDto
-	 * @see com.yumyap.service.UserServiceInterface#favoriteRecipe(com.yumyap.dto.RecipeDto, com.yumyap.dto.UserDto)
-	 */
+	
 	@Override
 	public void addFavoriteRecipe(RecipeDto recipeDto, UserDto userDto) {
 		User user = dao.getUserById(userDto.getId());
@@ -69,7 +64,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<RecipeDto> getDashboard(UserDto userDto) {
 		List<RecipeDto> recipes = new ArrayList<>();
-		log.trace("in getDashboard(userDto= "+userDto+")");
+		logger.trace("in getDashboard(userDto= "+userDto+")");
 		
 		User user = dao.getUserById(userDto.getId());
 		if (user == null) return recipes;
@@ -87,7 +82,7 @@ public class UserServiceImpl implements UserService {
 			.map(recipe -> new RecipeDto(recipe))
 			.forEach(recipeDto -> recipes.add(recipeDto));
 		
-		// TODO: Sort recipes by date created
+		Collections.sort(recipes, (r1, r2) -> -r1.getDateCreated().compareTo(r2.getDateCreated()));
 		
 		return recipes;
 	}
@@ -107,7 +102,15 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public void addRecipe(Recipe recipe) {
-		dao.addRecipe(recipe);
+		User creator = recipe.getCreator();
+		if (creator != null) {
+			Set<Recipe> favorites = creator.getFavoriteRecipes();
+			favorites.add(recipe);
+			User creatorDb = dao.getUserById(creator.getId());
+			recipe.setCreator(creatorDb);
+			dao.addRecipe(recipe);
+		}
+
 	}
 
 	@Override
@@ -123,8 +126,26 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDto getAuthor(SimpleUserDto simpleDto) {
-		
-		return new UserDto(dao.getUserById(simpleDto.getId()));
+	public UserDto getProfile(UserDto userDto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	public boolean addFollower(UserDto user, UserDto follower) {
+		SimpleUserDto follow = new SimpleUserDto(follower);
+		
+		if (user.getFollowing().contains(follow))
+			return false;
+		else {
+			user.getFollowing().add(follow);
+			return true;
+		}
+	}
+
+	public UserDto simpleUserDtoToUserDto(SimpleUserDto simpleUserDto) {
+		logger.trace("simpleUserDtoToUserDto() by " + simpleUserDto);
+		return new UserDto(dao.getUserById(simpleUserDto.getId()));
+	}
+
 }

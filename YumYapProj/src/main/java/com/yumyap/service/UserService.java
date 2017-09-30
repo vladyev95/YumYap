@@ -50,5 +50,19 @@ public interface UserService {
 
 	RecipeDto addComment(List<RecipeDto> recipeDto, Comment comment);
 
-	UserDto getAuthor(SimpleUserDto simpleDto);
+	/**
+	 * @param userDto only has email in it
+	 * @return a full userDto from the given email
+	 */
+	UserDto getProfile(UserDto userDto);
+	
+	boolean addFollower(UserDto user, UserDto follower);
+	
+	/**
+	 * Takes in a SimpleUserDto and transforms it into a UserDto based on the SimpleUserDto id
+	 * @param simpleUserDto The SimpleUserDto to transform into a UserDto
+	 * @return A UserDto version of SimpleUserDto
+	 */
+	UserDto simpleUserDtoToUserDto(SimpleUserDto simpleUserDto);
+
 }

@@ -1,10 +1,10 @@
 package com.yumyap.beans;
 
-import java.sql.Date;
+import java.util.Calendar;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.springframework.stereotype.Component;
 
@@ -22,28 +24,28 @@ import org.springframework.stereotype.Component;
 @Component
 @Entity
 @Table(name = "comments")
-public class Comment {
-	
+public class Comment implements Comparable<Comment> {
+
 	@Id
 	@Column(name = "comment_id")
 	@SequenceGenerator(name = "comment_id_seq", sequenceName = "comment_id_seq")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_id_seq")
 	private int id;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id")
+	@ManyToOne (cascade = CascadeType.ALL)
+	@JoinColumn(name = "USER_ID")
 	private User commenter;
 
-	@Column(name = "comment_date", nullable = false)
-	private Date commentDate;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "comment_date", nullable = false, insertable = false)
+	private Calendar commentDate;
 
 	@Column(name = "content", nullable = false)
 	private String content;
 
-	public Comment() {
-	}
+	public Comment() {}
 
-	public Comment(User commenter, Date commentDate, String content) {
+	public Comment(User commenter, Calendar commentDate, String content) {
 		this.commenter = commenter;
 		this.commentDate = commentDate;
 		this.content = content;
@@ -56,7 +58,7 @@ public class Comment {
 	public int getId() {
 		return id;
 	}
-	
+
 	/**
 	 * Sets the id of this Comment
 	 * @param id The new id of this Comment
@@ -85,7 +87,7 @@ public class Comment {
 	 * Returns the java.sql.Date that this Comment was made
 	 * @return The Date that this Comment was made
 	 */
-	public Date getDate() {
+	public Calendar getDate() {
 		return commentDate;
 	}
 
@@ -93,7 +95,7 @@ public class Comment {
 	 * Sets the Date that this Comment was made
 	 * @param comment_date The Date that this comment was made
 	 */
-	public void setDate(Date commentDate) {
+	public void setDate(Calendar commentDate) {
 		this.commentDate = commentDate;
 	}
 
@@ -124,4 +126,8 @@ public class Comment {
 				", content: " + content + " }";
 	}
 
+	@Override
+	public int compareTo(Comment that) {
+		return (this.commentDate != null) ? this.commentDate.compareTo(that.getDate()) : -1;
+	}
 }

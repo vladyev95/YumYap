@@ -4,6 +4,7 @@ import com.yumyap.beans.User;
 
 /**
  * A lightweight data transfer object only containing the necessary information of a User
+ * Lighter than UserDto and contains only info about the User
  * @author vlad
  */
 public class SimpleUserDto {
@@ -16,18 +17,24 @@ public class SimpleUserDto {
     
     public SimpleUserDto() {}
     
+    /**
+     * Converts a User into a SimpleUserDto with the corresponding fields
+     * @param user The User which to convert into a SimpleUserDto
+     */
     public SimpleUserDto(User user) {
-    	super();
     	this.id = user.getId();
     	this.firstName = user.getFirstName();
     	this.lastName = user.getLastName();
     }
 
-	public SimpleUserDto(int id, String firstName, String lastName) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
+    /**
+     * Converts a UserDto into a SimpleUserDto with the corresponding fields
+     * @param userDto The UserDto which to convert into a SimpleUserDto
+     */
+	public SimpleUserDto(UserDto userDto) {
+		this.id = userDto.getId();
+		this.firstName = userDto.getFirstName();
+		this.lastName = userDto.getLastName();
 	}
 
 	public int getId() {

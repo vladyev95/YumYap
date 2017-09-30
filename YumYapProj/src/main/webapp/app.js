@@ -35,72 +35,30 @@ app.config(function ($routeProvider) {
         });
 });
 
-app.service('RecipeService', function ($http) {
-    let service = this;
-
-    service.saveRecipe = function (recipe) {
-        log('RecipeService save recipe');
-        return $http.post('/YumYap/yum/recipe/create', recipe);
-    };
-});
-
-
-/* LoginRegisterController */
-app.controller('LoginRegisterController', function ($scope) {
-    $scope.onLogin = true;
-});
-/* LoginRegisterController */
-
+//current User information
 app.service("UserService", function ($http, $q) {
+    'use strict';
     console.log("in userservice");
-    var service = this;
-    service.user = {
-        id: "",
-        following: "",
-        firstname: "",
-        lastname: "",
-        password: "",
-        email: "",
-        active: "",
-        loggedIn: "",
-        favoriteRecipes: ""
-    };
+
+    let service = this;
+    let user = {};
+
 
     service.getUser = function () {
         console.log("in service.getUser");
-        console.log(service.user);
-        return service.user;
+        console.log(user);
+        return user;
     };
 
     service.setUser = function (data) {
-        console.log("service.user.username " + service.user.username);
-        console.log("data.username" + data.username);
-        service.user.username = data.username;
-        service.user.password = data.password;
-        service.user.authenticated = data.authenticated;
+
+        user.id = data.id;
+        user.email = data.email;
+        user.firstName = data.firstName;
+        user.lastName = data.lastName;
+        user.following = data.following;
+        user.favoriteRecipes = data.favoriteRecipes;
     };
-
-    service.registerUser = function () {
-        console.log("In register user");
-        var promise;
-        console.log(service.user);
-
-        promise = $http.post(
-            'yum/user/register', service.user
-        ).then(
-            function (response) {
-                console.log(response);
-                return response;
-            },
-            function (error) {
-                console.log('register user promise failed');
-                return $q.reject(error);
-            }
-            );
-        return promise;
-    };
-
-
 });
 
 
@@ -126,19 +84,9 @@ app.service('LoginService', function ($http, $q) {
 app.service('RegisterService', function ($http, $q) {
     let service = this;
 
-    service.user = {
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: ''
-    };
-
-    service.getUser = function () {
-        return service.user;
-    };
-
-    service.attemptRegister = function () {
-        return $http.post('yum/user/attemptRegister', service.user);
+    service.attemptRegister = function (user) {
+        log('registering user '+user);
+        return $http.post('yum/user/attemptRegister', user);
     };
 });
 /* RegisterService */
@@ -146,33 +94,31 @@ app.service('RegisterService', function ($http, $q) {
 app.service('RecipeService', function ($http) {
     let service = this;
 
-    service.saveRecipe = function (recipe) {
-        log('RecipeService save recipe');
-        return $http.post('/YumYap/yum/recipe/create', recipe);
+    service.createRecipe = function (recipe) {
+        log('RecipeService create recipe');
+        return $http.post('yum/recipe/create', recipe);
     };
+    
+    service.viewDash = function (user) {
+      console.log("getting dash");
+      console.log(user);
+      return $http.post('yum/user/dash', user);
+  };
+  
+  	service.recipes = {};
+
+  	service.setRecipes = function (data) {
+	  service.recipes = data.recipes;
+  	}
+  	service.getRecipes = function () {
+	  return service.recipes;
+  	}
 });
 
-
-/* LoggedInUserService */
-app.service('LoggedInUserService', function () {
-    let service = this;
-
-    service.setUser = function (user) {
-        service.user = user;
-    }
-});
-/* LoggedInUserService */
-
-
-/* LoginRegisterController */
-app.controller('LoginRegisterController', function ($scope) {
-    $scope.onLogin = true;
-});
-/* LoginRegisterController */
 
 
 /* LoginController*/
-app.controller('LoginController', function ($scope, $location, LoginService, LoggedInUserService) {
+app.controller('LoginController', function ($scope, $location, LoginService, UserService) {
 
     $scope.user = LoginService.getUser();
 
@@ -187,7 +133,7 @@ app.controller('LoginController', function ($scope, $location, LoginService, Log
                     console.log(response);
                     console.log('data: ');
                     console.log(response.data);
-                    LoggedInUserService.setUser(response.data);
+                    UserService.setUser(response.data);
                     $location.path('/app');
                 } else {
                     console.log('reponse.data is null');
@@ -205,14 +151,12 @@ app.controller('LoginController', function ($scope, $location, LoginService, Log
 
 
 /* RegisterController */
-app.controller('RegisterController', function ($scope, RegisterService) {
-
-    $scope.user = RegisterService.getUser();
+app.controller('RegisterController', function ($scope, RegisterService, UserService) {
 
     $scope.attemptRegister = function () {
         console.log('attempting to register: ');
         console.log($scope.user);
-        RegisterService.attemptRegister()
+        RegisterService.attemptRegister($scope.user)
             .then(
             function (response) {
                 console.log('attemptRegister() success response: ');
@@ -231,76 +175,109 @@ app.controller('RegisterController', function ($scope, RegisterService) {
 
 
 /* ViewAuthorService */
-app.service('ViewAuthorService', function () {
+app.service('ViewAuthorService', function ($http) {
     let service = this;
-
-    service.email = '';
-
-    service.setEmail = function (email) {
-        service.email = email;
+    console.log("Inside ViewAuthorService")
+    
+    service.user = {
+    		id: '',
+    		email: '',
+    		firstName: '',
+    		lastName: '',
+    		following: '',
+    		favoriteRecipes: ''
     };
 
-    service.getEmail = function (email) {
-        return service.email;
-    }
+    service.setUser = function (data) {
+       service.user.id =  data.id;
+       service.user.email = data.email;
+       service.user.firstName = data.firstName;
+       service.user.lastName = data.lastName;
+       service.user.following = data.following;
+       service.user.favoriteRecipes = data.favoriteRecipe;
+    };
+
+    service.getUser = function (email) {
+        return service.user;
+    };
     
-    service.getAuthorInfo = function() {
-        return $http.post('/viewAuthor', service.email);
+    service.follow = function (user) {
+    	console.log("Adding a follower");
+    	var follower = service.user;
+    	
+    	return $http.post('yum/user/addFollower', user, follower);
     };
 });
 /* ViewAuthorService */
 
-app.controller('ViewAuthorController', function ($scope, $location, ViewAuthorService) {
+app.controller('ViewAuthorController', function ($scope, ViewAuthorService, RecipeService, UserService) {
+	console.log("Inside ViewAuthorController");
+	var viewAuthor = ViewAuthorService;
+	var recipeService = RecipeService;
+	var userService = UserService;
+	var author = this;
+	author.user = viewAuthor.getUser();
 	
-	$scope.viewAuthor = function(email) {
-		// TODO: Implement viewAuthor with ViewAuthorService??
-		 ViewAuthorService.getAuthorInfo().then(function(response){
-			 if (response.data) {
-				 let user = response.data;
-			 }else{
-				 console.log('reponse.data is null');
-			 }
-		});
-			 
+	$scope.user = author.user;
+	$scope.recipes = author.user.recipes;
+	
+	$scope.follow = function(){
+		viewAuthor.follow(userService);
+		}
+	
+	$scope.viewAuthor = function(recipe){
+		recipeService.viewAuthor(recipe);
+	}
+
+	$scope.favoriteRecipe = function(recipe){
+		recipeService.favoriteRecipe(recipe);
 	}
 });
 
 
 /* AppController */
-app.controller('AppController', function ($scope, ProfileService, ViewAuthorService) {
+app.controller('AppController', function ($scope, ViewAuthorService) {
+	log('in AppController');
     $scope.tab = 'Home';
+    
+    $scope.onLogin = false;
 
-    $scope.homeTab = function () {
+    $scope.switchToHome = function () {
+    	log('switching to \'Home\' tab');
         $scope.tab = 'Home';
-
-
+    };
+    
+    $scope.switchToCreateRecipe = function () {
+    	log('switching to \'Create Recipe\' tab');
+    	$scope.tab = 'CreateRecipe';
     };
 
     $scope.viewAuthor = function (email) {
+    	log('switching to \'View Author\' tab');
         $scope.tab = 'ViewAuthor';
         ViewAuthorService.setEmail(email);
     };
 
-    var profile = ProfileService;
-    var data = function () {
-        console.log("start view");
-        profile.viewDash()
-            .then(
-            function (response) {
-                console.log(response);
-                $scope.recipes = response.data.recipes;
-                console.log(response.data.recipes);
-                profile.setRecipes(response.data);
-                console.log("The last");
-                console.log(profile.getRecipes());
-                return response;
-
-            }, function (error) {
-                console.log("error")
-                console.log(error);
-                //$scope.output = error;
-            });
-    }();
+//    var profile = ViewAuthorService;
+//    var data = function () {
+//        console.log("start view");
+//        profile.viewDash()
+//            .then(
+//            function (response) {
+//                console.log(response);
+//                $scope.recipes = response.data.recipes;
+//                console.log(response.data.recipes);
+//                profile.setRecipes(response.data);
+//                console.log("The last");
+//                console.log(profile.getRecipes());
+//                return response;
+//
+//            }, function (error) {
+//                console.log("error")
+//                console.log(error);
+//                //$scope.output = error;
+//            });
+//    }();
 
     var favoriteRecipe = function () {
         console.log("maybe some goats");
@@ -309,60 +286,99 @@ app.controller('AppController', function ($scope, ProfileService, ViewAuthorServ
 });
 /* AppController */
 
-app.service('HomeTabRecipesService', function () {
-
-});
-
-/* HomeTabController */
-app.controller('HomeTabController', function ($scope, ViewDashService) {
-
-});
-
 app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService) {
     'use strict';
     const API_KEY = '1dvNA9ailiF7xHYu1V2ogW374YZpjcMS1NsvOySE';
     const EXCLUDED_GROUPS = ['Baby Foods', 'Fast Foods', 'Restaurant Foods'];
     const TRACKED_NUTRIENTS = ['208', '204', '205', '203'];
+    var i = 1;
 
+    var warnning = element(by.binding('warnning'));
+    
     $scope.food = { 'name': '', 'nutrients': { 'calories': 0, 'fat': 0, 'carbs': 0, 'protein': 0 } };
     $scope.measures = [];
     $scope.nutrientsByMeasure = {};
     $scope.ingredients = [];
-    $scope.foodItems = [];
+    $scope.ingredients2 = [];
     $scope.steps = [];
 
-    $scope.saveRecipe = function () {
-        log('RecipeCtrl save recipe');
+    $scope.publishRecipe = function () {
+        log('RecipeCtrl create recipe');
         let recipe = {
             creator: UserService.getUser(),
-            name: $scope.recipeName,
-            description: $scope.recipeDescription,
+            name: $scope.recipeName.trim(),
+            description: $scope.recipeDescription.trim(),
             directions: $scope.steps,
-            imageUrl: null,
-            ingredients: $scope.foodItems,
+            imageUrl: '',
+            ingredients: $scope.ingredients2,
             calories: $scope.food.nutrients.calories,
             fat: $scope.food.nutrients.fat,
             carbs: $scope.food.nutrients.carbs,
             protein: $scope.food.nutrients.protein
         };
 
-        RecipeService.saveRecipe(recipe);
+        if(recipe.name && recipe.description && recipe.ingredients.length > 0 && recipe.steps.length > 0) {
+        	RecipeService.createRecipe(recipe);
+        	$scope.recipeName = null;
+        	$scope.recipeDescription = null;
+        	$scope.ingredients = [];
+        	$scope.ingredients2 = [];
+        	$scope.steps = [];
+        	
+        	expect(warnning.getText()).toContain('Recipe successfully created');
+        }
+        else{
+        	expect(warnning.getText()).toContain('name, discription, direction, and steps cannot be empty');
+        }
+        	
     };
 
     $scope.addIngredient = function (quantity, fraction, measure, name) {
         log('Creating ingredient with ' + quantity + ', ' + fraction + ', ' + measure + ', ' + name);
+        name = name.trim();
         let ingredient = { name: name, quantity: quantity, fraction: fraction, measure: measure };
-        $scope.ingredients.push(ingredient);
-        $scope.foodItems.push({ name: name, amount: quantity + eval(fraction), measure: measure });
-        $scope.search = null;
-        $scope.selection = null;
+        if(name && measure && (ingredient.quantity || ingredient.fraction)){
+        	 $scope.ingredients.push(ingredient);
+             $scope.ingredients2.push({ name: name, amount: quantity + eval(fraction), measure: measure });
+             $scope.search = null;
+             $scope.selection = null;
+        }
+        else{
+        	expect(warnning.getText()).toContain('quanity or fraction must be specifed, or specife both');
+        }
     };
 
     $scope.addStep = function (step) {
         log('Adding step ' + step);
-        $scope.steps.push({direction:step});
-        $scope.recipeStep = '';
+        step = step.trim();
+        if(step){
+        	step = i +'. '+ step;
+        	$scope.steps.push(step);
+        	$scope.recipeStep = '';
+        	i++;
+        }
+        else{
+        	expect(warnning.getText()).toContain('step cannot be empty');
+        }
     };
+    
+    /*var warnning = element(by.binding('warnning'));
+    
+    if(validate){
+    	RecipeService.createRecipe(recipe).then(
+            function (response) {
+            	// Recipe create success message
+            	// clear input fields
+            	expect(warnning.getText()).toContain('Recipe successfully created');
+            }, function(error){
+            	 console.log("error")
+                 console.log(error); // RIP Vlad
+            });
+	}else{
+		// Message says these fields cannnot be empty
+		expect(warnning.getText()).toContain('name, discription, direction, and steps cannot be empty');
+		expect(warnning.getText()).toContain('quanity or fraction must be specifed, or specife both')
+	}*/
 
     $scope.getFoodReport = function (selection) {
         log('in getFoodReport');
@@ -481,101 +497,103 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
     };
 });
 
-app.service('ProfileService', function ($http, $q) {
-    var service = this;
-    service.user = {
-        firstname: '',
-        lastname: '',
-        email: 'us@er.com',
-        password: ''
-    };
+//app.service('DashboardService', function ($http, $q) {
+//    var service = this;
+//    service.user = {
+//        firstname: '',
+//        lastname: '',
+//        email: '',
+//        password: ''
+//    };
+//
+//    service.viewProfile = function () {
+//        console.log("getting profile");
+//        console.log(service.user);
+//        return $http.post('yum/user/profile', service.user);
+//    };
+//
+//    service.viewDash = function () {
+//        console.log("getting dash");
+//        console.log(service.user);
+//        return $http.post('yum/user/dash', service.user);
+//    };
+//
+//    service.recipes = {
+//
+//    };
+//
+//    service.setRecipes = function (data) {
+//        service.recipes = data.recipes;
+//    }
+//    service.getRecipes = function () {
+//        return service.recipes;
+//    }
+//
+//    service.viewUser = {
+//        firstname: '',
+//        lastname: '',
+//        email: ''
+//    };
+//
+//    service.setViewUser = function (data) {
+//        service.viewUser.firstname = data.user.firstname;
+//        service.viewUser.firstname = data.user.lastname;
+//        service.viewUser.firstname = data.user.email;
+//    }
+//
+//    service.getViewUser = function () {
+//        return service.viewUser;
+//    }
+//});
+//app.controller('ProfileController', function ($scope, ProfileService, $http, $q) {
+//
+//
+//    var profile = ProfileService;
+//    var data = function () {
+//        console.log("start view");
+//        profile.viewProfile()
+//            .then(
+//            function (response) {
+//                console.log(response);
+//                console.log(response.data.recipes);
+//                profile.setRecipes(response.data);
+//                profile.setViewUser(resonse.data);
+//                $scope.recipes = profile.getRecipes();
+//                $scope.user = profile.getViewUser();
+//                return response;
+//
+//            }, function (error) {
+//                console.log("error")
+//                console.log(error);
+//                //$scope.output = error;
+//            });
+//    }();
+//
+//    var favoriteRecipe = function () {
+//        console.log("maybe some goats");
+//        // TODO: Use FavoriteRecipeService here
+//    }
+//
+//
+//});
 
-    service.viewProfile = function () {
-        console.log("getting profile");
-        console.log(service.user);
-        return $http.post('yum/user/profile', service.user);
-    };
-
-    service.viewDash = function () {
-        console.log("getting dash");
-        console.log(service.user);
-        return $http.post('yum/user/dash', service.user);
-    };
-
-    service.recipes = {
-
-    };
-
-    service.setRecipes = function (data) {
-        service.recipes = data.recipes;
-    }
-    service.getRecipes = function () {
-        return service.recipes;
-    }
-
-    service.viewUser = {
-        firstname: '',
-        lastname: '',
-        email: 'us@er.com'
-    };
-
-    service.setViewUser = function (data) {
-        service.viewUser.firstname = data.user.firstname;
-        service.viewUser.firstname = data.user.lastname;
-        service.viewUser.firstname = data.user.email;
-    }
-
-    service.getViewUser = function () {
-        return service.viewUser;
-    }
-});
-app.controller('ProfileController', function ($scope, ProfileService, $http, $q) {
+app.controller('DashboardController', function ($scope, UserService, RecipeService, $http, $q) {
 
 
-    var profile = ProfileService;
+    var recipeService = RecipeService;
+    var userService = UserService;
+    
     var data = function () {
         console.log("start view");
-        profile.viewProfile()
-            .then(
-            function (response) {
-                console.log(response);
-                console.log(response.data.recipes);
-                profile.setRecipes(response.data);
-                profile.setViewUser(resonse.data);
-                $scope.recipes = profile.getRecipes();
-                $scope.user = profile.getViewUser();
-                return response;
-
-            }, function (error) {
-                console.log("error")
-                console.log(error);
-                //$scope.output = error;
-            });
-    }();
-
-    var favoriteRecipe = function () {
-        console.log("maybe some goats");
-        // TODO: Use FavoriteRecipeService here
-    }
-
-
-});
-
-app.controller('DashboardController', function ($scope, ProfileService, $http, $q) {
-
-
-    var profile = ProfileService;
-    var data = function () {
-        console.log("start view");
-        profile.viewDash()
+        recipeService.viewDash(userService.getUser())
             .then(
             function (response) {
                 console.log(response);
                 $scope.recipes = response.data.recipes;
                 console.log(response.data.recipes);
-                profile.setRecipes(response.data);
+                recipeService.setRecipes(response.data);
                 console.log("The last");
-                console.log(profile.getRecipes());
+                console.log(recipeService.getRecipes());
                 return response;
 
             }, function (error) {

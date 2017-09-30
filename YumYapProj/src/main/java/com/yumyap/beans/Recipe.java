@@ -1,27 +1,27 @@
 package com.yumyap.beans;
 
-import java.sql.Date;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.SortedMap;
 import java.util.SortedSet;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
-import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.springframework.stereotype.Component;
 
@@ -34,7 +34,7 @@ import com.yumyap.dto.UserDto;
 @Component
 @Entity
 @Table(name = "recipes")
-public class Recipe {
+public class Recipe implements Comparable<Recipe> {
 
 	@Id
 	@Column (name = "recipe_id")
@@ -42,10 +42,11 @@ public class Recipe {
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator = "recipe_id_sequence")
 	private int id;
 
-	@Column (name = "date_created")
-	private Date dateCreated;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column (name = "date_created", insertable = false)
+	private Calendar dateCreated;
 
-	@ManyToOne (cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn (name = "user_id")
 	private User creator;
 
@@ -55,22 +56,27 @@ public class Recipe {
 	@Column (name = "description", nullable = false)
 	private String description;
 
-	@ElementCollection
+	@ElementCollection (fetch = FetchType.EAGER)
 	@CollectionTable (
 			name = "DIRECTION",
 			joinColumns = @JoinColumn(name = "RECIPE_ID"))
 	@Column (name = "CONTENT", nullable = false)
-	private SortedMap<Integer, String> directions = new TreeMap<>();
+	@OrderBy ("CONTENT")
+	private SortedSet<String> directions = new TreeSet<>();
 
 	@Column (name = "image_url")
 	private String imageUrl;
 
-	@OneToMany (cascade = CascadeType.ALL)
-	@JoinColumn (name = "recipes_ingredients")
+	@ElementCollection (fetch = FetchType.EAGER)
+	@CollectionTable (
+			name = "recipes_ingredients",
+			joinColumns = @JoinColumn(name = "RECIPE_ID", nullable = false))
+	@Column (name = "FOOD_ITEM")
 	private Set<FoodItem> ingredients = new HashSet<>();
 
-	@OneToMany (mappedBy = "COMMENTER")
-	@OrderColumn (name = "COMMENT_DATE")
+	@OneToMany
+	@JoinColumn (name = "COMMENT_ID")
+	@OrderBy ("COMMENT_DATE DESC")
 	private SortedSet<Comment> comments = new TreeSet<>();
 
 	@Column
@@ -88,7 +94,7 @@ public class Recipe {
 
 	public Recipe() {}
 
-	public Recipe(Date dateCreated, String name, String description, SortedMap<Integer, String> directions, String imageUrl,
+	public Recipe(Calendar dateCreated, String name, String description, SortedSet<String> directions, String imageUrl,
 			Set<FoodItem> ingredients, SortedSet<Comment> comments) {
 		this.dateCreated = dateCreated;
 		this.name = name;
@@ -183,7 +189,7 @@ public class Recipe {
 	 * Returns the java.sql.Time representing the time this Recipe was created
 	 * @return The java.sql.Time representing the time this Recipe was created
 	 */
-	public Date getDateCreated() {
+	public Calendar getDateCreated() {
 		return dateCreated;
 	}
 
@@ -191,7 +197,7 @@ public class Recipe {
 	 * Sets the time representing the time this Recipe was created
 	 * @param timeCreated
 	 */
-	public void setDateCreated(Date dateCreated) {
+	public void setDateCreated(Calendar dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
@@ -232,7 +238,7 @@ public class Recipe {
 	 * Returns the RecipeDirections for this Recipe 
 	 * @return The RecipeDirections for this Recipe
 	 */
-	public SortedMap<Integer, String> getDirections() {
+	public SortedSet<String> getDirections() {
 		return directions;
 	}
 
@@ -240,7 +246,7 @@ public class Recipe {
 	 * Sets the RecipeDirections for this Recipe
 	 * @param directions The new RecipeDirections for this Recipe
 	 */
-	public void setDirections(SortedMap<Integer, String> directions) {
+	public void setDirections(SortedSet<String> directions) {
 		this.directions = directions;
 	}
 
@@ -276,13 +282,16 @@ public class Recipe {
 		this.comments = comments;
 	}
 
-	/**
-	 * Returns a nice String representation of a Recipe
-	 */
 	@Override
 	public String toString() {
-		return "Recipe { id: " + id + ", timeCreated: " + dateCreated + ", creator: " + new UserDto(creator)
-				+ ", name: " + name + ", description: " + description + ", directions: " + directions + ", imageUrl: "
-				+ imageUrl + ", ingredients: " + ingredients + " }";
+		return "Recipe [id=" + id + ", dateCreated=" + dateCreated + ", creator=" + new UserDto(creator) + ", name=" + name
+				+ ", description=" + description + ", directions=" + directions + ", imageUrl=" + imageUrl
+				+ ", ingredients=" + ingredients + ", comments=" + comments + ", calories=" + calories + ", fat=" + fat
+				+ ", carbs=" + carbs + ", protein=" + protein + "]";
+	}
+
+	@Override
+	public int compareTo(Recipe that) {
+		return (this.dateCreated != null) ? this.dateCreated.compareTo(that.getDateCreated()) : -1;
 	}
 }
