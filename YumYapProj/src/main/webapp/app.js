@@ -124,6 +124,7 @@ app.service('RecipeService', function ($http) {
 	service.favoriteRecipe = function(recipe, user){
 		console.log('favoriting a recipe in RecipeService: ');
 		console.log(recipe);
+		console.log(user);
 		
 		return $http.post('yum/user/favorite', recipe, user);
 	};
@@ -610,60 +611,6 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			nutrients[attr] = (quantity + eval(fraction)) * nutrientsForMeasure[TRACKED_NUTRIENTS[i++]];
 		}
 	};
-
-//					log('successfully uploaded image ' + imageKey);
-//					setTimeout(function () {
-//						$scope.recipeImageUri = BUCKET_PATH + encodeURIComponent(imageKey);
-//						$('#recipeImage').attr('src', BUCKET_PATH + encodeURIComponent(imageKey));
-//						log('uri= '+$scope.recipeImageUri);
-//					}, 4000);
-//				}
-//			});
-//		}
-//	};
-/*
-});
-
-
-        var responseText = "#recipeMessage";
-        RecipeService.createRecipe(recipe)
-        	.then(
-                function (response) {
-                    console.log(response);
-                    $scope.recipes = response.data.recipes;
-                    console.log(response.data.recipes);
-                    recipeService.setRecipes(response.data);
-                    console.log(recipeService.getRecipes());
-                    
-                    
-                    $(responseText).attr("class", "alert alert-success");
-                    $(responseText).text("Recipe created");
-                    displayMessage(responseText);
-
-	var recipeService = RecipeService;
-	var userService = UserService;
-
-	var data = function () {
-		console.log("start view");
-		recipeService.viewDash(userService.getUser())
-			.then(
-			function (response) {
-				console.log(response);
-				$scope.recipes = response.data.recipes;
-				console.log(response.data.recipes);
-				recipeService.setRecipes(response.data);
-				console.log("The last");
-				console.log(recipeService.getRecipes());
-				return response;
-
-			}, function (error) {
-				console.log("error")
-				console.log(error);
-				//$scope.output = error;
-			});
-	}();
-*/
-
 	
 	$scope.addIngredient = function (quantity, fraction, measure, name) {
 		log('Creating ingredient with ' + quantity + ', ' + fraction + ', ' + measure + ', ' + name);
@@ -1013,26 +960,6 @@ function displaySubmitting(message) {
 	
 	displayMessage(message, "alert alert-warning", TIMEOUT_TIME*3);
 }
-
-//app.controller('SearchRecipesController', function($scope, SearchRecipeService, $http, $q){
-//    searchService = SearchRecipeService;
-//    
-//    $scope.searchRecipes = function(){
-//        searchService.search($scope.search).then(
-//                function(response){
-//                    //this should get back simpleRecipeDtos
-//                    $scope.foundRecipes = response.data;
-//                },
-//                function(error){
-//                    
-//                });
-//    }
-//    
-//    $scope.showRecipe = function(recipe){
-//        recipe.show = true;
-//        
-//    }
-//})
 
 function logError(error) {
 	log(error.status + ' error, ' + error.statusText);
