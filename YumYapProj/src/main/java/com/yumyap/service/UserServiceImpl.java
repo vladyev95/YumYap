@@ -135,4 +135,15 @@ public class UserServiceImpl implements UserService {
 		return new UserDto(dao.getUserById(simpleUserDto.getId()));
 	}
 
+	@Override
+	public List<RecipeDto> searchRecipe(String search) {
+		List<RecipeDto> recipes = new ArrayList<RecipeDto>();
+		dao.getRecipes(search)
+		.stream()
+		.map(recipe -> new RecipeDto(recipe))
+		.forEach(recipe -> recipes.add(recipe));
+		System.out.println(recipes);
+		return recipes;
+	}
+
 }

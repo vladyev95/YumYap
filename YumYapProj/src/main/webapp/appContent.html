@@ -49,9 +49,12 @@
 			<button ng-click="favoriteRecipe(recipe)">Save this recipe</button>
 			
 			<div id="comments">
-				<button ng-click="addComment(recipe)">Add comment</button>
-				<textarea ng-show="addComment" ng-model="recipeDescription"
+				<button ng-click="startComment()">Add comment</button>
+				<div ng-show="addingComment">
+				<textarea  ng-model="recipeDescription"
 					cols="32" rows="5" placeholder="Description"></textarea>
+					<button ng-click="addComment(recipe)">Submit</button>
+				</div>
 				<button ng-click="viewComments(recipe)">View comments for
 					this recipe</button>
 				<div ng-show="showComments">
@@ -69,7 +72,7 @@
 		<div>
 			<h1 ng-bind="user.firstName + ' ' + user.lastName"></h1>
 			<button ng-click="follow()">
-				Follow <span ng-bind="user.firstname"></span>
+				Follow <span ng-bind="user.firstName"></span>
 			</button>
 		</div>
 		<div class="recipe-block" ng-repeat="recipe in user.recipes">
@@ -81,9 +84,9 @@
 				<img id="recipe-image" ng-src="recipe.imageUrl" width="100"
 					height="100"></img>
 				<div>
-					Posted by {{recipe.creator.firstname + " " +
-					recipe.creator.lastname}} This button should bring you to the user
-					that posted it
+					Posted by {{recipe.creator.firstName + " " +
+					recipe.creator.lastName}} <!-- This button should bring you to the user
+					that posted it -->
 					<button ng-click="viewAuthor(recipe.creator)">View Author
 						Profile</button>
 				</div>
@@ -101,13 +104,16 @@
 				<button ng-click="favoriteRecipe(recipe)">Save this recipe</button>
 			</div>
 			<div id="comments">
-				<button ng-click="addComment(recipe)">Add comment</button>
-				<textarea ng-show="addComment" ng-model="recipeDescription"
+				<button ng-click="startComment()">Add comment</button>
+				<div ng-show="addingComment">
+				<textarea  ng-model="recipeDescription"
 					cols="32" rows="5" placeholder="Description"></textarea>
+					<button ng-click="addComment(recipe)">Submit</button>
+				</div>
 				<button ng-click="viewComments(recipe)">View comments for
 					this recipe</button>
 				<div ng-show="showComments">
-					<div ng-repeat="comment in comments">
+					<div ng-repeat="comment in recipe.comments">
 						<h5 ng-bind="comment.commentor"></h5>
 						<p ng-bind="comment.content"></p>
 					</div>
@@ -191,9 +197,52 @@
 	</div>
 
 	<div ng-show="tab === 'SearchRecipes'"
-		ng-controller="SearchRecipeController">
-		<input type="text" ng-model="RecipeName">
+		ng-controller="SearchRecipesController">
+		<div>
+		<input type="text" ng-model="recipeName">
 		<button ng-click="search()">Search Recipes</button>
+		</div>
+		<div ng-show="showRecipes">
+			<div class="recipe-content" ng-repeat="recipe in foundRecipes">
+				<h3 ng-bind="recipe.name"></h3>
+				<img id="recipe-image" ng-src="recipe.imageUrl" width="100"
+					height="100"></img>
+				<div>
+					<h4>Posted by <span ng-bind="recipe.creator.firstName"></span> <span ng-bind="recipe.creator.lastName"></span></h4><br> 
+					<button ng-click="viewAuthor(recipe.creator)">View Author
+						Profile</button>
+				</div>
+				<div class="recipe-content">
+					<ul class="recipe-content" id="recipe-ingredients"
+						ng-repeat="foodItem in recipe.ingredients">
+						<li><span
+							ng-bind="foodItem.amount + ' ' + foodItem.measure + ' of ' + foodItem.name"></span></li>
+					</ul>
+					<ul class="recipe-content"
+						ng-repeat="direction in recipe.directions">
+						<li ng-bind="direction"></li>
+					</ul>
+				</div>
+				<button ng-click="favoriteRecipe(recipe)">Save this recipe</button>
+			
+			<div id="comments">
+				<button ng-click="startComment()">Add comment</button>
+				<div ng-show="addingComment">
+				<textarea  ng-model="recipe.comment"
+					cols="32" rows="5" placeholder="Description"></textarea>
+					<button ng-click="addComment(recipe)">Submit</button>
+				</div>
+				<button ng-click="viewComments(recipe)">View comments for
+					this recipe</button>
+				<div ng-show="showComments">
+					<div ng-repeat="comment in recipe.comments">
+						<h5 ng-bind="comment.commentor"></h5>
+						<p ng-bind="comment.content"></p>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
 	</div>
 
 

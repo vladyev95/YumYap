@@ -59,24 +59,25 @@ app.service("UserService", function ($http, $q) {
 	console.log("in userservice");
 
 	let service = this;
-	let user = {};
+	service.user = {};
 
 
 	service.getUser = function () {
 		console.log("in service.getUser");
 		console.log(service.user);
-		return user;
+		return service.user;
 	};
 
 	service.setUser = function (data) {
 		console.log('setting user ');
 		console.log(data);
-		user.id = data.id;
-		user.email = data.email;
-		user.firstName = data.firstName;
-		user.lastName = data.lastName;
-		user.following = data.following;
-		user.favoriteRecipes = data.favoriteRecipes;
+		service.user.id = data.id;
+		service.user.email = data.email;
+		service.user.firstName = data.firstName;
+		service.user.lastName = data.lastName;
+		service.user.following = data.following;
+		service.user.favoriteRecipes = data.favoriteRecipes;
+		console.log(service.user);
 	};
 });
 
@@ -141,7 +142,7 @@ app.service('RecipeService', function ($http) {
 		return $http.post('yum/comments/show', recipe)
 	};
 	
-	service.addComment = function(recipe, user){
+	service.addComment = function(comment){
 		return $http.post('yum/comments/create', comment)
 	};
 
@@ -588,7 +589,20 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 });
 
 
-app.controller('DashboardController', function ($scope, UserService, RecipeService, $http, $q) {
+        var responseText = "#recipeResponse";
+        RecipeService.createRecipe(recipe)
+        	.then(
+                function (response) {
+                    console.log(response);
+                    $scope.recipes = response.data.recipes;
+                    console.log(response.data.recipes);
+                    recipeService.setRecipes(response.data);
+                    console.log(recipeService.getRecipes());
+                    
+                    
+                    $(responseText).attr("class", "alert alert-success");
+                    $(responseText).text("Recipe created");
+                    displayMessage(responseText);
 
 	var recipeService = RecipeService;
 	var userService = UserService;
@@ -764,26 +778,32 @@ app.controller('DashboardController', function ($scope, UserService, RecipeServi
 app.service('CommentService', function ($http, $q){
 	service = this;	
 	
-	service.comment = {}
-//		id = ''
-//		recipe
-//		commenter
-//		content
+	service.comment = {
+			id: '',
+			commenter: {},
+			recipe: {},
+			content: ''
+	}
 	
 	service.setComment = function(data){
-		service.comment = data;
+		service.comment.content = data;
 	}
 	
 	service.setUser = function(user){
-		service.comment.user = data;
+		service.comment.commenter = user;
+	}
+	
+	service.setRecipe = function(recipe){
+		service.comment.recipe = recipe;
 	}
 	
 	service.getComment = function(){
 		return service.comment;
 	}
-}
+	
+	
+});
 
-)
 
 app.controller('DashboardController', function ($scope, UserService, CommentService, RecipeService, $http, $q) {
 	var recipeService = RecipeService;
@@ -812,19 +832,25 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 				});
 	}();
 
-	var favoriteRecipe = function(recipe){
+	$scope.favoriteRecipe = function(recipe){
 		recipeService.favoriteRecipe(recipe, userService.getUser());
 		
 	}
-	var addComment = function(recipe){
-		commentService.setComment($scope.comment);
+	
+	$scope.addComment = function(recipe){
+		commentService.setComment($scope.commentContent);
 		commentService.setUser(userService.getUser());
-		recipeService.addComment(recipe, commentService.getComment()).then(
-				function(response){},
-				function(error){});
+		commentService.setRecipe(recipe);
+		recipeService.addComment(commentService.getComment()).then(
+				function(response){
+					console.log(response);
+				},
+				function(error){
+					console.log(error);
+				});
 		
 	}
-	var viewComments = function(recipe){
+	$scope.viewComments = function(recipe){
 		recipeService.viewComments(recipe).then(
 				function(response){
 					
@@ -834,7 +860,95 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 				});
 		
 	}
+	
 });
+
+	
+	
+
+
+app.service('SearchRecipeService', function($http, $q){
+    var service = this;
+    
+    service.search = function(search){
+    		return $http.post('yum/recipe/search', search);
+    }
+    
+});
+app.controller('SearchRecipesController', function($scope, RecipeService, SearchRecipeService, UserService, CommentService, $http, $q){
+    searchService = SearchRecipeService;
+    commentService = CommentService;
+    userService = UserService;
+    recipeService = RecipeService
+//    $scope.foundRecipes = '';
+//    $scope.showRecipes = false;
+    
+    
+    $scope.search = function(){
+    		searchService.search($scope.recipeName).then(
+                function(response){
+                		console.log(response.data)
+                		$scope.foundRecipes = response.data;
+                		if(response.data){
+                		$scope.showRecipes = true;
+                		}
+                },
+                function(error){
+                    
+                });
+    }
+    
+    $scope.favoriteRecipe = function(recipe){
+		recipeService.favoriteRecipe(recipe, userService.getUser());
+		
+	}
+    
+    
+    this.index;
+    
+    $scope.startComment = function(number){
+    		console.log("providing text space for a comment");
+    		$scope.addingComment = true;
+    		this.index = number;
+    }
+    
+    $scope.addComment = function(recipe){
+		commentService.setComment($scope.index);
+		console.log($scope.recipes.recipe.creator);
+		console.log($scope.recipe.comment);
+		commentService.setUser(userService.getUser());
+		commentService.setRecipe(recipe);
+		console.log('sending ');
+		console.log(commentService.getComment());
+		recipeService.addComment(commentService.getComment()).then(
+				function(response){
+					console.log(response);
+				},
+				function(error){
+					console.log('error');
+					console.log(error);
+				});
+		
+	}
+	$scope.viewComments = function(recipe){
+		recipeService.viewComments(recipe).then(
+				function(response){
+					
+				},
+				function(error){
+					
+				});
+		
+	}
+	
+	$scope.viewAuthor = function(recipe){
+		recipeService.viewAuthor(recipe);
+	}
+    
+//    $scope.showRecipe = function(recipe){
+//        recipe.show = true;  
+//    }
+})
 
 
 /**

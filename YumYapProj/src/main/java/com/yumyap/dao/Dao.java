@@ -7,6 +7,7 @@ import com.yumyap.beans.Comment;
 import com.yumyap.beans.FoodItem;
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
+import com.yumyap.dto.RecipeDto;
 
 /**
  * Interface representing a DAO (Data Access Object)
@@ -73,4 +74,11 @@ public interface Dao {
 	 * @param comment The Comment to add to the Recipe with the corresponding id
 	 */ 
 	void addCommentForRecipeById(int id, Comment comment);
+	
+	/**
+	 * Searches for names matching the given string
+	 * @param search
+	 * @return list of recipes
+	 */
+	Set<Recipe> getRecipes(String search);
 }

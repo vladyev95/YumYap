@@ -46,13 +46,13 @@ public class CommentService {
 	
 	/**
 	 * Creates a comment for the corresponding recipe
-	 * @param recipeDto The Recipe for which to add the Comment
 	 * @param comment The Comment to be added
 	 */
-	public void createComment(RecipeDto recipeDto, Comment comment) {
-		logger.trace("createComment() with " + recipeDto + ", " + comment);
-		User commenter = dao.getUserById(recipeDto.getCreator().getId());
+	public void createComment(Comment comment) {
+		logger.trace("createComment() with " + comment);
+		User commenter = dao.getUserById(comment.getCommenter().getId());
 		comment.setCommenter(commenter);
-		dao.addCommentForRecipeById(recipeDto.getId(), comment);
+		Recipe recipe = dao.getRecipeById(comment.getRecipe().getId());
+		dao.addComment(comment);
 	}
 }

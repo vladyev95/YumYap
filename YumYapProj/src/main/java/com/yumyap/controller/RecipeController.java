@@ -1,5 +1,7 @@
 package com.yumyap.controller;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.hibernate.PropertyValueException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.yumyap.beans.Recipe;
+import com.yumyap.dto.RecipeDto;
 import com.yumyap.service.UserService;
 
 /**
@@ -30,6 +33,17 @@ public class RecipeController {
 	@Autowired
 	public RecipeController(UserService userService) {
 		this.userService = userService;
+	}
+	
+	@RequestMapping(value = "/search",
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<RecipeDto>> searchRecipe(@RequestBody String search) {
+		logger.trace("searching recipes for " + search);
+		List<RecipeDto> recipes = userService.searchRecipe(search);		
+			logger.trace("Recipe created");
+			return new ResponseEntity<List<RecipeDto>>(recipes, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/create",

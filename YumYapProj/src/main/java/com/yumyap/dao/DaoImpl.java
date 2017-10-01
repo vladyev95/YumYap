@@ -2,6 +2,7 @@ package com.yumyap.dao;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.transaction.Transactional;
 
@@ -86,10 +87,11 @@ public class DaoImpl implements Dao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Recipe> getRecipes(String search) {
-
-		return (List<Recipe>) sessionFactory.getCurrentSession().createCriteria(Recipe.class)
-				.add(Restrictions.ilike("name", "%" + search + "%")).list();
+	public  Set<Recipe> getRecipes(String search) {
+		Set<Recipe> recipes = new LinkedHashSet<Recipe>();
+		recipes.addAll(sessionFactory.getCurrentSession().createCriteria(Recipe.class)
+				.add(Restrictions.ilike("name", "%" + search + "%")).list());
+		return recipes;
 	}
 
 	@SuppressWarnings("unchecked")
