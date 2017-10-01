@@ -254,26 +254,13 @@ function displayMessage(response, setClass, time, dontClear) {
 
 /* ViewAuthorService */
 app.service('ViewAuthorService', function ($http) {
+	console.log("in ViewAuthorService");
 	let service = this;
-
-	console.log("Inside ViewAuthorService");
-
-	service.user = {
-		id: '',
-		email: '',
-		firstName: '',
-		lastName: '',
-		following: '',
-		favoriteRecipes: ''
-	};
-
-	service.setUser = function (data) {
-		service.user.id =  data.id;
-		service.user.email = data.email;
-		service.user.firstName = data.firstName;
-		service.user.lastName = data.lastName;
-		service.user.following = data.following;
-		service.user.favoriteRecipes = data.favoriteRecipe;
+	
+	service.email = '';
+	
+	service.setEmail = function (email) {
+		service.email = email;
 	};
 
 	service.getEmail = function () {
@@ -423,13 +410,14 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 						recipeService.setRecipes(response.data);
 						console.log("The last");
 						console.log(recipeService.getRecipes());
-						return response;
 						
 						$(responseText).text("Recipe created");
 						displayMessage(responseText, "alert alert-success");
 
+						return response;
+
 					}, function (error) {
-						console.log("error")
+						console.log("error");
 						console.log(error);
 						
 						if (error.status == 406)
@@ -455,33 +443,6 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			$(responseText).text("name, discription, direction, and steps cannot be empty");
 			displayMessage(responseText, "alert alert-danger");
 		}
-
-		var responseText = "#recipeMessage";
-		RecipeService.createRecipe(recipe)
-			.then(
-				function (response) {
-					console.log(response);
-					$scope.recipes = response.data.recipes;
-					console.log(response.data.recipes);
-					recipeService.setRecipes(response.data);
-					console.log("The last");
-					console.log(recipeService.getRecipes());
-					return response;
-					
-					$(responseText).text("Recipe created");
-					displayMessage(responseText, "alert alert-success");
-
-				}, function (error) {
-					console.log("error")
-					console.log(error);
-					
-					if (error.status == 406)
-						$(responseText).text("Please fill out every field");
-					else if (error.status == 401)
-						$(responseText).text("You must be logged in to create a recipe");
-					else $(responseText).text("Something went wrong");
-					displayMessage(responseText, "alert alert-danger");
-				});
 	};
 
 	$scope.addIngredient = function (quantity, fraction, measure, name) {
