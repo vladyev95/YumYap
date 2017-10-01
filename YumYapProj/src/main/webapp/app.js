@@ -286,28 +286,6 @@ app.service('ViewAuthorService', function ($http) {
 
 app.controller('ViewAuthorController', function ($scope, ViewAuthorService, RecipeService, UserService) {
 
-	console.log("Inside ViewAuthorController");
-	var viewAuthor = ViewAuthorService;
-	var recipeService = RecipeService;
-	var userService = UserService;
-	var author = this;
-	author.user = viewAuthor.getUser();
-
-	$scope.user = author.user;
-	$scope.recipes = author.user.recipes;
-
-	$scope.follow = function(){
-		viewAuthor.follow(userService.getUser);
-	}
-
-	$scope.viewAuthor = function(recipe){
-		recipeService.viewAuthor(recipe);
-	}
-
-	$scope.favoriteRecipe = function(recipe){
-		console.log("favoriteRecipe in viewAuthorController");
-		recipeService.favoriteRecipe(recipe, userService.getUser());
-	};
 });
 
 
