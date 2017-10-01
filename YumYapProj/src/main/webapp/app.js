@@ -935,6 +935,7 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
 	$scope.viewComments = function(recipe){
 		recipeService.viewComments(recipe).then(
 				function(response){
+					$scope.showComments = true;
 					console.log(response);
 					$scope.comments = response.data;
 				},

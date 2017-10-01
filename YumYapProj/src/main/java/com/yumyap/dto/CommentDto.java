@@ -59,6 +59,10 @@ public class CommentDto {
 		this.content = content;
 	}
 	
-	
+	@Override
+	public boolean equals(Object o) {
+		CommentDto c = (CommentDto)o;
+		return this.id == c.getId();
+	}
 
 }

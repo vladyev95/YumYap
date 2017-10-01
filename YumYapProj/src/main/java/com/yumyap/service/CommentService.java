@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +44,8 @@ public class CommentService {
 	 */
 	public List<CommentDto> getRecipeComments(RecipeDto recipeDto) {
 		Recipe recipe = dao.getRecipeById(recipeDto.getId());
-		List<CommentDto> comments = new ArrayList<CommentDto>(dao.getCommentsByRecipe(recipe)); //recipe.getComments()
+		Set<CommentDto> comment = new LinkedHashSet<CommentDto>(dao.getCommentsByRecipe(recipe));
+		List<CommentDto> comments = new ArrayList<CommentDto>(comment); //recipe.getComments()
 //		System.out.println(comments);
 		if(comments != null && comments.size() > 1) {
 		Collections.sort(comments, (c1, c2) -> -c1.getCommentDate().compareTo(c2.getCommentDate()));
