@@ -405,6 +405,8 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 						log('uri= '+$scope.recipeImageUri);
 					}, 4000);
 				}
+			}, function () {
+				log('put image response !!!!!!!');
 			});
 		}
 	};
@@ -412,6 +414,25 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 	$scope.publishRecipe = function () {
 		log('RecipeCtrl create recipe');
 		displaySubmitting("#recipeResponse");
+
+		let totalCalories = 0,
+			totalFat = 0,
+			totalCarbs = 0,
+			totalProtein = 0;
+		
+		console.log($scope.ingredients);
+		for (let i = 0; i < $scope.ingredients; i++) {
+			let ingredient = $scope.ingredients[i];
+
+			log('foodItem');
+			log(ingredient.name);
+			log(ingredient.nutrients);
+			totalCalories += ingredient.nutrients.calories;
+			totalFat += ingredient.nutrients.fat;
+			totalCarbs += ingredient.nutrients.carbs;
+			totalProtein += ingredient.nutrients.protein;
+		}
+
 		let recipe = {
 			creator: UserService.getUser(),
 			name: $scope.recipeName,
@@ -458,6 +479,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			$scope.ingredients = [];
 			$scope.ingredients2 = [];
 			$scope.steps = [];
+			i = 1;
 			
 			$("#warningMessage").text("Recipe successfully created");
 			displayMessage("#warningMessage", "alert alert-danger");
@@ -470,7 +492,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 
 	$scope.addIngredient = function (quantity, fraction, measure, name) {
 		log('Creating ingredient with ' + quantity + ', ' + fraction + ', ' + measure + ', ' + name);
-		let ingredient = { food: food, name: name, quantity: quantity, fraction: fraction, measure: measure };
+		let ingredient = { name: name, quantity: quantity, fraction: fraction, measure: measure, nutrients: $scope.food.nutrients };
 		$scope.ingredients.push(ingredient);
 		$scope.ingredients2.push({ name: name, amount: quantity + eval(fraction), measure: measure });
 		$scope.search = null;
@@ -617,7 +639,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 	$scope.addIngredient = function (quantity, fraction, measure, name) {
 		log('Creating ingredient with ' + quantity + ', ' + fraction + ', ' + measure + ', ' + name);
 		name = name.trim();
-		let ingredient = { name: name, quantity: quantity, fraction: fraction, measure: measure };
+		let ingredient = { name: name, quantity: quantity, fraction: fraction, measure: measure, nutrients: $scope.food.nutrients };
 		if(name && measure && (ingredient.quantity || ingredient.fraction)){
 			$scope.ingredients.push(ingredient);
 			$scope.ingredients2.push({ name: name, amount: quantity + eval(fraction), measure: measure });
