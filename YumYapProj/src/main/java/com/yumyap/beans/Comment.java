@@ -17,6 +17,8 @@ import javax.persistence.TemporalType;
 
 import org.springframework.stereotype.Component;
 
+import com.yumyap.dto.CommentDto;
+
 /**
  * An object representing the comments that Users can make on Recipes
  * @author vlad
@@ -151,5 +153,16 @@ public class Comment implements Comparable<Comment> {
 	@Override
 	public int compareTo(Comment that) {
 		return (this.commentDate != null) ? -this.commentDate.compareTo(that.getDate()) : -1;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		Comment c = (Comment)o;
+		return this.id == c.getId();
+	}
+	
+	@Override
+	public int hashCode() {
+		return id;
 	}
 }

@@ -44,10 +44,14 @@ public class CommentService {
 	 */
 	public List<CommentDto> getRecipeComments(RecipeDto recipeDto) {
 		Recipe recipe = dao.getRecipeById(recipeDto.getId());
-		Set<CommentDto> comment = new LinkedHashSet<CommentDto>(dao.getCommentsByRecipe(recipe));
-		List<CommentDto> comments = new ArrayList<CommentDto>(comment); //recipe.getComments()
+		Set<CommentDto> comment = new LinkedHashSet<CommentDto>();
+		comment.addAll(dao.getCommentsByRecipe(recipe));
+		logger.trace(comment);
+		List<CommentDto> comments = new ArrayList<CommentDto>(); //recipe.getComments()
 //		System.out.println(comments);
+		comments.addAll(comment);
 		if(comments != null && comments.size() > 1) {
+			logger.trace("sorting comments by date");
 		Collections.sort(comments, (c1, c2) -> -c1.getCommentDate().compareTo(c2.getCommentDate()));
 		}
 		return comments;

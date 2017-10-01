@@ -59,10 +59,23 @@ public class CommentDto {
 		this.content = content;
 	}
 	
+	
+	
+	@Override
+	public String toString() {
+		return "CommentDto [id=" + id + ", recipe=" + recipe + ", commenter=" + commenter.getFirstName() + ", commentDate="
+				+ commentDate + ", content=" + content + "]";
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		CommentDto c = (CommentDto)o;
 		return this.id == c.getId();
+	}
+	
+	@Override
+	public int hashCode() {
+		return id;
 	}
 
 }
