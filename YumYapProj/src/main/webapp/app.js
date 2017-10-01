@@ -276,27 +276,7 @@ app.controller('ViewAuthorController', function ($scope, ViewAuthorService, Reci
 //			console.log(error);
 //		});
 //=======
-	console.log("Inside ViewAuthorController");
-	var viewAuthor = ViewAuthorService;
-	var recipeService = RecipeService;
-	var userService = UserService;
-	var author = this;
-	author.user = viewAuthor.getUser();
-
-	$scope.user = author.user;
-	$scope.recipes = author.user.recipes;
-
-	$scope.follow = function(){
-		viewAuthor.follow(userService.getUser);
-	}
-
-	$scope.viewAuthor = function(recipe){
-		recipeService.viewAuthor(recipe);
-	}
-
-	$scope.favoriteRecipe = function(recipe){
-		recipeService.favoriteRecipe(recipe);
-	}
+	
 });
 
 
