@@ -51,9 +51,8 @@
 			<div id="comments">
 				<button ng-click="startComment()">Add comment</button>
 				<div ng-show="addingComment">
-				<textarea  ng-model="recipeDescription"
-					cols="32" rows="5" placeholder="Description"></textarea>
-					<button ng-click="addComment(recipe)">Submit</button>
+				<textarea ng-model="recipe.comment1" cols="32" rows="5" placeholder="Comment"></textarea>
+					<button ng-click="addComment(recipe, recipe.comment1)">Submit</button>
 				</div>
 				<button ng-click="viewComments(recipe)">View comments for
 					this recipe</button>
@@ -102,19 +101,19 @@
 					</ul>
 				</div>
 				<button ng-click="favoriteRecipe(recipe)">Save this recipe</button>
+			
 			</div>
 			<div id="comments">
 				<button ng-click="startComment()">Add comment</button>
 				<div ng-show="addingComment">
-				<textarea  ng-model="recipeDescription"
-					cols="32" rows="5" placeholder="Description"></textarea>
-					<button ng-click="addComment(recipe)">Submit</button>
+				<textarea ng-model="recipe.comment1" cols="32" rows="5" placeholder="Comment"></textarea>
+					<button ng-click="addComment(recipe, recipe.comment1)">Submit</button>
 				</div>
 				<button ng-click="viewComments(recipe)">View comments for
 					this recipe</button>
 				<div ng-show="showComments">
 					<div ng-repeat="comment in comments">
-						<h5 ng-bind="comment.commentor"></h5>
+						<h5 ng-bind="comment.commentor.firstName"></h5>
 						<p ng-bind="comment.content"></p>
 					</div>
 				</div>
@@ -228,9 +227,9 @@
 			<div id="comments">
 				<button ng-click="startComment()">Add comment</button>
 				<div ng-show="addingComment">
-				<textarea  ng-model="content"
-					cols="32" rows="5" placeholder="Description"></textarea>
-					<button ng-click="addComment(recipe, content)">Submit</button>
+				 <!-- ng-attr-id="{{ 'recipeComment-' + recipe.id }}" -->
+				<textarea ng-model="recipe.comment1" cols="32" rows="5" placeholder="Comment"></textarea>
+					<button ng-click="addComment(recipe, recipe.comment1)">Submit</button>
 				</div>
 				<button ng-click="viewComments(recipe)">View comments for
 					this recipe</button>

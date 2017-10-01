@@ -345,7 +345,7 @@ app.controller('ViewAuthorController', function ($scope, ViewAuthorService, Reci
 //	};
 //
 //=======
-app.controller('AppController', function ($scope, ViewAuthorService, RecipeService) {
+app.controller('AppController', function ($scope, ViewAuthorService, RecipeService, CommentService) {
 	log('in AppController');
 	$scope.tab = 'Home';
 
@@ -364,6 +364,42 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 	$scope.switchToSearchRecipe = function(){
 		log('switching to \'Create Recipe\' tab');
 		$scope.tab = 'SearchRecipes';
+	}
+	
+	 $scope.startComment = function(number){
+ 		console.log("providing text space for a comment");
+ 		$scope.addingComment = true;
+ }
+ 
+	 $scope.addComment = function(recipe, content){
+		console.log('commenting: ');
+		console.log(content);
+		CommentService.setComment(content);
+		CommentService.setUser(userService.getUser());
+		CommentService.setRecipe(recipe);
+		console.log('sending ');
+		console.log(CommentService.getComment());
+		recipeService.addComment(CommentService.getComment()).then(
+				function(response){
+					console.log(response);
+				},
+				function(error){
+					console.log('error');
+					console.log(error);
+				});
+		
+	}
+	 $scope.viewComments = function(recipe){
+		RecipeService.viewComments(recipe).then(
+				function(response){
+					$scope.showComments = true;
+					console.log(response);
+					$scope.comments = response.data;
+				},
+				function(error){
+					
+				});
+		
 	}
 
 });
@@ -836,30 +872,6 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 		
 	}
 	
-	$scope.addComment = function(recipe){
-		commentService.setComment($scope.commentContent);
-		commentService.setUser(userService.getUser());
-		commentService.setRecipe(recipe);
-		recipeService.addComment(commentService.getComment()).then(
-				function(response){
-					console.log(response);
-				},
-				function(error){
-					console.log(error);
-				});
-		
-	}
-	$scope.viewComments = function(recipe){
-		recipeService.viewComments(recipe).then(
-				function(response){
-					
-				},
-				function(error){
-					
-				});
-		
-	}
-	
 });
 
 	
@@ -908,49 +920,7 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
 		
 	}
 
-    
-    $scope.startComment = function(number){
-    		console.log("providing text space for a comment");
-    		$scope.addingComment = true;
-    		this.index = number;
-    }
-    
-    $scope.addComment = function(recipe, content){
-		commentService.setComment(content);
-		commentService.setUser(userService.getUser());
-		commentService.setRecipe(recipe);
-		console.log('sending ');
-		console.log(commentService.getComment());
-		recipeService.addComment(commentService.getComment()).then(
-				function(response){
-					console.log(response);
-				},
-				function(error){
-					console.log('error');
-					console.log(error);
-				});
-		
-	}
-	$scope.viewComments = function(recipe){
-		recipeService.viewComments(recipe).then(
-				function(response){
-					$scope.showComments = true;
-					console.log(response);
-					$scope.comments = response.data;
-				},
-				function(error){
-					
-				});
-		
-	}
-	
-	$scope.viewAuthor = function(recipe){
-		recipeService.viewAuthor(recipe);
-	}
-    
-//    $scope.showRecipe = function(recipe){
-//        recipe.show = true;  
-//    }
+
 })
 
 
