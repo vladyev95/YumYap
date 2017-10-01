@@ -173,13 +173,13 @@ public class DaoImpl implements Dao {
 		return sessionFactory.getCurrentSession();
 	}
 
-	public void addCommentForRecipeById(int id, Comment comment) {
-		logger.trace("addCommentForRecipyById() for id: " + id + " comment: " + comment);
-		Session session = sessionFactory.getCurrentSession();
-		Recipe recipe = getRecipeById(id);
-		recipe.getComments().add(comment);
-		session.merge(recipe);
-	}
+//	public void addCommentForRecipeById(int id, Comment comment) {
+//		logger.trace("addCommentForRecipyById() for id: " + id + " comment: " + comment);
+//		Session session = sessionFactory.getCurrentSession();
+//		Recipe recipe = getRecipeById(id);
+//		recipe.getComments().add(comment);
+//		session.merge(recipe);
+//	}
 	
 	public List<CommentDto> getCommentsByRecipe(Recipe recipe) {
 		Session session = sessionFactory.getCurrentSession();

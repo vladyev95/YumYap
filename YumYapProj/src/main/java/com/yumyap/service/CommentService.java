@@ -63,10 +63,11 @@ public class CommentService {
 	 */
 	public void createComment(Comment comment) {
 		comment.setDate(new  GregorianCalendar());
-		logger.trace("createComment() with " + comment);
 		User commenter = dao.getUserById(comment.getCommenter().getId());
 		comment.setCommenter(commenter);
 		Recipe recipe = dao.getRecipeById(comment.getRecipe().getId());
+		comment.setRecipe(recipe);
+		logger.trace("createComment() with " + comment);
 		dao.addComment(comment);
 	}
 }

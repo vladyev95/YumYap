@@ -72,7 +72,7 @@ public interface Dao {
 	 * @param id The id of the Recipe to add the comment to
 	 * @param comment The Comment to add to the Recipe with the corresponding id
 	 */ 
-	void addCommentForRecipeById(int id, Comment comment);
+//	void addCommentForRecipeById(int id, Comment comment);
 	
 	/**
 	 * Searches for names matching the given string
