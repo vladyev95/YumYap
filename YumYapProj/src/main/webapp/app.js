@@ -373,8 +373,6 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 	'use strict';
 	var i = 1;
 	var recipeService = RecipeService;
-	
-//	var warning = element(by.binding("warning"));
 
 	$scope.food = { 'name': '', 'nutrients': { 'calories': 0, 'fat': 0, 'carbs': 0, 'protein': 0 } };
 	$scope.measures = [];
@@ -425,7 +423,9 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 
 	$scope.publishRecipe = function () {
 		log('RecipeCtrl create recipe');
-		displaySubmitting("#recipeResponse");
+		var responseText = "#recipeMessage";
+		
+		displaySubmitting(responseText);
 		let recipe = {
 			creator: UserService.getUser(),
 			name: $scope.recipeName,
@@ -446,16 +446,18 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			$scope.ingredients = [];
 			$scope.ingredients2 = [];
 			$scope.steps = [];
+			$scope.recipeImage = [];
+			$scope.recipeImageFile = [];
 			
-			$("#warningMessage").text("Recipe successfully created");
-			displayMessage("#warningMessage", "alert alert-danger");
+			$(responseText).text("Recipe successfully created");
+			displayMessage(responseText, "alert alert-success");
 		}
 		else{
-			$("#warningMessage").text("name, discription, direction, and steps cannot be empty");
-			displayMessage("#warningMessage", "alert alert-danger");
+			$(responseText).text("name, discription, direction, and steps cannot be empty");
+			displayMessage(responseText, "alert alert-danger");
 		}
 
-		var responseText = "#recipeResponse";
+		var responseText = "#recipeMessage";
 		RecipeService.createRecipe(recipe)
 			.then(
 				function (response) {
@@ -589,7 +591,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 });
 
 
-        var responseText = "#recipeResponse";
+        var responseText = "#recipeMessage";
         RecipeService.createRecipe(recipe)
         	.then(
                 function (response) {

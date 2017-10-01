@@ -130,7 +130,8 @@
 				<br> <input type="file" id="recipeImageFile" />
 				<button ng-click="uploadRecipeImage()">Save Image</button>
 				<br> <img ng-src="{{ recipeImageUri }}" id="recipeImage" /> <br>
-				<br>
+				<br><br>
+				<p id="uploadImageMessage" hidden=true></p>
 
 				<textarea ng-model="recipeDescription" cols="36" rows="5"
 					placeholder="Description"></textarea>
@@ -191,8 +192,7 @@
 			<!-- TODO: Send recipe to backend for storage -->
 			<button class="btn btn-primary" ng-click="publishRecipe()">Publish Recipe</button>
 			<br><br>
-			<a id="warningMessage"></a>
-			<p id="recipeResponse" hidden=true></p>
+			<p id="recipeMessage" hidden=true></p>
 		</div>
 	</div>
 
