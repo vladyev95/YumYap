@@ -129,7 +129,7 @@
 				<input ng-model="recipeName" placeholder="Recipe name" /> <br>
 				<br> <input type="file" id="recipeImageFile" />
 				<button ng-click="uploadRecipeImage()">Save Image</button>
-				<br> <img ng-src="{{ recipeImageUri }}" id="recipeImage" /> <br>
+				<br> <img ng-src="{{ recipeImageUri }}" id="recipeImage" width="300" height="300" /> <br>
 				<br>
 
 				<textarea ng-model="recipeDescription" cols="36" rows="5"
@@ -157,7 +157,6 @@
 						<option value="1/2">1/2</option>
 						<option value="2/3">2/3</option>
 						<option value="3/4">3/4</option>
-						<option value="1">1</option>
 				</select> <select ng-model="measure"
 					ng-change="calculateNutrients(quantity, fraction, measure)">
 						<option ng-repeat="m in measures" value="{{ m }}" ng-bind="m"></option>
