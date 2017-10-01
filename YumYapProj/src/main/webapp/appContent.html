@@ -205,7 +205,8 @@
 		<div ng-show="showRecipes">
 			<div class="recipe-content" ng-repeat="recipe in foundRecipes">
 				<h3 ng-bind="recipe.name"></h3>
-				<img id="recipe-image" ng-src="{{recipe.imageUrl}}" width="100"
+
+				<img id="recipe-image" ng-src="{{ recipe.imageUrl }}" width="100"
 					height="100"></img>
 				<div>
 					<h4>Posted by <span ng-bind="recipe.creator.firstName"></span> <span ng-bind="recipe.creator.lastName"></span></h4><br> 
