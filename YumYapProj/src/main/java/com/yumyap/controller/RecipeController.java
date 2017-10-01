@@ -1,5 +1,6 @@
 package com.yumyap.controller;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -51,6 +52,7 @@ public class RecipeController {
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Void> createRecipe(@RequestBody Recipe recipe) {
+		recipe.setDateCreated(new GregorianCalendar());
 		logger.trace("createRecipe() by " + recipe);
 		try {
 			userService.addRecipe(recipe);		

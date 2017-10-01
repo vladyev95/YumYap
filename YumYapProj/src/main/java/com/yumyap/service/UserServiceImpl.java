@@ -1,6 +1,7 @@
 package com.yumyap.service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -64,28 +65,37 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<RecipeDto> getDashboard(UserDto userDto) {
-		List<RecipeDto> recipes = new ArrayList<>();
+		Set<RecipeDto> recipes = new LinkedHashSet<>();
 		logger.trace("in getDashboard() by " + userDto);
 		
 		User user = dao.getUserById(userDto.getId());
-		if (user == null) return recipes;
+		logger.trace("getDashboard() User: " + user);
+		
+		if (user == null) 
+			return new ArrayList<>();
 		
 		Set<User> following = user.getFollowing();
-		if (following == null || following.isEmpty()) return recipes;
 		
-		dao.getRecipesByUser(user)
+		
+		dao.getUsersRecipes(user)
 			.stream()
 			.map(recipe -> new RecipeDto(recipe))
 			.forEach(recipe -> recipes.add(recipe));
 	
+		if (following == null || following.isEmpty()) {
+			logger.trace("getDashBoard() returning recipes: " + recipes);
+			return new ArrayList<>(recipes);
+		}
+		
 		following.stream()
-			.map(followedUser -> dao.getRecipesByUser(followedUser))
+			.map(followedUser -> dao.getUsersRecipes(followedUser))
 			.flatMap(list -> list.stream())
 			.map(recipe -> new RecipeDto(recipe))
 			.forEach(recipeDto -> recipes.add(recipeDto));
-		System.out.println(recipes);
-		logger.trace("getDashBoard() returning " + recipes);
-		return recipes;
+	
+		
+		logger.trace("getDashBoard() returning recipes: " + recipes);
+		return new ArrayList<>(recipes);
 	}
 
 	

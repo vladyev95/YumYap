@@ -91,7 +91,9 @@ public class UserController {
 	public ResponseEntity<List<RecipeDto>> loadDashboard(@RequestBody UserDto userDto) {
 		logger.trace("loadDashboard() by " + userDto);
 		
-		return new ResponseEntity<List<RecipeDto>>(userService.getDashboard(userDto), HttpStatus.OK);
+		List<RecipeDto> recipeDtos = userService.getDashboard(userDto);
+		logger.trace("loadDashboard() recipes: " + recipeDtos);
+		return new ResponseEntity<List<RecipeDto>>(recipeDtos, HttpStatus.OK);
 	}
 
 	/*

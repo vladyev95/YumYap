@@ -53,8 +53,7 @@ public class User {
 	private String password;
 
 	@ManyToMany
-	@JoinTable (
-			name = "FAVORITE_RECIPES",
+	@JoinTable (name = "FAVORITE_RECIPES",
 			joinColumns = @JoinColumn(name = "USER_ID"),
 			inverseJoinColumns = @JoinColumn(name = "RECIPE_ID"))
 	private Set<Recipe> favoriteRecipes = new HashSet<>();

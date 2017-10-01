@@ -442,14 +442,40 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			directions: $scope.steps,
 			imageUrl: $scope.recipeImageUri,
 			ingredients: $scope.ingredients2,
-			calories: $scope.food.nutrients.calories,
-			fat: $scope.food.nutrients.fat,
-			carbs: $scope.food.nutrients.carbs,
-			protein: $scope.food.nutrients.protein
+			calories: totalCalories,
+			fat: totalFat,
+			carbs: totalCarbs,
+			protein: totalProtein
 		};
 		
 		if(recipe.name && recipe.description && recipe.ingredients.length > 0 && recipe.directions.length > 0) {
-			RecipeService.createRecipe(recipe);
+			
+			let responseText = "#recipeResponse";
+			RecipeService.createRecipe(recipe)
+				.then(
+					function (response) {
+						console.log(response);
+						$scope.recipes = response.data.recipes;
+						console.log(response.data.recipes);
+						recipeService.setRecipes(response.data);
+						console.log("The last");
+						console.log(recipeService.getRecipes());
+						return response;
+						
+						$(responseText).text("Recipe created");
+						displayMessage(responseText, "alert alert-success");
+
+					}, function (error) {
+						console.log("error")
+						console.log(error);
+						
+						if (error.status == 406)
+							$(responseText).text("Please fill out every field");
+						else if (error.status == 401)
+							$(responseText).text("You must be logged in to create a recipe");
+						else $(responseText).text("Something went wrong");
+						displayMessage(responseText, "alert alert-danger");
+					});
 			$scope.recipeName = null;
 			$scope.recipeDescription = null;
 			$scope.ingredients = [];
@@ -495,7 +521,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 
 	$scope.addIngredient = function (quantity, fraction, measure, name) {
 		log('Creating ingredient with ' + quantity + ', ' + fraction + ', ' + measure + ', ' + name);
-		let ingredient = { name: name, quantity: quantity, fraction: fraction, measure: measure };
+		let ingredient = { food: food, name: name, quantity: quantity, fraction: fraction, measure: measure };
 		$scope.ingredients.push(ingredient);
 		$scope.ingredients2.push({ name: name, amount: quantity + eval(fraction), measure: measure });
 		$scope.search = null;

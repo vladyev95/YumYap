@@ -196,6 +196,11 @@ public class RecipeDto implements Comparable<RecipeDto>{
 		RecipeDto r = (RecipeDto) o;
 		return this.id == r.getId();
 	}
+	
+	@Override
+	public int hashCode() {
+		return id;
+	}
 
 
 }

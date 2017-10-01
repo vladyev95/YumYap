@@ -27,7 +27,7 @@
 				<p id="recipe-description" ng-bind="recipe.description"></p>
 			</div>
 			<div class="recipe-content">
-				<img id="recipe-image" ng-src="recipe.imageUrl" width="100" height="100"></img>
+				<img id="recipe-image" ng-src="{{ recipe.imageUrl }}" width="100" height="100"></img>
 				<div>
 					Posted by {{recipe.creator.firstName + " " +
 					recipe.creator.lastName}} <br>
@@ -130,7 +130,7 @@
 				<input ng-model="recipeName" placeholder="Recipe name" /> <br>
 				<br> <input type="file" id="recipeImageFile" />
 				<button ng-click="uploadRecipeImage()">Save Image</button>
-				<br> <img ng-src="{{ recipeImageUri }}" id="recipeImage" /> <br>
+				<br> <img ng-src="{{ recipeImageUri }}" id="recipeImage" width="300" height="300" /> <br>
 				<br><br>
 				<p id="uploadImageMessage" hidden=true></p>
 
@@ -159,7 +159,6 @@
 						<option value="1/2">1/2</option>
 						<option value="2/3">2/3</option>
 						<option value="3/4">3/4</option>
-						<option value="1">1</option>
 				</select> <select ng-model="measure"
 					ng-change="calculateNutrients(quantity, fraction, measure)">
 						<option ng-repeat="m in measures" value="{{ m }}" ng-bind="m"></option>
@@ -206,7 +205,7 @@
 		<div ng-show="showRecipes">
 			<div class="recipe-content" ng-repeat="recipe in foundRecipes">
 				<h3 ng-bind="recipe.name"></h3>
-				<img id="recipe-image" ng-src="recipe.imageUrl" width="100"
+				<img id="recipe-image" ng-src="{{ recipe.imageUrl }}" width="100"
 					height="100"></img>
 				<div>
 					<h4>Posted by <span ng-bind="recipe.creator.firstName"></span> <span ng-bind="recipe.creator.lastName"></span></h4><br> 

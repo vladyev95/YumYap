@@ -2,7 +2,6 @@ package com.yumyap.dao;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.transaction.Transactional;
 
@@ -93,21 +92,7 @@ public class DaoImpl implements Dao {
 				.add(Restrictions.ilike("name", "%" + search + "%")).list());
 		return recipes;
 	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Recipe> getRecipesByUser(User user) {
-		logger.trace("getRecipesByUser() " + user);
-		Session session = sessionFactory.getCurrentSession();
-		List<Recipe> recipes = (List<Recipe>) session
-				.createCriteria(Recipe.class)
-				.add(Restrictions.eq("creator", user))
-				.list();
-		logger.trace("getRecipesByUser() got " + recipes);
-		System.out.println(recipes);
-		return recipes;
-	}
-
+	
 	@Override
 	public User getUserByEmailAndPassword(String email, String password) {
 		logger.trace("getUserByEmail() " + email);
@@ -116,7 +101,16 @@ public class DaoImpl implements Dao {
 				.createCriteria(User.class)
 				.add(Restrictions.eq("email", email))
 				.add(Restrictions.eq("password", password)).uniqueResult();
-
+		
+		if (user == null)
+			return null;
+		
+		user.getFavoriteRecipes().stream()
+			.forEach(recipe -> recipe.getId());
+		
+		user.getFollowing().stream()
+			.forEach(userProxy -> userProxy.getId());
+		
 		logger.trace("got " + user);
 		return user;
 	}	
@@ -144,7 +138,7 @@ public class DaoImpl implements Dao {
 				.add(Restrictions.eq("creator", user))
 				.list());
 
-		logger.trace("got " + recipes);
+		logger.trace("getUsersRecipes() returning: " + recipes);
 		return recipes;
 	}
 
