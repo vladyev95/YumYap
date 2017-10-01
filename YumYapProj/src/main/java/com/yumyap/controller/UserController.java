@@ -1,8 +1,6 @@
 package com.yumyap.controller;
 
 import java.util.List;
-import java.util.Set;
-
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +91,16 @@ public class UserController {
 		logger.trace("loadDashboard() by " + userDto);
 		
 		List<RecipeDto> recipeDtos = userService.getDashboard(userDto);
+		recipeDtos.sort((r1, r2) -> 
+			{
+				if (r1.getDateCreated() == null && r2.getDateCreated() == null)
+					return 0;
+				else if (r1.getDateCreated() == null)
+					return 1;
+				else if (r2.getDateCreated() == null)
+					return -1;
+				return -r1.getDateCreated().compareTo(r2.getDateCreated());
+			});
 		logger.trace("loadDashboard() recipes: " + recipeDtos);
 		return new ResponseEntity<List<RecipeDto>>(recipeDtos, HttpStatus.OK);
 	}
@@ -126,16 +134,22 @@ public class UserController {
 		}
 	}
 
-	/*
-	 * @RequestMapping(value = "/favorite", method = { RequestMethod.POST },
-	 * consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-	 * MediaType.APPLICATION_JSON_VALUE }) public ResponseEntity<UserDto>
-	 * addFavoriteRecipe(@RequestBody RecipeDto recipeDto, @RequestBody UserDto
-	 * userDto) { System.out.println("favoriting this recipe");
-	 * System.out.println(userDto); System.out.println(recipeDto); return new
-	 * ResponseEntity<UserDto>(userService.addFavoriteRecipe(recipeDto, userDto),
-	 * HttpStatus.OK); }
-	 */
+	
+	@RequestMapping(value = "/favorite", method = { RequestMethod.POST }, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Boolean> addFavoriteRecipe(@RequestBody RecipeDto recipeDto, @RequestBody UserDto userDto) {
+		System.out.println("favoriting this recipe");
+		System.out.println("userDto: " + userDto + ", recipeDto" + recipeDto);
+
+		try {
+			if (userService.addFavoriteRecipe(recipeDto, userDto))
+				return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+			else return new ResponseEntity<Boolean>(false, HttpStatus.CONFLICT);
+		} catch (NullPointerException e) {
+			logger.warn("NullPointerException thrown");
+			return new ResponseEntity<Boolean>(HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
 
 	/*
 	 * // TODO: Deactivate or logout???

@@ -14,11 +14,11 @@
 				<!-- TODO: Set tab to Create Recipe -->
 				<a class="nav-item nav-link" ng-click="switchToCreateRecipe()">Create Recipe</a>
 				<a class="nav-item nav-link" ng-click="switchToSearchRecipe()">Search Recipes</a>
-				<a class="nav-item nav-link">Logout</a>
+				<a class="nav-item nav-link" href="#">Logout</a>
 			</div>
 		</div>
 	</nav>
-	<div ng-show="tab === 'Home'" ng-controller="DashboardController">
+	<div class="outer-div" ng-show="tab === 'Home'" ng-controller="DashboardController">
 		<h3> Welcome back, <span ng-bind="currentUser.firstName"></span></h3>
 
 		<div class="recipe-block"  ng-repeat="recipe in recipes">
@@ -32,7 +32,7 @@
 					Posted by {{recipe.creator.firstName + " " +
 					recipe.creator.lastName}} <br>
 					<!-- This button should bring you to the user that posted it -->
-					<button class="btn btn-primary" ng-click="viewAuthor(recipe)">View Author Profile</button>
+					<button class="btn btn-primary" ng-click="viewAuthor(recipe.creator.email)">View Author Profile</button>
 				</div>
 			</div>
 			<div class="recipe-content">
@@ -46,15 +46,18 @@
 					<li ng-bind="recipe.directions"></li>
 				</ol>
 			</div>
-			<button ng-click="favoriteRecipe(recipe)">Save this recipe</button>
-			
-			<div id="comments">
-				<button ng-click="startComment()">Add comment</button>
+			<div class="recipe-content">
+				<button class="btn btn-primary" ng-click="favoriteRecipe(recipe)">Save this recipe</button>
+				<p ng-attr-id="{{ 'recipe-' + recipe.id }}" hidden=true></p>
+			</div>
+			<div id="comments" class="recipe-content">
+				<button class="btn btn-primary" ng-click="startComment()">Add comment</button>
 				<div ng-show="addingComment">
 				<textarea ng-model="recipe.comment1" cols="32" rows="5" placeholder="Comment"></textarea>
 					<button ng-click="addComment(recipe, recipe.comment1)">Submit</button>
+
 				</div>
-				<button ng-click="viewComments(recipe)">View comments for
+				<button class="btn btn-primary" ng-click="viewComments(recipe)">View comments for
 					this recipe</button>
 				<div ng-show="showComments">
 					<div ng-repeat="comment in recipe.comments">
@@ -67,10 +70,10 @@
 
 	</div>
 
-	<div ng-show="tab === 'ViewAuthor'" ng-controller="ViewAuthorController as viewAuthor">
+	<div ng-show="tab === 'ViewAuthor'" ng-controller="ViewAuthorController as viewAuthor" class="outer-div">
 		<div>
 			<h1 ng-bind="user.firstName + ' ' + user.lastName"></h1>
-			<button ng-click="follow()">
+			<button class="btn btn-primary" ng-click="follow()">
 				Follow <span ng-bind="user.firstName"></span>
 			</button>
 		</div>
@@ -80,13 +83,14 @@
 				<p id="recipe-description" ng-bind="recipe.description"></p>
 			</div>
 			<div class="recipe-content">
-				<img id="recipe-image" ng-src="{{recipe.imageUrl}}" width="100"
+				<img id="recipe-image" ng-src="{{ recipe.imageUrl }}" width="100"
+
 					height="100"></img>
 				<div>
 					Posted by {{recipe.creator.firstName + " " +
 					recipe.creator.lastName}} <!-- This button should bring you to the user
 					that posted it -->
-					<button ng-click="viewAuthor(recipe.creator)">View Author
+					<button class="btn btn-primary" ng-click="viewAuthor(recipe.creator)">View Author
 						Profile</button>
 				</div>
 				<div class="recipe-content">
@@ -100,16 +104,20 @@
 						<li ng-bind="direction"></li>
 					</ul>
 				</div>
-				<button ng-click="favoriteRecipe(recipe)">Save this recipe</button>
-			
+
+				<button class="btn btn-primary" ng-click="favoriteRecipe(recipe)">Save this recipe</button>
+				<p ng-attr-id="{{ 'recipe-' + recipe.id }}" hidden=true></p>
+				
 			</div>
 			<div id="comments">
-				<button ng-click="startComment()">Add comment</button>
+				<button class="btn btn-primary" ng-click="startComment()">Add comment</button>
 				<div ng-show="addingComment">
+
 				<textarea ng-model="recipe.comment1" cols="32" rows="5" placeholder="Comment"></textarea>
 					<button ng-click="addComment(recipe, recipe.comment1)">Submit</button>
+
 				</div>
-				<button ng-click="viewComments(recipe)">View comments for
+				<button class="btn btn-primary" ng-click="viewComments(recipe)">View comments for
 					this recipe</button>
 				<div ng-show="showComments">
 					<div ng-repeat="comment in comments">
@@ -121,15 +129,16 @@
 		</div>
 	</div>
 
-	<div ng-show="tab === 'CreateRecipe'" style="padding-left:20px">
+	<div ng-show="tab === 'CreateRecipe'" class="outer-div">
 		<div ng-controller="RecipeCtrl">
 			<div id="recipe-head" class="recipe-content">
 				<h1 ng-bind="recipeName"></h1>
 				<input ng-model="recipeName" placeholder="Recipe name" /> <br>
 				<br> <input type="file" id="recipeImageFile" />
-				<button ng-click="uploadRecipeImage()">Save Image</button>
+				<button class="btn btn-primary" ng-click="uploadRecipeImage()">Save Image</button>
 				<br> <img ng-src="{{ recipeImageUri }}" id="recipeImage" width="300" height="300" /> <br>
-				<br>
+				<br><br>
+				<p id="uploadImageMessage" hidden=true></p>
 
 				<textarea ng-model="recipeDescription" cols="36" rows="5"
 					placeholder="Description"></textarea>
@@ -189,16 +198,14 @@
 			<!-- TODO: Send recipe to backend for storage -->
 			<button class="btn btn-primary" ng-click="publishRecipe()">Publish Recipe</button>
 			<br><br>
-			<a id="warningMessage"></a>
-			<p id="recipeResponse" hidden=true></p>
+			<p id="recipeMessage" hidden=true></p>
 		</div>
 	</div>
 
-	<div ng-show="tab === 'SearchRecipes'"
-		ng-controller="SearchRecipesController">
+	<div ng-show="tab === 'SearchRecipes'" ng-controller="SearchRecipesController" class="outer-div">
 		<div>
 		<input type="text" ng-model="recipeName">
-		<button ng-click="search()">Search Recipes</button>
+		<button class="btn btn-primary" ng-click="search()">Search Recipes</button>
 		</div>
 		<div ng-show="showRecipes">
 			<div class="recipe-content" ng-repeat="recipe in foundRecipes">
@@ -208,7 +215,7 @@
 					height="100"></img>
 				<div>
 					<h4>Posted by <span ng-bind="recipe.creator.firstName"></span> <span ng-bind="recipe.creator.lastName"></span></h4><br> 
-					<button ng-click="viewAuthor(recipe.creator)">View Author
+					<button class="btn btn-primary" ng-click="viewAuthor(recipe.creator)">View Author
 						Profile</button>
 				</div>
 				<div class="recipe-content">
@@ -222,16 +229,17 @@
 						<li ng-bind="direction"></li>
 					</ul>
 				</div>
-				<button ng-click="favoriteRecipe(recipe)">Save this recipe</button>
+				<button class="btn btn-primary" ng-click="favoriteRecipe(recipe)">Save this recipe</button>
+				<p ng-attr-id="{{ 'recipe-' + recipe.id }}" hidden=true></p>
 			
 			<div id="comments">
-				<button ng-click="startComment()">Add comment</button>
+				<button class="btn btn-primary" ng-click="startComment()">Add comment</button>
 				<div ng-show="addingComment">
 				 <!-- ng-attr-id="{{ 'recipeComment-' + recipe.id }}" -->
 				<textarea ng-model="recipe.comment1" cols="32" rows="5" placeholder="Comment"></textarea>
 					<button ng-click="addComment(recipe, recipe.comment1)">Submit</button>
 				</div>
-				<button ng-click="viewComments(recipe)">View comments for
+				<button class="btn btn-primary" ng-click="viewComments(recipe)">View comments for
 					this recipe</button>
 				<div ng-show="showComments">
 					<div ng-repeat="comment in comments">

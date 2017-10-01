@@ -41,8 +41,7 @@ public class Recipe implements Comparable<Recipe>{
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator = "recipe_id_sequence")
 	private int id;
 
-//	@Temporal(TemporalType.TIMESTAMP)
-	@Column (name = "date_created", insertable = false)
+	@Column (name = "date_created")
 	private Calendar dateCreated;
 
 	@ManyToOne(cascade = CascadeType.PERSIST)
