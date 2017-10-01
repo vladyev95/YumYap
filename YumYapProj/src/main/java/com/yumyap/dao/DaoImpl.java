@@ -95,21 +95,7 @@ public class DaoImpl implements Dao {
 				.add(Restrictions.ilike("name", "%" + search + "%")).list());
 		return recipes;
 	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Recipe> getRecipesByUser(User user) {
-		logger.trace("getRecipesByUser() " + user);
-		Session session = sessionFactory.getCurrentSession();
-		List<Recipe> recipes = (List<Recipe>) session
-				.createCriteria(Recipe.class)
-				.add(Restrictions.eq("creator", user))
-				.list();
-		logger.trace("getRecipesByUser() got " + recipes);
-		System.out.println(recipes);
-		return recipes;
-	}
-
+	
 	@Override
 	public User getUserByEmailAndPassword(String email, String password) {
 		logger.trace("getUserByEmail() " + email);
@@ -155,7 +141,7 @@ public class DaoImpl implements Dao {
 				.add(Restrictions.eq("creator", user))
 				.list());
 
-		logger.trace("got " + recipes);
+		logger.trace("getUsersRecipes() returning: " + recipes);
 		return recipes;
 	}
 

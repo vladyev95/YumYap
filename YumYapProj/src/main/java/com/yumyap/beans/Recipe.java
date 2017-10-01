@@ -305,9 +305,12 @@ public class Recipe implements Comparable<Recipe>{
 	@Override
 	public boolean equals(Object o) {
 		Recipe r = (Recipe) o;
-		this.id = r.getId();
 		return this.id == r.getId();
 	}
 	
+	@Override
+	public int hashCode() {
+		return id;
+	}
 	
 }
