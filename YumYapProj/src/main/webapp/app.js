@@ -88,7 +88,7 @@ app.service('LoginService', function ($http, $q) {
 
 	service.attemptLogin = function (user) {
 		console.log('attempting to login ');
-		console.log(user)
+		console.log(user);
 		return $http.post('yum/user/attemptLogin',  user);
 
 	};
@@ -121,12 +121,17 @@ app.service('RecipeService', function ($http) {
 		return $http.post('yum/user/dash', user);
 	};
 
-	service.favoriteRecipe = function(recipe){
-		console.log('favoriting '+recipe);
+	service.favoriteRecipe = function(recipe, user){
+		console.log('favoriting a recipe in RecipeService: ');
+		console.log(recipe);
+		console.log(user);
+		
+		return $http.post('yum/user/favorite', recipe, user);
 	};
 
 	service.viewAuthor = function(recipe){
 		console.log('viewing author of '+recipe);
+		// TODO
 	};
 
 	service.recipes = {};
@@ -139,11 +144,11 @@ app.service('RecipeService', function ($http) {
 	};
 	
 	service.viewComments = function(recipe){
-		return $http.post('yum/comments/show', recipe)
+		return $http.post('yum/comments/show', recipe);
 	};
 	
 	service.addComment = function(comment){
-		return $http.post('yum/comments/create', comment)
+		return $http.post('yum/comments/create', comment);
 	};
 
 });
@@ -220,7 +225,7 @@ app.controller('RegisterController', function ($scope, $timeout, RegisterService
 					displayMessage(responseText, "alert alert-danger");
 				}
 				);
-		}
+		};
 	};
 });
 /* RegisterController */
@@ -230,9 +235,11 @@ app.controller('RegisterController', function ($scope, $timeout, RegisterService
  * @param setClass Sets the class of the response HTML tag
  * @param time Optional parameter to set timeout duration. Default is TIMEOUT_TIME
  */
-function displayMessage(response, setClass, time) {
+function displayMessage(response, setClass, time, dontClear) {
 	$(response).attr("class", setClass);
-	clearTimeout(timeout);
+	
+	if (!dontClear)
+		clearTimeout(timeout);
 	var timeout_time_ammt = TIMEOUT_TIME;
 	if (time)
 		timeout_time_ammt = time;
@@ -248,9 +255,25 @@ function displayMessage(response, setClass, time) {
 /* ViewAuthorService */
 app.service('ViewAuthorService', function ($http) {
 	let service = this;
-	
-	service.setEmail = function (email) {
-		service.email = email;
+
+	console.log("Inside ViewAuthorService");
+
+	service.user = {
+		id: '',
+		email: '',
+		firstName: '',
+		lastName: '',
+		following: '',
+		favoriteRecipes: ''
+	};
+
+	service.setUser = function (data) {
+		service.user.id =  data.id;
+		service.user.email = data.email;
+		service.user.firstName = data.firstName;
+		service.user.lastName = data.lastName;
+		service.user.following = data.following;
+		service.user.favoriteRecipes = data.favoriteRecipe;
 	};
 
 	service.getEmail = function () {
@@ -262,49 +285,33 @@ app.service('ViewAuthorService', function ($http) {
 /* ViewAuthorService */
 
 app.controller('ViewAuthorController', function ($scope, ViewAuthorService, RecipeService, UserService) {
-//<<<<<<< HEAD
-//	ViewAuthorService.getAuthor().then(
-//		function (response) {
-//			console.log('getAuthor() response: ');
-//			console.log(response);
-//			console.log('getAuthor() response.data: ');
-//			console.log(response.data);
-//			$scope.author = response.data;
-//		},
-//		function (error) {
-//			console.log('getAuthor() error: ');
-//			console.log(error);
-//		});
-//=======
-	
+
+	console.log("Inside ViewAuthorController");
+	var viewAuthor = ViewAuthorService;
+	var recipeService = RecipeService;
+	var userService = UserService;
+	var author = this;
+	author.user = viewAuthor.getUser();
+
+	$scope.user = author.user;
+	$scope.recipes = author.user.recipes;
+
+	$scope.follow = function(){
+		viewAuthor.follow(userService.getUser);
+	}
+
+	$scope.viewAuthor = function(recipe){
+		recipeService.viewAuthor(recipe);
+	}
+
+	$scope.favoriteRecipe = function(recipe){
+		console.log("favoriteRecipe in viewAuthorController");
+		recipeService.favoriteRecipe(recipe, userService.getUser());
+	};
 });
 
 
 /* AppController */
-//<<<<<<< HEAD
-//app.controller('AppController', function ($scope, ViewAuthorService) {
-//	console.log('in AppController');
-//	$scope.tab = 'Home';
-//
-//	$scope.onLogin = false;
-//
-//	$scope.switchToHome = function () {
-//		log('switching to \'Home\' tab');
-//		$scope.tab = 'Home';
-//	};
-//
-//	$scope.switchToCreateRecipe = function () {
-//		log('switching to \'Create Recipe\' tab');
-//		$scope.tab = 'CreateRecipe';
-//	};
-//
-//	$scope.viewAuthor = function (email) {
-//		log('switching to \'View Author\' tab');
-//		$scope.tab = 'ViewAuthor';
-//		ViewAuthorService.email = email;
-//	};
-//
-//=======
 app.controller('AppController', function ($scope, ViewAuthorService, RecipeService) {
 	log('in AppController');
 	$scope.tab = 'Home';
@@ -330,7 +337,7 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 	$scope.switchToSearchRecipe = function(){
 		log('switching to \'Create Recipe\' tab');
 		$scope.tab = 'SearchRecipes';
-	}
+	};
 
 });
 /* AppController */
@@ -339,15 +346,15 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 	'use strict';
 	var i = 1;
 	var recipeService = RecipeService;
-	
-//	var warning = element(by.binding("warning"));
 
 	$scope.food = { 'name': '', 'nutrients': { 'calories': 0, 'fat': 0, 'carbs': 0, 'protein': 0 } };
-	$scope.measures = [];
-	$scope.nutrientsByMeasure = {};
+	$scope.recipeName = null;
+	$scope.recipeDescription = null;
 	$scope.ingredients = [];
 	$scope.ingredients2 = [];
 	$scope.steps = [];
+	$scope.recipeImage = [];
+	$scope.recipeImageFile = [];
 
 	$scope.uploadRecipeImage = function () {
 		log('uploading recipe image');
@@ -388,7 +395,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			}, function () {
 				log('put image response !!!!!!!');
 			});
-		}
+		};
 	};
 
 	$scope.publishRecipe = function () {
@@ -459,15 +466,44 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			$scope.ingredients = [];
 			$scope.ingredients2 = [];
 			$scope.steps = [];
+			$scope.recipeImage = [];
+			$scope.recipeImageFile = [];
+
 			i = 1;
 			
-			$("#warningMessage").text("Recipe successfully created");
-			displayMessage("#warningMessage", "alert alert-danger");
+			$(responseText).text("Recipe successfully created");
+			displayMessage(responseText, "alert alert-success");
+		} else{
+			$(responseText).text("name, discription, direction, and steps cannot be empty");
+			displayMessage(responseText, "alert alert-danger");
 		}
-		else{
-			$("#warningMessage").text("name, discription, direction, and steps cannot be empty");
-			displayMessage("#warningMessage", "alert alert-danger");
-		}
+
+		var responseText = "#recipeMessage";
+		RecipeService.createRecipe(recipe)
+			.then(
+				function (response) {
+					console.log(response);
+					$scope.recipes = response.data.recipes;
+					console.log(response.data.recipes);
+					recipeService.setRecipes(response.data);
+					console.log("The last");
+					console.log(recipeService.getRecipes());
+					return response;
+					
+					$(responseText).text("Recipe created");
+					displayMessage(responseText, "alert alert-success");
+
+				}, function (error) {
+					console.log("error")
+					console.log(error);
+					
+					if (error.status == 406)
+						$(responseText).text("Please fill out every field");
+					else if (error.status == 401)
+						$(responseText).text("You must be logged in to create a recipe");
+					else $(responseText).text("Something went wrong");
+					displayMessage(responseText, "alert alert-danger");
+				});
 	};
 
 	$scope.addIngredient = function (quantity, fraction, measure, name) {
@@ -561,60 +597,6 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			nutrients[attr] = (quantity + eval(fraction)) * nutrientsForMeasure[TRACKED_NUTRIENTS[i++]];
 		}
 	};
-
-//					log('successfully uploaded image ' + imageKey);
-//					setTimeout(function () {
-//						$scope.recipeImageUri = BUCKET_PATH + encodeURIComponent(imageKey);
-//						$('#recipeImage').attr('src', BUCKET_PATH + encodeURIComponent(imageKey));
-//						log('uri= '+$scope.recipeImageUri);
-//					}, 4000);
-//				}
-//			});
-//		}
-//	};
-/*
-});
-
-
-        var responseText = "#recipeResponse";
-        RecipeService.createRecipe(recipe)
-        	.then(
-                function (response) {
-                    console.log(response);
-                    $scope.recipes = response.data.recipes;
-                    console.log(response.data.recipes);
-                    recipeService.setRecipes(response.data);
-                    console.log(recipeService.getRecipes());
-                    
-                    
-                    $(responseText).attr("class", "alert alert-success");
-                    $(responseText).text("Recipe created");
-                    displayMessage(responseText);
-
-	var recipeService = RecipeService;
-	var userService = UserService;
-
-	var data = function () {
-		console.log("start view");
-		recipeService.viewDash(userService.getUser())
-			.then(
-			function (response) {
-				console.log(response);
-				$scope.recipes = response.data.recipes;
-				console.log(response.data.recipes);
-				recipeService.setRecipes(response.data);
-				console.log("The last");
-				console.log(recipeService.getRecipes());
-				return response;
-
-			}, function (error) {
-				console.log("error")
-				console.log(error);
-				//$scope.output = error;
-			});
-	}();
-*/
-
 	
 	$scope.addIngredient = function (quantity, fraction, measure, name) {
 		log('Creating ingredient with ' + quantity + ', ' + fraction + ', ' + measure + ', ' + name);
@@ -625,8 +607,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			$scope.ingredients2.push({ name: name, amount: quantity + eval(fraction), measure: measure });
 			$scope.search = null;
 			$scope.selection = null;
-		}
-		else{
+		} else{
 			//expect(warnning.getText()).toContain('quanity or fraction must be specifed, or specife both');
 		}
 	};
@@ -640,8 +621,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			$scope.steps.push(step);
 			$scope.recipeStep = '';
 			i++;
-		}
-		else{
+		} else{
 			//expect(warnning.getText()).toContain('step cannot be empty');
 		}
 	};
@@ -688,18 +668,18 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 								let label = measures.item(i).getAttribute('label');
 								let value = measures.item(i).getAttribute('value');
 								$scope.nutrientsByMeasure[label][id] = value;
-							}
-						}
-					}
+							};
+						};
+					};
 				} else {
 
 					// Bad food ndbno
-				}
+				};
 			},
 			function (error) {
 				logError(error);
 			});
-		}
+		};
 	};
 
 	$scope.calculateNutrients = function (quantity, fraction, measure) {
@@ -744,7 +724,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 						// Create food item and add to list
 						let item = { 'name': name, 'ndbno': ndbno, 'group': group };
 						$scope.foodItems.push(item);
-					}
+					};
 				} else {
 
 					// Show previous results when no new results
@@ -820,6 +800,7 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 	}();
 
 	$scope.favoriteRecipe = function(recipe){
+		console.log("favoriteRecipe in DasboardController");
 		recipeService.favoriteRecipe(recipe, userService.getUser());
 		
 	}
@@ -874,19 +855,38 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
     $scope.search = function(){
     		searchService.search($scope.recipeName).then(
                 function(response){
-                		console.log(response.data)
+                		console.log(response.data);
                 		$scope.foundRecipes = response.data;
                 		if(response.data){
                 		$scope.showRecipes = true;
                 		}
                 },
                 function(error){
-                    
+                    ;
                 });
     }
     
     $scope.favoriteRecipe = function(recipe){
-		recipeService.favoriteRecipe(recipe, userService.getUser());
+		console.log("favoriting a recipe in SearchRecipesController");
+		var responseText = "#recipe-" + recipe.id;
+		
+    	recipeService.favoriteRecipe(recipe, userService.getUser()).then(
+				function (response) {
+					$(responseText).text("Recipe successfully favorited");
+					
+					displayMessage(responseText, "alert alert-success", undefined, true);
+				},
+				function (error) {
+					
+					if (error == 409)
+						$(responseText).text("You have already favorited that recipe");
+					else if (error == 406)
+						$(responseText).text("User or Recipe are not valid");
+					else $(responseText).text("Something went wrong");
+					
+					displayMessage(responseText, "alert alert-danger", undefined, true);
+				}
+				);
 		
 	}
     
@@ -946,7 +946,6 @@ function displaySubmitting(message) {
 	
 	displayMessage(message, "alert alert-warning", TIMEOUT_TIME*3);
 }
-
 
 function logError(error) {
 	log(error.status + ' error, ' + error.statusText);

@@ -134,16 +134,22 @@ public class UserController {
 		}
 	}
 
-	/*
-	 * @RequestMapping(value = "/favorite", method = { RequestMethod.POST },
-	 * consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-	 * MediaType.APPLICATION_JSON_VALUE }) public ResponseEntity<UserDto>
-	 * addFavoriteRecipe(@RequestBody RecipeDto recipeDto, @RequestBody UserDto
-	 * userDto) { System.out.println("favoriting this recipe");
-	 * System.out.println(userDto); System.out.println(recipeDto); return new
-	 * ResponseEntity<UserDto>(userService.addFavoriteRecipe(recipeDto, userDto),
-	 * HttpStatus.OK); }
-	 */
+	
+	@RequestMapping(value = "/favorite", method = { RequestMethod.POST }, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Boolean> addFavoriteRecipe(@RequestBody RecipeDto recipeDto, @RequestBody UserDto userDto) {
+		System.out.println("favoriting this recipe");
+		System.out.println("userDto: " + userDto + ", recipeDto" + recipeDto);
+
+		try {
+			if (userService.addFavoriteRecipe(recipeDto, userDto))
+				return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+			else return new ResponseEntity<Boolean>(false, HttpStatus.CONFLICT);
+		} catch (NullPointerException e) {
+			logger.warn("NullPointerException thrown");
+			return new ResponseEntity<Boolean>(HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
 
 	/*
 	 * // TODO: Deactivate or logout???

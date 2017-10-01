@@ -53,11 +53,14 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public void addFavoriteRecipe(RecipeDto recipeDto, UserDto userDto) {
+	public boolean addFavoriteRecipe(RecipeDto recipeDto, UserDto userDto) throws NullPointerException {
 		User user = dao.getUserById(userDto.getId());
 		Recipe recipe = dao.getRecipeById(recipeDto.getId());
-		user.getFavoriteRecipes().add(recipe);
-		dao.updateUser(user);
+		
+		if (user.getFavoriteRecipes().add(recipe)) {
+			dao.updateUser(user);
+			return true;
+		} else return false;
 	}
 
 	@Override

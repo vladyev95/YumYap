@@ -5,10 +5,15 @@
   width: 80%;
   margin: auto;
   margin-bottom: 10px;
+  padding: 10px;
 }
 
 .recipe-content {
-  width: 80%;
+  width: 90%;
   margin: auto;
   margin-bottom: 10px;
+}
+
+.outer-div {
+	padding: 20px;
 }
