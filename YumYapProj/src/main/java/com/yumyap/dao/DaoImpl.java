@@ -2,7 +2,6 @@ package com.yumyap.dao;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.transaction.Transactional;
 
@@ -116,7 +115,16 @@ public class DaoImpl implements Dao {
 				.createCriteria(User.class)
 				.add(Restrictions.eq("email", email))
 				.add(Restrictions.eq("password", password)).uniqueResult();
-
+		
+		if (user == null)
+			return null;
+		
+		user.getFavoriteRecipes().stream()
+			.forEach(recipe -> recipe.getId());
+		
+		user.getFollowing().stream()
+			.forEach(userProxy -> userProxy.getId());
+		
 		logger.trace("got " + user);
 		return user;
 	}	
