@@ -142,6 +142,7 @@ public class UserServiceImpl implements UserService {
 		.stream()
 		.map(recipe -> new RecipeDto(recipe))
 		.forEach(recipe -> recipes.add(recipe));
+		System.out.println(recipes);
 		return recipes;
 	}
 

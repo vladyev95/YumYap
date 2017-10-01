@@ -80,5 +80,5 @@ public interface Dao {
 	 * @param search
 	 * @return list of recipes
 	 */
-	List<Recipe> getRecipes(String search);
+	Set<Recipe> getRecipes(String search);
 }

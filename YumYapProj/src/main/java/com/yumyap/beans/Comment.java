@@ -58,6 +58,23 @@ public class Comment implements Comparable<Comment> {
 		this.content = content;
 	}
 
+	
+	public Recipe getRecipe() {
+		return recipe;
+	}
+
+	public void setRecipe(Recipe recipe) {
+		this.recipe = recipe;
+	}
+
+	public Calendar getCommentDate() {
+		return commentDate;
+	}
+
+	public void setCommentDate(Calendar commentDate) {
+		this.commentDate = commentDate;
+	}
+
 	/**
 	 * Returns the id of this Comment
 	 * @return The id of this Comment

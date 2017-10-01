@@ -44,9 +44,9 @@ public class CommentController {
 				method = RequestMethod.POST, 
 				consumes = MediaType.APPLICATION_JSON_VALUE, 
 				produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Void> createComment(@RequestBody RecipeDto recipeDto, @RequestBody Comment comment){
-		logger.trace("createComment() " + comment + " for " + recipeDto);
-		commentService.createComment(recipeDto, comment);
+	public ResponseEntity<Void> createComment(@RequestBody Comment comment){
+		logger.trace("createComment() " + comment + " for ");
+		commentService.createComment(comment);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
