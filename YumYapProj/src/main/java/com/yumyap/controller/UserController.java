@@ -93,11 +93,11 @@ public class UserController {
 		List<RecipeDto> recipeDtos = userService.getDashboard(userDto);
 		recipeDtos.sort((r1, r2) -> 
 			{
-				if (r1 == null && r2 == null)
+				if (r1.getDateCreated() == null && r2.getDateCreated() == null)
 					return 0;
-				else if (r1 == null)
+				else if (r1.getDateCreated() == null)
 					return 1;
-				else if (r2 == null)
+				else if (r2.getDateCreated() == null)
 					return -1;
 				return -r1.getDateCreated().compareTo(r2.getDateCreated());
 			});
