@@ -1,6 +1,7 @@
 package com.yumyap.controller;
 
 import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import com.yumyap.beans.User;
 import com.yumyap.dto.RecipeDto;
 import com.yumyap.dto.SimpleUserDto;
 import com.yumyap.dto.UserDto;
+import com.yumyap.dto.UsrRecDto;
 import com.yumyap.service.UserService;
 
 /**
@@ -137,17 +139,20 @@ public class UserController {
 	
 	@RequestMapping(value = "/favorite", method = { RequestMethod.POST }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Boolean> addFavoriteRecipe(@RequestBody RecipeDto recipeDto, @RequestBody UserDto userDto) {
+	public ResponseEntity<Boolean> addFavoriteRecipe(@RequestBody UsrRecDto dto) {
 		System.out.println("favoriting this recipe");
-		System.out.println("userDto: " + userDto + ", recipeDto" + recipeDto);
+		System.out.println("userDto: " + dto);
 
 		try {
-			if (userService.addFavoriteRecipe(recipeDto, userDto))
+			if (userService.addFavoriteRecipe(dto))
 				return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 			else return new ResponseEntity<Boolean>(false, HttpStatus.CONFLICT);
 		} catch (NullPointerException e) {
 			logger.warn("NullPointerException thrown");
 			return new ResponseEntity<Boolean>(HttpStatus.NOT_ACCEPTABLE);
+		} catch (DataIntegrityViolationException e) {
+			logger.info("DataIntegrityViolationException");
+			return new ResponseEntity<Boolean>(false, HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
