@@ -362,7 +362,7 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 	};
 	
 	$scope.switchToSearchRecipe = function(){
-		log('switching to \'Create Recipe\' tab');
+		log('switching to \'Search Recipe\' tab');
 		$scope.tab = 'SearchRecipes';
 	}
 
