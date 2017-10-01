@@ -91,7 +91,16 @@ public class UserController {
 		logger.trace("loadDashboard() by " + userDto);
 		
 		List<RecipeDto> recipeDtos = userService.getDashboard(userDto);
-		recipeDtos.sort((r1, r2) -> -r1.getDateCreated().compareTo(r2.getDateCreated()));
+		recipeDtos.sort((r1, r2) -> 
+			{
+				if (r1 == null && r2 == null)
+					return 0;
+				else if (r1 == null)
+					return 1;
+				else if (r2 == null)
+					return -1;
+				return -r1.getDateCreated().compareTo(r2.getDateCreated());
+			});
 		logger.trace("loadDashboard() recipes: " + recipeDtos);
 		return new ResponseEntity<List<RecipeDto>>(recipeDtos, HttpStatus.OK);
 	}
