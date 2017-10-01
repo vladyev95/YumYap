@@ -121,12 +121,12 @@ app.service('RecipeService', function ($http) {
 		return $http.post('yum/user/dash', user);
 	};
 
-	service.favoriteRecipe = function(recipe, user){
-		console.log('favoriting a recipe in RecipeService: ');
+	service.favoriteRecipe = function(recipe){
+		console.log('favoriteRecipe in RecipeService: ');
 		console.log(recipe);
-		console.log(user);
+		console.log(userService.getUser());
 		
-		return $http.post('yum/user/favorite', recipe, user);
+		addFavoriteRecipe($http, userService.getUser(), recipe);
 	};
 
 	service.viewAuthor = function(recipe){
@@ -754,7 +754,6 @@ app.service('CommentService', function ($http, $q){
 	
 });
 
-
 app.controller('DashboardController', function ($scope, UserService, CommentService, RecipeService, $http, $q) {
 	var recipeService = RecipeService;
 	var userService = UserService;
@@ -784,8 +783,8 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 
 	$scope.favoriteRecipe = function(recipe){
 		console.log("favoriteRecipe in DasboardController");
-		recipeService.favoriteRecipe(recipe, userService.getUser());
-		
+
+		addFavoriteRecipe($http, userService.getUser(), recipe);		
 	}
 	
 	$scope.addComment = function(recipe){
@@ -813,10 +812,6 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 	}
 	
 });
-
-	
-	
-
 
 app.service('SearchRecipeService', function($http, $q){
     var service = this;
@@ -848,29 +843,12 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
                     ;
                 });
     }
-    
+   
     $scope.favoriteRecipe = function(recipe){
-		console.log("favoriting a recipe in SearchRecipesController");
-		var responseText = "#recipe-" + recipe.id;
+		console.log("favoriteRecipe in SearchRecipesController");
+		console.log(recipe);
 		
-    	recipeService.favoriteRecipe(recipe, userService.getUser()).then(
-				function (response) {
-					$(responseText).text("Recipe successfully favorited");
-					
-					displayMessage(responseText, "alert alert-success", undefined, true);
-				},
-				function (error) {
-					
-					if (error == 409)
-						$(responseText).text("You have already favorited that recipe");
-					else if (error == 406)
-						$(responseText).text("User or Recipe are not valid");
-					else $(responseText).text("Something went wrong");
-					
-					displayMessage(responseText, "alert alert-danger", undefined, true);
-				}
-				);
-		
+		addFavoriteRecipe($http, userService.getUser(), recipe);
 	}
     
     
@@ -920,6 +898,34 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
 //    }
 })
 
+function addFavoriteRecipe($http, user, recipe) {
+	var responseText = "#recipe-" + recipe.id;
+	displaySubmitting(responseText);
+	var dto = {};
+	dto.user = user;
+	dto.recipe = recipe;
+	
+	return $http.post('yum/user/favorite', dto)
+			.then(function(response) {
+		
+				$(responseText).text("Recipe successfully favorited");
+		
+				console.log(responseText);
+				displayMessage(responseText, "alert alert-success", undefined, true);
+			}, function(error) {
+		
+				if (error.status == 409)
+					$(responseText).text("You have already favorited that recipe");
+				else if (error.status == 406)
+					$(responseText).text("User or Recipe are not valid");
+				else if (error.status == 417)
+					$(responseText).text("Unique constraint violation");
+				else $(responseText).text("Something went wrong");
+				
+				console.log("problem");
+				displayMessage(responseText, "alert alert-danger", undefined, true);
+			} );
+};
 
 /**
  * @param message id of the HTML tag to display the message

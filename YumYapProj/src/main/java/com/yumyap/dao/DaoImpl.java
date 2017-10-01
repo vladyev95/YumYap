@@ -162,8 +162,8 @@ public class DaoImpl implements Dao {
 
 	@Override
 	public void updateUser(User user) {
-
-		currentSession().save(user);
+		sessionFactory.getCurrentSession().merge(user);
+		
 	}
 
 	private Session currentSession() {

@@ -17,6 +17,7 @@ import com.yumyap.dao.Dao;
 import com.yumyap.dto.RecipeDto;
 import com.yumyap.dto.SimpleUserDto;
 import com.yumyap.dto.UserDto;
+import com.yumyap.dto.UsrRecDto;
 
 /**
  * An implementation of a UserService
@@ -75,14 +76,13 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public boolean addFavoriteRecipe(RecipeDto recipeDto, UserDto userDto) throws NullPointerException {
-		User user = dao.getUserById(userDto.getId());
-		Recipe recipe = dao.getRecipeById(recipeDto.getId());
+	public boolean addFavoriteRecipe(UsrRecDto dto) throws NullPointerException {
+		User user = dao.getUserById(dto.getUser().getId());
+		System.out.println("adding favorite recipe: " + dto.getRecipe());
 		
-		if (user.getFavoriteRecipes().add(recipe)) {
-			dao.updateUser(user);
-			return true;
-		} else return false;
+		user.getFavoriteRecipes().add(dto.getRecipe());
+		dao.updateUser(user);
+		return true;
 	}
 
 	@Override
