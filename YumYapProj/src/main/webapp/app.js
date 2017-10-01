@@ -421,7 +421,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			totalProtein = 0;
 		
 		console.log($scope.ingredients);
-		for (let i = 0; i < $scope.ingredients; i++) {
+		for (let i = 0; i < $scope.ingredients.length; i++) {
 			let ingredient = $scope.ingredients[i];
 
 			log('foodItem');
