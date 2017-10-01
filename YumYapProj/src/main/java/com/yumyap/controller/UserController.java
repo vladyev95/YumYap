@@ -1,8 +1,6 @@
 package com.yumyap.controller;
 
 import java.util.List;
-import java.util.Set;
-
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +91,7 @@ public class UserController {
 		logger.trace("loadDashboard() by " + userDto);
 		
 		List<RecipeDto> recipeDtos = userService.getDashboard(userDto);
+		recipeDtos.sort((r1, r2) -> -r1.getDateCreated().compareTo(r2.getDateCreated()));
 		logger.trace("loadDashboard() recipes: " + recipeDtos);
 		return new ResponseEntity<List<RecipeDto>>(recipeDtos, HttpStatus.OK);
 	}

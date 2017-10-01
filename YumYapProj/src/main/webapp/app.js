@@ -248,36 +248,16 @@ function displayMessage(response, setClass, time) {
 /* ViewAuthorService */
 app.service('ViewAuthorService', function ($http) {
 	let service = this;
-	console.log("Inside ViewAuthorService")
-
-	service.user = {
-		id: '',
-		email: '',
-		firstName: '',
-		lastName: '',
-		following: '',
-		favoriteRecipes: ''
+	
+	service.setEmail = function (email) {
+		service.email = email;
 	};
 
-	service.setUser = function (data) {
-		service.user.id =  data.id;
-		service.user.email = data.email;
-		service.user.firstName = data.firstName;
-		service.user.lastName = data.lastName;
-		service.user.following = data.following;
-		service.user.favoriteRecipes = data.favoriteRecipe;
+	service.getEmail = function () {
+		return service.email;
 	};
 
-	service.getUser = function () {
-		return service.user;
-	};
-
-	service.follow = function (user) {
-		console.log(user + " is now following "+service.user);
-		var following = service.user;
-
-		return $http.post('yum/user/addFollower', user, following);
-	};
+	
 });
 /* ViewAuthorService */
 
@@ -360,6 +340,12 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 		log('switching to \'Create Recipe\' tab');
 		$scope.tab = 'CreateRecipe';
 	};
+	
+	$scope.viewAuthor = function(email) {
+		console.log('viewAuthor(' + email + ')');
+		$scope.tab = 'ViewAuthor';
+		ViewAuthorService.setEmail(email);
+	}
 	
 	$scope.switchToSearchRecipe = function(){
 		log('switching to \'Create Recipe\' tab');

@@ -32,7 +32,7 @@
 					Posted by {{recipe.creator.firstName + " " +
 					recipe.creator.lastName}} <br>
 					<!-- This button should bring you to the user that posted it -->
-					<button class="btn btn-primary" ng-click="viewAuthor(recipe)">View Author Profile</button>
+					<button class="btn btn-primary" ng-click="viewAuthor(recipe.creator.email)">View Author Profile</button>
 				</div>
 			</div>
 			<div class="recipe-content">
