@@ -144,7 +144,7 @@ public class Comment implements Comparable<Comment> {
 	 */
 	@Override
 	public String toString() {
-		return "Comment [id=" + id + ", recipe=" + recipe + ", commenter=" + commenter + ", commentDate=" + commentDate
+		return "Comment [id=" + id + ", recipe=" + recipe.getId() + ", commenter=" + commenter + ", commentDate=" + commentDate
 				+ ", content=" + content + "]";
 	}
 

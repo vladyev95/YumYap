@@ -139,6 +139,7 @@ app.service('RecipeService', function ($http) {
 	service.setRecipes = function (data) {
 		service.recipes = data;
 	};
+	
 	service.getRecipes = function () {
 		return service.recipes;
 	};
@@ -151,6 +152,32 @@ app.service('RecipeService', function ($http) {
 		return $http.post('yum/comments/create', comment);
 	};
 
+});
+
+app.service('UsersRecipesService', function($http) {
+	let service = this;
+	
+	service.recipes = [];
+	
+	service.setId = function(id) {
+		service.id = id;
+	};
+	
+	service.makeRequest = function() {
+		$http.post('yum/recipe/usersRecipes', { id: service.id })
+			.then(function(response) {
+				console.log('UsersRecipesService response: ');
+				console.log(response);
+				console.log('UsersRecipesService response.data: ');
+				console.log(response.data);
+				for (let i=0; i<response.data.length; ++i) {
+					service.recipes.push(response.data[i]);
+				}
+			}, function(error) {
+				console.log('UsersRecipesService error: ');
+				console.log(error);
+			});
+	}
 });
 
 
@@ -254,30 +281,43 @@ function displayMessage(response, setClass, time, dontClear) {
 
 /* ViewAuthorService */
 app.service('ViewAuthorService', function ($http) {
-	console.log("in ViewAuthorService");
 	let service = this;
 	
-	service.email = '';
+	service.user = {};
 	
-	service.setEmail = function (email) {
-		service.email = email;
+	service.setId = function (id) {
+		service.id = id;
+	};
+	
+	service.makeRequest = function() {
+		$http.post('yum/user/profile', { id: service.id })
+		.then(function(response) {
+			console.log('ViewAuthor response: ');
+			console.log(response);
+			console.log('ViewAuthor response.data: ');
+			console.log(response.data);
+			service.user.id = response.data.id;
+			service.user.email = response.data.email;
+			service.user.firstName = response.data.firstName;
+			service.user.lastName = response.data.lastName;
+		}, function(error) {
+			console.log('ViewAuthorService error: ');
+			console.log(error);
+		});
 	};
 
-	service.getEmail = function () {
-		return service.email;
-	};
-
-	
 });
 /* ViewAuthorService */
 
-app.controller('ViewAuthorController', function ($scope, ViewAuthorService, RecipeService, UserService) {
-
+app.controller('ViewAuthorController', function ($scope, ViewAuthorService, UsersRecipesService) {
+	console.log('in ViewAuthorController');
+	$scope.user = ViewAuthorService.user;
+	$scope.recipes = UsersRecipesService.recipes;
 });
 
 
 /* AppController */
-app.controller('AppController', function ($scope, ViewAuthorService, RecipeService) {
+app.controller('AppController', function ($scope, ViewAuthorService, RecipeService, UsersRecipesService) {
 	log('in AppController');
 	$scope.tab = 'Home';
 
@@ -293,10 +333,14 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 		$scope.tab = 'CreateRecipe';
 	};
 	
-	$scope.viewAuthor = function(email) {
-		console.log('viewAuthor(' + email + ')');
+	$scope.viewAuthor = function(id) {
+		console.log('viewAuthor(' + id + ')');
 		$scope.tab = 'ViewAuthor';
-		ViewAuthorService.setEmail(email);
+		ViewAuthorService.setId(id);
+		ViewAuthorService.makeRequest();
+		UsersRecipesService.setId(id);
+		UsersRecipesService.makeRequest();
+		
 	}
 	
 	$scope.switchToSearchRecipe = function(){

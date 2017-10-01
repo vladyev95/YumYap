@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,27 @@ public class UserServiceImpl implements UserService {
 		return dao.addUser(user);
 	}
 
+	
+	@Override
+	public List<RecipeDto> getUsersRecipes(SimpleUserDto simpleUserDto) {
+		logger.trace("getUsersRecipes() by " + simpleUserDto);
+		User user = dao.getUserById(simpleUserDto.getId());
+		List<RecipeDto> recipes = dao.getUsersRecipes(user).stream()
+			.map(recipe -> new RecipeDto(recipe)).collect(Collectors.toList());
+		 
+		recipes.sort((r1, r2) -> {
+			if (r1.getDateCreated() == null && r2.getDateCreated() == null)
+				return 0;
+			else if (r1.getDateCreated() == null)
+				return 1;
+			else if (r2.getDateCreated() == null)
+				return -1;
+			return -r1.getDateCreated().compareTo(r2.getDateCreated());
+		});
+		return recipes;
+	}
+	
+	
 	@Override
 	public Set<Recipe> getFollowingRecipes(User user) {
 		return null;

@@ -67,4 +67,6 @@ public interface UserService {
 
 	List<RecipeDto> searchRecipe(String search);
 
+	List<RecipeDto> getUsersRecipes(SimpleUserDto simpleUserDto);
+
 }
