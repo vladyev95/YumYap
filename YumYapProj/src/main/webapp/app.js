@@ -382,18 +382,17 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 				} else {
 
 					log('successfully uploaded image ' + imageKey);
+					$scope.recipeImageUri = BUCKET_PATH + encodeURIComponent(imageKey);
+					log($scope.recipeImageUri);
 					setTimeout(function () {
 						$(responseText).attr("class");
 						$(responseText).text("Image saved");
 						displayMessage(responseText, "alert alert-success");
 						
-						$scope.recipeImageUri = BUCKET_PATH + encodeURIComponent(imageKey);
 						$('#recipeImage').attr('src', BUCKET_PATH + encodeURIComponent(imageKey));
 						log('uri= '+$scope.recipeImageUri);
 					}, 4000);
 				}
-			}, function () {
-				log('put image response !!!!!!!');
 			});
 		};
 	};
@@ -420,6 +419,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			totalProtein += ingredient.nutrients.protein;
 		}
 
+		log('uri to submit= '+$scope.recipeImageUri);
 		let recipe = {
 			creator: UserService.getUser(),
 			name: $scope.recipeName,
