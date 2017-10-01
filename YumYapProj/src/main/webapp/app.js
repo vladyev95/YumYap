@@ -899,12 +899,16 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
     }
     
     $scope.favoriteRecipe = function(recipe){
-		recipeService.favoriteRecipe(recipe, userService.getUser());
+		recipeService.favoriteRecipe(recipe, userService.getUser()).then(
+				function(response){
+					console.log(response);
+				},
+				function(error){
+					console.log(error);
+				});
 		
 	}
-    
-    
-    this.index;
+
     
     $scope.startComment = function(number){
     		console.log("providing text space for a comment");
@@ -912,10 +916,8 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
     		this.index = number;
     }
     
-    $scope.addComment = function(recipe){
-		commentService.setComment($scope.index);
-		console.log($scope.recipes.recipe.creator);
-		console.log($scope.recipe.comment);
+    $scope.addComment = function(recipe, content){
+		commentService.setComment(content);
 		commentService.setUser(userService.getUser());
 		commentService.setRecipe(recipe);
 		console.log('sending ');
@@ -933,7 +935,8 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
 	$scope.viewComments = function(recipe){
 		recipeService.viewComments(recipe).then(
 				function(response){
-					
+					console.log(response);
+					$scope.comments = response.data;
 				},
 				function(error){
 					

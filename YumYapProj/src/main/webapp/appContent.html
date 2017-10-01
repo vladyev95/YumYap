@@ -113,7 +113,7 @@
 				<button ng-click="viewComments(recipe)">View comments for
 					this recipe</button>
 				<div ng-show="showComments">
-					<div ng-repeat="comment in recipe.comments">
+					<div ng-repeat="comment in comments">
 						<h5 ng-bind="comment.commentor"></h5>
 						<p ng-bind="comment.content"></p>
 					</div>
@@ -228,9 +228,9 @@
 			<div id="comments">
 				<button ng-click="startComment()">Add comment</button>
 				<div ng-show="addingComment">
-				<textarea  ng-model="recipe.comment"
+				<textarea  ng-model="content"
 					cols="32" rows="5" placeholder="Description"></textarea>
-					<button ng-click="addComment(recipe)">Submit</button>
+					<button ng-click="addComment(recipe, content)">Submit</button>
 				</div>
 				<button ng-click="viewComments(recipe)">View comments for
 					this recipe</button>

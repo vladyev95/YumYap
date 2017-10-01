@@ -1,7 +1,9 @@
 package com.yumyap.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -40,6 +42,7 @@ public class CommentService {
 	public List<Comment> getRecipeComments(RecipeDto recipeDto) {
 		Recipe recipe = dao.getRecipeById(recipeDto.getId());
 		List<Comment> comments = new ArrayList<>(recipe.getComments());
+		System.out.println(comments);
 		Collections.sort(comments, (c1, c2) -> -c1.getDate().compareTo(c2.getDate()));
 		return comments;
 	}
@@ -49,6 +52,7 @@ public class CommentService {
 	 * @param comment The Comment to be added
 	 */
 	public void createComment(Comment comment) {
+		comment.setDate(new  GregorianCalendar());
 		logger.trace("createComment() with " + comment);
 		User commenter = dao.getUserById(comment.getCommenter().getId());
 		comment.setCommenter(commenter);

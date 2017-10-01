@@ -41,7 +41,7 @@ public class Comment implements Comparable<Comment> {
 	private User commenter;
 
 //	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "comment_date", nullable = false, insertable = false)
+	@Column(name = "comment_date", nullable = true)
 	private Calendar commentDate;
 
 	@Column(name = "content", nullable = false)
