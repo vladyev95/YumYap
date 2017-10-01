@@ -102,6 +102,7 @@
 					</ul>
 				</div>
 				<button ng-click="favoriteRecipe(recipe)">Save this recipe</button>
+				
 			</div>
 			<div id="comments">
 				<button ng-click="startComment()">Add comment</button>
@@ -224,6 +225,7 @@
 					</ul>
 				</div>
 				<button ng-click="favoriteRecipe(recipe)">Save this recipe</button>
+				<p ng-attr-id="{{ 'recipe-' + recipe.id }}" hidden=true></p>
 			
 			<div id="comments">
 				<button ng-click="startComment()">Add comment</button>

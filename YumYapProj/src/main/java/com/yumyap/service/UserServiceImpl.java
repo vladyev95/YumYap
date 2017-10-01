@@ -3,8 +3,6 @@ package com.yumyap.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,11 +52,14 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public void addFavoriteRecipe(RecipeDto recipeDto, UserDto userDto) {
+	public boolean addFavoriteRecipe(RecipeDto recipeDto, UserDto userDto) throws NullPointerException {
 		User user = dao.getUserById(userDto.getId());
 		Recipe recipe = dao.getRecipeById(recipeDto.getId());
-		user.getFavoriteRecipes().add(recipe);
-		dao.updateUser(user);
+		
+		if (user.getFavoriteRecipes().add(recipe)) {
+			dao.updateUser(user);
+			return true;
+		} else return false;
 	}
 
 	@Override

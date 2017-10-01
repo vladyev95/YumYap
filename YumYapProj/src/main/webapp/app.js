@@ -88,7 +88,7 @@ app.service('LoginService', function ($http, $q) {
 
 	service.attemptLogin = function (user) {
 		console.log('attempting to login ');
-		console.log(user)
+		console.log(user);
 		return $http.post('yum/user/attemptLogin',  user);
 
 	};
@@ -121,12 +121,16 @@ app.service('RecipeService', function ($http) {
 		return $http.post('yum/user/dash', user);
 	};
 
-	service.favoriteRecipe = function(recipe){
-		console.log('favoriting '+recipe);
+	service.favoriteRecipe = function(recipe, user){
+		console.log('favoriting a recipe in RecipeService: ');
+		console.log(recipe);
+		
+		return $http.post('yum/user/favorite', recipe, user);
 	};
 
 	service.viewAuthor = function(recipe){
 		console.log('viewing author of '+recipe);
+		// TODO
 	};
 
 	service.recipes = {};
@@ -139,11 +143,11 @@ app.service('RecipeService', function ($http) {
 	};
 	
 	service.viewComments = function(recipe){
-		return $http.post('yum/comments/show', recipe)
+		return $http.post('yum/comments/show', recipe);
 	};
 	
 	service.addComment = function(comment){
-		return $http.post('yum/comments/create', comment)
+		return $http.post('yum/comments/create', comment);
 	};
 
 });
@@ -220,7 +224,7 @@ app.controller('RegisterController', function ($scope, $timeout, RegisterService
 					displayMessage(responseText, "alert alert-danger");
 				}
 				);
-		}
+		};
 	};
 });
 /* RegisterController */
@@ -232,7 +236,7 @@ app.controller('RegisterController', function ($scope, $timeout, RegisterService
  */
 function displayMessage(response, setClass, time) {
 	$(response).attr("class", setClass);
-	clearTimeout(timeout);
+//	clearTimeout(timeout);
 	var timeout_time_ammt = TIMEOUT_TIME;
 	if (time)
 		timeout_time_ammt = time;
@@ -248,7 +252,7 @@ function displayMessage(response, setClass, time) {
 /* ViewAuthorService */
 app.service('ViewAuthorService', function ($http) {
 	let service = this;
-	console.log("Inside ViewAuthorService")
+	console.log("Inside ViewAuthorService");
 
 	service.user = {
 		id: '',
@@ -315,8 +319,9 @@ app.controller('ViewAuthorController', function ($scope, ViewAuthorService, Reci
 	}
 
 	$scope.favoriteRecipe = function(recipe){
-		recipeService.favoriteRecipe(recipe);
-	}
+		console.log("favoriteRecipe in viewAuthorController");
+		recipeService.favoriteRecipe(recipe, userService.getUser());
+	};
 });
 
 
@@ -364,7 +369,7 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 	$scope.switchToSearchRecipe = function(){
 		log('switching to \'Create Recipe\' tab');
 		$scope.tab = 'SearchRecipes';
-	}
+	};
 
 });
 /* AppController */
@@ -416,9 +421,9 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 						$('#recipeImage').attr('src', BUCKET_PATH + encodeURIComponent(imageKey));
 						log('uri= '+$scope.recipeImageUri);
 					}, 4000);
-				}
+				};
 			});
-		}
+		};
 	};
 
 	$scope.publishRecipe = function () {
@@ -451,8 +456,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			
 			$(responseText).text("Recipe successfully created");
 			displayMessage(responseText, "alert alert-success");
-		}
-		else{
+		} else{
 			$(responseText).text("name, discription, direction, and steps cannot be empty");
 			displayMessage(responseText, "alert alert-danger");
 		}
@@ -640,8 +644,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			$scope.ingredients2.push({ name: name, amount: quantity + eval(fraction), measure: measure });
 			$scope.search = null;
 			$scope.selection = null;
-		}
-		else{
+		} else{
 			//expect(warnning.getText()).toContain('quanity or fraction must be specifed, or specife both');
 		}
 	};
@@ -655,8 +658,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			$scope.steps.push(step);
 			$scope.recipeStep = '';
 			i++;
-		}
-		else{
+		} else{
 			//expect(warnning.getText()).toContain('step cannot be empty');
 		}
 	};
@@ -703,18 +705,18 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 								let label = measures.item(i).getAttribute('label');
 								let value = measures.item(i).getAttribute('value');
 								$scope.nutrientsByMeasure[label][id] = value;
-							}
-						}
-					}
+							};
+						};
+					};
 				} else {
 
 					// Bad food ndbno
-				}
+				};
 			},
 			function (error) {
 				logError(error);
 			});
-		}
+		};
 	};
 
 	$scope.calculateNutrients = function (quantity, fraction, measure) {
@@ -759,7 +761,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 						// Create food item and add to list
 						let item = { 'name': name, 'ndbno': ndbno, 'group': group };
 						$scope.foodItems.push(item);
-					}
+					};
 				} else {
 
 					// Show previous results when no new results
@@ -835,6 +837,7 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 	}();
 
 	$scope.favoriteRecipe = function(recipe){
+		console.log("favoriteRecipe in DasboardController");
 		recipeService.favoriteRecipe(recipe, userService.getUser());
 		
 	}
@@ -889,19 +892,38 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
     $scope.search = function(){
     		searchService.search($scope.recipeName).then(
                 function(response){
-                		console.log(response.data)
+                		console.log(response.data);
                 		$scope.foundRecipes = response.data;
                 		if(response.data){
                 		$scope.showRecipes = true;
                 		}
                 },
                 function(error){
-                    
+                    ;
                 });
     }
     
     $scope.favoriteRecipe = function(recipe){
-		recipeService.favoriteRecipe(recipe, userService.getUser());
+		console.log("favoriting a recipe in SearchRecipesController");
+		var responseText = "#recipe-" + recipe.id;
+		
+    	recipeService.favoriteRecipe(recipe, userService.getUser()).then(
+				function (response) {
+					$(responseText).text("Recipe successfully favorited");
+					
+					displayMessage(responseText, "alert alert-success");
+				},
+				function (error) {
+					
+					if (error == 409)
+						$(responseText).text("You have already favorited that recipe");
+					else if (error == 406)
+						$(responseText).text("User or Recipe are not valid");
+					else $(responseText).text("Something went wrong");
+					
+					displayMessage(responseText, "alert alert-danger");
+				}
+				);
 		
 	}
     
@@ -962,34 +984,25 @@ function displaySubmitting(message) {
 	displayMessage(message, "alert alert-warning", TIMEOUT_TIME*3);
 }
 
-app.service('SearchRecipeService', function($http, $q){
-    var service = this;
-    
-    service.search = function(search){
-        
-    }
-    
-});
-
-app.controller('SearchRecipesController', function($scope, SearchRecipeService, $http, $q){
-    searchService = SearchRecipeService;
-    
-    $scope.searchRecipes = function(){
-        searchService.search($scope.search).then(
-                function(response){
-                    //this should get back simpleRecipeDtos
-                    $scope.foundRecipes = response.data;
-                },
-                function(error){
-                    
-                });
-    }
-    
-    $scope.showRecipe = function(recipe){
-        recipe.show = true;
-        
-    }
-})
+//app.controller('SearchRecipesController', function($scope, SearchRecipeService, $http, $q){
+//    searchService = SearchRecipeService;
+//    
+//    $scope.searchRecipes = function(){
+//        searchService.search($scope.search).then(
+//                function(response){
+//                    //this should get back simpleRecipeDtos
+//                    $scope.foundRecipes = response.data;
+//                },
+//                function(error){
+//                    
+//                });
+//    }
+//    
+//    $scope.showRecipe = function(recipe){
+//        recipe.show = true;
+//        
+//    }
+//})
 
 function logError(error) {
 	log(error.status + ' error, ' + error.statusText);
