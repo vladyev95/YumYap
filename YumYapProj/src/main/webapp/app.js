@@ -780,8 +780,8 @@ app.service('CommentService', function ($http, $q){
 	
 	service.comment = {
 			id: '',
-			user: '',
-			recipe: '',
+			commenter: {},
+			recipe: {},
 			content: ''
 	}
 	
@@ -790,7 +790,7 @@ app.service('CommentService', function ($http, $q){
 	}
 	
 	service.setUser = function(user){
-		service.comment.user = user;
+		service.comment.commenter = user;
 	}
 	
 	service.setRecipe = function(recipe){
@@ -838,7 +838,7 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 	}
 	
 	$scope.addComment = function(recipe){
-		commentService.setComment($scope.comment);
+		commentService.setComment($scope.commentContent);
 		commentService.setUser(userService.getUser());
 		commentService.setRecipe(recipe);
 		recipeService.addComment(commentService.getComment()).then(
@@ -883,6 +883,7 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
 //    $scope.foundRecipes = '';
 //    $scope.showRecipes = false;
     
+    
     $scope.search = function(){
     		searchService.search($scope.recipeName).then(
                 function(response){
@@ -902,16 +903,23 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
 		
 	}
     
-    $scope.startComment = function(){
+    
+    this.index;
+    
+    $scope.startComment = function(number){
     		console.log("providing text space for a comment");
     		$scope.addingComment = true;
+    		this.index = number;
     }
     
     $scope.addComment = function(recipe){
-		commentService.setComment($scope.comment);
+		commentService.setComment($scope.index);
+		console.log($scope.recipes.recipe.creator);
+		console.log($scope.recipe.comment);
 		commentService.setUser(userService.getUser());
 		commentService.setRecipe(recipe);
-		console.log('sending '+commentService.getComment());
+		console.log('sending ');
+		console.log(commentService.getComment());
 		recipeService.addComment(commentService.getComment()).then(
 				function(response){
 					console.log(response);
@@ -922,7 +930,7 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
 				});
 		
 	}
-	var viewComments = function(recipe){
+	$scope.viewComments = function(recipe){
 		recipeService.viewComments(recipe).then(
 				function(response){
 					
