@@ -234,9 +234,11 @@ app.controller('RegisterController', function ($scope, $timeout, RegisterService
  * @param setClass Sets the class of the response HTML tag
  * @param time Optional parameter to set timeout duration. Default is TIMEOUT_TIME
  */
-function displayMessage(response, setClass, time) {
+function displayMessage(response, setClass, time, dontClear) {
 	$(response).attr("class", setClass);
-//	clearTimeout(timeout);
+	
+	if (!dontClear)
+		clearTimeout(timeout);
 	var timeout_time_ammt = TIMEOUT_TIME;
 	if (time)
 		timeout_time_ammt = time;
@@ -380,11 +382,13 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 	var recipeService = RecipeService;
 
 	$scope.food = { 'name': '', 'nutrients': { 'calories': 0, 'fat': 0, 'carbs': 0, 'protein': 0 } };
-	$scope.measures = [];
-	$scope.nutrientsByMeasure = {};
+	$scope.recipeName = null;
+	$scope.recipeDescription = null;
 	$scope.ingredients = [];
 	$scope.ingredients2 = [];
 	$scope.steps = [];
+	$scope.recipeImage = [];
+	$scope.recipeImageFile = [];
 
 	$scope.uploadRecipeImage = function () {
 		log('uploading recipe image');
@@ -911,7 +915,7 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
 				function (response) {
 					$(responseText).text("Recipe successfully favorited");
 					
-					displayMessage(responseText, "alert alert-success");
+					displayMessage(responseText, "alert alert-success", undefined, true);
 				},
 				function (error) {
 					
@@ -921,7 +925,7 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
 						$(responseText).text("User or Recipe are not valid");
 					else $(responseText).text("Something went wrong");
 					
-					displayMessage(responseText, "alert alert-danger");
+					displayMessage(responseText, "alert alert-danger", undefined, true);
 				}
 				);
 		
