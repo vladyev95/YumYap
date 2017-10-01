@@ -846,8 +846,33 @@ function displaySubmitting(message) {
 	displayMessage(message, "alert alert-warning", TIMEOUT_TIME*3);
 }
 
-app.controller('SearchRecipeController', function ($scope, UserService, RecipeService, $http, $q) {
+app.service('SearchRecipeService', function($http, $q){
+    var service = this;
+    
+    service.search = function(search){
+        
+    }
+    
+});
 
+app.controller('SearchRecipesController', function($scope, SearchRecipeService, $http, $q){
+    searchService = SearchRecipeService;
+    
+    $scope.searchRecipes = function(){
+        searchService.search($scope.search).then(
+                function(response){
+                    //this should get back simpleRecipeDtos
+                    $scope.foundRecipes = response.data;
+                },
+                function(error){
+                    
+                });
+    }
+    
+    $scope.showRecipe = function(recipe){
+        recipe.show = true;
+        
+    }
 })
 
 function logError(error) {
