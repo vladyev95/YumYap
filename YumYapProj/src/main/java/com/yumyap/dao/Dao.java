@@ -64,8 +64,6 @@ public interface Dao {
 	 */
 	Recipe getRecipeById(int id);
 
-	List<Recipe> getRecipesByUser(User user);
-
 	void updateUser(User user);
 	
 	/**
