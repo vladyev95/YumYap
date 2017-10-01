@@ -771,7 +771,6 @@ app.service('CommentService', function ($http, $q){
 	
 });
 
-
 app.controller('DashboardController', function ($scope, UserService, CommentService, RecipeService, $http, $q) {
 	var recipeService = RecipeService;
 	var userService = UserService;
@@ -830,10 +829,6 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 	}
 	
 });
-
-	
-	
-
 
 app.service('SearchRecipeService', function($http, $q){
     var service = this;
