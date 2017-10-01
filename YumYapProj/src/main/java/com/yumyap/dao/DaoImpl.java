@@ -1,4 +1,5 @@
 package com.yumyap.dao;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +18,8 @@ import com.yumyap.beans.Comment;
 import com.yumyap.beans.FoodItem;
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
+import com.yumyap.dto.CommentDto;
+import com.yumyap.dto.RecipeDto;
 
 /**
  * An implementation of the Dao interface
@@ -182,5 +185,16 @@ public class DaoImpl implements Dao {
 		Recipe recipe = getRecipeById(id);
 		recipe.getComments().add(comment);
 		session.merge(recipe);
+	}
+	
+	public List<CommentDto> getCommentsByRecipe(Recipe recipe) {
+		Session session = sessionFactory.getCurrentSession();
+		List<Comment> comments = session.createCriteria(Comment.class).add(Restrictions.eq("recipe", recipe)).list();
+		List<CommentDto> commentDtos = new ArrayList<>();
+		for(Comment c: comments) {
+			commentDtos.add(new CommentDto(c));
+		}
+		System.out.println(comments);
+		return commentDtos;
 	}
 }

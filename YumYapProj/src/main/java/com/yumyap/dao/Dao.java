@@ -7,6 +7,7 @@ import com.yumyap.beans.Comment;
 import com.yumyap.beans.FoodItem;
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
+import com.yumyap.dto.CommentDto;
 import com.yumyap.dto.RecipeDto;
 
 /**
@@ -81,4 +82,7 @@ public interface Dao {
 	 * @return list of recipes
 	 */
 	Set<Recipe> getRecipes(String search);
+	
+	
+	List<CommentDto> getCommentsByRecipe(Recipe recipe);
 }

@@ -14,6 +14,7 @@ import com.yumyap.beans.Comment;
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 import com.yumyap.dao.Dao;
+import com.yumyap.dto.CommentDto;
 import com.yumyap.dto.RecipeDto;
 
 /**
@@ -39,11 +40,13 @@ public class CommentService {
 	 * @param recipeDto The RecipeDto corresponding to the actual Recipe for which to get the Comments
 	 * @return A List of Comments for the specified Recipe, sorted from newest to oldest
 	 */
-	public List<Comment> getRecipeComments(RecipeDto recipeDto) {
+	public List<CommentDto> getRecipeComments(RecipeDto recipeDto) {
 		Recipe recipe = dao.getRecipeById(recipeDto.getId());
-		List<Comment> comments = new ArrayList<>(recipe.getComments());
-		System.out.println(comments);
-		Collections.sort(comments, (c1, c2) -> -c1.getDate().compareTo(c2.getDate()));
+		List<CommentDto> comments = new ArrayList<CommentDto>(dao.getCommentsByRecipe(recipe)); //recipe.getComments()
+//		System.out.println(comments);
+		if(comments != null && comments.size() > 1) {
+		Collections.sort(comments, (c1, c2) -> -c1.getCommentDate().compareTo(c2.getCommentDate()));
+		}
 		return comments;
 	}
 	
