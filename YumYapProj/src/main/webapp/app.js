@@ -472,6 +472,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			$scope.ingredients = [];
 			$scope.ingredients2 = [];
 			$scope.steps = [];
+			i = 1;
 			
 			$("#warningMessage").text("Recipe successfully created");
 			displayMessage("#warningMessage", "alert alert-danger");
