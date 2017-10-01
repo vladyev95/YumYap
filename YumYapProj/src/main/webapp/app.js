@@ -588,7 +588,20 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 });
 
 
-app.controller('DashboardController', function ($scope, UserService, RecipeService, $http, $q) {
+        var responseText = "#recipeResponse";
+        RecipeService.createRecipe(recipe)
+        	.then(
+                function (response) {
+                    console.log(response);
+                    $scope.recipes = response.data.recipes;
+                    console.log(response.data.recipes);
+                    recipeService.setRecipes(response.data);
+                    console.log(recipeService.getRecipes());
+                    
+                    
+                    $(responseText).attr("class", "alert alert-success");
+                    $(responseText).text("Recipe created");
+                    displayMessage(responseText);
 
 	var recipeService = RecipeService;
 	var userService = UserService;
@@ -765,10 +778,6 @@ app.service('CommentService', function ($http, $q){
 	service = this;	
 	
 	service.comment = {}
-//		id = ''
-//		recipe
-//		commenter
-//		content
 	
 	service.setComment = function(data){
 		service.comment = data;
@@ -781,9 +790,8 @@ app.service('CommentService', function ($http, $q){
 	service.getComment = function(){
 		return service.comment;
 	}
-}
+});
 
-)
 
 app.controller('DashboardController', function ($scope, UserService, CommentService, RecipeService, $http, $q) {
 	var recipeService = RecipeService;
@@ -836,6 +844,34 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 	}
 });
 
+app.service('SearchRecipeService', function($http, $q){
+    var service = this;
+    
+    service.search = function(search){
+    		$http.post('yum/recipe/search', search)
+    }
+    
+});
+app.controller('SearchRecipesController', function($scope, SearchRecipeService, $http, $q){
+    searchService = SearchRecipeService;
+    
+    $scope.searchRecipes = function(){
+        searchService.search($scope.search).then(
+                function(response){
+                		console.log(response.data)
+                		$scope.foundRecipes = response.data;
+                },
+                function(error){
+                    
+                });
+    }
+    
+    $scope.showRecipe = function(recipe){
+        recipe.show = true;
+        
+    }
+})
+
 
 /**
  * @param message id of the HTML tag to display the message
@@ -846,9 +882,6 @@ function displaySubmitting(message) {
 	displayMessage(message, "alert alert-warning", TIMEOUT_TIME*3);
 }
 
-app.controller('SearchRecipeController', function ($scope, UserService, RecipeService, $http, $q) {
-
-})
 
 function logError(error) {
 	log(error.status + ' error, ' + error.statusText);
