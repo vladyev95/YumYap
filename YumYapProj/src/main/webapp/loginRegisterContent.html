@@ -1,39 +1,72 @@
 <div id="loginRegisterContent" ng-controller="AppController as loginRegister">
-    <nav id="loginRegisterNav" class="navbar navbar-light bg-faded col-3">
-        <a href="" class="nav-item nav-link" ng-click="onLogin = true">Login</a>
-        <a href="" class="nav-item nav-link" ng-click="onLogin = false">Register</a>
-    </nav>
-    
-    <div id="loginContent" class="form-group col-3" ng-show="onLogin" ng-controller="LoginController as login">
+    <br>
+    <br>
+    <div id="loginContent" class="container-fluid" ng-show="loginRegister.onLogin" ng-controller="LoginController as login">
         <form ng-submit="attemptLogin()">
-            <input type="email" placeholder="Email" id="loginEmail" class="form-control" ng-model="user.email" required/>
-            
-            <input type="password" placeholder="Password" id="loginPassword" class="form-control" ng-model="user.password" required/>
-            
-            <button type="submit" id="loginBtn" class="btn btn-primary btn-large form-control">Login</button>
-            <br><br>
-            <p class="alert alert-danger" id="loginMessage" hidden="true">Invalid email or password. Please try again</p>
+            <div class="row">
+                <div class="input-block col-center">
+                    <div class="row form-group">
+                        <img class="col-center" width="360" height="120" src="https://s3.amazonaws.com/yumyapimg/logo/2017_09_30__2__by_4_x_s-dbp2617.png"
+                        />
+                    </div>
+                    <div class="row form-group">
+                        <h3>Log In</h3>
+                    </div>
+                    <div class="row form-group">
+                        <input type="email" placeholder="Email" id="loginEmail" class="form-control" ng-model="user.email" required/>
+                    </div>
+                    <div class="row form-group">
+                        <input type="password" placeholder="Password" id="loginPassword" class="form-control" ng-model="user.password" required/>
+                    </div>
+                    <div class="row form-group">
+                        <button type="submit" id="loginBtn" class="btn btn-primary btn-large form-control">Login</button>
+                    </div>
+                    <div class="row form-group">
+                        <p class="form-control alert alert-danger" id="loginMessage" hidden="true">Invalid email or password. Please try again</p>
+                    </div>
+
+                    Don't have an account?&nbsp;<span class="link" ng-click="loginRegister.onLogin = false">Sign up here.</span>
+                </div>
+            </div>
         </form>
     </div>
-    
-    <div id="registerContent" class="form-group col-3" ng-hide="onLogin" ng-controller="RegisterController as register">
+
+    <div id="registerContent" class="container-fluid" ng-hide="loginRegister.onLogin" ng-controller="RegisterController as register">
         <form ng-submit="attemptRegister()">
-            <input type="text" placeholder="First Name" id="registerFirstName" class="form-control" ng-model="user.firstName" required/>
-            
-            <input type="text" placeholder="Last Name" id="registerLastName" class="form-control" ng-model="user.lastName" required/>
-            
-            <input type="email" placeholder="Email" id="registerEmail" class="form-control" ng-model="user.email" required/>
-           
-            <input type="password" placeholder="Password" id="registerPassword" class="form-control" ng-model="user.password" required/>
+            <div class="row">
+                <div class="input-block col-center">
+                    <div class="row form-group">
+                        <img class="col-center" width="360" height="120" src="https://s3.amazonaws.com/yumyapimg/logo/2017_09_30__2__by_4_x_s-dbp2617.png"
+                        />
+                    </div>
+                    <div class="row form-group">
+                        <h3>Sign Up</h3>
+                    </div>
+                    <div class="row form-group">
+                        <input type="text" placeholder="First name" id="registerFirstName" class="form-control" ng-model="user.firstName" required/>
+                    </div>
+                    <div class="row form-group">
+                        <input type="text" placeholder="Last name" id="registerLastName" class="form-control" ng-model="user.lastName" required/>
+                    </div>
+                    <div class="row form-group">
+                        <input type="email" placeholder="Email" id="registerEmail" class="form-control" ng-model="user.email" required/>
+                    </div>
+                    <div class="row form-group">
+                        <input type="password" placeholder="Password" id="registerPassword" class="form-control" ng-model="user.password" required/>
+                    </div>
+                    <div class="row form-group">
+                        <input type="password" placeholder="Re-enter password" id="registerPassword" class="form-control" ng-model="user.password2" required/>
+                    </div>
+                    <div class="row form-group">
+                        <button type="submit" id="registerBtn" class="btn btn-primary btn-large form-control">Register</button>
+                    </div>
+                    <div class="row form-group">
+                        <p class="alert alert-danger" id="registerMessage" hidden=true></p>
+                    </div>
 
-            <input type="password" placeholder="Password" id="registerPassword" class="form-control" ng-model="user.password2" required/>
-            
-            <button type="submit" id="registerBtn" class="btn btn-primary btn-large form-control">Register</button>
-            <br><br>
-            <p class="alert alert-danger" id="registerMessage" hidden=true></p>
-            
+                    Return to <span class="link" ng-click="loginRegister.onLogin = true">log in.</span>
+                </div>
+            </div>
         </form>
     </div>
-
-   
 </div>
