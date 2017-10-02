@@ -164,7 +164,53 @@ public class RecipeDto implements Comparable<RecipeDto>{
 		this.imageUrl = imageUrl;
 	}
 
+	public List<String> getIngredients() {
+		return this.ingredients;
+	}
+	
+	public void setIngredients(List<String> ingredients) {
+		this.ingredients = ingredients;
+	}
 
+	public List<String> getDirections() {
+		return this.directions;
+	}
+	
+	public void setDirections(List<String> directions) {
+		this.directions = directions;
+	}
+
+	public double getCalories() {
+		return calories;
+	}
+
+	public void setCalories(double calories) {
+		this.calories = calories;
+	}
+
+	public double getFat() {
+		return fat;
+	}
+
+	public void setFat(double fat) {
+		this.fat = fat;
+	}
+
+	public double getCarbs() {
+		return carbs;
+	}
+
+	public void setCarbs(double carbs) {
+		this.carbs = carbs;
+	}
+
+	public double getProtein() {
+		return protein;
+	}
+
+	public void setProtein(double protein) {
+		this.protein = protein;
+	}
 
 	/**
 	 * Returns a nice String representation of this RecipeDto

@@ -61,14 +61,13 @@ public class User {
 	public User() {}
 
 	public User(Set<User> following, String firstName, String lastName, String password, String email,
-			Set<Recipe> favoriteRecipes, SortedSet<Recipe> createdRecipes) {
+			Set<Recipe> favoriteRecipes) {
 		this.following = following;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.password = password;
 		this.email = email;
 		this.favoriteRecipes = favoriteRecipes;
-//		this.createdRecipes = createdRecipes;
 	}
 
 	/**

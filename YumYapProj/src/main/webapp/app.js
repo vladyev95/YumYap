@@ -142,7 +142,7 @@ app.service('RecipeService', function ($http) {
 			service.recipes[0]= recipe;	
 		else
 			service.recipes.unshift(recipe);
-	}
+	};
 	
 	service.getRecipes = function () {
 		return service.recipes;
@@ -178,7 +178,7 @@ app.service('UsersRecipesService', function($http) {
 				console.log(response);
 				console.log('UsersRecipesService response.data: ');
 				console.log(response.data);
-				for (; recipes.length; recipes.pop) 
+				for (; service.recipes.length; service.recipes.pop) 
 					;
 				for (let i=0; i<response.data.length; ++i) {
 					service.recipes.push(response.data[i]);
@@ -390,6 +390,7 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 					$('#addComments-' + recipe.id).attr('hidden', true);
 					$('#commentAdded-'+ recipe.id ).attr('hidden', false);
 					$('#commentAdded-'+ recipe.id ).text('Comment successfully added');
+
 					timeout = setTimeout(function() {
 						$('#commentAdded-'+ recipe.id).attr("hidden", true);
 					}, TIMEOUT_TIME);
@@ -473,7 +474,8 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 
 	$scope.publishRecipe = function () {
 		log('RecipeCtrl create recipe');
-		displaySubmitting("#recipeResponse");
+		let responseText = "#recipeMessage";
+		displaySubmitting(responseText);
 
 		let totalCalories = 0,
 			totalFat = 0,
@@ -507,7 +509,6 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			protein: totalProtein
 		};
 
-		let responseText = "#recipeResponse";
 		if (recipe.name && recipe.description && recipe.ingredients.length > 0 && recipe.directions.length > 0) {
 
 			RecipeService.createRecipe(recipe)
@@ -544,7 +545,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 
 			i = 1;
 
-			$(responseText).text("Recipe successfully created");
+			$(responseText).text("Recipe created");
 			displayMessage(responseText, "alert alert-success");
 		} else {
 			$(responseText).text("name, discription, direction, and steps cannot be empty");
@@ -889,7 +890,7 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
 		var responseText = "#recipe-" + recipe.id;
 		recipeService.favoriteRecipe(recipe, userService.getUser()).then(
 				function (response) {
-					$(responseText).text("Recipe successfully favorited");
+					$(responseText).text("Recipe favorited");
 					
 					displayMessage(responseText, "alert alert-success", undefined, true);
 				},
@@ -918,7 +919,7 @@ function addFavoriteRecipe($http, user, recipe) {
 	return $http.post('yum/user/favorite', dto)
 			.then(function(response) {
 		
-				$(responseText).text("Recipe successfully favorited");
+				$(responseText).text("Recipe favorited");
 		
 				console.log(responseText);
 				displayMessage(responseText, "alert alert-success", undefined, true);
