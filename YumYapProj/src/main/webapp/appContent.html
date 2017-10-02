@@ -72,8 +72,14 @@
 							<button class="btn " ng-click="viewComments(recipe)">View comments</button>
 							<div ng-attr-id="{{ 'showComments-'+ recipe.id }}" hidden=true>
 								<div ng-repeat="comment in comments">
-									<h5 ng-bind="comment.commentor"></h5>
+								<div>
+									<div class="commentHead">
+									<h5 ng-bind="comment.commenter"></h5>
+									</div>
+									<div class="commentBody">
 									<p ng-bind="comment.content"></p>
+									</div>
+								</div>
 								</div>
 							</div>
 						</div>

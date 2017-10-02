@@ -41,9 +41,17 @@
 	width: 360px;
 }
 
-.description {
+.description, .commentBody {
   padding: 20px;
   background: rgba(255, 255, 2555, .5);
+}
+
+.commentBody{
+  width: 20%;
+}
+
+.commentHead{
+  width: 20%;
 }
 
 .row {
