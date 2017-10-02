@@ -244,22 +244,22 @@
 				<button class="btn btn-primary" ng-click="favoriteRecipe(recipe)">Save this recipe</button>
 				<p ng-attr-id="{{ 'recipe-' + recipe.id }}" hidden=true></p>
 
-				<div id="comments">
-					<button class="btn btn-primary" ng-click="startComment()">Add comment</button>
-					<div ng-show="addingComment">
-						<!-- ng-attr-id="{{ 'recipeComment-' + recipe.id }}" -->
-						<textarea ng-model="recipe.comment1" cols="32" rows="5" placeholder="Comment"></textarea>
-						<button ng-click="addComment(recipe, recipe.comment1)">Submit</button>
-					</div>
-					<button class="btn btn-primary" ng-click="viewComments(recipe)">View comments for
-					this recipe</button>
-					<div ng-show="showComments">
-						<div ng-repeat="comment in comments">
-							<h5 ng-bind="comment.commentor.firstName"></h5>
-							<p ng-bind="comment.content"></p>
+				<div class="recipe-content" id="comments">
+							<button class="btn btn-primary" ng-click="startComment(recipe)">Comment</button>
+							<div ng-attr-id="{{ 'addComments-'+ recipe.id }}" hidden=true>
+								<textarea ng-model="recipe.comment1" cols="30" rows="3" placeholder="Comment"></textarea>
+								<button ng-click="addComment(recipe, recipe.comment1)">Submit</button>
+
+							</div ng-attr-id="{{ 'commentAdded-'+ recipe.id }}" hidden ="true">
+							<div></div>
+							<button class="btn btn-primary" ng-click="viewComments(recipe)">View comments</button>
+							<div ng-attr-id="{{ 'showComments-'+ recipe.id }}" hidden=true>
+								<div ng-repeat="comment in comments">
+									<h5 ng-bind="comment.commentor"></h5>
+									<p ng-bind="comment.content"></p>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 

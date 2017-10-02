@@ -362,7 +362,7 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 				function(response){
 					console.log(response);
 					$('#addComments-' + recipe.id).attr('hidden', true);
-					$('commentAdded-'+ recipe.id ).attr('hidden', false);
+					$('#commentAdded-'+ recipe.id ).attr('hidden', false);
 					$('commentAdded-'+ recipe.id ).text('Comment successfully added');
 					timeout = setTimeout(function() {
 						$('commentAdded-'+ recipe.id).attr("hidden", true);
@@ -376,7 +376,7 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 	 $scope.viewComments = function(recipe){
 		RecipeService.viewComments(recipe).then(
 				function(response){
-					$('showComments-'+ recipe.id).attr('hidden', false);
+					$('#showComments-'+ recipe.id).attr('hidden', false);
 					console.log(response);
 					$scope.comments = response.data;
 				},
