@@ -322,7 +322,7 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 	log('in AppController');
 	$scope.tab = 'Home';
 
-	$scope.onLogin = true;
+	this.onLogin = true;
 
 	$scope.switchToHome = function () {
 		log('switching to \'Home\' tab');
