@@ -429,7 +429,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 						
 						$('#recipeImage').attr('src', BUCKET_PATH + encodeURIComponent(imageKey));
 						log('uri= '+$scope.recipeImageUri);
-					}, 4000);
+					}, 3000);
 				}
 			});
 		};
