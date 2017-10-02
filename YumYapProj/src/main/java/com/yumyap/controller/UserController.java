@@ -138,8 +138,10 @@ public class UserController {
 	}
 
 	
-	@RequestMapping(value = "/favorite", method = { RequestMethod.POST }, consumes = {
-			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	@RequestMapping(value = "/favorite", 
+			method = RequestMethod.POST, 
+			consumes = MediaType.APPLICATION_JSON_VALUE, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> addFavoriteRecipe(@RequestBody UsrRecDto dto) {
 		System.out.println("favoriting this recipe");
 		System.out.println("userDto: " + dto);
