@@ -178,7 +178,7 @@ app.service('UsersRecipesService', function($http) {
 				console.log(response);
 				console.log('UsersRecipesService response.data: ');
 				console.log(response.data);
-				for (; recipes.length; recipes.pop) 
+				for (; service.recipes.length; service.recipes.pop) 
 					;
 				for (let i=0; i<response.data.length; ++i) {
 					service.recipes.push(response.data[i]);
