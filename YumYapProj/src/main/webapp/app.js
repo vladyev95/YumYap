@@ -317,7 +317,8 @@ app.controller('ViewAuthorController', function ($scope, ViewAuthorService, User
 
 
 /* AppController */
-app.controller('AppController', function ($scope, ViewAuthorService, RecipeService, UsersRecipesService) {
+app.controller('AppController', function ($scope, ViewAuthorService, RecipeService, CommentService, UsersRecipesService) {
+
 	log('in AppController');
 	$scope.tab = 'Home';
 
@@ -327,7 +328,6 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 		log('switching to \'Home\' tab');
 		$scope.tab = 'Home';
 	};
-
 	$scope.switchToCreateRecipe = function () {
 		log('switching to \'Create Recipe\' tab');
 		$scope.tab = 'CreateRecipe';
@@ -342,11 +342,40 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 		UsersRecipesService.makeRequest();
 		
 	}
-	
 	$scope.switchToSearchRecipe = function(){
 		log('switching to \'Create Recipe\' tab');
 		$scope.tab = 'SearchRecipes';
-	};
+	}
+	 $scope.startComment = function(number){
+ 		console.log("providing text space for a comment");
+ 		$scope.addingComment = true;
+ }
+	 $scope.addComment = function(recipe, content){
+		console.log('commenting: ');
+		console.log(content);
+		CommentService.setComment(content);
+		CommentService.setUser(userService.getUser());
+		CommentService.setRecipe(recipe);
+		console.log('sending ');
+		console.log(CommentService.getComment());
+		recipeService.addComment(CommentService.getComment()).then(
+				function(response){
+					console.log(response);
+				},
+				function(error){
+					console.log('error');
+					console.log(error);
+				});
+	}
+	 $scope.viewComments = function(recipe){
+		RecipeService.viewComments(recipe).then(
+				function(response){
+					$scope.showComments = true;
+					console.log(response);
+					$scope.comments = response.data;
+				},
+				function(error){console.log(error)});	
+	}
 
 });
 /* AppController */
@@ -787,30 +816,6 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 		addFavoriteRecipe($http, userService.getUser(), recipe);		
 	}
 	
-	$scope.addComment = function(recipe){
-		commentService.setComment($scope.commentContent);
-		commentService.setUser(userService.getUser());
-		commentService.setRecipe(recipe);
-		recipeService.addComment(commentService.getComment()).then(
-				function(response){
-					console.log(response);
-				},
-				function(error){
-					console.log(error);
-				});
-		
-	}
-	$scope.viewComments = function(recipe){
-		recipeService.viewComments(recipe).then(
-				function(response){
-					
-				},
-				function(error){
-					
-				});
-		
-	}
-	
 });
 
 app.service('SearchRecipeService', function($http, $q){
@@ -845,57 +850,27 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
     }
    
     $scope.favoriteRecipe = function(recipe){
-		console.log("favoriteRecipe in SearchRecipesController");
-		console.log(recipe);
-		
-		addFavoriteRecipe($http, userService.getUser(), recipe);
-	}
-    
-    
-    this.index;
-    
-    $scope.startComment = function(number){
-    		console.log("providing text space for a comment");
-    		$scope.addingComment = true;
-    		this.index = number;
-    }
-    
-    $scope.addComment = function(recipe){
-		commentService.setComment($scope.index);
-		console.log($scope.recipes.recipe.creator);
-		console.log($scope.recipe.comment);
-		commentService.setUser(userService.getUser());
-		commentService.setRecipe(recipe);
-		console.log('sending ');
-		console.log(commentService.getComment());
-		recipeService.addComment(commentService.getComment()).then(
-				function(response){
-					console.log(response);
-				},
-				function(error){
-					console.log('error');
-					console.log(error);
-				});
-		
-	}
-	$scope.viewComments = function(recipe){
-		recipeService.viewComments(recipe).then(
-				function(response){
+    		console.log("favoriting a recipe in SearchRecipesController");
+		var responseText = "#recipe-" + recipe.id;
+		recipeService.favoriteRecipe(recipe, userService.getUser()).then(
+				function (response) {
+					$(responseText).text("Recipe successfully favorited");
 					
+					displayMessage(responseText, "alert alert-success", undefined, true);
 				},
-				function(error){
+				function (error) {
 					
-				});
-		
+					if (error == 409)
+						$(responseText).text("You have already favorited that recipe");
+					else if (error == 406)
+						$(responseText).text("User or Recipe are not valid");
+					else $(responseText).text("Something went wrong");
+					
+					displayMessage(responseText, "alert alert-danger", undefined, true);
+				}
+				);	
 	}
-	
-	$scope.viewAuthor = function(recipe){
-		recipeService.viewAuthor(recipe);
-	}
-    
-//    $scope.showRecipe = function(recipe){
-//        recipe.show = true;  
-//    }
+
 })
 
 function addFavoriteRecipe($http, user, recipe) {

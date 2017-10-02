@@ -1,8 +1,12 @@
 package com.yumyap.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.GregorianCalendar;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +16,7 @@ import com.yumyap.beans.Comment;
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
 import com.yumyap.dao.Dao;
+import com.yumyap.dto.CommentDto;
 import com.yumyap.dto.RecipeDto;
 
 /**
@@ -37,10 +42,18 @@ public class CommentService {
 	 * @param recipeDto The RecipeDto corresponding to the actual Recipe for which to get the Comments
 	 * @return A List of Comments for the specified Recipe, sorted from newest to oldest
 	 */
-	public List<Comment> getRecipeComments(RecipeDto recipeDto) {
+	public List<CommentDto> getRecipeComments(RecipeDto recipeDto) {
 		Recipe recipe = dao.getRecipeById(recipeDto.getId());
-		List<Comment> comments = new ArrayList<>(recipe.getComments());
-		Collections.sort(comments, (c1, c2) -> -c1.getDate().compareTo(c2.getDate()));
+		Set<CommentDto> comment = new LinkedHashSet<CommentDto>();
+		comment.addAll(dao.getCommentsByRecipe(recipe));
+		logger.trace(comment);
+		List<CommentDto> comments = new ArrayList<CommentDto>(); //recipe.getComments()
+//		System.out.println(comments);
+		comments.addAll(comment);
+		if(comments != null && comments.size() > 1) {
+			logger.trace("sorting comments by date");
+		Collections.sort(comments, (c1, c2) -> -c1.getCommentDate().compareTo(c2.getCommentDate()));
+		}
 		return comments;
 	}
 	
@@ -49,10 +62,12 @@ public class CommentService {
 	 * @param comment The Comment to be added
 	 */
 	public void createComment(Comment comment) {
-		logger.trace("createComment() with " + comment);
+		comment.setDate(new  GregorianCalendar());
 		User commenter = dao.getUserById(comment.getCommenter().getId());
 		comment.setCommenter(commenter);
 		Recipe recipe = dao.getRecipeById(comment.getRecipe().getId());
+		comment.setRecipe(recipe);
+		logger.trace("createComment() with " + comment);
 		dao.addComment(comment);
 	}
 }

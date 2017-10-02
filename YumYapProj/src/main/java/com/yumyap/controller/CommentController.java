@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.yumyap.beans.Comment;
+import com.yumyap.dto.CommentDto;
 import com.yumyap.dto.RecipeDto;
 import com.yumyap.service.CommentService;
 
@@ -60,9 +61,9 @@ public class CommentController {
 				method = RequestMethod.POST,
 				consumes = MediaType.APPLICATION_JSON_VALUE, 
 				produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Comment>> recipeComments(@RequestBody RecipeDto recipeDto) {
+	public ResponseEntity<List<CommentDto>> recipeComments(@RequestBody RecipeDto recipeDto) {
 		logger.trace("recipeComments() by " + recipeDto);
-		List<Comment> comments = commentService.getRecipeComments(recipeDto);
-		return new ResponseEntity<List<Comment>>(comments, HttpStatus.OK);
+		List<CommentDto> comments = commentService.getRecipeComments(recipeDto);
+		return new ResponseEntity<List<CommentDto>>(comments, HttpStatus.OK);
 	}
 }

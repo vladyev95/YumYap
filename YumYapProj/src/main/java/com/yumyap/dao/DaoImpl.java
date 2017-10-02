@@ -1,4 +1,5 @@
 package com.yumyap.dao;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,6 +17,8 @@ import com.yumyap.beans.Comment;
 import com.yumyap.beans.FoodItem;
 import com.yumyap.beans.Recipe;
 import com.yumyap.beans.User;
+import com.yumyap.dto.CommentDto;
+import com.yumyap.dto.RecipeDto;
 
 /**
  * An implementation of the Dao interface
@@ -170,11 +173,27 @@ public class DaoImpl implements Dao {
 		return sessionFactory.getCurrentSession();
 	}
 
-	public void addCommentForRecipeById(int id, Comment comment) {
-		logger.trace("addCommentForRecipyById() for id: " + id + " comment: " + comment);
+//	public void addCommentForRecipeById(int id, Comment comment) {
+//		logger.trace("addCommentForRecipyById() for id: " + id + " comment: " + comment);
+//		Session session = sessionFactory.getCurrentSession();
+//		Recipe recipe = getRecipeById(id);
+//		recipe.getComments().add(comment);
+//		session.merge(recipe);
+//	}
+	
+	public List<CommentDto> getCommentsByRecipe(Recipe recipe) {
 		Session session = sessionFactory.getCurrentSession();
-		Recipe recipe = getRecipeById(id);
-		recipe.getComments().add(comment);
-		session.merge(recipe);
+		List<Comment> comments = session.createCriteria(Comment.class).add(Restrictions.eq("recipe", recipe)).list();
+		logger.trace("getting comments " +comments);
+		List<CommentDto> commentDtos = new ArrayList<>();
+		Comment a = comments.get(0);
+		for(Comment c: comments) {
+			logger.trace("converting "+c +" to comment dto");
+			logger.trace(a.equals(c));
+			commentDtos.add(new CommentDto(c));
+			a = c;
+		}
+		System.out.println(comments);
+		return commentDtos;
 	}
 }
