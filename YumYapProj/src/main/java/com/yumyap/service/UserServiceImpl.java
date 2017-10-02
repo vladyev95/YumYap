@@ -1,5 +1,6 @@
 package com.yumyap.service;
 
+
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -72,7 +73,7 @@ public class UserServiceImpl implements UserService {
 		User user = dao.getUserById(simpleUserDto.getId());
 		List<RecipeDto> recipes = dao.getUsersRecipes(user).stream()
 			.map(recipe -> new RecipeDto(recipe)).collect(Collectors.toList());
-		 
+		recipes.addAll(dao.getUserById(simpleUserDto.getId()).getFavoriteRecipes().stream().map(recipe -> new RecipeDto(recipe)).collect(Collectors.toList()));
 		recipes.sort((r1, r2) -> {
 			if (r1.getDateCreated() == null && r2.getDateCreated() == null)
 				return 0;
@@ -112,10 +113,8 @@ public class UserServiceImpl implements UserService {
 		
 		if (user == null) 
 			return new ArrayList<>();
-		
+		recipes.addAll(userDto.getFavoriteRecipes());
 		Set<User> following = user.getFollowing();
-		
-		
 		dao.getUsersRecipes(user)
 			.stream()
 			.map(recipe -> new RecipeDto(recipe))
@@ -194,6 +193,18 @@ public class UserServiceImpl implements UserService {
 		.forEach(recipe -> recipes.add(recipe));
 		System.out.println(recipes);
 		return recipes;
+	}
+
+	@Override
+	public boolean followeUser(UserDto user) {
+		Set<User> following = new LinkedHashSet<User>();
+		for(SimpleUserDto u: user.getFollowing()) {
+			following.add(dao.getUserById(u.getId()));
+		}
+		User mainUser = dao.getUserById(user.getId());
+		mainUser.setFollowing(following);
+		dao.updateUser(mainUser);
+		return true;
 	}
 
 }
