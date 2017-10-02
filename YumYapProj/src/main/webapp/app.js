@@ -134,11 +134,15 @@ app.service('RecipeService', function ($http) {
 		// TODO
 	};
 
-	service.recipes = {};
+	service.recipes = [];
 
 	service.setRecipes = function (data) {
 		service.recipes = data;
 	};
+	
+	service.addRecipe = function (recipe){
+		service.recipes.push(recipe)
+	}
 	
 	service.getRecipes = function () {
 		return service.recipes;
@@ -346,9 +350,9 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 		log('switching to \'Create Recipe\' tab');
 		$scope.tab = 'SearchRecipes';
 	}
-	 $scope.startComment = function(number){
+	 $scope.startComment = function(recipe){
  		console.log("providing text space for a comment");
- 		$scope.addingComment = true;
+ 		$('#addComments-' + recipe.id).attr('hidden', false);
  }
 	 $scope.addComment = function(recipe, content){
 		console.log('commenting: ');
@@ -361,6 +365,12 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 		recipeService.addComment(CommentService.getComment()).then(
 				function(response){
 					console.log(response);
+					$('#addComments-' + recipe.id).attr('hidden', true);
+					$('#commentAdded-'+ recipe.id ).attr('hidden', false);
+					$('commentAdded-'+ recipe.id ).text('Comment successfully added');
+					timeout = setTimeout(function() {
+						$('commentAdded-'+ recipe.id).attr("hidden", true);
+					}, TIMEOUT_TIME);
 				},
 				function(error){
 					console.log('error');
@@ -370,7 +380,7 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 	 $scope.viewComments = function(recipe){
 		RecipeService.viewComments(recipe).then(
 				function(response){
-					$scope.showComments = true;
+					$('#showComments-'+ recipe.id).attr('hidden', false);
 					console.log(response);
 					$scope.comments = response.data;
 				},
@@ -478,10 +488,8 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 				.then(
 				function (response) {
 					console.log(response);
-					$scope.recipes = response.data.recipes;
+					//$scope.recipes = response.data.recipes;
 					console.log(response.data.recipes);
-					recipeService.setRecipes(response.data);
-					console.log("The last");
 					console.log(recipeService.getRecipes());
 
 					$(responseText).text("Recipe created");
@@ -796,11 +804,11 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 		.then(
 				function (response) {
 					console.log(response);
-					$scope.recipes = response.data;
+					//$scope.recipes = response.data;
 					console.log(response.data);
 					recipeService.setRecipes(response.data);
 					console.log("The last");
-					console.log(recipeService.getRecipes());
+					$scope.recipes = recipeService.getRecipes();
 					return response;
 
 				}, function (error) {
