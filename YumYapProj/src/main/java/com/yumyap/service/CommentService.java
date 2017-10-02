@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +68,11 @@ public class CommentService {
 		comment.setCommenter(commenter);
 		Recipe recipe = dao.getRecipeById(comment.getRecipe().getId());
 		comment.setRecipe(recipe);
+//		SortedSet<Comment> com = recipe.getComments();
+//		com.add(comment);
+//		recipe.setComments(com);
 		logger.trace("createComment() with " + comment);
+//		dao.updateRecipe(recipe);
 		dao.addComment(comment);
 	}
 }

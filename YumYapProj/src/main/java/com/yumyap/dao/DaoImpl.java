@@ -196,4 +196,10 @@ public class DaoImpl implements Dao {
 		System.out.println(comments);
 		return commentDtos;
 	}
+
+	@Override
+	public void updateRecipe(Recipe recipe) {
+		Session session = sessionFactory.getCurrentSession();
+		session.saveOrUpdate(recipe);
+	}
 }

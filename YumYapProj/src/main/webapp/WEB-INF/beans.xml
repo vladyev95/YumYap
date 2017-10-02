@@ -21,9 +21,9 @@
 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
-		<property name="url" value="jdbc:oracle:thin:@vladdb.ckwavtaqqhv9.us-east-2.rds.amazonaws.com:1521:ORCL"></property>
-		<property name="username" value="vladyev"></property>
-		<property name="password" value="p4ssw0rd"></property>
+		<property name="url" value="jdbc:oracle:thin:@mydbone.cwgeyy5s0tre.us-east-1.rds.amazonaws.com:1521:ORCL"></property>
+		<property name="username" value="ekbownes"></property>
+		<property name="password" value="mypassw0rd"></property>
 	</bean>
 
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">

@@ -83,4 +83,6 @@ public interface Dao {
 	
 	
 	List<CommentDto> getCommentsByRecipe(Recipe recipe);
+
+	void updateRecipe(Recipe recipe);
 }

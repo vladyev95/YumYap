@@ -315,7 +315,10 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 		console.log(CommentService.getComment());
 		recipeService.addComment(CommentService.getComment()).then(
 				function(response){
+					$scope.addingComment = false;
+					$scope.commentMessage = "Comment Successfully added";
 					console.log(response);
+					
 				},
 				function(error){
 					console.log('error');
@@ -426,9 +429,10 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			protein: totalProtein
 		};
 		
+		let responseText = "#recipeResponse";
 		if(recipe.name && recipe.description && recipe.ingredients.length > 0 && recipe.directions.length > 0) {
 			
-			let responseText = "#recipeResponse";
+			
 			RecipeService.createRecipe(recipe)
 				.then(
 					function (response) {
@@ -461,7 +465,9 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			$scope.ingredients2 = [];
 			$scope.steps = [];
 			$scope.recipeImage = [];
+			$('#recipeImage').attr('src', '');
 			$scope.recipeImageFile = [];
+			$('recipeImageFile').attr('value', '');
 
 			i = 1;
 			

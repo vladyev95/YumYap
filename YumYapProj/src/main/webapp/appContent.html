@@ -54,7 +54,12 @@
 				<button class="btn btn-primary" ng-click="startComment()">Add comment</button>
 				<div ng-show="addingComment">
 				<textarea ng-model="recipe.comment1" cols="32" rows="5" placeholder="Comment"></textarea>
+				<br>
+				
 					<button ng-click="addComment(recipe, recipe.comment1)">Submit</button>
+					<br>
+					<div ng-bind="commentMessage">
+					</div>
 
 				</div>
 				<button class="btn btn-primary" ng-click="viewComments(recipe)">View comments for
@@ -114,8 +119,12 @@
 				<div ng-show="addingComment">
 
 				<textarea ng-model="recipe.comment1" cols="32" rows="5" placeholder="Comment"></textarea>
+					<br>
+				
 					<button ng-click="addComment(recipe, recipe.comment1)">Submit</button>
-
+					<br>
+					<div ng-bind="commentMessage">
+					</div>
 				</div>
 				<button class="btn btn-primary" ng-click="viewComments(recipe)">View comments for
 					this recipe</button>
@@ -237,8 +246,13 @@
 				<div ng-show="addingComment">
 				 <!-- ng-attr-id="{{ 'recipeComment-' + recipe.id }}" -->
 				<textarea ng-model="recipe.comment1" cols="32" rows="5" placeholder="Comment"></textarea>
+				<br>
+				
 					<button ng-click="addComment(recipe, recipe.comment1)">Submit</button>
+					<br>
 				</div>
+				<div ng-show="commentMessage" class="" ng-bind="commentMessage">
+					</div>
 				<button class="btn btn-primary" ng-click="viewComments(recipe)">View comments for
 					this recipe</button>
 				<div ng-show="showComments">
