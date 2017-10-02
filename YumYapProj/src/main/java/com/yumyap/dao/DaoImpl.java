@@ -116,7 +116,28 @@ public class DaoImpl implements Dao {
 		
 		logger.trace("got " + user);
 		return user;
-	}	
+	}
+	
+	@Override
+	public User getUser(String email) {
+		logger.trace("getUserByEmail() " + email);
+		Session session = sessionFactory.getCurrentSession();
+		User user = (User) session
+				.createCriteria(User.class)
+				.add(Restrictions.ilike("email", email)).uniqueResult();
+		
+		if (user == null)
+			return null;
+		
+		user.getFavoriteRecipes().stream()
+			.forEach(recipe -> recipe.getId());
+		
+		user.getFollowing().stream()
+			.forEach(userProxy -> userProxy.getId());
+		
+		logger.trace("got " + user);
+		return user;
+	}
 
 	@Override
 	public Set<Recipe> getFollowingRecipes(User user) {

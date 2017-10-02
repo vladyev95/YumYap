@@ -83,4 +83,6 @@ public interface Dao {
 	
 	
 	List<CommentDto> getCommentsByRecipe(Recipe recipe);
+
+	User getUser(String email);
 }

@@ -40,12 +40,29 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User attemptLogin(String email, String password) {
 		logger.trace("attemptLogin(" + email + ", " + password + ") ");
-		return dao.getUserByEmailAndPassword(email, password);
+		User user = dao.getUser(email);
+		if (user == null) return null;
+		
+		try {
+			if (Password.check(password, user.getPassword()))
+				return user;
+		} catch (Exception e) {
+			logger.trace(e);
+		}
+		
+		return null;
 	}
 
 	@Override
 	public boolean attemptRegister(User user) {
-		return dao.addUser(user);
+		try {
+			user.setPassword(Password.getSaltedHash(user.getPassword()));
+			return dao.addUser(user);
+		} catch (Exception e) {
+			logger.trace(e);
+			return false;
+		}
+		
 	}
 
 	
