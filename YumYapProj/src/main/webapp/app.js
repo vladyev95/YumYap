@@ -79,6 +79,8 @@ app.service("UserService", function ($http, $q) {
 		service.user.favoriteRecipes = data.favoriteRecipes;
 		console.log(service.user);
 	};
+	
+	
 });
 
 
@@ -170,6 +172,10 @@ app.service('UsersRecipesService', function($http) {
 		service.id = id;
 	};
 	
+	service.getRecipes = function(){
+		return service.recipes;
+	}
+	
 	service.makeRequest = function() {
 		$http.post('yum/recipe/usersRecipes', { id: service.id })
 			.then(function(response) {
@@ -177,10 +183,11 @@ app.service('UsersRecipesService', function($http) {
 				console.log(response);
 				console.log('UsersRecipesService response.data: ');
 				console.log(response.data);
-				service.recipes = [];
-				for (let i=0; i<response.data.length; ++i) {
-					service.recipes.push(response.data[i]);
-				}
+				service.recipes = response.data;
+//				for (let i=0; i<response.data.length; i++) {
+//					console.log(response.data[i]);
+//					service.recipes.push(response.data[i]);
+//				}
 			}, function(error) {
 				console.log('UsersRecipesService error: ');
 				console.log(error);
@@ -324,7 +331,7 @@ app.service('ViewAuthorService', function ($http) {
 app.controller('ViewAuthorController', function ($scope, ViewAuthorService, UserService, UsersRecipesService) {
 	console.log('in ViewAuthorController');
 	$scope.user = ViewAuthorService.user;
-	$scope.recipes = UsersRecipesService.recipes;
+	$scope.recipes = UsersRecipesService.getRecipes();
 	
 	$scope.follow = function(){
 		var currentUser = UserService.getUser();
@@ -406,6 +413,10 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 				},
 				function(error){console.log(error)});	
 	}
+	 $scope.getDate = function(long){
+		 var date = new Date(date);
+		 return date.toString();
+	 }
 
 });
 /* AppController */
@@ -825,6 +836,8 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 				function (response) {
 					console.log(response);
 					console.log(response.data);
+					console.log(response.data[0].directions);
+					console.log(response.data[0].ingredients)
 					recipeService.setRecipes(response.data);
 					$scope.recipes = recipeService.getRecipes();
 					$scope.welcomeMessage = recipeService.getRecipes().length;
