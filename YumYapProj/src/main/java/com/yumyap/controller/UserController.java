@@ -194,14 +194,14 @@ public class UserController {
 	 * @param follower
 	 * @return HttpStatus.OK on success, HttpStatus.CONFLICT or HttpStatus.NOT_ACCEPTABLE on failure
 	 */
-	@RequestMapping(value = "/addFollower", method = { RequestMethod.POST }, consumes = {
+	@RequestMapping(value = "/follow", method = { RequestMethod.POST }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Void> addFollower(@RequestBody UserDto user, @RequestBody UserDto follower) {
+	public ResponseEntity<Void> addFollower(@RequestBody UserDto user) {
 		logger.trace("Adding a follower");
 
-		if (user == null || follower == null)
+		if (user == null)
 			return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
-		if (userService.addFollower(user, follower))
+		if (userService.followeUser(user))
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		else {
 			logger.info("The user is already following that person");

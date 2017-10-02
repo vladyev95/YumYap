@@ -1,5 +1,6 @@
 package com.yumyap.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -177,6 +178,18 @@ public class UserServiceImpl implements UserService {
 		.forEach(recipe -> recipes.add(recipe));
 		System.out.println(recipes);
 		return recipes;
+	}
+
+	@Override
+	public boolean followeUser(UserDto user) {
+		Set<User> following = new LinkedHashSet<User>();
+		for(SimpleUserDto u: user.getFollowing()) {
+			following.add(dao.getUserById(u.getId()));
+		}
+		User mainUser = dao.getUserById(user.getId());
+		mainUser.setFollowing(following);
+		dao.updateUser(mainUser);
+		return true;
 	}
 
 }
