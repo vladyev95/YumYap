@@ -3,8 +3,6 @@ package com.yumyap.beans;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import org.hibernate.annotations.Parent;
-
 /**
  * An object representing the FoodItems that constitute the ingredient list of a
  * Recipe
