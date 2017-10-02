@@ -126,7 +126,7 @@ app.service('RecipeService', function ($http) {
 		console.log(recipe);
 		console.log(userService.getUser());
 		
-		addFavoriteRecipe($http, userService.getUser(), recipe);
+		return addFavoriteRecipe($http, userService.getUser(), recipe);
 	};
 
 	service.viewAuthor = function(recipe){

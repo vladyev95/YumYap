@@ -93,6 +93,7 @@ public class UserController {
 		logger.trace("loadDashboard() by " + userDto);
 		
 		List<RecipeDto> recipeDtos = userService.getDashboard(userDto);
+		
 		recipeDtos.sort((r1, r2) -> 
 			{
 				if (r1.getDateCreated() == null && r2.getDateCreated() == null)

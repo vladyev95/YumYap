@@ -1,6 +1,6 @@
 package com.yumyap.service;
 
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
 		User user = dao.getUserById(simpleUserDto.getId());
 		List<RecipeDto> recipes = dao.getUsersRecipes(user).stream()
 			.map(recipe -> new RecipeDto(recipe)).collect(Collectors.toList());
-		 
+		recipes.addAll(dao.getUserById(simpleUserDto.getId()).getFavoriteRecipes().stream().map(recipe -> new RecipeDto(recipe)).collect(Collectors.toList()));
 		recipes.sort((r1, r2) -> {
 			if (r1.getDateCreated() == null && r2.getDateCreated() == null)
 				return 0;
@@ -96,10 +96,8 @@ public class UserServiceImpl implements UserService {
 		
 		if (user == null) 
 			return new ArrayList<>();
-		
+		recipes.addAll(userDto.getFavoriteRecipes());
 		Set<User> following = user.getFollowing();
-		
-		
 		dao.getUsersRecipes(user)
 			.stream()
 			.map(recipe -> new RecipeDto(recipe))
