@@ -58,10 +58,10 @@
 						</ol>
 					</div>
 				-->
-						<div id="comments" class="recipe-content">
+						<div class="recipe-content" id="comments">
 							<button class="btn btn-primary" ng-click="startComment()">Comment</button>
 							<div ng-show="addingComment">
-								<textarea ng-model="recipe.comment1" cols="32" rows="5" placeholder="Comment"></textarea>
+								<textarea ng-model="recipe.comment1" cols="30" rows="3" placeholder="Comment"></textarea>
 								<button ng-click="addComment(recipe, recipe.comment1)">Submit</button>
 
 							</div>
@@ -155,11 +155,14 @@
 		<div ng-controller="RecipeCtrl">
 			<div id="recipe-head" class="recipe-content">
 				<h1 ng-bind="recipeName"></h1>
-				<input ng-model="recipeName" placeholder="Recipe name" /> <br>
-				<br> <input type="file" id="recipeImageFile" />
+				<input ng-model="recipeName" placeholder="Recipe name" />
+				<br>
+				<br>
+				<input type="file" id="recipeImageFile" />
 				<button class="btn btn-primary" ng-click="uploadRecipeImage()">Save Image</button>
-				<br> <img ng-src="{{ recipeImageUri }}" id="recipeImage" width="300" height="300" /> <br>
-				<br><br>
+				<br>
+				<img ng-src="{{ recipeImageUri }}" width="300" height="300" id="recipeImage" />
+				<br>
 				<p id="uploadImageMessage" hidden=true></p>
 
 				<textarea ng-model="recipeDescription" cols="36" rows="5" placeholder="Description"></textarea>

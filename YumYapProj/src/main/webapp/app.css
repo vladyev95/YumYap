@@ -47,6 +47,10 @@
   background: rgba(255, 255, 2555, .5);
 }
 
+.row {
+  padding-bottom: 5px;
+}
+
 .right {
   float: right;
   overflow: hidden;
