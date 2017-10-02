@@ -346,9 +346,9 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 		log('switching to \'Create Recipe\' tab');
 		$scope.tab = 'SearchRecipes';
 	}
-	 $scope.startComment = function(number){
+	 $scope.startComment = function(recipe){
  		console.log("providing text space for a comment");
- 		$scope.addingComment = true;
+ 		$('#addComments-' + recipe.id).attr('hidden', false);
  }
 	 $scope.addComment = function(recipe, content){
 		console.log('commenting: ');
@@ -361,6 +361,12 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 		recipeService.addComment(CommentService.getComment()).then(
 				function(response){
 					console.log(response);
+					$('#addComments-' + recipe.id).attr('hidden', true);
+					$('commentAdded-'+ recipe.id ).attr('hidden', false);
+					$('commentAdded-'+ recipe.id ).text('Comment successfully added');
+					timeout = setTimeout(function() {
+						$('commentAdded-'+ recipe.id).attr("hidden", true);
+					}, TIMEOUT_TIME);
 				},
 				function(error){
 					console.log('error');
@@ -370,7 +376,7 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 	 $scope.viewComments = function(recipe){
 		RecipeService.viewComments(recipe).then(
 				function(response){
-					$scope.showComments = true;
+					$('showComments-'+ recipe.id).attr('hidden', false);
 					console.log(response);
 					$scope.comments = response.data;
 				},
