@@ -121,12 +121,12 @@ app.service('RecipeService', function ($http) {
 		return $http.post('yum/user/dash', user);
 	};
 
-	service.favoriteRecipe = function(recipe, user){
-		console.log('favoriting a recipe in RecipeService: ');
+	service.favoriteRecipe = function(recipe){
+		console.log('favoriteRecipe in RecipeService: ');
 		console.log(recipe);
-		console.log(user);
+		console.log(userService.getUser());
 		
-		return $http.post('yum/user/favorite', recipe, user);
+		addFavoriteRecipe($http, userService.getUser(), recipe);
 	};
 
 	service.viewAuthor = function(recipe){
@@ -139,6 +139,7 @@ app.service('RecipeService', function ($http) {
 	service.setRecipes = function (data) {
 		service.recipes = data;
 	};
+	
 	service.getRecipes = function () {
 		return service.recipes;
 	};
@@ -151,6 +152,32 @@ app.service('RecipeService', function ($http) {
 		return $http.post('yum/comments/create', comment);
 	};
 
+});
+
+app.service('UsersRecipesService', function($http) {
+	let service = this;
+	
+	service.recipes = [];
+	
+	service.setId = function(id) {
+		service.id = id;
+	};
+	
+	service.makeRequest = function() {
+		$http.post('yum/recipe/usersRecipes', { id: service.id })
+			.then(function(response) {
+				console.log('UsersRecipesService response: ');
+				console.log(response);
+				console.log('UsersRecipesService response.data: ');
+				console.log(response.data);
+				for (let i=0; i<response.data.length; ++i) {
+					service.recipes.push(response.data[i]);
+				}
+			}, function(error) {
+				console.log('UsersRecipesService error: ');
+				console.log(error);
+			});
+	}
 });
 
 
@@ -254,30 +281,43 @@ function displayMessage(response, setClass, time, dontClear) {
 
 /* ViewAuthorService */
 app.service('ViewAuthorService', function ($http) {
-	console.log("in ViewAuthorService");
 	let service = this;
 	
-	service.email = '';
+	service.user = {};
 	
-	service.setEmail = function (email) {
-		service.email = email;
+	service.setId = function (id) {
+		service.id = id;
+	};
+	
+	service.makeRequest = function() {
+		$http.post('yum/user/profile', { id: service.id })
+		.then(function(response) {
+			console.log('ViewAuthor response: ');
+			console.log(response);
+			console.log('ViewAuthor response.data: ');
+			console.log(response.data);
+			service.user.id = response.data.id;
+			service.user.email = response.data.email;
+			service.user.firstName = response.data.firstName;
+			service.user.lastName = response.data.lastName;
+		}, function(error) {
+			console.log('ViewAuthorService error: ');
+			console.log(error);
+		});
 	};
 
-	service.getEmail = function () {
-		return service.email;
-	};
-
-	
 });
 /* ViewAuthorService */
 
-app.controller('ViewAuthorController', function ($scope, ViewAuthorService, RecipeService, UserService) {
-
+app.controller('ViewAuthorController', function ($scope, ViewAuthorService, UsersRecipesService) {
+	console.log('in ViewAuthorController');
+	$scope.user = ViewAuthorService.user;
+	$scope.recipes = UsersRecipesService.recipes;
 });
 
 
 /* AppController */
-app.controller('AppController', function ($scope, ViewAuthorService, RecipeService, CommentService) {
+app.controller('AppController', function ($scope, ViewAuthorService, RecipeService, CommentService, UsersRecipesService) {
 
 	log('in AppController');
 	$scope.tab = 'Home';
@@ -292,10 +332,15 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 		log('switching to \'Create Recipe\' tab');
 		$scope.tab = 'CreateRecipe';
 	};
-	$scope.viewAuthor = function(email) {
-		console.log('viewAuthor(' + email + ')');
+	
+	$scope.viewAuthor = function(id) {
+		console.log('viewAuthor(' + id + ')');
 		$scope.tab = 'ViewAuthor';
-		ViewAuthorService.setEmail(email);
+		ViewAuthorService.setId(id);
+		ViewAuthorService.makeRequest();
+		UsersRecipesService.setId(id);
+		UsersRecipesService.makeRequest();
+		
 	}
 	$scope.switchToSearchRecipe = function(){
 		log('switching to \'Create Recipe\' tab');
@@ -738,7 +783,6 @@ app.service('CommentService', function ($http, $q){
 	
 });
 
-
 app.controller('DashboardController', function ($scope, UserService, CommentService, RecipeService, $http, $q) {
 	var recipeService = RecipeService;
 	var userService = UserService;
@@ -768,15 +812,11 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 
 	$scope.favoriteRecipe = function(recipe){
 		console.log("favoriteRecipe in DasboardController");
-		recipeService.favoriteRecipe(recipe, userService.getUser());
-		
+
+		addFavoriteRecipe($http, userService.getUser(), recipe);		
 	}
 	
 });
-
-	
-	
-
 
 app.service('SearchRecipeService', function($http, $q){
     var service = this;
@@ -808,7 +848,7 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
                     ;
                 });
     }
-    
+   
     $scope.favoriteRecipe = function(recipe){
     		console.log("favoriting a recipe in SearchRecipesController");
 		var responseText = "#recipe-" + recipe.id;
@@ -833,6 +873,34 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
 
 })
 
+function addFavoriteRecipe($http, user, recipe) {
+	var responseText = "#recipe-" + recipe.id;
+	displaySubmitting(responseText);
+	var dto = {};
+	dto.user = user;
+	dto.recipe = recipe;
+	
+	return $http.post('yum/user/favorite', dto)
+			.then(function(response) {
+		
+				$(responseText).text("Recipe successfully favorited");
+		
+				console.log(responseText);
+				displayMessage(responseText, "alert alert-success", undefined, true);
+			}, function(error) {
+		
+				if (error.status == 409)
+					$(responseText).text("You have already favorited that recipe");
+				else if (error.status == 406)
+					$(responseText).text("User or Recipe are not valid");
+				else if (error.status == 417)
+					$(responseText).text("Unique constraint violation");
+				else $(responseText).text("Something went wrong");
+				
+				console.log("problem");
+				displayMessage(responseText, "alert alert-danger", undefined, true);
+			} );
+};
 
 /**
  * @param message id of the HTML tag to display the message

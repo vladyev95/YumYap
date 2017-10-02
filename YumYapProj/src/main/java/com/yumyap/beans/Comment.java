@@ -12,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.springframework.stereotype.Component;
 
@@ -146,8 +144,7 @@ public class Comment implements Comparable<Comment> {
 	 */
 	@Override
 	public String toString() {
-		return "Comment [id=" + id + ", recipe=" + recipe + ", commenter=" + commenter + ", commentDate=" + commentDate
-				+ ", content=" + content + "]";
+		return "Comment [id=" + id + ", recipeId=" + recipe.getId() + ", commenter=" + commenter.getId() + ", commentDate=" + commentDate + ", content=" + content + "]";
 	}
 
 	@Override

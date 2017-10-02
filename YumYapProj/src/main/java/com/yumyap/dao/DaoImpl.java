@@ -102,7 +102,7 @@ public class DaoImpl implements Dao {
 		Session session = sessionFactory.getCurrentSession();
 		User user = (User) session
 				.createCriteria(User.class)
-				.add(Restrictions.eq("email", email))
+				.add(Restrictions.ilike("email", email))
 				.add(Restrictions.eq("password", password)).uniqueResult();
 		
 		if (user == null)
@@ -165,8 +165,8 @@ public class DaoImpl implements Dao {
 
 	@Override
 	public void updateUser(User user) {
-
-		currentSession().save(user);
+		sessionFactory.getCurrentSession().merge(user);
+		
 	}
 
 	private Session currentSession() {

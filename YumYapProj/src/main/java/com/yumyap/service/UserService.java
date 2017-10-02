@@ -9,6 +9,7 @@ import com.yumyap.beans.User;
 import com.yumyap.dto.RecipeDto;
 import com.yumyap.dto.SimpleUserDto;
 import com.yumyap.dto.UserDto;
+import com.yumyap.dto.UsrRecDto;
 /**
  * The interface representing a service that deals with
  * User operations
@@ -41,7 +42,7 @@ public interface UserService {
 	 */
 	Set<Recipe> getFollowingRecipes(User user);
 
-	boolean addFavoriteRecipe(RecipeDto recipeDto, UserDto userDto);
+	boolean addFavoriteRecipe(UsrRecDto dto);
 	List<RecipeDto> getDashboard(UserDto userDto);
 
 	void addRecipe(Recipe recipe);
@@ -66,5 +67,7 @@ public interface UserService {
 	UserDto simpleUserDtoToUserDto(SimpleUserDto simpleUserDto);
 
 	List<RecipeDto> searchRecipe(String search);
+
+	List<RecipeDto> getUsersRecipes(SimpleUserDto simpleUserDto);
 
 }

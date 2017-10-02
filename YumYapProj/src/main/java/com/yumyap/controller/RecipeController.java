@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.yumyap.beans.Recipe;
 import com.yumyap.dto.RecipeDto;
+import com.yumyap.dto.SimpleUserDto;
 import com.yumyap.service.UserService;
 
 /**
@@ -65,6 +66,15 @@ public class RecipeController {
 			logger.trace("NullPointer thrown");
 			return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
 		}
+	}
+	
+	
+	@RequestMapping(value = "/usersRecipes",
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<RecipeDto>> usersRecipes(@RequestBody SimpleUserDto simpleUserDto) {
+		return new ResponseEntity<List<RecipeDto>>(userService.getUsersRecipes(simpleUserDto), HttpStatus.OK);
 	}
 
 }
