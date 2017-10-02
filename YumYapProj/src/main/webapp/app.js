@@ -142,7 +142,7 @@ app.service('RecipeService', function ($http) {
 			service.recipes[0]= recipe;	
 		else
 			service.recipes.unshift(recipe);
-	}
+	};
 	
 	service.getRecipes = function () {
 		return service.recipes;

@@ -195,14 +195,11 @@ public class DaoImpl implements Dao {
 		List<Comment> comments = session.createCriteria(Comment.class).add(Restrictions.eq("recipe", recipe)).list();
 		logger.trace("getting comments " +comments);
 		List<CommentDto> commentDtos = new ArrayList<>();
-		Comment a = comments.get(0);
 		for(Comment c: comments) {
 			logger.trace("converting "+c +" to comment dto");
-			logger.trace(a.equals(c));
 			commentDtos.add(new CommentDto(c));
-			a = c;
 		}
-		System.out.println(comments);
+		logger.trace(comments);
 		return commentDtos;
 	}
 }
