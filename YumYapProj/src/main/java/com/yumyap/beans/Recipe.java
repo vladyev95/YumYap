@@ -71,11 +71,6 @@ public class Recipe implements Comparable<Recipe>{
 	@Column (name = "FOOD_ITEM")
 	private Set<FoodItem> ingredients = new HashSet<>();
 
-	@OneToMany
-	@JoinColumn (name = "COMMENT_ID")
-	@OrderBy ("COMMENT_DATE DESC")
-	private SortedSet<Comment> comments = new TreeSet<>();
-
 	@Column
 	private double calories;
 
@@ -99,7 +94,6 @@ public class Recipe implements Comparable<Recipe>{
 		this.directions = directions;
 		this.imageUrl = imageUrl;
 		this.ingredients = ingredients;
-		this.comments = comments;
 	}
 
 	public double getCalories() {
@@ -263,21 +257,6 @@ public class Recipe implements Comparable<Recipe>{
 		this.ingredients = ingredients;
 	}
 
-	/**
-	 * Returns the Comments of this Recipe
-	 * @return The Comments of this Recipe
-	 */
-	public SortedSet<Comment> getComments() {
-		return comments;
-	}
-
-	/**
-	 * Sets the Comments for this Recipe
-	 * @param comments The new Comments for this Recipe
-	 */
-	public void setComments(SortedSet<Comment> comments) {
-		this.comments = comments;
-	}
 
 	@Override
 	public String toString() {
@@ -289,7 +268,6 @@ public class Recipe implements Comparable<Recipe>{
 				", directions: " + directions + 
 				", imageUrl: " + imageUrl +
 				", ingredients:" + ingredients + 
-				", comments: " + comments + 
 				", calories: " + calories + 
 				", fat: " + fat +
 				", carbs: " + carbs + 
