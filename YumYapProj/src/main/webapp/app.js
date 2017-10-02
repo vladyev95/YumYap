@@ -126,7 +126,7 @@ app.service('RecipeService', function ($http) {
 		console.log(recipe);
 		console.log(userService.getUser());
 		
-		addFavoriteRecipe($http, userService.getUser(), recipe);
+		return addFavoriteRecipe($http, userService.getUser(), recipe);
 	};
 
 	service.viewAuthor = function(recipe){
@@ -141,7 +141,10 @@ app.service('RecipeService', function ($http) {
 	};
 	
 	service.addRecipe = function (recipe){
-		service.recipes.push(recipe)
+		if(service.recipes.length >0){
+		service.recipes.unshift(recipe)
+		}
+		else{service.recipes[0]=recipe;}
 	}
 	
 	service.getRecipes = function () {
@@ -309,14 +312,30 @@ app.service('ViewAuthorService', function ($http) {
 			console.log(error);
 		});
 	};
+	
+	service.followUser = function(currentUser){
+		return $http.post('yum/user/follow', currentUser);
+	}
 
 });
 /* ViewAuthorService */
 
-app.controller('ViewAuthorController', function ($scope, ViewAuthorService, UsersRecipesService) {
+app.controller('ViewAuthorController', function ($scope, ViewAuthorService, UserService, UsersRecipesService) {
 	console.log('in ViewAuthorController');
 	$scope.user = ViewAuthorService.user;
 	$scope.recipes = UsersRecipesService.recipes;
+	
+	$scope.follow = function(){
+		var currentUser = UserService.getUser();
+		currentUser.following.push(ViewAuthorService.user);
+		ViewAuthorService.followUser(currentUser).then(
+				function(response){
+					
+				},
+				function(error){
+					
+				});
+	}
 });
 
 
@@ -804,10 +823,8 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 		.then(
 				function (response) {
 					console.log(response);
-					//$scope.recipes = response.data;
 					console.log(response.data);
 					recipeService.setRecipes(response.data);
-					console.log("The last");
 					$scope.recipes = recipeService.getRecipes();
 					return response;
 

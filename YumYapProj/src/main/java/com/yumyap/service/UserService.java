@@ -70,4 +70,6 @@ public interface UserService {
 
 	List<RecipeDto> getUsersRecipes(SimpleUserDto simpleUserDto);
 
+	boolean followeUser(UserDto user);
+
 }

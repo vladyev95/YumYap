@@ -54,6 +54,9 @@
   float: right;
   overflow: hidden;
 }
+.recipe-block button{
+	background-color: rgb(204,212,225);
+	}
 
 button {
 	background-color: rgb(224,242,255);

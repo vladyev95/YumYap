@@ -133,12 +133,12 @@ public class DaoImpl implements Dao {
 
 	@Override
 	public Set<Recipe> getUsersRecipes(User user) {
-		logger.trace("getUserRecipesById() using " + user);
+//		logger.trace("getUserRecipesById() using " + user);
 		Session session = sessionFactory.getCurrentSession();
 
 		@SuppressWarnings("unchecked")
 		Set<Recipe> recipes = new LinkedHashSet<>(session.createCriteria(Recipe.class)
-				.add(Restrictions.eq("creator", user))
+				.add(Restrictions.eq("creator", getUserById(user.getId())))
 				.list());
 
 		logger.trace("getUsersRecipes() returning: " + recipes);
@@ -150,6 +150,15 @@ public class DaoImpl implements Dao {
 		logger.trace("getUserById() by " + id); 
 		Session session = sessionFactory.getCurrentSession();
 		User user = (User) session.get(User.class, id);
+		if (user == null)
+			return null;
+		
+		user.getFavoriteRecipes().stream()
+			.forEach(recipe -> recipe.getId());
+		
+		user.getFollowing().stream()
+			.forEach(userProxy -> userProxy.getId());
+		
 		logger.trace("got " + user);
 		return user;
 	}

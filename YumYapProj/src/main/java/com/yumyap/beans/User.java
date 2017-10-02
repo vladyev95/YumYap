@@ -181,7 +181,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User { id: " + id + ", firstName: " + firstName + ", lastName: " + lastName + ", password: " + password
-				+ ", email: " + email + ", following: " + following + ", favoriteRecipes: " + favoriteRecipes+"}";
+				+ ", email: " + email + ", favoriteRecipes: " + favoriteRecipes+"}";
 //				+ ", createdRecipes: " + createdRecipes + " }";
 	}
 }
