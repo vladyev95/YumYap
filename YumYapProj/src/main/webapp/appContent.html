@@ -18,7 +18,9 @@
 			<div class="row">
 				<h1>Welcome, <span ng-bind="currentUser.firstName"></span></h1>
 			</div>
-			<div><h6 ng-bind="welcomeMessage"></h6>
+			<div><h6 ng-show="welcomeMessage"> No recipes to display yet! </h6>
+			<h6>When you favorite recipes, create recipes, or follow other users that create recipes, you will be able to view them here.</h6>
+			<h6> Try searching for a recipe, or creating your own."</h6>
 			</div>
 			<div ng-repeat="recipe in recipes">
 				<div class="row recipe-block">
