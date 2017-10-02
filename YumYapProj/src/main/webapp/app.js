@@ -141,10 +141,10 @@ app.service('RecipeService', function ($http) {
 	};
 	
 	service.addRecipe = function (recipe){
-		if(service.recipes.length >0){
-		service.recipes.unshift(recipe)
+		if(service.recipes.length == 0){
+			service.recipes[0]=recipe;	
 		}
-		else{service.recipes[0]=recipe;}
+		else{service.recipes.unshift(recipe)}
 	}
 	
 	service.getRecipes = function () {
@@ -827,7 +827,7 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 					console.log(response.data);
 					recipeService.setRecipes(response.data);
 					$scope.recipes = recipeService.getRecipes();
-					if(recipeService.getRecipes().length == 0){$scope.welcomeMessage = true;}
+					$scope.welcomeMessage = recipeService.getRecipes().length;
 					return response;
 
 				}, function (error) {
