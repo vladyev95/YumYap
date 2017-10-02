@@ -829,6 +829,7 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 					console.log(response.data);
 					recipeService.setRecipes(response.data);
 					$scope.recipes = recipeService.getRecipes();
+					if(recipeService.getRecipes().length < 1){$scope.welcomeMessage = "No recipes to display yet!<br> When you favorite recipes, create recipes, or follow other users that create recipes, you will be able to view them here<br>Try searching for a recipe, or creating your own.";}
 					return response;
 
 				}, function (error) {
