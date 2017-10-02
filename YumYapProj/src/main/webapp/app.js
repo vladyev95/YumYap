@@ -510,8 +510,8 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 					console.log(response);
 					//$scope.recipes = response.data.recipes;
 					console.log(response.data.recipes);
+					recipeService.addRecipe(recipe);
 					console.log(recipeService.getRecipes());
-
 					$(responseText).text("Recipe created");
 					displayMessage(responseText, "alert alert-success");
 

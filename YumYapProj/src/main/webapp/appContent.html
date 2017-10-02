@@ -74,7 +74,7 @@
 								<div ng-repeat="comment in comments">
 								<div>
 									<div class="commentHead">
-									<h5 ng-bind="comment.commenter"></h5>
+									<h5 ng-bind="comment.commenter.firstName +' ' + comment.commenter.lastName"></h5>
 									</div>
 									<div class="commentBody">
 									<p ng-bind="comment.content"></p>
