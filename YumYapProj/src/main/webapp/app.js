@@ -141,7 +141,10 @@ app.service('RecipeService', function ($http) {
 	};
 	
 	service.addRecipe = function (recipe){
+		if(service.recipes.length >0){
 		service.recipes.unshift(recipe)
+		}
+		else{service.recipes[0]=recipe;}
 	}
 	
 	service.getRecipes = function () {
@@ -823,10 +826,8 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 		.then(
 				function (response) {
 					console.log(response);
-					//$scope.recipes = response.data;
 					console.log(response.data);
 					recipeService.setRecipes(response.data);
-					console.log("The last");
 					$scope.recipes = recipeService.getRecipes();
 					return response;
 
