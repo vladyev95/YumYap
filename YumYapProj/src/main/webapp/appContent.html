@@ -229,9 +229,8 @@
 				<h3 ng-bind="recipe.name"></h3>
 				<img id="recipe-image" ng-src="{{ recipe.imageUrl }}" width="100" height="100"></img>
 				<div>
-					<h4>Posted by <span ng-bind="recipe.creator.firstName"></span> <span ng-bind="recipe.creator.lastName"></span></h4><br>
-					<button class="btn btn-primary" ng-click="viewAuthor(recipe.creator)">View Author
-						Profile</button>
+									Posted by&nbsp;<span class="link" ng-click="viewAuthor(recipe.creator.id)">
+										{{ recipe.creator.firstName + " " + recipe.creator.lastName }} </span>
 				</div>
 				<div class="recipe-content">
 					<ul class="recipe-content" id="recipe-ingredients" ng-repeat="foodItem in recipe.ingredients">
@@ -240,10 +239,17 @@
 					<ul class="recipe-content" ng-repeat="direction in recipe.directions">
 						<li ng-bind="direction"></li>
 					</ul>
-				</div>
-				<button class="btn btn-primary" ng-click="favoriteRecipe(recipe)">Save this recipe</button>
-				<p ng-attr-id="{{ 'recipe-' + recipe.id }}" hidden=true></p>
-
+				<div class="col-4">
+								<div class="row">
+									<div class="pull-right float-right recipe-content">
+										<button class="btn btn-primary" ng-click="favoriteRecipe(recipe)">Favorite</button>
+										<p ng-attr-id="{{ 'recipe-'+ recipe.id }}" hidden=true></p>
+									</div>
+								</div>
+								<div class="row">
+									<img class="right" id="recipe-image" ng-src="{{ recipe.imageUrl }}" width="200" height="200" />
+								</div>
+							</div>
 				<div class="recipe-content" id="comments">
 							<button class="btn btn-primary" ng-click="startComment(recipe)">Comment</button>
 							<div ng-attr-id="{{ 'addComments-'+ recipe.id }}" hidden=true>
