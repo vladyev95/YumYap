@@ -389,7 +389,7 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 					console.log(response);
 					$('#addComments-' + recipe.id).attr('hidden', true);
 					$('#commentAdded-'+ recipe.id ).attr('hidden', false);
-					$('commentAdded-'+ recipe.id ).text('Comment successfully added');
+					$('commentAdded-'+ recipe.id ).text('Comment added');
 					timeout = setTimeout(function() {
 						$('commentAdded-'+ recipe.id).attr("hidden", true);
 					}, TIMEOUT_TIME);
@@ -544,7 +544,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 
 			i = 1;
 
-			$(responseText).text("Recipe successfully created");
+			$(responseText).text("Recipe created");
 			displayMessage(responseText, "alert alert-success");
 		} else {
 			$(responseText).text("name, discription, direction, and steps cannot be empty");
@@ -889,7 +889,7 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
 		var responseText = "#recipe-" + recipe.id;
 		recipeService.favoriteRecipe(recipe, userService.getUser()).then(
 				function (response) {
-					$(responseText).text("Recipe successfully favorited");
+					$(responseText).text("Recipe favorited");
 					
 					displayMessage(responseText, "alert alert-success", undefined, true);
 				},
@@ -918,7 +918,7 @@ function addFavoriteRecipe($http, user, recipe) {
 	return $http.post('yum/user/favorite', dto)
 			.then(function(response) {
 		
-				$(responseText).text("Recipe successfully favorited");
+				$(responseText).text("Recipe favorited");
 		
 				console.log(responseText);
 				displayMessage(responseText, "alert alert-success", undefined, true);
