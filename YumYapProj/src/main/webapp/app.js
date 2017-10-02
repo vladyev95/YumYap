@@ -144,7 +144,7 @@ app.service('RecipeService', function ($http) {
 		if(service.recipes.length == 0){
 			service.recipes[0]= recipe;	
 		}
-		else{service.recipes.unshift(recipe)}
+		else{service.recipes.unshift(recipe);}
 	}
 	
 	service.getRecipes = function () {
@@ -467,7 +467,8 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 
 	$scope.publishRecipe = function () {
 		log('RecipeCtrl create recipe');
-		displaySubmitting("#recipeResponse");
+		let responseText = "#recipeMessage";
+		displaySubmitting(responseText);
 
 		let totalCalories = 0,
 			totalFat = 0,
@@ -501,7 +502,6 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			protein: totalProtein
 		};
 
-		let responseText = "#recipeResponse";
 		if (recipe.name && recipe.description && recipe.ingredients.length > 0 && recipe.directions.length > 0) {
 
 			RecipeService.createRecipe(recipe)
