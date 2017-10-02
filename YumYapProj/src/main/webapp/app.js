@@ -130,12 +130,7 @@ app.service('RecipeService', function ($http) {
 		
 		return addFavoriteRecipe($http, userService.getUser(), recipe);
 	};
-
-	service.viewAuthor = function(recipe){
-		console.log('viewing author of '+recipe);
-		// TODO
-	};
-
+	
 	service.recipes = [];
 
 	service.setRecipes = function (data) {
@@ -143,10 +138,10 @@ app.service('RecipeService', function ($http) {
 	};
 	
 	service.addRecipe = function (recipe){
-		if(service.recipes.length == 0){
+		if(service.recipes.length == 0)
 			service.recipes[0]= recipe;	
-		}
-		else{service.recipes.unshift(recipe)}
+		else
+			service.recipes.unshift(recipe);
 	}
 	
 	service.getRecipes = function () {
@@ -183,11 +178,11 @@ app.service('UsersRecipesService', function($http) {
 				console.log(response);
 				console.log('UsersRecipesService response.data: ');
 				console.log(response.data);
-				service.recipes = response.data;
-//				for (let i=0; i<response.data.length; i++) {
-//					console.log(response.data[i]);
-//					service.recipes.push(response.data[i]);
-//				}
+				for (; recipes.length; recipes.pop) 
+					;
+				for (let i=0; i<response.data.length; ++i) {
+					service.recipes.push(response.data[i]);
+				}
 			}, function(error) {
 				console.log('UsersRecipesService error: ');
 				console.log(error);
