@@ -421,13 +421,13 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 	$scope.ingredients2 = [];
 	$scope.steps = [];
 	$scope.recipeImage = [];
-	$scope.recipeImageFile = [];
+	$('#recipeImageFile').val(null);
 
 	$scope.uploadRecipeImage = function () {
 		log('uploading recipe image');
 		var responseText = "#uploadImageMessage";
 		displaySubmitting(responseText);
-		
+
 		let image = document.getElementById('recipeImageFile').files[0];
 		if (!image)
 			return;
@@ -455,10 +455,10 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 						$(responseText).attr("class");
 						$(responseText).text("Image saved");
 						displayMessage(responseText, "alert alert-success");
-						
-						$('#recipeImage').attr('src', BUCKET_PATH + encodeURIComponent(imageKey));
-						log('uri= '+$scope.recipeImageUri);
-					}, 3000);
+
+						$scope.$apply();
+						log('uri= ' + $scope.recipeImageUri);
+					}, 2000);
 				}
 			});
 		};
@@ -499,50 +499,47 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 			carbs: totalCarbs,
 			protein: totalProtein
 		};
-		
-		
+
 		let responseText = "#recipeResponse";
-		if(recipe.name && recipe.description && recipe.ingredients.length > 0 && recipe.directions.length > 0) {
-			
-			
+		if (recipe.name && recipe.description && recipe.ingredients.length > 0 && recipe.directions.length > 0) {
+
 			RecipeService.createRecipe(recipe)
 				.then(
-					function (response) {
-						console.log(response);
-//						$scope.recipes = response.data.recipes;
-						console.log(response.data.recipes);
-						recipeService.addRecipe(recipe);
-						console.log(recipeService.getRecipes());
-						
-						$(responseText).text("Recipe created");
-						displayMessage(responseText, "alert alert-success");
+				function (response) {
+					console.log(response);
+					//$scope.recipes = response.data.recipes;
+					console.log(response.data.recipes);
+					console.log(recipeService.getRecipes());
 
-						return response;
+					$(responseText).text("Recipe created");
+					displayMessage(responseText, "alert alert-success");
 
-					}, function (error) {
-						console.log("error");
-						console.log(error);
-						
-						if (error.status == 406)
-							$(responseText).text("Please fill out every field");
-						else if (error.status == 401)
-							$(responseText).text("You must be logged in to create a recipe");
-						else $(responseText).text("Something went wrong");
-						displayMessage(responseText, "alert alert-danger");
-					});
+					return response;
+
+				}, function (error) {
+					console.log("error");
+					console.log(error);
+
+					if (error.status == 406)
+						$(responseText).text("Please fill out every field");
+					else if (error.status == 401)
+						$(responseText).text("You must be logged in to create a recipe");
+					else $(responseText).text("Something went wrong");
+					displayMessage(responseText, "alert alert-danger");
+				});
 			$scope.recipeName = null;
 			$scope.recipeDescription = null;
 			$scope.ingredients = [];
 			$scope.ingredients2 = [];
 			$scope.steps = [];
 			$scope.recipeImage = [];
-			$scope.recipeImageFile = [];
+			$scope.recipeImageUri = null;
 
 			i = 1;
-			
+
 			$(responseText).text("Recipe successfully created");
 			displayMessage(responseText, "alert alert-success");
-		} else{
+		} else {
 			$(responseText).text("name, discription, direction, and steps cannot be empty");
 			displayMessage(responseText, "alert alert-danger");
 		}
