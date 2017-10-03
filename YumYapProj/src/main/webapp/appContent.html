@@ -107,12 +107,12 @@
 							<div></div>
 							<button class="btn " ng-click="viewComments(recipe)">View comments</button>
 							<div ng-attr-id="{{ 'showComments-'+ recipe.id }}" hidden=true>
-								<div ng-repeat="comment in comments">
+								<div ng-repeat="comment in recipe.comments">
 								<div>
 									<div class="commentHead">
 									<br>
 									<h5 ng-click="viewAuthor(recipe.creator.id)" ng-bind="comment.commenter.firstName +' ' + comment.commenter.lastName"></h5>
-									<h6 style="text-align:right" ng-bind="{{getDate(comment.commentDate)}}"></h6>
+									<h6 style="text-align:right" ng-bind="comment.commentDate | date:'MM/dd/yyyy'"></h6>
 									</div>
 									<div class="commentBody">
 									<p ng-bind="comment.content"></p>
@@ -174,21 +174,29 @@
 					</div>
 				-->
 					<div class="recipe-content" id="comments">
-						<button class="btn " ng-click="startComment(recipe)">Comment</button>
-						<div ng-attr-id="{{ 'addComments-'+ recipe.id }}" hidden=true>
-							<textarea ng-model="recipe.comment1" cols="30" rows="3" placeholder="Comment"></textarea>
-							<button class="btn" ng-click="addComment(recipe, recipe.comment1)">Submit</button>
+							<button class="btn " ng-click="startComment(recipe)">Comment</button>
+							<div ng-attr-id="{{ 'addComments-'+ recipe.id }}" hidden=true>
+								<textarea ng-model="recipe.comment1" cols="30" rows="3" placeholder="Comment"></textarea>
+								<button class="btn" ng-click="addComment(recipe, recipe.comment1)">Submit</button>
 
-						</div ng-attr-id="{{ 'commentAdded-'+ recipe.id }}" hidden="true">
-						<div></div>
-						<button class="btn " ng-click="viewComments(recipe)">View comments</button>
-						<div ng-attr-id="{{ 'showComments-'+ recipe.id }}" hidden=true>
-							<div ng-repeat="comment in comments">
-								<h5 ng-bind="comment.commentor"></h5>
-								<p ng-bind="comment.content"></p>
+							</div ng-attr-id="{{ 'commentAdded-'+ recipe.id }}" hidden="true">
+							<div></div>
+							<button class="btn " ng-click="viewComments(recipe)">View comments</button>
+							<div ng-attr-id="{{ 'showComments-'+ recipe.id }}" hidden=true>
+								<div ng-repeat="comment in recipe.comments">
+								<div>
+									<div class="commentHead">
+									<br>
+									<h5 ng-click="viewAuthor(recipe.creator.id)" ng-bind="comment.commenter.firstName +' ' + comment.commenter.lastName"></h5>
+									<h6 style="text-align:right" ng-bind="comment.commentDate | date:'MM/dd/yyyy'"></h6>
+									</div>
+									<div class="commentBody">
+									<p ng-bind="comment.content"></p>
+									</div>
+								</div>
+								</div>
 							</div>
 						</div>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -333,21 +341,29 @@
 						</div>
 					</div>
 					<div class="recipe-content" id="comments">
-						<button class="btn " ng-click="startComment(recipe)">Comment</button>
-						<div ng-attr-id="{{ 'addComments-'+ recipe.id }}" hidden=true>
-							<textarea ng-model="recipe.comment1" cols="30" rows="3" placeholder="Comment"></textarea>
-							<button class="btn" ng-click="addComment(recipe, recipe.comment1)">Submit</button>
+							<button class="btn " ng-click="startComment(recipe)">Comment</button>
+							<div ng-attr-id="{{ 'addComments-'+ recipe.id }}" hidden=true>
+								<textarea ng-model="recipe.comment1" cols="30" rows="3" placeholder="Comment"></textarea>
+								<button class="btn" ng-click="addComment(recipe, recipe.comment1)">Submit</button>
 
-						</div ng-attr-id="{{ 'commentAdded-'+ recipe.id }}" hidden="true">
-						<div></div>
-						<button class="btn " ng-click="viewComments(recipe)">View comments</button>
-						<div ng-attr-id="{{ 'showComments-'+ recipe.id }}" hidden=true>
-							<div ng-repeat="comment in comments">
-								<h5 ng-bind="comment.commentor"></h5>
-								<p ng-bind="comment.content"></p>
+							</div ng-attr-id="{{ 'commentAdded-'+ recipe.id }}" hidden="true">
+							<div></div>
+							<button class="btn " ng-click="viewComments(recipe)">View comments</button>
+							<div ng-attr-id="{{ 'showComments-'+ recipe.id }}" hidden=true>
+								<div ng-repeat="comment in recipe.comments">
+								<div>
+									<div class="commentHead">
+									<br>
+									<h5 ng-click="viewAuthor(recipe.creator.id)" ng-bind="comment.commenter.firstName +' ' + comment.commenter.lastName"></h5>
+									<h6 style="text-align:right;" ng-bind="comment.commentDate | date:'MM/dd/yyyy'"></h6>
+									</div>
+									<div class="commentBody">
+									<p ng-bind="comment.content"></p>
+									</div>
+								</div>
+								</div>
 							</div>
 						</div>
-					</div>
 				</div>
 			</div>
 		</div>
