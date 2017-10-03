@@ -349,9 +349,16 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 	$scope.tab = 'Home';
 
 	this.onLogin = true;
-	this.selectedRecipe = {};
+	this.selectedRecipe = { directions: [], ingredients: [] };
 
-	service.setSelectedRecipe = function (recipe) {
+	this.showModal = function () {
+		$('#recipeModal').modal('show');
+	};
+
+	this.setSelectedRecipe = function (recipe) {
+		for (let x in recipe) {
+			console.log(x);
+		}
 		this.selectedRecipe.id = recipe.id;
 		this.selectedRecipe.creator = recipe.creator;
 		this.selectedRecipe.dateCreated = recipe.dateCreated;
@@ -364,7 +371,7 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 		this.selectedRecipe.protein = recipe.protein;
 		for (; this.selectedRecipe.ingredients.length; this.selectedRecipe.ingredients.pop());
 		for (let i = 0; i < recipe.ingredients.length; i++) {
-			this.selectedRecipe.ingredient.push(recipe.ingredient[i]);
+			this.selectedRecipe.ingredients.push(recipe.ingredients[i]);
 		}
 		for (; this.selectedRecipe.directions.length; this.selectedRecipe.directions.pop());
 		for (let i = 0; i < recipe.directions.length; i++) {
