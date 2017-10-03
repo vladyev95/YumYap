@@ -23,8 +23,8 @@
 const BUCKET_PATH = 'https://s3.amazonaws.com/thisisans3bucket/';
 const S3 = new AWS.S3({
 	credentials: {
-		accessKeyId: 'AKIAIOP5ZFGR5TPQYKAA',
-		secretAccessKey: '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'
+		accessKeyId: 'AKIAICHUYFKPMRIUSCDQ',
+		secretAccessKey: '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'
 	}
 });
 
