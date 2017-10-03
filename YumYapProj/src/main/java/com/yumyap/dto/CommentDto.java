@@ -12,6 +12,8 @@ public class CommentDto {
 	private Calendar commentDate;
 	private String content;
 	
+	public CommentDto() {}
+	
 	public CommentDto(Comment c) {
 		this.id = c.getId();
 		this.recipe = new RecipeDto(c.getRecipe());

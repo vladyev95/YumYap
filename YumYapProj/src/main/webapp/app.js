@@ -444,7 +444,6 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 		CommentService.addComment(CommentService.getComment()).then(
 				function(response){
 					console.log(response);
-					$('#addComments-' + recipe.id).attr('hidden', true);
 					$('#commentAdded-'+ recipe.id ).attr('hidden', false);
 					$('#commentAdded-'+ recipe.id ).text('Comment successfully added');
 
@@ -850,7 +849,6 @@ app.service('CommentService', function ($http, $q){
 	service = this;	
 	
 	service.comment = {
-			id: '',
 			commenter: {},
 			recipe: {},
 			content: ''
@@ -928,8 +926,6 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
     commentService = CommentService;
     userService = UserService;
     recipeService = RecipeService
-//    $scope.foundRecipes = '';
-//    $scope.showRecipes = false;
     
     
     $scope.search = function(){
