@@ -139,7 +139,7 @@
 							</div>
 						</div>
 						<br>
-						<div ng-attr-id="{{ 'showComments-'+ recipe.id }}" hidden=true>
+						<div>
 							<div ng-repeat="comment in recipe.comments">
 								<div>
 
@@ -232,7 +232,7 @@
 							</div>
 						</div>
 						<br>
-						<div ng-attr-id="{{ 'showComments-'+ recipe.id }}" hidden=true>
+						<div>
 							<div ng-repeat="comment in recipe.comments">
 								<div>
 
@@ -445,7 +445,7 @@
 							</div>
 						</div>
 						<br>
-						<div ng-attr-id="{{ 'showComments-'+ recipe.id }}" hidden=true>
+						<div ng-show="recipe.comments.length">
 							<div ng-repeat="comment in recipe.comments">
 								<div>
 

@@ -68,6 +68,7 @@ public class CommentService {
 		comment.setCommenter(commenter);
 		Recipe recipe = dao.getRecipeById(commentDto.getRecipe().getId());
 		comment.setRecipe(recipe);
+		comment.setContent(commentDto.getContent());
 		logger.trace("createComment() with " + comment);
 		dao.addComment(comment);
 	}
