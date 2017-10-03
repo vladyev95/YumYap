@@ -29,7 +29,6 @@
 							<div class="col-8 recipe-content" id="recipe-head">
 								<div class="row">
 									<h1 id="recipe-name" ng-bind="recipe.name"></h1>
-									<h3 ng-bind="recipe.calories"></h3>
 								</div>
 								<div class="row">
 									Posted by&nbsp;<span class="link" ng-click="viewAuthor(recipe.creator.id)">
@@ -76,8 +75,8 @@
 								<div>
 									<div class="commentHead">
 									<br>
-									<h5 ng-click="viewAuthor(recipe.creator.id)" ng-bind="comment.commenter.firstName +' ' + comment.commenter.lastName"></h5>
-									<h6 style="text-align:right" ng-bind="comment.commentDate | date:'MM/dd/yyyy'"></h6>
+									<h5 ng-click="viewAuthor(comment.commenter.id)" ng-bind="comment.commenter.firstName +' ' + comment.commenter.lastName"></h5>
+									<h6 style="text-align:right" ng-bind="comment.commentDate | date:'MM/dd/yyyy h:mma'"></h6>
 									</div>
 									<div class="commentBody">
 									<p ng-bind="comment.content"></p>
@@ -152,8 +151,8 @@
 								<div>
 									<div class="commentHead">
 									<br>
-									<h5 ng-click="viewAuthor(recipe.creator.id)" ng-bind="comment.commenter.firstName +' ' + comment.commenter.lastName"></h5>
-									<h6 style="text-align:right" ng-bind="comment.commentDate | date:'MM/dd/yyyy'"></h6>
+									<h5 ng-click="viewAuthor(comment.commenter.id)" ng-bind="comment.commenter.firstName +' ' + comment.commenter.lastName"></h5>
+									<h6 style="text-align:right" ng-bind="comment.commentDate | date:'MM/dd/yyyy h:mma'"></h6>
 									</div>
 									<div class="commentBody">
 									<p ng-bind="comment.content"></p>
@@ -291,12 +290,12 @@
 				{{ recipe.creator.firstName + " " + recipe.creator.lastName }} </span>
 				</div>
 				<div class="recipe-content">
-					<ul class="recipe-content" id="recipe-ingredients" ng-repeat="foodItem in recipe.ingredients">
+					<!-- <ul class="recipe-content" id="recipe-ingredients" ng-repeat="foodItem in recipe.ingredients">
 						<li><span ng-bind="foodItem"></span></li>
 					</ul>
 					<ul class="recipe-content" ng-repeat="direction in recipe.directions">
 						<li ng-bind="direction"></li>
-					</ul>
+					</ul> -->
 					<div class="col-4">
 						<div class="row">
 							<div class="pull-right float-right recipe-content">
@@ -319,8 +318,8 @@
 								<div>
 									<div class="commentHead">
 									<br>
-									<h5 ng-click="viewAuthor(recipe.creator.id)" ng-bind="comment.commenter.firstName +' ' + comment.commenter.lastName"></h5>
-									<h6 style="text-align:right;" ng-bind="comment.commentDate | date:'MM/dd/yyyy'"></h6>
+									<h5 ng-click="viewAuthor(comment.commenter.id)" ng-bind="comment.commenter.firstName +' ' + comment.commenter.lastName"></h5>
+									<h6 style="text-align:right;" ng-bind="comment.commentDate | date:'MM/dd/yyyy h:mma'"></h6>
 									</div>
 									<div class="commentBody">
 									<p ng-bind="comment.content"></p>
