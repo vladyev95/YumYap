@@ -886,8 +886,6 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 				function (response) {
 					console.log(response);
 					console.log(response.data);
-					console.log(response.data[0].directions);
-					console.log(response.data[0].ingredients)
 					recipeService.setRecipes(response.data);
 					$scope.recipes = recipeService.getRecipes();
 					$scope.welcomeMessage = recipeService.getRecipes().length;
