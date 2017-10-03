@@ -944,7 +944,7 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
 		recipeService.favoriteRecipe(recipe, userService.getUser()).then(
 				function (response) {
 					$(responseText).text("Recipe favorited");
-					
+					recipeService.addRecipe(recipe);
 					displayMessage(responseText, "alert alert-success", undefined, true);
 				},
 				function (error) {
