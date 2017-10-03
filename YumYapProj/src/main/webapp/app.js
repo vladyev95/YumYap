@@ -349,6 +349,28 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 	$scope.tab = 'Home';
 
 	this.onLogin = true;
+	this.selectedRecipe = {};
+
+	service.setSelectedRecipe = function (recipe) {
+		this.selectedRecipe.id = recipe.id;
+		this.selectedRecipe.creator = recipe.creator;
+		this.selectedRecipe.dateCreated = recipe.dateCreated;
+		this.selectedRecipe.name = recipe.name;
+		this.selectedRecipe.description = recipe.description;
+		this.selectedRecipe.imageUrl = recipe.imageUrl;
+		this.selectedRecipe.calories = recipe.calories;
+		this.selectedRecipe.fat = recipe.fat;
+		this.selectedRecipe.carbs = recipe.carbs;
+		this.selectedRecipe.protein = recipe.protein;
+		for (; this.selectedRecipe.ingredients.length; this.selectedRecipe.ingredients.pop());
+		for (let i = 0; i < recipe.ingredients.length; i++) {
+			this.selectedRecipe.ingredient.push(recipe.ingredient[i]);
+		}
+		for (; this.selectedRecipe.directions.length; this.selectedRecipe.directions.pop());
+		for (let i = 0; i < recipe.directions.length; i++) {
+			this.selectedRecipe.directions.push(recipe.directions[i]);
+		}
+	};
 
 	$scope.switchToHome = function () {
 		log('switching to \'Home\' tab');
