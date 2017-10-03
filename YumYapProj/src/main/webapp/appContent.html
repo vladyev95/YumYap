@@ -16,7 +16,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title" ng-bind="app.selectedRecipe.name"></h4>
+					<h2 class="modal-title" ng-bind="app.selectedRecipe.name"></h2>
 					<button type="button" class="close modalCancel" data-dismiss="modal">
 						<span>&times;</span>
 					</button>
@@ -272,15 +272,8 @@
 							<input type="text" value="{{ customName }}" ng-model="customName" />
 							<button type="submit">+</button>
 						</form>
-						<div class="row form-group">
-							<h5>
-								<span ng-if="quantity!=0 && measure" ng-bind="quantity"></span>
-								<span ng-if="fraction!='0' && measure" ng-bind="fraction"></span>
-								<span ng-bind="measure"></span> <span ng-bind="customName"></span>
-							</h5>
-						</div>
 						<div class="row">
-							<h5>Add a step:</h5>
+							<h4>Add a step:</h4>
 						</div>
 						<form ng-submit="addStep(recipeStep)" class="row form-group">
 							<input type="text" ng-model="recipeStep" placeholder="Add a step" />
@@ -316,12 +309,18 @@
 								<span ng-bind="ingredient.name"></span>
 							</li>
 						</ul>
+						<h6>
+							<span ng-if="quantity!=0 && measure" ng-bind="quantity"></span>
+							<span ng-if="fraction!='0' && measure" ng-bind="fraction"></span>
+							<span ng-bind="measure"></span> <span ng-bind="customName"></span>
+						</h6>
 						<br>
 						<h4>Directions</h4>
 						<hr>
 						<ul style="list-style-type: none;">
 							<li ng-repeat="step in steps" ng-bind="step"></li>
 						</ul>
+						<h6 ng-bind="recipeStep"></h6>
 					</div>
 				</div>
 			</div>

@@ -396,7 +396,13 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 		this.selectedRecipe.protein = recipe.protein;
 		for (; this.selectedRecipe.ingredients.length; this.selectedRecipe.ingredients.pop());
 		for (let i = 0; i < recipe.ingredients.length; i++) {
-			this.selectedRecipe.ingredients.push(recipe.ingredients[i]);
+			let ingr = recipe.ingredients[i];
+			if (ingr.name) {
+				let ingrStr = ingr.amount + ' ' + ingr.measure + ' ' + ingr.name;
+				this.selectedRecipe.ingredients.push(ingrStr);
+			} else {
+				this.selectedRecipe.ingredients.push(ingr);
+			}
 		}
 		for (; this.selectedRecipe.directions.length; this.selectedRecipe.directions.pop());
 		for (let i = 0; i < recipe.directions.length; i++) {
