@@ -15,6 +15,8 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+import com.yumyap.beans.Recipe;
+import com.yumyap.beans.User;
 import com.yumyap.dto.CommentDto;
 
 /**

@@ -886,8 +886,6 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 				function (response) {
 					console.log(response);
 					console.log(response.data);
-					console.log(response.data[0].directions);
-					console.log(response.data[0].ingredients)
 					recipeService.setRecipes(response.data);
 					$scope.recipes = recipeService.getRecipes();
 					$scope.welcomeMessage = recipeService.getRecipes().length;
@@ -970,10 +968,10 @@ function addFavoriteRecipe($http, user, recipe) {
 	var dto = {};
 	dto.user = user;
 	dto.recipe = recipe;
-	
+	console.log(dto);
 	return $http.post('yum/user/favorite', dto)
 			.then(function(response) {
-		
+				console.log(dto);
 				$(responseText).text("Recipe favorited");
 		
 				console.log(responseText);
