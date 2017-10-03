@@ -68,10 +68,12 @@
 								<div class="row">
 									Posted by&nbsp;<span class="link" ng-click="viewAuthor(recipe.creator.id)">
 										{{ recipe.creator.firstName + " " + recipe.creator.lastName }} </span>
-										<br><span ng-bind="recipe.dateCreated | date:'MM/dd/yyyy h:mma'"></span>
+								</div>
+								<div class="row">
+									<span ng-bind="recipe.dateCreated | date:'MM/dd/yyyy h:mma'"></span>
 								</div>
 								<div class="row recipe-content">
-									<p class="description" id="recipe-description" ng-bind="recipe.description" height="200"></p>
+									<p class="description" ng-bind="recipe.description" height="200"></p>
 								</div>
 								<div class="row recipe-content">
 									<button class="btn" ng-click="app.setSelectedRecipe(recipe); app.showModal()">View Full Recipe</button>
