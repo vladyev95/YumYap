@@ -40,6 +40,11 @@
 							<li ng-repeat="step in app.selectedRecipe.directions" ng-bind="step"></li>
 						</ul>
 						<br>
+						<h6>Calories: <span ng-bind="app.selectedRecipe.calories"></span>g</h6>
+						<h6>Fat: <span ng-bind="app.selectedRecipe.fat"></span>g</h6>
+						<h6>Carbs: <span ng-bind="app.selectedRecipe.carbs"></span>g</h6>
+						<h6>Protein: <span ng-bind="app.selectedRecipe.protein"></span>g</h6>
+						<br>
 					</div>
 				</div>
 			</div>
@@ -68,10 +73,12 @@
 								<div class="row">
 									Posted by&nbsp;<span class="link" ng-click="viewAuthor(recipe.creator.id)">
 										{{ recipe.creator.firstName + " " + recipe.creator.lastName }} </span>
-										<br><span ng-bind="recipe.dateCreated | date:'MM/dd/yyyy h:mma'"></span>
+								</div>
+								<div class="row">
+									<span ng-bind="recipe.dateCreated | date:'MM/dd/yyyy h:mma'"></span>
 								</div>
 								<div class="row recipe-content">
-									<p class="description" id="recipe-description" ng-bind="recipe.description" height="200"></p>
+									<p class="description" ng-bind="recipe.description" height="200"></p>
 								</div>
 								<div class="row recipe-content">
 									<button class="btn" ng-click="app.setSelectedRecipe(recipe); app.showModal()">View Full Recipe</button>
