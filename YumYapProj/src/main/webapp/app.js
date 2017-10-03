@@ -258,7 +258,7 @@ app.controller('RegisterController', function ($scope, $timeout, RegisterService
 					
 					if (error.status == 406)
 						$(responseText).text("A user with that email already exists");
-					else $(responseText).text("something went wrong");
+					else $(responseText).text("Something went wrong. error " + error.status);
 					displayMessage(responseText, "alert alert-danger");
 				}
 				);
@@ -532,7 +532,7 @@ app.controller('RecipeCtrl', function ($scope, $http, RecipeService, UserService
 						$(responseText).text("Please fill out every field");
 					else if (error.status == 401)
 						$(responseText).text("You must be logged in to create a recipe");
-					else $(responseText).text("Something went wrong");
+					else $(responseText).text("Something went wrong. error " + error.status);
 					displayMessage(responseText, "alert alert-danger");
 				});
 			$scope.recipeName = null;
@@ -837,6 +837,7 @@ app.controller('DashboardController', function ($scope, UserService, CommentServ
 					recipeService.setRecipes(response.data);
 					$scope.recipes = recipeService.getRecipes();
 					$scope.welcomeMessage = recipeService.getRecipes().length;
+					
 					return response;
 
 				}, function (error) {
@@ -900,7 +901,7 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
 						$(responseText).text("You have already favorited that recipe");
 					else if (error == 406)
 						$(responseText).text("User or Recipe are not valid");
-					else $(responseText).text("Something went wrong");
+					else $(responseText).text("Something went wrong. error " + error.status);
 					
 					displayMessage(responseText, "alert alert-danger", undefined, true);
 				}
@@ -931,7 +932,7 @@ function addFavoriteRecipe($http, user, recipe) {
 					$(responseText).text("User or Recipe are not valid");
 				else if (error.status == 417)
 					$(responseText).text("Unique constraint violation");
-				else $(responseText).text("Something went wrong");
+				else $(responseText).text("Something went wrong. error " + error.status);
 				
 				console.log("problem");
 				displayMessage(responseText, "alert alert-danger", undefined, true);
