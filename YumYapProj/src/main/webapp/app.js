@@ -111,6 +111,16 @@ app.service('RegisterService', function ($http, $q) {
 
 app.service('RecipeService', function ($http) {
 	let service = this;
+	
+	function compare(a, b) {
+		  if (a.dateCreated < b.dateCreated) {
+		    return -1;
+		  }
+		  if (a.dateCreated > b.dateCreated) {
+		    return 1;
+		  }
+		  return 0;
+		}
 
 	service.createRecipe = function (recipe) {
 		log('RecipeService create recipe');
@@ -142,6 +152,20 @@ app.service('RecipeService', function ($http) {
 			service.recipes[0]= recipe;	
 		else
 			service.recipes.unshift(recipe);
+		
+		service.recipes.sort(compare);
+	};
+	
+	service.addRecipes = function (adders){
+		if(service.recipes.length == 0)
+			{service.recipes = recipe;}	
+		else{
+			for(let i=0; i<adders.length; ++i){
+				service.recipes.unshift(adders[i]);
+			}
+		}
+		
+		service.recipes.sort(compare);
 	};
 	
 	service.getRecipes = function () {
@@ -323,7 +347,7 @@ app.service('ViewAuthorService', function ($http) {
 });
 /* ViewAuthorService */
 
-app.controller('ViewAuthorController', function ($scope, ViewAuthorService, UserService, UsersRecipesService) {
+app.controller('ViewAuthorController', function ($scope, ViewAuthorService, RecipeService, UserService, UsersRecipesService) {
 	console.log('in ViewAuthorController');
 	$scope.user = ViewAuthorService.user;
 	$scope.recipes = UsersRecipesService.getRecipes();
@@ -333,7 +357,8 @@ app.controller('ViewAuthorController', function ($scope, ViewAuthorService, User
 		currentUser.following.push(ViewAuthorService.user);
 		ViewAuthorService.followUser(currentUser).then(
 				function(response){
-					
+					console.log(UsersRecipesService.getRecipes());
+					RecipeService.addRecipes(UsersRecipesService.getRecipes());
 				},
 				function(error){
 					
