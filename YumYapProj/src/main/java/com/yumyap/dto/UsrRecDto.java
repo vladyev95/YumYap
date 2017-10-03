@@ -8,32 +8,32 @@ import com.yumyap.beans.User;
  */
 public class UsrRecDto {
 
-	private User user;
-	private Recipe recipe;
+	private UserDto user;
+	private RecipeDto recipe;
 
 	public UsrRecDto() {
 		super();
 	}
 
-	public UsrRecDto(User user, Recipe recipe) {
+	public UsrRecDto(UserDto user, RecipeDto recipe) {
 		super();
 		this.user = user;
 		this.recipe = recipe;
 	}
 
-	public User getUser() {
+	public UserDto getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUserDto(UserDto user) {
 		this.user = user;
 	}
 
-	public Recipe getRecipe() {
+	public RecipeDto getRecipe() {
 		return recipe;
 	}
 
-	public void setRecipe(Recipe recipe) {
+	public void setRecipe(RecipeDto recipe) {
 		this.recipe = recipe;
 	}
 

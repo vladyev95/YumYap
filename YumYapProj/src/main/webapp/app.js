@@ -113,10 +113,10 @@ app.service('RecipeService', function ($http) {
 	let service = this;
 	
 	function compare(a, b) {
-		  if (a.dateCreated < b.dateCreated) {
+		  if (a.dateCreated > b.dateCreated) {
 		    return -1;
 		  }
-		  if (a.dateCreated > b.dateCreated) {
+		  if (a.dateCreated < b.dateCreated) {
 		    return 1;
 		  }
 		  return 0;
@@ -944,7 +944,7 @@ app.controller('SearchRecipesController', function($scope, RecipeService, Search
 		recipeService.favoriteRecipe(recipe, userService.getUser()).then(
 				function (response) {
 					$(responseText).text("Recipe favorited");
-					
+					recipeService.addRecipe(recipe);
 					displayMessage(responseText, "alert alert-success", undefined, true);
 				},
 				function (error) {
@@ -973,7 +973,7 @@ function addFavoriteRecipe($http, user, recipe) {
 			.then(function(response) {
 				console.log(dto);
 				$(responseText).text("Recipe favorited");
-		
+				recipeService.addRecipe(recipe);
 				console.log(responseText);
 				displayMessage(responseText, "alert alert-success", undefined, true);
 			}, function(error) {

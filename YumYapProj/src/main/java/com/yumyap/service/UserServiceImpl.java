@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
 		User user = dao.getUserById(dto.getUser().getId());
 		System.out.println("adding favorite recipe: " + dto.getRecipe());
 		
-		user.getFavoriteRecipes().add(dto.getRecipe());
+		user.getFavoriteRecipes().add(dao.getRecipeById(dto.getRecipe().getId()));
 		dao.updateUser(user);
 		return true;
 	}
