@@ -61,11 +61,12 @@ public class CommentService {
 	 * Creates a comment for the corresponding recipe
 	 * @param comment The Comment to be added
 	 */
-	public void createComment(Comment comment) {
+	public void createComment(CommentDto commentDto) {
+		Comment comment = new Comment();
 		comment.setDate(new  GregorianCalendar());
-		User commenter = dao.getUserById(comment.getCommenter().getId());
+		User commenter = dao.getUserById(commentDto.getCommenter().getId());
 		comment.setCommenter(commenter);
-		Recipe recipe = dao.getRecipeById(comment.getRecipe().getId());
+		Recipe recipe = dao.getRecipeById(commentDto.getRecipe().getId());
 		comment.setRecipe(recipe);
 		logger.trace("createComment() with " + comment);
 		dao.addComment(comment);

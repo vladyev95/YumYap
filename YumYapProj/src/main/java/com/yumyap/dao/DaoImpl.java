@@ -202,4 +202,10 @@ public class DaoImpl implements Dao {
 		logger.trace(comments);
 		return commentDtos;
 	}
+
+	@Override
+	public Object getCommentById(CommentDto commentDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

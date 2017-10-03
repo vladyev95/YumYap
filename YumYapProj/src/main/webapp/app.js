@@ -175,10 +175,7 @@ app.service('RecipeService', function ($http) {
 	service.viewComments = function(recipe){
 		return $http.post('yum/comments/show', recipe);
 	};
-	
-	service.addComment = function(comment){
-		return $http.post('yum/comments/create', comment);
-	};
+
 
 });
 
@@ -444,7 +441,7 @@ app.controller('AppController', function ($scope, ViewAuthorService, RecipeServi
 		CommentService.setRecipe(recipe);
 		console.log('sending ');
 		console.log(CommentService.getComment());
-		recipeService.addComment(CommentService.getComment()).then(
+		CommentService.addComment(CommentService.getComment()).then(
 				function(response){
 					console.log(response);
 					$('#addComments-' + recipe.id).attr('hidden', true);
@@ -874,6 +871,11 @@ app.service('CommentService', function ($http, $q){
 	service.getComment = function(){
 		return service.comment;
 	}
+	
+	service.addComment = function(something){
+		console.log(service.comment);
+		return $http.post('yum/comments/create', service.comment);
+	};
 	
 	
 });

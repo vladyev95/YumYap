@@ -28,6 +28,7 @@ public class CommentDto {
 		this.commentDate = commentDate;
 		this.content = content;
 	}
+	
 	public int getId() {
 		return id;
 	}
@@ -58,8 +59,6 @@ public class CommentDto {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
-	
 	
 	@Override
 	public String toString() {
