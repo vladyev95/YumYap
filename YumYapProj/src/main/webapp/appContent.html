@@ -1,13 +1,15 @@
 <div id="appContent" ng-controller="AppController as app">
 
 
-	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+	<nav class="navbar navbar-expand-lg navbar-light"
+		style="background-color: #e3f2fd;">
 		<a class="navbar-brand">YumYap</a>
 		<div class="navbar-nav">
-			<a class="nav-item nav-link" ng-click="switchToHome()">Home</a>
-			<a class="nav-item nav-link" ng-click="switchToCreateRecipe()">Create Recipe</a>
-			<a class="nav-item nav-link" ng-click="switchToSearchRecipe()">Search Recipes</a>
-			<a class="nav-item nav-link" href="#">Logout</a>
+			<a class="nav-item nav-link" ng-click="switchToHome()">Home</a> <a
+				class="nav-item nav-link" ng-click="switchToCreateRecipe()">Create
+				Recipe</a> <a class="nav-item nav-link"
+				ng-click="switchToSearchRecipe()">Search Recipes</a> <a
+				class="nav-item nav-link" href="#">Logout</a>
 		</div>
 	</nav>
 
@@ -24,8 +26,8 @@
 				<div class="modal-body row">
 					<div class="col-11 col-center">
 						<p ng-bind="app.selectedRecipe.description"></p>
-						<img ng-src="{{ app.selectedRecipe.imageUrl }}" width="300" height="300" />
-						<br><br>
+						<img ng-src="{{ app.selectedRecipe.imageUrl }}" width="300"
+							height="300" /> <br> <br>
 						<h4>Ingredients:</h4>
 						<hr>
 						<ul style="list-style-type: none;">
@@ -37,14 +39,23 @@
 						<h4>Directions</h4>
 						<hr>
 						<ul style="list-style-type: none;">
-							<li ng-repeat="step in app.selectedRecipe.directions" ng-bind="step"></li>
+							<li ng-repeat="step in app.selectedRecipe.directions"
+								ng-bind="step"></li>
 						</ul>
 						<br>
 						<hr>
-						<h6>Calories: <span ng-bind="app.selectedRecipe.calories"></span>g</h6>
-						<h6>Fat: <span ng-bind="app.selectedRecipe.fat"></span>g</h6>
-						<h6>Carbs: <span ng-bind="app.selectedRecipe.carbs"></span>g</h6>
-						<h6>Protein: <span ng-bind="app.selectedRecipe.protein"></span>g</h6>
+						<h6>
+							Calories: <span ng-bind="app.selectedRecipe.calories"></span>g
+						</h6>
+						<h6>
+							Fat: <span ng-bind="app.selectedRecipe.fat"></span>g
+						</h6>
+						<h6>
+							Carbs: <span ng-bind="app.selectedRecipe.carbs"></span>g
+						</h6>
+						<h6>
+							Protein: <span ng-bind="app.selectedRecipe.protein"></span>g
+						</h6>
 						<br>
 					</div>
 				</div>
@@ -53,14 +64,18 @@
 	</div>
 
 
-	<div class="container outer-div" ng-show="tab === 'Home'" ng-controller="DashboardController">
+	<div class="container outer-div" ng-show="tab === 'Home'"
+		ng-controller="DashboardController">
 		<div class="col-11 col-center">
 
 			<div class="row">
-				<h1>Welcome, <span ng-bind="currentUser.firstName"></span></h1>
+				<h1>
+					Welcome, <span ng-bind="currentUser.firstName"></span>
+				</h1>
 			</div>
-			<div><h6 ng-show="welcomeMessage"> </h6>
-			<h6></h6>
+			<div>
+				<h6 ng-show="welcomeMessage"></h6>
+				<h6></h6>
 
 			</div>
 			<div ng-repeat="recipe in recipes">
@@ -72,64 +87,74 @@
 									<h1 id="recipe-name" ng-bind="recipe.name"></h1>
 								</div>
 								<div class="row">
-									Posted by&nbsp;<span class="link" ng-click="viewAuthor(recipe.creator.id)">
-										{{ recipe.creator.firstName + " " + recipe.creator.lastName }} </span>
+									Posted by&nbsp;<span class="link"
+										ng-click="viewAuthor(recipe.creator.id)"> {{
+										recipe.creator.firstName + " " + recipe.creator.lastName }} </span>
 								</div>
 								<div class="row">
 									<span ng-bind="recipe.dateCreated | date:'MM/dd/yyyy h:mma'"></span>
 								</div>
 								<div class="row recipe-content">
-									<p class="description" ng-bind="recipe.description" height="200"></p>
+									<p class="description" ng-bind="recipe.description"
+										height="200"></p>
 								</div>
 								<div class="row recipe-content">
-									<button class="btn" ng-click="app.setSelectedRecipe(recipe); app.showModal()">View Full Recipe</button>
+									<button class="btn"
+										ng-click="app.setSelectedRecipe(recipe); app.showModal()">View
+										Full Recipe</button>
+
 								</div>
 							</div>
+
 							<div class="col-4">
 								<div class="row">
-									<div class="pull-right float-right recipe-content">
+									<div class="right">
 										<button class="btn " ng-click="favoriteRecipe(recipe)">Favorite</button>
 										<p ng-attr-id="{{ 'recipe-'+ recipe.id }}" hidden=true></p>
 									</div>
 								</div>
 								<div class="row">
-									<img class="right" id="recipe-image" ng-src="{{ recipe.imageUrl }}" width="200" height="200" />
+									<img class="right" id="recipe-image"
+										ng-src="{{ recipe.imageUrl }}" width="200" height="200" />
 								</div>
 							</div>
 						</div>
-						<!-- TODO: Create modal with more recipe info
+						<hr>
+						<div class="row">
+							<div class="col-9" id="comments">
+								<input class="commentInput" ng-model="recipe.comment1"
+									placeholder="Leave a comment" />
+							</div>
+							<div class="col-3">
+								<button class="btn submitComment"
+									ng-click="addComment(recipe, recipe.comment1)">Submit</button>
+							</div>
+						</div>
 
-					<div class="recipe-content">
-						<ul class="recipe-content" id="recipe-ingredients" ng-repeat="foodItem in recipe.ingredients">
-							<li>{{foodItem.amount}}<span ng-bind="foodItem.measure"></span> of <span ng-bind="foodItem.food"></span></li>
-						</ul>
-						<ol class="recipe-content" id="recipe-methods" ng-repeat="direction in recipe.directions">
-							<li ng-bind="recipe.directions"></li>
-						</ol>
-					</div>
-				-->
-						<div class="recipe-content" id="comments">
-							<button class="btn " ng-click="startComment(recipe)">Comment</button>
-							<div ng-attr-id="{{ 'addComments-'+ recipe.id }}" hidden=true>
-								<textarea ng-model="recipe.comment1" cols="30" rows="3" placeholder="Comment"></textarea>
-								<br>
-								<button class="btn" ng-click="addComment(recipe, recipe.comment1)">Submit</button>
-
-							</div ng-attr-id="{{ 'commentAdded-'+ recipe.id }}" hidden="true">
-							<div></div>
-							<button class="btn " ng-click="viewComments(recipe)">View comments</button>
-							<div ng-attr-id="{{ 'showComments-'+ recipe.id }}" hidden=true>
-								<div ng-repeat="comment in recipe.comments">
+						<div ng-attr-id="{{ 'commentAdded-'+ recipe.id }}" hidden="true"></div>
+						<div class="row">
+							<div class="col-12">
+								<span class="clickable col-center"
+									ng-click="viewComments(recipe)">Show comments</span>
+							</div>
+						</div>
+						<br>
+						<div ng-attr-id="{{ 'showComments-'+ recipe.id }}" hidden=true>
+							<div ng-repeat="comment in recipe.comments">
 								<div>
+
 									<div class="commentHead">
-									<br>
-									<h5 class="clickable" ng-click="viewAuthor(comment.commenter.id)" ng-bind="comment.commenter.firstName +' ' + comment.commenter.lastName"></h5>
-									<h6 style="text-align:right" ng-bind="comment.commentDate | date:'MM/dd/yyyy h:mma'"></h6>
+										<b><span class="clickable"
+											ng-click="viewAuthor(comment.commenter.id)"
+											ng-bind="comment.commenter.firstName +' ' + comment.commenter.lastName">
+										</span></b> <span style="text-align: right"
+											ng-bind="comment.commentDate | date:'MM/dd/yyyy h:mma'">
+										</span>
 									</div>
 									<div class="commentBody">
-									<p ng-bind="comment.content"></p>
+										<p ng-bind="comment.content"></p>
 									</div>
-								</div>
+
 								</div>
 							</div>
 						</div>
@@ -137,90 +162,103 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 
 
-	<div ng-show="tab === 'ViewAuthor'" ng-controller="ViewAuthorController as viewAuthor" class="outer-div">
+	<div ng-show="tab === 'ViewAuthor'"
+		ng-controller="ViewAuthorController as viewAuthor" class="outer-div">
 		<div>
 			<h1 ng-bind="user.firstName + ' ' + user.lastName"></h1>
 			<button ng-click="follow()">Follow User</button>
 		</div>
 		<div ng-repeat="recipe in recipes">
-			<div class="row recipe-block">
-				<div class="col-10 col-center">
-					<div class="row">
-						<div class="col-8 recipe-content" id="recipe-head">
-							<div class="row">
-								<h1 id="recipe-name" ng-bind="recipe.name"></h1>
-							</div>
-							<div class="row">
-								Posted by&nbsp;<span class="link" ng-click="viewAuthor(recipe.creator.id)">
-										{{ recipe.creator.firstName + " " + recipe.creator.lastName }} </span>
-										<br><span ng-bind="recipe.dateCreated | date:'MM/dd/yyyy h:mma'"></span>
-							</div>
-							<div class="row recipe-content">
-								<p class="description" id="recipe-description" ng-bind="recipe.description" height="200"></p>
-							</div>
-							<div class="row recipe-content">
-								<button class="btn" ng-click="app.setSelectedRecipe(recipe); app.showModal()">View Full Recipe</button>
-							</div>
-						</div>
-						<div class="col-4">
-							<div class="row">
-								<div class="pull-right float-right recipe-content">
-									<button class="btn " ng-click="favoriteRecipe(recipe)">Favorite</button>
-									<p ng-attr-id="{{ 'recipe-'+ recipe.id }}" hidden=true></p>
+				<div class="row recipe-block">
+					<div class="col-10 col-center">
+						<div class="row">
+							<div class="col-8 recipe-content" id="recipe-head">
+								<div class="row">
+									<h1 id="recipe-name" ng-bind="recipe.name"></h1>
+								</div>
+								<div class="row">
+									Posted by&nbsp;<span class="link"
+										ng-click="viewAuthor(recipe.creator.id)"> {{
+										recipe.creator.firstName + " " + recipe.creator.lastName }} </span>
+								</div>
+								<div class="row">
+									<span ng-bind="recipe.dateCreated | date:'MM/dd/yyyy h:mma'"></span>
+								</div>
+								<div class="row recipe-content">
+									<p class="description" ng-bind="recipe.description"
+										height="200"></p>
+								</div>
+								<div class="row recipe-content">
+									<button class="btn"
+										ng-click="app.setSelectedRecipe(recipe); app.showModal()">View
+										Full Recipe</button>
+
 								</div>
 							</div>
-							<div class="row">
-								<img class="right" id="recipe-image" ng-src="{{ recipe.imageUrl }}" width="200" height="200" />
+
+							<div class="col-4">
+								<div class="row">
+									<div class="right">
+										<button class="btn " ng-click="favoriteRecipe(recipe)">Favorite</button>
+										<p ng-attr-id="{{ 'recipe-'+ recipe.id }}" hidden=true></p>
+									</div>
+								</div>
+								<div class="row">
+									<img class="right" id="recipe-image"
+										ng-src="{{ recipe.imageUrl }}" width="200" height="200" />
+								</div>
 							</div>
 						</div>
-					</div>
-					<!-- TODO: Create modal with more recipe info
+						<hr>
+						<div class="row">
+							<div class="col-9" id="comments">
+								<input class="commentInput" ng-model="recipe.comment1"
+									placeholder="Leave a comment" />
+							</div>
+							<div class="col-3">
+								<button class="btn submitComment"
+									ng-click="addComment(recipe, recipe.comment1)">Submit</button>
+							</div>
+						</div>
 
-					<div class="recipe-content">
-						<ul class="recipe-content" id="recipe-ingredients" ng-repeat="foodItem in recipe.ingredients">
-							<li>{{foodItem.amount}}<span ng-bind="foodItem.measure"></span> of <span ng-bind="foodItem.food"></span></li>
-						</ul>
-						<ol class="recipe-content" id="recipe-methods" ng-repeat="direction in recipe.directions">
-							<li ng-bind="recipe.directions"></li>
-						</ol>
-					</div>
-				-->
-					<div class="recipe-content" id="comments">
-							<button class="btn " ng-click="startComment(recipe)">Comment</button>
-							<div ng-attr-id="{{ 'addComments-'+ recipe.id }}" hidden=true>
-								<textarea ng-model="recipe.comment1" cols="30" rows="3" placeholder="Comment"></textarea>
-								<br>
-								<button class="btn" ng-click="addComment(recipe, recipe.comment1)">Submit</button>
-
-							</div ng-attr-id="{{ 'commentAdded-'+ recipe.id }}" hidden="true">
-							<div></div>
-							<button class="btn " ng-click="viewComments(recipe)">View comments</button>
-							<div ng-attr-id="{{ 'showComments-'+ recipe.id }}" hidden=true>
-								<div ng-repeat="comment in recipe.comments">
+						<div ng-attr-id="{{ 'commentAdded-'+ recipe.id }}" hidden="true"></div>
+						<div class="row">
+							<div class="col-12">
+								<span class="clickable col-center"
+									ng-click="viewComments(recipe)">Show comments</span>
+							</div>
+						</div>
+						<br>
+						<div ng-attr-id="{{ 'showComments-'+ recipe.id }}" hidden=true>
+							<div ng-repeat="comment in recipe.comments">
 								<div>
+
 									<div class="commentHead">
-									<br>
-									<h5 class="clickable" ng-click="viewAuthor(comment.commenter.id)" ng-bind="comment.commenter.firstName +' ' + comment.commenter.lastName"></h5>
-									<h6 style="text-align:right" ng-bind="comment.commentDate | date:'MM/dd/yyyy h:mma'"></h6>
+										<b><span class="clickable"
+											ng-click="viewAuthor(comment.commenter.id)"
+											ng-bind="comment.commenter.firstName +' ' + comment.commenter.lastName">
+										</span></b> <span style="text-align: right"
+											ng-bind="comment.commentDate | date:'MM/dd/yyyy h:mma'">
+										</span>
 									</div>
 									<div class="commentBody">
-									<p ng-bind="comment.content"></p>
+										<p ng-bind="comment.content"></p>
 									</div>
-								</div>
+
 								</div>
 							</div>
 						</div>
+					</div>
 				</div>
 			</div>
-		</div>
 	</div>
 
 
-	<div ng-show="tab === 'CreateRecipe'" class="container outer-div" ng-controller="RecipeCtrl">
+	<div ng-show="tab === 'CreateRecipe'" class="container outer-div"
+		ng-controller="RecipeCtrl">
 
 		<div class="row">
 			<div class="col-11 col-center">
@@ -230,17 +268,20 @@
 							<h2>Author a Recipe</h2>
 						</div>
 						<div class="row form-group">
-							<input class="form-control" ng-model="recipeName" placeholder="Title" />
+							<input class="form-control" ng-model="recipeName"
+								placeholder="Title" />
 						</div>
 						<div class="row form-group">
-							<textarea ng-model="recipeDescription" cols="36" rows="5" placeholder="Description"></textarea>
+							<textarea ng-model="recipeDescription" cols="36" rows="5"
+								placeholder="Description"></textarea>
 						</div>
 						<div class="row">
 							<h4>Add an image:</h4>
 						</div>
 						<div class="row form-group">
 							<input type="file" id="recipeImageFile" />
-							<button class="btn btn-primary" ng-click="uploadRecipeImage()">Save Image</button>
+							<button class="btn btn-primary" ng-click="uploadRecipeImage()">Save
+								Image</button>
 						</div>
 						<div class="row form-group">
 							<p id="uploadImageMessage" hidden=true></p>
@@ -249,27 +290,35 @@
 							<h4>Add an ingredient:</h4>
 						</div>
 						<div class="row form-group">
-							<input id="search" ng-model="search" ng-change="searchFoods(search)" type="text" placeholder="Search ingredients" />
-							<select ng-model="selection" ng-change="getFoodReport(selection)" ng-show="search" ng-hide="!search">
-						<option ng-repeat="item in foodItems" ng-bind="item.name" value="{{ item.ndbno }}"></option>
-					</select>
+							<input id="search" ng-model="search"
+								ng-change="searchFoods(search)" type="text"
+								placeholder="Search ingredients" /> <select
+								ng-model="selection" ng-change="getFoodReport(selection)"
+								ng-show="search" ng-hide="!search">
+								<option ng-repeat="item in foodItems" ng-bind="item.name"
+									value="{{ item.ndbno }}"></option>
+							</select>
 						</div>
-						<form ng-submit="addIngredient(quantity, fraction, measure, customName)" class="row form-group" ng-show="selection">
-							<input ng-model="quantity" ng-change="calculateNutrients(quantity, fraction, measure)" type="number" default=0 step="1" min="0"
-							/>
-							<select ng-model="fraction" ng-change="calculateNutrients(quantity, fraction, measure)">
-						<option value="0"></option>
-						<option value="1/8">1/8</option>
-						<option value="1/4">1/4</option>
-						<option value="1/3">1/3</option>
-						<option value="1/2">1/2</option>
-						<option value="2/3">2/3</option>
-						<option value="3/4">3/4</option>
-					</select>
-							<select ng-model="measure" ng-change="calculateNutrients(quantity, fraction, measure)">
-						<option ng-repeat="m in measures" value="{{ m }}" ng-bind="m"></option>
-					</select>
-							<input type="text" value="{{ customName }}" ng-model="customName" />
+						<form
+							ng-submit="addIngredient(quantity, fraction, measure, customName)"
+							class="row form-group" ng-show="selection">
+							<input ng-model="quantity"
+								ng-change="calculateNutrients(quantity, fraction, measure)"
+								type="number" default=0 step="1" min="0" /> <select
+								ng-model="fraction"
+								ng-change="calculateNutrients(quantity, fraction, measure)">
+								<option value="0"></option>
+								<option value="1/8">1/8</option>
+								<option value="1/4">1/4</option>
+								<option value="1/3">1/3</option>
+								<option value="1/2">1/2</option>
+								<option value="2/3">2/3</option>
+								<option value="3/4">3/4</option>
+							</select> <select ng-model="measure"
+								ng-change="calculateNutrients(quantity, fraction, measure)">
+								<option ng-repeat="m in measures" value="{{ m }}" ng-bind="m"></option>
+							</select> <input type="text" value="{{ customName }}"
+								ng-model="customName" />
 							<button type="submit">+</button>
 						</form>
 						<div class="row">
@@ -296,18 +345,18 @@
 						<h2 ng-bind="recipeName"></h2>
 						<hr>
 						<p ng-bind="recipeDescription"></p>
-						<br>
-						<img ng-src="{{ recipeImageUri }}" ng-show="recipeImageUri" width="300" height="300" id="recipeImage" />
-						<br><br>
+						<br> <img ng-src="{{ recipeImageUri }}"
+							ng-show="recipeImageUri" width="300" height="300"
+							id="recipeImage" /> <br> <br>
 						<h4>Ingredients:</h4>
 						<hr>
 						<ul style="list-style-type: none;">
-							<li ng-repeat="ingredient in ingredients">
-								<span ng-if="ingredient.quantity!=0" ng-bind="ingredient.quantity"></span>
-								<span ng-if="ingredient.fraction!='0'" ng-bind="ingredient.fraction"></span>
-								<span ng-bind="ingredient.measure"></span>
-								<span ng-bind="ingredient.name"></span>
-							</li>
+							<li ng-repeat="ingredient in ingredients"><span
+								ng-if="ingredient.quantity!=0" ng-bind="ingredient.quantity"></span>
+								<span ng-if="ingredient.fraction!='0'"
+								ng-bind="ingredient.fraction"></span> <span
+								ng-bind="ingredient.measure"></span> <span
+								ng-bind="ingredient.name"></span></li>
 						</ul>
 						<h6>
 							<span ng-if="quantity!=0 && measure" ng-bind="quantity"></span>
@@ -328,64 +377,94 @@
 	</div>
 
 
-	<div ng-show="tab === 'SearchRecipes'" ng-controller="SearchRecipesController" class="outer-div">
+	<div ng-show="tab === 'SearchRecipes'"
+		ng-controller="SearchRecipesController" class="outer-div">
 		<form ng-submit="search()">
 			<input type="text" ng-model="recipeName" placeholder="Search">
 			<button type="submit" class="btn ">Search</button>
 		</form>
 		<div ng-show="showRecipes">
-			<div class="recipe-content" ng-repeat="recipe in foundRecipes">
-				<h3 ng-bind="recipe.name"></h3>
-				<img id="recipe-image" ng-src="{{ recipe.imageUrl }}" width="100" height="100"></img>
-				<div>
-					Posted by&nbsp;<span class="link" ng-click="viewAuthor(recipe.creator.id)">
-										{{ recipe.creator.firstName + " " + recipe.creator.lastName }} </span>
-										<br><span ng-bind="recipe.dateCreated | date:'MM/dd/yyyy h:mma'"></span>
-				</div>
-				<div class="recipe-content">
-					<!-- <ul class="recipe-content" id="recipe-ingredients" ng-repeat="foodItem in recipe.ingredients">
-						<li><span ng-bind="foodItem"></span></li>
-					</ul>
-					<ul class="recipe-content" ng-repeat="direction in recipe.directions">
-						<li ng-bind="direction"></li>
-					</ul> -->
-					<div class="row recipe-content">
-						<button class="btn" ng-click="app.setSelectedRecipe(recipe); app.showModal()">View Full Recipe</button>
-					</div>
-					
-					<div class="col-4">
+			<div ng-repeat="recipe in foundRecipes">
+				<div class="row recipe-block">
+					<div class="col-10 col-center">
 						<div class="row">
-							<div class="pull-right float-right recipe-content">
-								<button class="btn " ng-click="favoriteRecipe(recipe)">Favorite</button>
-								<p ng-attr-id="{{ 'recipe-'+ recipe.id }}" hidden=true></p>
+							<div class="col-8 recipe-content" id="recipe-head">
+								<div class="row">
+									<h1 id="recipe-name" ng-bind="recipe.name"></h1>
+								</div>
+								<div class="row">
+									Posted by&nbsp;<span class="link"
+										ng-click="viewAuthor(recipe.creator.id)"> {{
+										recipe.creator.firstName + " " + recipe.creator.lastName }} </span>
+								</div>
+								<div class="row">
+									<span ng-bind="recipe.dateCreated | date:'MM/dd/yyyy h:mma'"></span>
+								</div>
+								<div class="row recipe-content">
+									<p class="description" ng-bind="recipe.description"
+										height="200"></p>
+								</div>
+								<div class="row recipe-content">
+									<button class="btn"
+										ng-click="app.setSelectedRecipe(recipe); app.showModal()">View
+										Full Recipe</button>
+
+								</div>
+							</div>
+
+							<div class="col-4">
+								<div class="row">
+									<div class="right">
+										<button class="btn " ng-click="favoriteRecipe(recipe)">Favorite</button>
+										<p ng-attr-id="{{ 'recipe-'+ recipe.id }}" hidden=true></p>
+									</div>
+								</div>
+								<div class="row">
+									<img class="right" id="recipe-image"
+										ng-src="{{ recipe.imageUrl }}" width="200" height="200" />
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="recipe-content" id="comments">
-							<button class="btn " ng-click="startComment(recipe)">Comment</button>
-							<div ng-attr-id="{{ 'addComments-'+ recipe.id }}" hidden=true>
-								<textarea ng-model="recipe.comment1" cols="30" rows="3" placeholder="Comment"></textarea>
-								<br>
-								<button class="btn" ng-click="addComment(recipe, recipe.comment1)">Submit</button>
+						<hr>
+						<div class="row">
+							<div class="col-9" id="comments">
+								<input class="commentInput" ng-model="recipe.comment1"
+									placeholder="Leave a comment" />
+							</div>
+							<div class="col-3">
+								<button class="btn submitComment"
+									ng-click="addComment(recipe, recipe.comment1)">Submit</button>
+							</div>
+						</div>
 
-							</div ng-attr-id="{{ 'commentAdded-'+ recipe.id }}" hidden="true">
-							<div></div>
-							<button class="btn " ng-click="viewComments(recipe)">View comments</button>
-							<div ng-attr-id="{{ 'showComments-'+ recipe.id }}" hidden=true>
-								<div ng-repeat="comment in recipe.comments">
+						<div ng-attr-id="{{ 'commentAdded-'+ recipe.id }}" hidden="true"></div>
+						<div class="row">
+							<div class="col-12">
+								<span class="clickable col-center"
+									ng-click="viewComments(recipe)">Show comments</span>
+							</div>
+						</div>
+						<br>
+						<div ng-attr-id="{{ 'showComments-'+ recipe.id }}" hidden=true>
+							<div ng-repeat="comment in recipe.comments">
 								<div>
+
 									<div class="commentHead">
-									<br>
-									<h5 class="clickable" ng-click="viewAuthor(comment.commenter.id)" ng-bind="comment.commenter.firstName +' ' + comment.commenter.lastName"></h5>
-									<h6 style="text-align:right;" ng-bind="comment.commentDate | date:'MM/dd/yyyy h:mma'"></h6>
+										<b><span class="clickable"
+											ng-click="viewAuthor(comment.commenter.id)"
+											ng-bind="comment.commenter.firstName +' ' + comment.commenter.lastName">
+										</span></b> <span style="text-align: right"
+											ng-bind="comment.commentDate | date:'MM/dd/yyyy h:mma'">
+										</span>
 									</div>
 									<div class="commentBody">
-									<p ng-bind="comment.content"></p>
+										<p ng-bind="comment.content"></p>
 									</div>
-								</div>
+
 								</div>
 							</div>
 						</div>
+					</div>
 				</div>
 			</div>
 		</div>
