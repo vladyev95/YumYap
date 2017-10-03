@@ -16,7 +16,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title" ng-model="{{ recipe }}">Withdraw
+					<h4 class="modal-title" ng-bind="{{ recipe }}">Withdraw
 						Pending Request</h4>
 					<button type="button" class="close modalCancel"
 						data-dismiss="modal">
@@ -68,6 +68,7 @@
 								<div class="row">
 									Posted by&nbsp;<span class="link" ng-click="viewAuthor(recipe.creator.id)">
 										{{ recipe.creator.firstName + " " + recipe.creator.lastName }} </span>
+										<br><span ng-bind="recipe.dateCreated | date:'MM/dd/yyyy h:mma'"></span>
 								</div>
 								<div class="row recipe-content">
 									<p class="description" id="recipe-description" ng-bind="recipe.description" height="200"></p>
@@ -100,6 +101,7 @@
 							<button class="btn " ng-click="startComment(recipe)">Comment</button>
 							<div ng-attr-id="{{ 'addComments-'+ recipe.id }}" hidden=true>
 								<textarea ng-model="recipe.comment1" cols="30" rows="3" placeholder="Comment"></textarea>
+								<br>
 								<button class="btn" ng-click="addComment(recipe, recipe.comment1)">Submit</button>
 
 							</div ng-attr-id="{{ 'commentAdded-'+ recipe.id }}" hidden="true">
@@ -144,6 +146,7 @@
 							<div class="row">
 								Posted by&nbsp;<span class="link" ng-click="viewAuthor(recipe.creator.id)">
 										{{ recipe.creator.firstName + " " + recipe.creator.lastName }} </span>
+										<br><span ng-bind="recipe.dateCreated | date:'MM/dd/yyyy h:mma'"></span>
 							</div>
 							<div class="row recipe-content">
 								<p class="description" id="recipe-description" ng-bind="recipe.description" height="200"></p>
@@ -176,6 +179,7 @@
 							<button class="btn " ng-click="startComment(recipe)">Comment</button>
 							<div ng-attr-id="{{ 'addComments-'+ recipe.id }}" hidden=true>
 								<textarea ng-model="recipe.comment1" cols="30" rows="3" placeholder="Comment"></textarea>
+								<br>
 								<button class="btn" ng-click="addComment(recipe, recipe.comment1)">Submit</button>
 
 							</div ng-attr-id="{{ 'commentAdded-'+ recipe.id }}" hidden="true">
@@ -322,7 +326,8 @@
 				<img id="recipe-image" ng-src="{{ recipe.imageUrl }}" width="100" height="100"></img>
 				<div>
 					Posted by&nbsp;<span class="link" ng-click="viewAuthor(recipe.creator.id)">
-				{{ recipe.creator.firstName + " " + recipe.creator.lastName }} </span>
+										{{ recipe.creator.firstName + " " + recipe.creator.lastName }} </span>
+										<br><span ng-bind="recipe.dateCreated | date:'MM/dd/yyyy h:mma'"></span>
 				</div>
 				<div class="recipe-content">
 					<!-- <ul class="recipe-content" id="recipe-ingredients" ng-repeat="foodItem in recipe.ingredients">
@@ -343,6 +348,7 @@
 							<button class="btn " ng-click="startComment(recipe)">Comment</button>
 							<div ng-attr-id="{{ 'addComments-'+ recipe.id }}" hidden=true>
 								<textarea ng-model="recipe.comment1" cols="30" rows="3" placeholder="Comment"></textarea>
+								<br>
 								<button class="btn" ng-click="addComment(recipe, recipe.comment1)">Submit</button>
 
 							</div ng-attr-id="{{ 'commentAdded-'+ recipe.id }}" hidden="true">
